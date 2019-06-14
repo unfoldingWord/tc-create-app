@@ -1,10 +1,18 @@
 {
-  "name": "translate-markdown-prototype",
+  "name": "gateway-language-translation-suite",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "MIT",
   "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "gitea-react-toolkit": "0.3.3",
+    "markdown-translatable": "^0.3.8",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-select": "^3.0.4"
+  },
+  "devDependencies": {
     "react-scripts": "3.0.1"
   },
   "scripts": {
