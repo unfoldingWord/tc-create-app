@@ -45,6 +45,11 @@ function LanguageSelectComponent ({
     return {value, label};
   });
 
+  let value;
+  if (language) {
+    value = options.filter(object => (object.value === language.languageId) )[0];
+  }
+
   return (
     <div className={classes.root}>
       <NoSsr>
@@ -53,9 +58,7 @@ function LanguageSelectComponent ({
           styles={selectStyles}
           options={options}
           components={components}
-          // value={
-          //   options.filter(object => (object.value === language.languageId) )[0]
-          // }
+          value={value}
           onChange={handleChange}
           placeholder="Select Language"
         />
@@ -73,7 +76,6 @@ LanguageSelectComponent.propTypes = {
 };
 
 LanguageSelectComponent.defaultProps = {
-  language: {languageId: "en"},
 }
 
 const styles = theme => ({
