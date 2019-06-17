@@ -23,6 +23,8 @@ function Workspace ({
   onOriginalRepository,
   translationRepository,
   onTranslationRepository,
+  originalBlob,
+  onOriginalBlob,
   originalFile,
   translationFile,
   language,
@@ -84,6 +86,9 @@ function Workspace ({
         originalRepository={originalRepository}
         onOriginalRepository={onOriginalRepository}
         repositoryConfig={repositoryConfig}
+        originalBlob={originalBlob}
+        onOriginalBlob={onOriginalBlob}
+        originalFile={originalFile}
         language={language}
         onLanguage={onLanguage}
       />

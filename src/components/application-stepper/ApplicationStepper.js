@@ -8,7 +8,7 @@ import {
   Typography,
   Paper,
 } from '@material-ui/core';
-import { Authentication, Repositories } from 'gitea-react-toolkit';
+import { Authentication, Repositories, Tree } from 'gitea-react-toolkit';
 
 import { LanguageSelect } from '../languages';
 
@@ -20,12 +20,19 @@ function ApplicationStepper({
   originalRepository,
   onOriginalRepository,
   repositoryConfig,
+  originalBlob,
+  onOriginalBlob,
+  originalFile,
   language,
   onLanguage,
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState({});
-
+  const completed = {
+    0: !!language,
+    1: !!originalRepository,
+    2: !!authentication,
+    3: !!originalFile,
+  };
   const getSteps = () => {
     return [
       {
@@ -62,10 +69,16 @@ function ApplicationStepper({
         )
       },
       {
-        label: 'Repository',
-        instructions: 'Select or Create Translation Repository',
+        label: 'File',
+        instructions: 'Select File to Translate',
         component: (
-          <>Step 4</>
+          <Tree
+            url={originalRepository ? originalRepository.tree_url : null}
+            blob={originalBlob}
+            onBlob={onOriginalBlob}
+            config={authenticationConfig}
+            selected={true}
+          />
         )
       },
     ];
@@ -91,17 +104,6 @@ function ApplicationStepper({
   }
   const handleBack = () => setActiveStep(activeStep - 1);
   const handleStep = step => () => setActiveStep(step);
-  const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-  }
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-  }
 
   return (
     <Paper>
@@ -116,44 +118,25 @@ function ApplicationStepper({
         ))}
       </Stepper>
       <div>
-        {allStepsCompleted() ? (
+        <div>
+          <Typography className={classes.instructions}>
+            Step {activeStep + 1}: {steps[activeStep].instructions}
+          </Typography>
+          {steps[activeStep].component}
           <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset}>Reset</Button>
+            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              className={classes.button}
+            >
+              Next
+            </Button>
           </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>
-              Step {activeStep + 1}: {steps[activeStep].instructions}
-            </Typography>
-            {steps[activeStep].component}
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                Next
-              </Button>
-              {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography variant="caption" className={classes.completed}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button variant="contained" color="primary" onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                  </Button>
-                ))}
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
     </Paper>
