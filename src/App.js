@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import {ApplicationBar, ensureRepo} from 'gitea-react-toolkit';
+import {
+  ApplicationBar,
+  ensureRepo,
+} from 'gitea-react-toolkit';
 import Workspace from './Workspace';
 import FilePopulator from './components/FilePopulator';
 import appPackage from '../package.json';
@@ -40,7 +43,7 @@ function App() {
       owner: authentication.user.username,
       repo: translationRepoName,
       config: authentication.config,
-      readme: undefined,
+      settings: {}
     };
     const _translationRepository = await ensureRepo(params);
     setTranslationRepository(_translationRepository);

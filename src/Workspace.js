@@ -26,6 +26,15 @@ function Workspace ({
   language,
   onLanguage,
 }) {
+  let translationFileContent;
+  if (originalFile && translationFile) {
+    translationFileContent = translationFile.content;
+    const autoInitFileContent = `# ${translationRepository.name}`;
+    const autoInitFile = translationFile.content.trim() === autoInitFileContent;
+    if (autoInitFile) translationFileContent = originalFile.content;
+  } 
+    
+
   let component;
   if (originalFile && translationFile) {
     component = (
@@ -56,7 +65,7 @@ function Workspace ({
         </Grid>
         <DocumentTranslatable
           original={originalFile.content}
-          translation={translationFile.content}
+          translation={translationFileContent}
           onTranslation={(edit) => {
             translationFile.saveContent(edit);
           }}

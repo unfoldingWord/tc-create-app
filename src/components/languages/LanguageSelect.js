@@ -53,9 +53,9 @@ function LanguageSelectComponent ({
           styles={selectStyles}
           options={options}
           components={components}
-          value={
-            options.filter(object => (object.value === language.languageId) )[0]
-          }
+          // value={
+          //   options.filter(object => (object.value === language.languageId) )[0]
+          // }
           onChange={handleChange}
           placeholder="Select Language"
         />
