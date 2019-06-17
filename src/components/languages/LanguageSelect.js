@@ -71,12 +71,9 @@ function LanguageSelectComponent ({
 LanguageSelectComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  language: PropTypes.object.isRequired,
+  language: PropTypes.object,
   onLanguage: PropTypes.func.isRequired,
 };
-
-LanguageSelectComponent.defaultProps = {
-}
 
 const styles = theme => ({
   root: {

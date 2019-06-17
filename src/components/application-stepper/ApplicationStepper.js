@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
   Paper,
+  Divider,
 } from '@material-ui/core';
 import { Authentication, Repositories, Tree } from 'gitea-react-toolkit';
 
@@ -118,12 +119,14 @@ function ApplicationStepper({
         ))}
       </Stepper>
       <div>
-        <div>
-          <Typography className={classes.instructions}>
+        <div className={classes.step}>
+          <Typography variant="h5" className={classes.instructions}>
             Step {activeStep + 1}: {steps[activeStep].instructions}
           </Typography>
+          <Divider className={classes.divider} />
           {steps[activeStep].component}
-          <div>
+          <Divider className={classes.divider} />
+          <div className={classes.buttons}>
             <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
               Back
             </Button>
@@ -146,6 +149,18 @@ function ApplicationStepper({
 const styles = theme => ({
   root: {
     padding: '1em',
+  },
+  step: {
+    maxWidth: '40em',
+    margin: 'auto',
+    padding: '0 2.5em',
+  },
+  divider: {
+    margin: '1em 0',
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
   },
   button: {
     marginRight: theme.spacing.unit,
