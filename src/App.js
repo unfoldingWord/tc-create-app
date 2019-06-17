@@ -18,10 +18,10 @@ const authenticationConfig = {
 const repositoryConfig = {
   ...config,
   urls: [
-    'https://bg.door43.org/api/v1/repos/door43-catalog/en_ta',
-    'https://bg.door43.org/api/v1/repos/door43-catalog/en_tw',
-    'https://bg.door43.org/api/v1/repos/door43-catalog/en_tn',
-    'https://bg.door43.org/api/v1/repos/door43-catalog/en_obs',
+    'https://bg.door43.org/api/v1/repos/unfoldingword/en_ta',
+    'https://bg.door43.org/api/v1/repos/unfoldingword/en_tw',
+    'https://bg.door43.org/api/v1/repos/unfoldingword/en_tn',
+    'https://bg.door43.org/api/v1/repos/unfoldingword/en_obs',
   ],
 }
 
@@ -39,11 +39,12 @@ function App() {
     const repositoryNameArray = originalRepository.name.split('_');
     const resourceNameArray = repositoryNameArray.slice(1);
     const translationRepoName = `${language.languageId}_${resourceNameArray.join('_')}`;
+    const {description} = originalRepository;
     const params = {
       owner: authentication.user.username,
       repo: translationRepoName,
       config: authentication.config,
-      settings: {}
+      settings: {description}
     };
     const _translationRepository = await ensureRepo(params);
     setTranslationRepository(_translationRepository);

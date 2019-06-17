@@ -11,6 +11,8 @@ import {
 import ApplicationStepper from './components/application-stepper/ApplicationStepper';
 import {DocumentTranslatable} from 'markdown-translatable';
 
+import {getLanguage} from './components/languages/helpers';
+
 function Workspace ({
   classes,
   authentication,
@@ -29,7 +31,7 @@ function Workspace ({
   let translationFileContent;
   if (originalFile && translationFile) {
     translationFileContent = translationFile.content;
-    const autoInitFileContent = `# ${translationRepository.name}`;
+    const autoInitFileContent = `# ${translationRepository.name}\n\n${translationRepository.description}`;
     const autoInitFile = translationFile.content.trim() === autoInitFileContent;
     if (autoInitFile) translationFileContent = originalFile.content;
   } 
@@ -37,14 +39,15 @@ function Workspace ({
 
   let component;
   if (originalFile && translationFile) {
+    const originalLanguage = getLanguage({languageId: originalRepository.name.split('_')[0]});
     component = (
       <>
         <Grid className={classes.headers} container wrap="nowrap" spacing={16}>
           <Grid item xs={12}>
             <Chip
               icon={<Translate />}
-              label={`${originalRepository.full_name}/${originalFile.filepath}`}
-              onDelete={()=> originalRepository.close()}
+              label={`${originalRepository.owner.username} - ${originalLanguage.languageName}`}
+              onDelete={()=> {}}
               deleteIcon={<Settings />}
               variant="outlined"
               className={classes.header}
@@ -54,7 +57,7 @@ function Workspace ({
           <Grid item xs={12}>
             <Chip
               icon={<Translate />}
-              label={`${translationRepository.full_name}/${translationFile.filepath}`}
+              label={`${translationRepository.owner.username} - ${language.languageName}`}
               onDelete={()=>{}}
               deleteIcon={<Settings />}
               variant="outlined"
