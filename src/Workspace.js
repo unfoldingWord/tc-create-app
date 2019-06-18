@@ -22,7 +22,6 @@ function Workspace ({
   originalRepository,
   onOriginalRepository,
   translationRepository,
-  onTranslationRepository,
   originalBlob,
   onOriginalBlob,
   originalFile,

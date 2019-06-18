@@ -121,7 +121,6 @@ function App() {
             originalBlob={originalBlob}
             onOriginalBlob={setOriginalBlob}
             translationRepository={translationRepository}
-            onTranslationRepository={setTranslationRepository}
             translationBlob={translationBlob}
             originalFile={originalFile}
             translationFile={translationFile}
