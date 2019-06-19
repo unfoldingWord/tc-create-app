@@ -6943,10 +6943,10 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.3.tgz#6155e10416efaafab665d466ce598216375195f5"
   integrity sha512-XUi5HJhhV5R74k8/0H2oCbCiYf/u4cO/rX8tnGkRvrqhsr5BRNU6Mg0yt/8UIx1iIS8220BNJsDb7XnILhLepw==
 
-markdown-translatable@^0.3.9:
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.3.9.tgz#52bae3c2ce680acf8385493c63f88959817391be"
-  integrity sha512-HoZZjvAuwYwCiroX8+MTqxHoVavnKEL/bmQexfbV0etGUuBGoGc5RMKjwP4he9JPBM8apqdioVxRYWn2AoD1XA==
+markdown-translatable@^0.3.12:
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.3.12.tgz#2891bf26975a2991d25bebec7598884be685f712"
+  integrity sha512-ecXDISF4Kl/dGKzKz4xoWIGGBA5fR+l2EEnMyk/ZnK6VKtenIhPLTISq4mopg5z1fkpXcho6lssN0mAdiaeDMg==
   dependencies:
     md5 "^2.2.1"
     prop-types "^15.7.2"
