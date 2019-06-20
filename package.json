@@ -7,10 +7,11 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
-    "gitea-react-toolkit": "0.3.3",
+    "gitea-react-toolkit": "0.3.4",
     "markdown-translatable": "^0.3.12",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "react-headroom": "^2.2.8",
     "react-select": "^3.0.4"
   },
   "devDependencies": {

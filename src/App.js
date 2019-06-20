@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import Headroom from 'react-headroom';
 import {
   ApplicationBar,
   ensureRepo,
@@ -34,6 +35,22 @@ function App() {
   const [originalFile, setOriginalFile] = useState();
   const [translationFile, setTranslationFile] = useState();
   const [language, setLanguage] = useState();
+
+  const cleanup = () => {
+    setTranslationFile();
+    setTranslationBlob();
+    setOriginalFile();
+    setOriginalBlob();
+    setTranslationRepository();
+  };
+
+  const onOriginalRepository = (repository) => {
+    if (!repository) cleanup();
+    if (originalRepository && repository)
+      if (originalRepository.full_name !== repository.full_name)
+        cleanup();
+    setOriginalRepository(repository);
+  };
 
   const populateTranslationRepository = async () => {
     const repositoryNameArray = originalRepository.name.split('_');
@@ -96,6 +113,7 @@ function App() {
       {filePopulator}
       <MuiThemeProvider theme={theme}>
         <header className="App-header">
+          <Headroom>
           <ApplicationBar
             title="GL Translate"
             // buttons={buttons}
@@ -104,11 +122,12 @@ function App() {
             onAuthentication={setAuthentication}
             authenticationConfig={authenticationConfig}
             repository={originalRepository}
-            onRepository={setOriginalRepository}
+            onRepository={onOriginalRepository}
             repositoryConfig={repositoryConfig}
             blob={originalBlob}
             onBlob={setOriginalBlob}
           />
+          </Headroom>
         </header>
         <div style={{margin: '1em'}}>
           <Workspace
@@ -117,7 +136,7 @@ function App() {
             authenticationConfig={authenticationConfig}
             repositoryConfig={repositoryConfig}
             originalRepository={originalRepository}
-            onOriginalRepository={setOriginalRepository}
+            onOriginalRepository={onOriginalRepository}
             originalBlob={originalBlob}
             onOriginalBlob={setOriginalBlob}
             translationRepository={translationRepository}
