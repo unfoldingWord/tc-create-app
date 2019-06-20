@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import { 
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemSecondaryAction,
+  Switch,
+} from '@material-ui/core';
+import {
+  ViewDay,
+  ViewDayOutlined,
+} from '@material-ui/icons';
 import Headroom from 'react-headroom';
 import {
   ApplicationBar,
@@ -35,6 +47,9 @@ function App() {
   const [originalFile, setOriginalFile] = useState();
   const [translationFile, setTranslationFile] = useState();
   const [language, setLanguage] = useState();
+  const [sectionable, setSectionable] = useState(true);
+
+  const toggleSectionable = () => setSectionable(!sectionable);
 
   const cleanup = () => {
     setTranslationFile();
@@ -108,6 +123,20 @@ function App() {
     );
   }
 
+  const drawerMenu = (
+    <List>
+      <ListItem button onClick={toggleSectionable}>
+        <ListItemIcon style={{margin:0}}>
+          {sectionable ? <ViewDayOutlined /> : <ViewDay />}
+        </ListItemIcon>
+        <ListItemText primary="Heading Sections" />
+        <ListItemSecondaryAction>
+          <Switch onChange={toggleSectionable} checked={sectionable} color="primary" />
+        </ListItemSecondaryAction>
+      </ListItem>
+    </List>
+  );
+
   return (
     <div className="App">
       {filePopulator}
@@ -126,6 +155,7 @@ function App() {
             repositoryConfig={repositoryConfig}
             blob={originalBlob}
             onBlob={setOriginalBlob}
+            drawerMenu={drawerMenu}
           />
           </Headroom>
         </header>
@@ -145,6 +175,7 @@ function App() {
             translationFile={translationFile}
             language={language}
             onLanguage={setLanguage}
+            sectionable={sectionable}
           />
         </div>
       </MuiThemeProvider>

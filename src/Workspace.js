@@ -9,7 +9,10 @@ import {
   Settings,
 } from '@material-ui/icons';
 import ApplicationStepper from './components/application-stepper/ApplicationStepper';
-import {DocumentTranslatable} from 'markdown-translatable';
+import {
+  DocumentTranslatable,
+  SectionTranslatable,
+} from 'markdown-translatable';
 
 import {getLanguage} from './components/languages/helpers';
 
@@ -28,6 +31,7 @@ function Workspace ({
   translationFile,
   language,
   onLanguage,
+  sectionable,
 }) {
   let translationFileContent;
   if (originalFile && translationFile) {
@@ -41,6 +45,17 @@ function Workspace ({
   let component;
   if (originalFile && translationFile) {
     const originalLanguage = getLanguage({languageId: originalRepository.name.split('_')[0]});
+    let translatableComponent;
+    let translatableProps = {
+      original: originalFile.content,
+      translation: translationFileContent,
+      onTranslation: translationFile.saveContent,
+    }
+    if (sectionable) {
+      translatableComponent = <DocumentTranslatable {...translatableProps} />;
+    } else {
+      translatableComponent = <SectionTranslatable {...translatableProps} />;
+    }
     component = (
       <>
         <Grid className={classes.headers} container wrap="nowrap" spacing={16}>
@@ -67,13 +82,7 @@ function Workspace ({
             />
           </Grid>
         </Grid>
-        <DocumentTranslatable
-          original={originalFile.content}
-          translation={translationFileContent}
-          onTranslation={(edit) => {
-            translationFile.saveContent(edit);
-          }}
-        />
+        {translatableComponent}
       </>
     );
   } else {
