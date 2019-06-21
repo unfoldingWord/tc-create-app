@@ -39,8 +39,7 @@ function Workspace ({
     const autoInitFileContent = `# ${translationRepository.name}\n\n${translationRepository.description}`;
     const autoInitFile = translationFile.content.trim() === autoInitFileContent;
     if (autoInitFile) translationFileContent = originalFile.content;
-  } 
-    
+  }
 
   let component;
   if (originalFile && translationFile) {
@@ -54,7 +53,7 @@ function Workspace ({
     if (sectionable) {
       translatableComponent = <DocumentTranslatable {...translatableProps} />;
     } else {
-      translatableComponent = <SectionTranslatable {...translatableProps} />;
+      translatableComponent = <SectionTranslatable sectionFocus {...translatableProps} />;
     }
     component = (
       <>
