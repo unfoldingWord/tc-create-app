@@ -104,7 +104,7 @@ const styles = theme => ({
   root: {
   },
   headers: {
-    marginBottom: '0.2em',
+    marginBottom: `${theme.spacing.unit}px`,
   },
   header: {
     justifyContent: 'space-between',

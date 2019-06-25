@@ -7,11 +7,15 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   Switch,
+  IconButton,
 } from '@material-ui/core';
 import {
   ViewDay,
   ViewDayOutlined,
+  FormatSize,
+  Undo,
 } from '@material-ui/icons';
+import { Slider } from '@material-ui/lab';
 import Headroom from 'react-headroom';
 import {
   ApplicationBar,
@@ -27,6 +31,7 @@ const config = { server: 'https://bg.door43.org' };
 
 setGlobal({
   sectionable: true,
+  fontScale: 100,
   authenticationConfig: {
     ...config,
     tokenid: appPackage.name,
@@ -54,6 +59,7 @@ function App() {
   const [sectionable, setSectionable] = useGlobal('sectionable');
   const [authenticationConfig] = useGlobal('authenticationConfig');
   const [repositoryConfig] = useGlobal('repositoryConfig');
+  const [fontScale, setFontScale] = useGlobal('fontScale')
 
   const toggleSectionable = () => setSectionable(!sectionable);
 
@@ -129,10 +135,14 @@ function App() {
     );
   }
 
+
+  const drawerIconStyle = { margin: 0 };
+  const onFontScale = (event, value) => setFontScale(value);
+  const resetFontScale = () => setFontScale(100);
   const drawerMenu = (
     <List>
       <ListItem button onClick={toggleSectionable}>
-        <ListItemIcon style={{margin:0}}>
+        <ListItemIcon style={drawerIconStyle}>
           {sectionable ? <ViewDayOutlined /> : <ViewDay />}
         </ListItemIcon>
         <ListItemText primary="Heading Sections" />
@@ -140,11 +150,37 @@ function App() {
           <Switch onChange={toggleSectionable} checked={sectionable} color="primary" />
         </ListItemSecondaryAction>
       </ListItem>
+      <ListItem>
+        <ListItemIcon style={drawerIconStyle}>
+          <FormatSize />
+        </ListItemIcon>
+        <ListItemText
+          primary={`Font Size ${fontScale}%`}
+          secondary={
+            <Slider
+              value={fontScale}
+              aria-labelledby="label"
+              onChange={onFontScale}
+              min={50}
+              max={150}
+              step={10}
+            />
+          }
+        />
+        <ListItemSecondaryAction>
+          <IconButton style={drawerIconStyle} onClick={resetFontScale}>
+            <Undo />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
     </List>
   );
 
+  const appStyle = {
+    fontSize: `${fontScale/100}em`
+  };
   return (
-    <div className="App">
+    <div className="App" style={appStyle}>
       {filePopulator}
       <MuiThemeProvider theme={theme}>
         <header className="App-header">
@@ -165,7 +201,7 @@ function App() {
           />
           </Headroom>
         </header>
-        <div style={{margin: '1em'}}>
+        <div style={{margin: `${theme.spacing.unit * 2}px`}}>
           <Workspace
             authenticationConfig={authenticationConfig}
             repositoryConfig={repositoryConfig}

@@ -131,6 +131,7 @@ function ApplicationStepper({
               color="primary"
               onClick={handleNext}
               className={classes.button}
+              disabled={activeStep === steps.length - 1}
             >
               Next
             </Button>
@@ -144,15 +145,15 @@ function ApplicationStepper({
 
 const styles = theme => ({
   root: {
-    padding: '1em',
+    padding: `${theme.spacing.unit * 2}px`,
   },
   step: {
-    maxWidth: '40em',
+    maxWidth: '600px',
     margin: 'auto',
-    padding: '0 2.5em',
+    padding: `0 ${theme.spacing.unit * 2}px`,
   },
   divider: {
-    margin: '1em 0',
+    margin: `${theme.spacing.unit * 2}px 0`,
   },
   buttons: {
     display: 'flex',
