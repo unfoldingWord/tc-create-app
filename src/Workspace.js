@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import {
   Translate,
-  Settings,
+  Link,
 } from '@material-ui/icons';
 import ApplicationStepper from './components/application-stepper/ApplicationStepper';
 import {
@@ -55,29 +55,40 @@ function Workspace ({
     } else {
       translatableComponent = <SectionTranslatable sectionFocus {...translatableProps} />;
     }
+    const openLink = (link) => window.open(link,'_blank');
+    const originalChipData = {
+      label: `${originalRepository.owner.username} - ${originalLanguage.languageName}`,
+      handleLink: () => openLink(originalRepository.html_url),
+      style: {background: '#fff9'},
+    };
+    const translationChipData = {
+      label: `${translationRepository.owner.username} - ${language.languageName}`,
+      handleLink: () => openLink(translationRepository.html_url),
+      style: {background: 'white'},
+    };
     component = (
       <>
         <Grid className={classes.headers} container wrap="nowrap" spacing={16}>
           <Grid item xs={12}>
             <Chip
               icon={<Translate />}
-              label={`${originalRepository.owner.username} - ${originalLanguage.languageName}`}
-              onDelete={()=> {}}
-              deleteIcon={<Settings />}
+              label={originalChipData.label}
+              onDelete={originalChipData.handleLink}
+              deleteIcon={<Link />}
               variant="outlined"
               className={classes.header}
-              style={{background: '#fff9'}}
+              style={originalChipData.style}
             />
           </Grid>
           <Grid item xs={12}>
             <Chip
               icon={<Translate />}
-              label={`${translationRepository.owner.username} - ${language.languageName}`}
-              onDelete={()=>{}}
-              deleteIcon={<Settings />}
+              label={translationChipData.label}
+              onDelete={translationChipData.handleLink}
+              deleteIcon={<Link />}
               variant="outlined"
               className={classes.header}
-              style={{background: 'white'}}
+              style={translationChipData.style}
             />
           </Grid>
         </Grid>
