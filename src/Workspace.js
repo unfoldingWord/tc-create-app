@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useGlobal } from 'reactn';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Grid,
@@ -18,21 +18,17 @@ import {getLanguage} from './components/languages/helpers';
 
 function Workspace ({
   classes,
-  authentication,
-  onAuthentication,
   authenticationConfig,
   repositoryConfig,
-  originalRepository,
-  onOriginalRepository,
-  translationRepository,
-  originalBlob,
-  onOriginalBlob,
-  originalFile,
-  translationFile,
-  language,
-  onLanguage,
-  sectionable,
 }) {
+  const [originalRepository] = useGlobal('originalRepository');
+  const [translationRepository] = useGlobal('translationRepository');
+  const [originalFile] = useGlobal('originalFile');
+  const [translationFile] = useGlobal('translationFile');
+  const [language] = useGlobal('language');
+  const [sectionable] = useGlobal('sectionable');
+
+  
   let translationFileContent;
   if (originalFile && translationFile) {
     translationFileContent = translationFile.content;
@@ -97,19 +93,7 @@ function Workspace ({
     );
   } else {
     component = (
-      <ApplicationStepper
-        authentication={authentication}
-        onAuthentication={onAuthentication}
-        authenticationConfig={authenticationConfig}
-        originalRepository={originalRepository}
-        onOriginalRepository={onOriginalRepository}
-        repositoryConfig={repositoryConfig}
-        originalBlob={originalBlob}
-        onOriginalBlob={onOriginalBlob}
-        originalFile={originalFile}
-        language={language}
-        onLanguage={onLanguage}
-      />
+      <ApplicationStepper />
     );
   }
 

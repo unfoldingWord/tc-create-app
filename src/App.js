@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { setGlobal, useGlobal } from 'reactn';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { 
   List,
@@ -24,30 +24,36 @@ import appPackage from '../package.json';
 import theme from './theme';
 
 const config = { server: 'https://bg.door43.org' };
-const authenticationConfig = {
-  tokenid: appPackage.name,
-  ...config,
-};
-const repositoryConfig = {
-  ...config,
-  urls: [
-    'https://bg.door43.org/api/v1/repos/unfoldingword/en_ta',
-    'https://bg.door43.org/api/v1/repos/unfoldingword/en_tw',
-    'https://bg.door43.org/api/v1/repos/unfoldingword/en_tn',
-    'https://bg.door43.org/api/v1/repos/unfoldingword/en_obs',
-  ],
-}
+
+setGlobal({
+  sectionable: true,
+  authenticationConfig: {
+    ...config,
+    tokenid: appPackage.name,
+  },
+  repositoryConfig: {
+    ...config,
+    urls: [
+      'https://bg.door43.org/api/v1/repos/unfoldingword/en_ta',
+      'https://bg.door43.org/api/v1/repos/unfoldingword/en_tw',
+      'https://bg.door43.org/api/v1/repos/unfoldingword/en_tn',
+      'https://bg.door43.org/api/v1/repos/unfoldingword/en_obs',
+    ],
+  },
+});
 
 function App() {
-  const [authentication, setAuthentication] = useState();
-  const [originalRepository, setOriginalRepository] = useState();
-  const [translationRepository, setTranslationRepository] = useState();
-  const [originalBlob, setOriginalBlob] = useState();
-  const [translationBlob, setTranslationBlob] = useState();
-  const [originalFile, setOriginalFile] = useState();
-  const [translationFile, setTranslationFile] = useState();
-  const [language, setLanguage] = useState();
-  const [sectionable, setSectionable] = useState(true);
+  const [authentication, setAuthentication] = useGlobal('authentication');
+  const [originalRepository, setOriginalRepository] = useGlobal('originalRepository');
+  const [translationRepository, setTranslationRepository] = useGlobal('translationRepository');
+  const [originalBlob, setOriginalBlob] = useGlobal('originalBlob');
+  const [translationBlob, setTranslationBlob] = useGlobal('translationBlob');
+  const [originalFile, setOriginalFile] = useGlobal('originalFile');
+  const [translationFile, setTranslationFile] = useGlobal('translationFile');
+  const [language] = useGlobal('language');
+  const [sectionable, setSectionable] = useGlobal('sectionable');
+  const [authenticationConfig] = useGlobal('authenticationConfig');
+  const [repositoryConfig] = useGlobal('repositoryConfig');
 
   const toggleSectionable = () => setSectionable(!sectionable);
 
@@ -161,21 +167,8 @@ function App() {
         </header>
         <div style={{margin: '1em'}}>
           <Workspace
-            authentication={authentication}
-            onAuthentication={setAuthentication}
             authenticationConfig={authenticationConfig}
             repositoryConfig={repositoryConfig}
-            originalRepository={originalRepository}
-            onOriginalRepository={onOriginalRepository}
-            originalBlob={originalBlob}
-            onOriginalBlob={setOriginalBlob}
-            translationRepository={translationRepository}
-            translationBlob={translationBlob}
-            originalFile={originalFile}
-            translationFile={translationFile}
-            language={language}
-            onLanguage={setLanguage}
-            sectionable={sectionable}
           />
         </div>
       </MuiThemeProvider>

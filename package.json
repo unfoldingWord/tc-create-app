@@ -1,7 +1,7 @@
 {
   "name": "gateway-language-translation-suite-prototype",
   "homepage": "https://unfoldingword-box3.github.io/gateway-language-translation-suite-prototype/",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "license": "MIT",
   "dependencies": {
@@ -12,7 +12,8 @@
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-headroom": "^2.2.8",
-    "react-select": "^3.0.4"
+    "react-select": "^3.0.4",
+    "reactn": "^2.1.4"
   },
   "devDependencies": {
     "ghpages": "^0.0.10",

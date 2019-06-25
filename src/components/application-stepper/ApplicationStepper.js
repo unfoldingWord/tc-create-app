@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useGlobal } from 'reactn';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -15,24 +15,20 @@ import { LanguageSelect } from '../languages';
 
 function ApplicationStepper({
   classes,
-  authentication,
-  onAuthentication,
-  authenticationConfig,
-  originalRepository,
-  onOriginalRepository,
-  repositoryConfig,
-  originalBlob,
-  onOriginalBlob,
-  originalFile,
-  language,
-  onLanguage,
 }) {
+  const [authentication, onAuthentication] = useGlobal('authentication');
+  const [originalRepository, onOriginalRepository] = useGlobal('originalRepository');
+  const [originalBlob, onOriginalBlob] = useGlobal('originalBlob');
+  const [language, onLanguage] = useGlobal('language');
+  const [repositoryConfig] = useGlobal('repositoryConfig');
+  const [authenticationConfig] = useGlobal('authenticationConfig');
+
   const [activeStep, setActiveStep] = React.useState(0);
   const completed = {
     0: !!language,
     1: !!originalRepository,
     2: !!authentication,
-    3: !!originalFile,
+    3: !!originalBlob,
   };
   const getSteps = () => {
     return [
