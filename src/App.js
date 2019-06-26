@@ -1,26 +1,11 @@
 import React, { setGlobal, useGlobal } from 'reactn';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { 
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemSecondaryAction,
-  Switch,
-  IconButton,
-} from '@material-ui/core';
-import {
-  ViewDay,
-  ViewDayOutlined,
-  FormatSize,
-  Undo,
-} from '@material-ui/icons';
-import { Slider } from '@material-ui/lab';
 import Headroom from 'react-headroom';
 import {
   ApplicationBar,
   ensureRepo,
 } from 'gitea-react-toolkit';
+import DrawerMenu from './components/drawer-menu/DrawerMenu';
 import Workspace from './Workspace';
 import FilePopulator from './components/FilePopulator';
 import appPackage from '../package.json';
@@ -60,8 +45,6 @@ function App() {
   const [authenticationConfig] = useGlobal('authenticationConfig');
   const [repositoryConfig] = useGlobal('repositoryConfig');
   const [fontScale, setFontScale] = useGlobal('fontScale')
-
-  const toggleSectionable = () => setSectionable(!sectionable);
 
   const cleanup = () => {
     setTranslationFile();
@@ -135,45 +118,13 @@ function App() {
     );
   }
 
-
-  const drawerIconStyle = { margin: 0 };
-  const onFontScale = (event, value) => setFontScale(value);
-  const resetFontScale = () => setFontScale(100);
   const drawerMenu = (
-    <List>
-      <ListItem button onClick={toggleSectionable}>
-        <ListItemIcon style={drawerIconStyle}>
-          {sectionable ? <ViewDayOutlined /> : <ViewDay />}
-        </ListItemIcon>
-        <ListItemText primary="Heading Sections" />
-        <ListItemSecondaryAction>
-          <Switch onChange={toggleSectionable} checked={sectionable} color="primary" />
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem>
-        <ListItemIcon style={drawerIconStyle}>
-          <FormatSize />
-        </ListItemIcon>
-        <ListItemText
-          primary={`Font Size ${fontScale}%`}
-          secondary={
-            <Slider
-              value={fontScale}
-              aria-labelledby="label"
-              onChange={onFontScale}
-              min={50}
-              max={150}
-              step={10}
-            />
-          }
-        />
-        <ListItemSecondaryAction>
-          <IconButton style={drawerIconStyle} onClick={resetFontScale}>
-            <Undo />
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
-    </List>
+    <DrawerMenu
+      sectionable={sectionable}
+      onSectionable={setSectionable}
+      fontScale={fontScale}
+      onFontScale={setFontScale}
+    />
   );
 
   const appStyle = {
@@ -188,7 +139,6 @@ function App() {
           <ApplicationBar
             title="GL Translate"
             // buttons={buttons}
-            // drawerMenu={drawerMenu}
             authentication={authentication}
             onAuthentication={setAuthentication}
             authenticationConfig={authenticationConfig}
