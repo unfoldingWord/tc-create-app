@@ -15,8 +15,11 @@ import {
   ViewDayOutlined,
   FormatSize,
   Undo,
+  FeedbackOutlined,
 } from '@material-ui/icons';
 import { Slider } from '@material-ui/lab';
+
+import appPackage from '../../../package.json';
 
 function DrawerMenu ({
   classes,
@@ -28,6 +31,8 @@ function DrawerMenu ({
   const toggleSectionable = () => onSectionable(!sectionable);
   const handleFontScale = (event, value) => onFontScale(value);
   const handleResetFontScale = () => onFontScale(100);
+  const openLink = (link) => window.open(link,'_blank');
+  const handleFeedback = () => openLink(appPackage.bugs.url);
   return (
     <List>
       <ListItem button onClick={toggleSectionable}>
@@ -61,6 +66,14 @@ function DrawerMenu ({
           <IconButton className={classes.secondaryIcon} onClick={handleResetFontScale}>
             <Undo />
           </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+      <ListItem button onClick={handleFeedback}>
+        <ListItemIcon className={classes.icon}>
+          <FeedbackOutlined />
+        </ListItemIcon>
+        <ListItemText primary="Feedback/Suggestions" />
+        <ListItemSecondaryAction>
         </ListItemSecondaryAction>
       </ListItem>
     </List>

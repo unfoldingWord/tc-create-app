@@ -1,6 +1,9 @@
 {
   "name": "gateway-language-translation-suite-prototype",
   "homepage": "https://unfoldingword-box3.github.io/gateway-language-translation-suite-prototype/",
+  "bugs": {
+    "url": "https://github.com/unfoldingWord-box3/gateway-language-translation-suite-prototype/issues"
+  },
   "version": "0.3.0",
   "private": false,
   "license": "MIT",
