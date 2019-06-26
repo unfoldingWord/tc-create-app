@@ -1,4 +1,4 @@
-import React, { setGlobal, useGlobal } from 'reactn';
+import React, { useEffect, setGlobal, useGlobal } from 'reactn';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Headroom from 'react-headroom';
 import {
@@ -44,50 +44,65 @@ function App() {
   const [sectionable, setSectionable] = useGlobal('sectionable');
   const [authenticationConfig] = useGlobal('authenticationConfig');
   const [repositoryConfig] = useGlobal('repositoryConfig');
-  const [fontScale, setFontScale] = useGlobal('fontScale')
+  const [fontScale, setFontScale] = useGlobal('fontScale');
+
+  useEffect(() => {
+    cleanup();
+    populateTranslationRepository()
+    .then(() => {
+      populateTranslationBlob();
+    });
+  });
 
   const cleanup = () => {
-    setTranslationFile();
-    setTranslationBlob();
-    setOriginalFile();
-    setOriginalBlob();
-    setTranslationRepository();
-  };
-
-  const onOriginalRepository = (repository) => {
-    if (!repository) cleanup();
-    if (originalRepository && repository)
-      if (originalRepository.full_name !== repository.full_name)
-        cleanup();
-    setOriginalRepository(repository);
+    if (
+      (!originalRepository && // no repo but remnants of an old one
+        (originalBlob || originalFile || translationBlob || translationFile || translationRepository)
+      ) ||
+      (originalRepository && // theres a repo but it doesn't match the blob url
+        (originalBlob && !originalBlob.url.includes(originalRepository.full_name))
+      )
+    ) {
+      setTranslationFile();
+      setTranslationBlob();
+      setOriginalFile();
+      setOriginalBlob();
+      setTranslationRepository();
+    }
   };
 
   const populateTranslationRepository = async () => {
-    const repositoryNameArray = originalRepository.name.split('_');
-    const resourceNameArray = repositoryNameArray.slice(1);
-    const translationRepoName = `${language.languageId}_${resourceNameArray.join('_')}`;
-    const {description} = originalRepository;
-    const params = {
-      owner: authentication.user.username,
-      repo: translationRepoName,
-      config: authentication.config,
-      settings: {description}
-    };
-    const _translationRepository = await ensureRepo(params);
-    setTranslationRepository(_translationRepository);
+    if (authentication && originalRepository && language && !translationRepository) {
+      const repositoryNameArray = originalRepository.name.split('_');
+      const resourceNameArray = repositoryNameArray.slice(1);
+      const translationRepoName = `${language.languageId}_${resourceNameArray.join('_')}`;
+      const {description} = originalRepository;
+      const params = {
+        owner: authentication.user.username,
+        repo: translationRepoName,
+        config: authentication.config,
+        settings: {description}
+      };
+      const _translationRepository = await ensureRepo(params);
+      setTranslationRepository(_translationRepository);
+    }
   };
-  if (authentication && originalRepository && language && !translationRepository) {
-    populateTranslationRepository();
-  }
-  const needBlob = (originalBlob && !translationBlob);
-  const needBlobUpdate = originalBlob && translationBlob && 
-    (originalBlob.filepath !== translationBlob.filepath);
-  if (needBlob || needBlobUpdate) {
-    setTranslationBlob(originalBlob);
-  }
+
+  const populateTranslationBlob = () => {
+    const needBlob = (originalBlob && !translationBlob);
+    const needBlobUpdate = originalBlob && translationBlob && 
+      (originalBlob.filepath !== translationBlob.filepath);
+    if (needBlob || needBlobUpdate) {
+      setTranslationBlob(originalBlob);
+    }
+  };
+  
 
   let filePopulator = [];
-  if (!originalFile || originalFile.filepath !== originalBlob.filepath) {
+  if (
+    (originalRepository && originalBlob) &&
+    (!originalFile || originalFile.filepath !== originalBlob.filepath)
+  ) {
     filePopulator.push(
       <FilePopulator
         key={Math.random()}
@@ -143,7 +158,7 @@ function App() {
             onAuthentication={setAuthentication}
             authenticationConfig={authenticationConfig}
             repository={originalRepository}
-            onRepository={onOriginalRepository}
+            onRepository={setOriginalRepository}
             repositoryConfig={repositoryConfig}
             blob={originalBlob}
             onBlob={setOriginalBlob}

@@ -38,7 +38,7 @@ function Workspace ({
   }
 
   let component;
-  if (originalFile && translationFile) {
+  if (originalRepository && originalFile && translationFile) {
     const originalLanguage = getLanguage({languageId: originalRepository.name.split('_')[0]});
     let translatableComponent;
     let translatableProps = {
