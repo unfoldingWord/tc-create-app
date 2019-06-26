@@ -16,6 +16,7 @@ import {
   FormatSize,
   Undo,
   FeedbackOutlined,
+  BugReportOutlined,
 } from '@material-ui/icons';
 import { Slider } from '@material-ui/lab';
 
@@ -72,8 +73,11 @@ function DrawerMenu ({
         <ListItemIcon className={classes.icon}>
           <FeedbackOutlined />
         </ListItemIcon>
-        <ListItemText primary="Feedback/Suggestions" />
+        <ListItemText primary="Report Bug or Feedback" />
         <ListItemSecondaryAction>
+          <IconButton className={classes.secondaryIcon} onClick={handleFeedback}>
+            <BugReportOutlined />
+          </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
     </List>
