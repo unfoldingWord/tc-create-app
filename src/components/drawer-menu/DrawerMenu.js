@@ -44,7 +44,7 @@ function DrawerMenu ({
           <FormatSize />
         </ListItemIcon>
         <div className={classes.sliderDiv}>
-          <Typography id="label" >
+          <Typography id="label" className={classes.typography}>
             {`Font Size ${fontScale}%`}
           </Typography>
           <Slider
@@ -74,13 +74,17 @@ const styles = theme => ({
   secondaryIcon: {
     margin: `0 ${theme.spacing.unit}px`,
   },
+  typography: {
+    lineHeight: '1',
+    marginBottom: '2px',
+  },
   sliderDiv: {
     width: '100%',
     padding: `0 ${theme.spacing.unit * 2}px`,
     marginRight: `${theme.spacing.unit * 2}px`,
   },
   slider: {
-    padding: `${theme.spacing.unit}px 0`,
+    padding: `${theme.spacing.unit / 2}px 0`,
   },
 });
 
