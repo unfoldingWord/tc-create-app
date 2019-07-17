@@ -36,14 +36,16 @@ function AppComponent() {
     />
   );
 
-  const appStyle = {
-    fontSize: `${fontScale/100}em`
+  const style = {
+    app: { fontSize: `${fontScale/100}em` },
+    headroom: { zIndex: '200' },
+    workspace: { margin: `${theme.spacing.unit * 2}px` },
   };
   return (
-    <div className="App" style={appStyle}>
+    <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>
-        <header className="App-header">
-          <Headroom>
+        <header id="App-header">
+          <Headroom style={style.headroom}>
           <ApplicationBar
             title="GL Translate"
             // buttons={buttons}
@@ -59,7 +61,7 @@ function AppComponent() {
           />
           </Headroom>
         </header>
-        <div style={{margin: `${theme.spacing.unit * 2}px`}}>
+        <div style={style.workspace}>
           <Workspace
             authenticationConfig={config.authenticationConfig}
             repositoryConfig={config.repositoryConfig}
