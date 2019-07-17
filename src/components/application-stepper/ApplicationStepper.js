@@ -1,4 +1,4 @@
-import React, { useGlobal } from 'reactn';
+import React, { useContext } from 'reactn';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -12,23 +12,35 @@ import {
 import { Authentication, Repositories, Tree } from 'gitea-react-toolkit';
 
 import { LanguageSelect } from '../languages';
+import { AppContext } from '../../App.context';
 
 function ApplicationStepper({
   classes,
 }) {
-  const [authentication, onAuthentication] = useGlobal('authentication');
-  const [originalRepository, onOriginalRepository] = useGlobal('originalRepository');
-  const [originalBlob, onOriginalBlob] = useGlobal('originalBlob');
-  const [language, onLanguage] = useGlobal('language');
-  const [repositoryConfig] = useGlobal('repositoryConfig');
-  const [authenticationConfig] = useGlobal('authenticationConfig');
+  const {
+    state: {
+      authentication,
+      sourceRepository,
+      sourceBlob,
+      language,
+      config: {
+        repositoryConfig,
+        authenticationConfig,
+      }
+    },
+    actions: {
+      setAuthentication,
+      setSourceRepository,
+      setSourceBlob,
+      setLanguage,
+    }} = useContext(AppContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const completed = {
     0: !!language,
-    1: !!originalRepository,
+    1: !!sourceRepository,
     2: !!authentication,
-    3: !!originalBlob,
+    3: !!sourceBlob,
   };
   const getSteps = () => {
     return [
@@ -38,7 +50,7 @@ function ApplicationStepper({
         component: (
           <LanguageSelect
             language={language}
-            onLanguage={onLanguage}
+            onLanguage={setLanguage}
           />
         )
       },
@@ -49,8 +61,8 @@ function ApplicationStepper({
           <Repositories
             config={repositoryConfig}
             urls={repositoryConfig.urls}
-            repository={originalRepository}
-            onRepository={onOriginalRepository}
+            repository={sourceRepository}
+            onRepository={setSourceRepository}
           />
         )
       },
@@ -60,7 +72,7 @@ function ApplicationStepper({
         component: (
           <Authentication
             authentication={authentication}
-            onAuthentication={onAuthentication}
+            onAuthentication={setAuthentication}
             config={authenticationConfig}
           />
         )
@@ -70,9 +82,9 @@ function ApplicationStepper({
         instructions: 'Select File to Translate',
         component: (
           <Tree
-            url={originalRepository ? originalRepository.tree_url : null}
-            blob={originalBlob}
-            onBlob={onOriginalBlob}
+            url={sourceRepository ? sourceRepository.tree_url : null}
+            blob={sourceBlob}
+            onBlob={setSourceBlob}
             config={authenticationConfig}
             selected={true}
           />
