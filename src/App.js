@@ -9,6 +9,9 @@ import theme from './theme';
 
 import { AppContext, AppContextProvider } from './App.context';
 
+const { version } = require('../package.json');
+const title = `GLtS v${version}`
+
 function AppComponent() {
   const {state, actions} = useContext(AppContext);
   const {
@@ -41,13 +44,14 @@ function AppComponent() {
     headroom: { zIndex: '200' },
     workspace: { margin: `${theme.spacing.unit * 2}px` },
   };
+
   return (
     <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>
         <header id="App-header">
           <Headroom style={style.headroom}>
           <ApplicationBar
-            title="GL Translate"
+            title={title}
             // buttons={buttons}
             authentication={authentication}
             onAuthentication={setAuthentication}
