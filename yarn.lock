@@ -3564,13 +3564,13 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.2.1.tgz#ab7c8ac7ecffab060e50e89db5f146879e560ce4"
-  integrity sha512-3x3d07X/ZBIu6rIu4ivvHzGWxQg3VMKGyUkaFiDKYtepB4BUPYUhjOX8Kgd3oCY00cbFcSXRAxqyasKuBCK89g==
+datatable-translatable@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.3.0.tgz#295751fde77db9b0fcee339f6f20be6dc53277c5"
+  integrity sha512-9InAQzzm0/seVUSMDI/sLwMfCJdVKx9fue2kvbJ/SONEkmw5+wGNSh+JfmYg9RYRhxmhYnQUJro+28sShIbyXg==
   dependencies:
     deep-freeze "^0.0.1"
-    markdown-translatable "^0.4.1"
+    markdown-translatable "^0.5.0"
     mui-datatables "^2.6.1"
 
 date-now@^0.1.4:
@@ -7003,11 +7003,12 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.3.tgz#6155e10416efaafab665d466ce598216375195f5"
   integrity sha512-XUi5HJhhV5R74k8/0H2oCbCiYf/u4cO/rX8tnGkRvrqhsr5BRNU6Mg0yt/8UIx1iIS8220BNJsDb7XnILhLepw==
 
-markdown-translatable@0.4.1, markdown-translatable@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.4.1.tgz#12905aa6f40b0c11202532b44ddbd8d397cd54ca"
-  integrity sha512-tOFsTxjDyZTAfuwyr0tjal49LnSOKsDBIqBGQncHlJ6iggIZa1Rz80f6FTn0yGfb9AsE2ydebWLgXqBt12qAkA==
+markdown-translatable@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.5.0.tgz#337b5bbd527701017bac5ec7b365cb86a45675a4"
+  integrity sha512-bsLt1MPvZrnQDLnQjweZ1pB4jF5m7MFjPyNY1L2DNNsPgWCTMZ8fPz1R6ScY5IFSjZ/Cu8XzQRyZe4Npb0Bmug==
   dependencies:
+    deep-freeze "^0.0.1"
     md5 "^2.2.1"
     prop-types "^15.7.2"
     react-markdown "^4.0.6"
