@@ -3564,13 +3564,13 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.3.0.tgz#295751fde77db9b0fcee339f6f20be6dc53277c5"
-  integrity sha512-9InAQzzm0/seVUSMDI/sLwMfCJdVKx9fue2kvbJ/SONEkmw5+wGNSh+JfmYg9RYRhxmhYnQUJro+28sShIbyXg==
+datatable-translatable@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.4.0.tgz#60349098bd090e6cb37aaa921a1a8bcbae526645"
+  integrity sha512-Hf6gkWAcwnvtTqgXEElU13zRfhbkRDOLVlCCE6QPEuNNxc0i4nEZGNsPQs/Os4UEXbYR+Ng40WOKegI6Pvtz1A==
   dependencies:
     deep-freeze "^0.0.1"
-    markdown-translatable "^0.5.0"
+    markdown-translatable "0.7.1"
     mui-datatables "^2.6.1"
 
 date-now@^0.1.4:
@@ -7003,10 +7003,10 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.3.tgz#6155e10416efaafab665d466ce598216375195f5"
   integrity sha512-XUi5HJhhV5R74k8/0H2oCbCiYf/u4cO/rX8tnGkRvrqhsr5BRNU6Mg0yt/8UIx1iIS8220BNJsDb7XnILhLepw==
 
-markdown-translatable@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.5.0.tgz#337b5bbd527701017bac5ec7b365cb86a45675a4"
-  integrity sha512-bsLt1MPvZrnQDLnQjweZ1pB4jF5m7MFjPyNY1L2DNNsPgWCTMZ8fPz1R6ScY5IFSjZ/Cu8XzQRyZe4Npb0Bmug==
+markdown-translatable@0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.7.1.tgz#f3d725dcf5d0cdadcc75d1f509a746c21d2e47c0"
+  integrity sha512-4LnCqK4rVa0pJOmaHQNffOIs+wagsO5FeOF6ZnnLVZQVCy2mJFN5eD9uix/LTCyUEXy5KlPbHbZM32cLlgzULQ==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
