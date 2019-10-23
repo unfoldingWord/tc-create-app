@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ensureRepo } from 'gitea-react-toolkit';
 import appPackage from '../package.json';
 
 import FilePopulator from './components/FilePopulator';
+import {saveState, loadState} from './core/persistence';
 
 export const AppContext = React.createContext();
 
@@ -45,6 +46,38 @@ export function AppContextProvider({
   const [sourceFilePopulator, setSourceFilePopulator] = useState();
   const [targetFilePopulator, setTargetFilePopulator] = useState();
 
+  const cleanup = useCallback(async () => {
+    await saveState('sourceBlob')
+    await saveState('sourceRepository');
+    setSourceBlob();
+    setSourceRepository();
+  }, []);
+
+  useEffect(() => {
+    if (language) saveState('language', language);
+    else loadState('language').then(setLanguage);
+  }, [language]);
+
+  useEffect(() => {
+    if (sourceRepository) {
+      saveState('sourceRepository', sourceRepository);
+    } else {
+      loadState('sourceRepository').then(repo => {
+        if (repo) {
+          repo.close = cleanup;
+          setSourceRepository(repo);
+        } else {
+          cleanup();
+        }
+      });
+    }
+  }, [sourceRepository, cleanup]);
+
+  useEffect(() => {
+    if (sourceBlob) saveState('sourceBlob', sourceBlob);
+    else loadState('sourceBlob').then(setSourceBlob);
+  }, [sourceBlob]); 
+
   // populate targetRepository when sourceRepository is updated
   useEffect(() => {
     if (authentication && sourceRepository && language) {
@@ -61,6 +94,8 @@ export function AppContextProvider({
       ensureRepo(params).then((_targetRepository) => {
         setTargetRepository(_targetRepository);
       });
+    } else {
+      setTargetRepository();
     }
   }, [authentication, sourceRepository, language]);
   // populate targetBlob when sourceBlob is updated
@@ -81,6 +116,8 @@ export function AppContextProvider({
         />
       );
       setSourceFilePopulator(_sourceFilePopulator);
+    } else {
+      setSourceFilePopulator();
     }
   }, [authentication, sourceRepository, sourceBlob, sourceFile]);
   // populate targetFile when blob is updated
@@ -103,18 +140,21 @@ export function AppContextProvider({
         />
       );
       setTargetFilePopulator(_targetFilePopulator);
+    } else {
+      setTargetFilePopulator();
     }
   }, [authentication, sourceFile, targetRepository, targetBlob, targetFile]);
 
   useEffect(() => {
-    if (sourceFile && targetFile) {
+    if (sourceFile && targetFile && targetRepository) {
       const autoInitFileContent = `# ${targetRepository.name}\n\n${targetRepository.description}`;
       const autoInitFile = targetFile.content.trim() === autoInitFileContent;
       if (autoInitFile) {
         const _targetFile = {...targetFile, content: sourceFile.content};
         setTargetFile(_targetFile);
-        debugger
       }
+    } else {
+      setTargetFile();
     }
   }, [targetRepository, sourceFile, targetFile]);
 

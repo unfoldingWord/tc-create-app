@@ -4894,10 +4894,10 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
-gitea-react-toolkit@0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.3.5.tgz#b7c1d29c4dd0b50eaa23c138284551caca3525ed"
-  integrity sha512-x1Br6VegH14AykHfus45s0kowve2j2px08ZJfivrithSzeaYHOcoXXq097zSEpEvX9ktC+W1VzganXml3Xwl2Q==
+gitea-react-toolkit@0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.4.7.tgz#849eea8a8746e2a7f0de85f0c9ad0b6fe079f3a7"
+  integrity sha512-MEu+96SvAtWcacYKMSsRV2EZlzfEsf6/UG63O64gdZhbIMFXD/6/vgWS/Rlux1pm3F9Usc42TLAHLkuSLAeQjw==
   dependencies:
     awesome-debounce-promise "^2.1.0"
     axios-cache-adapter "^2.3.0"
