@@ -1,4 +1,4 @@
-import React, { useContext } from 'reactn';
+import React, { useContext, useEffect } from 'reactn';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -36,7 +36,7 @@ function ApplicationStepper({
     }} = useContext(AppContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
-  const completed = {
+  let completed = {
     0: !!language,
     1: !!sourceRepository,
     2: !!authentication,
@@ -113,6 +113,14 @@ function ApplicationStepper({
   }
   const handleBack = () => setActiveStep(activeStep - 1);
   const handleStep = step => () => setActiveStep(step);
+
+  useEffect(() => {
+    let firstIncomplete;
+    Object.keys(completed).forEach(step => {
+      if (!completed[step] && !firstIncomplete) firstIncomplete = step; 
+    });
+    if (firstIncomplete) setActiveStep(firstIncomplete);
+  }, [completed]);
 
   return (
     <Paper>
