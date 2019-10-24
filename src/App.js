@@ -50,26 +50,23 @@ function AppComponent() {
       <MuiThemeProvider theme={theme}>
         <header id="App-header">
           <Headroom style={style.headroom}>
-          <ApplicationBar
-            title={title}
-            // buttons={buttons}
-            authentication={authentication}
-            onAuthentication={setAuthentication}
-            authenticationConfig={config.authenticationConfig}
-            repository={sourceRepository}
-            onRepository={setSourceRepository}
-            repositoryConfig={config.repositoryConfig}
-            blob={sourceBlob}
-            onBlob={setSourceBlob}
-            drawerMenu={drawerMenu}
-          />
+            <ApplicationBar
+              title={title}
+              // buttons={buttons}
+              authentication={authentication}
+              onAuthentication={setAuthentication}
+              authenticationConfig={config.authenticationConfig}
+              repository={sourceRepository}
+              onRepository={setSourceRepository}
+              repositoryConfig={config.repositoryConfig}
+              blob={sourceBlob}
+              onBlob={setSourceBlob}
+              drawerMenu={drawerMenu}
+            />
           </Headroom>
         </header>
         <div style={style.workspace}>
-          <Workspace
-            authenticationConfig={config.authenticationConfig}
-            repositoryConfig={config.repositoryConfig}
-          />
+          <Workspace />
         </div>
       </MuiThemeProvider>
     </div>

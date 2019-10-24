@@ -15,12 +15,25 @@ function FilePopulator ({
   onFile,
   fileConfig,
 }) {
-  const updateFile = () => onFile();
-  if (blob && file && file.filepath !== blob.filepath) updateFile();
+  if (blob && file && file.filepath !== blob.filepath) onFile();
   const File = withAuthentication(withBlob(withFile(FileComponent)));
   let filePopulator = <></>;
   const needFile = authentication && blob && !file;
   const needUpdate = blob && file && (blob.filepath !== file.filepath);
+
+  const updateFile = (_file) => {
+    let __file = {..._file};
+    if (fileConfig && fileConfig.defaultContent) {
+      const isEmpty = _file.content.trim().length === 0;
+      const emptyReadme = `# ${repository.name}\n\n${repository.description}`;
+      const isEmptyReadme = _file.content.trim() === emptyReadme;
+      if (isEmpty || isEmptyReadme) {
+        __file.content = fileConfig.defaultContent;
+      }
+    }
+    onFile(__file);
+  }
+
   if (needFile || needUpdate) {
     filePopulator = (
       <File
@@ -29,7 +42,7 @@ function FilePopulator ({
         repository={repository}
         blob={blob}
         file={file}
-        onFile={onFile}
+        onFile={updateFile}
         fileConfig={fileConfig}
       />
     );

@@ -33,76 +33,81 @@ function ApplicationStepper({
       setSourceRepository,
       setSourceBlob,
       setLanguage,
-    }} = useContext(AppContext);
+    }
+  } = useContext(AppContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
   let completed = {
-    0: !!language,
-    1: !!sourceRepository,
-    2: !!authentication,
+    0: !!authentication,
+    1: !!language,
+    2: !!sourceRepository,
     3: !!sourceBlob,
   };
-  const getSteps = () => {
-    return [
-      {
-        label: 'Language',
-        instructions: 'Select Your Language',
-        component: (
-          <LanguageSelect
-            language={language}
-            onLanguage={setLanguage}
-          />
-        )
-      },
-      {
-        label: 'Resource',
-        instructions: 'Select Resource to Translate',
-        component: (
-          <Repositories
-            config={repositoryConfig}
-            urls={repositoryConfig.urls}
-            repository={sourceRepository}
-            onRepository={setSourceRepository}
-          />
-        )
-      },
-      {
-        label: 'Login',
-        instructions: 'Login to Door43',
-        component: (
-          <Authentication
-            authentication={authentication}
-            onAuthentication={setAuthentication}
-            config={authenticationConfig}
-          />
-        )
-      },
-      {
-        label: 'File',
-        instructions: 'Select File to Translate',
-        component: (
-          <Tree
-            url={sourceRepository ? sourceRepository.tree_url : null}
-            blob={sourceBlob}
-            onBlob={setSourceBlob}
-            config={authenticationConfig}
-            selected={true}
-          />
-        )
-      },
-    ];
-  }
 
-  const steps = getSteps();
+  useEffect(() => {
+    let firstIncomplete;
+    Object.keys(completed).forEach(step => {
+      if (!completed[step] && !firstIncomplete) firstIncomplete = step; 
+    });
+    if (firstIncomplete < activeStep) setActiveStep(firstIncomplete);
+  }, [completed, activeStep]);
 
-  const totalSteps = () => steps.length;
-  const completedSteps = () => Object.keys(completed).length;
-  const isLastStep = () => activeStep === totalSteps() - 1;
-  const allStepsCompleted = () => completedSteps() === totalSteps();
-
+  const steps = [
+    {
+      label: 'Login',
+      instructions: 'Login to Door43',
+      component: () => (
+        <Authentication
+          authentication={authentication}
+          onAuthentication={setAuthentication}
+          config={authenticationConfig}
+        />
+      )
+    },
+    {
+      label: 'Language',
+      instructions: 'Select Your Language',
+      component: () => (
+        <LanguageSelect
+          language={language}
+          onLanguage={setLanguage}
+        />
+      )
+    },
+    {
+      label: 'Resource',
+      instructions: 'Select Resource to Translate',
+      component: () => (
+        <Repositories
+          config={repositoryConfig}
+          urls={repositoryConfig.urls}
+          repository={sourceRepository}
+          onRepository={setSourceRepository}
+        />
+      )
+    },
+    {
+      label: 'File',
+      instructions: 'Select File to Translate',
+      component: () => (
+        <Tree
+          url={sourceRepository ? sourceRepository.tree_url : null}
+          blob={sourceBlob}
+          onBlob={setSourceBlob}
+          config={authenticationConfig}
+          selected={true}
+        />
+      )
+    },
+  ];
+  
   const handleNext = () => {
     let newActiveStep;
-    if (isLastStep() && !allStepsCompleted()) {
+    const totalSteps = steps.length;
+    const isLastStep = activeStep === totalSteps - 1;
+    const completedSteps = Object.keys(completed).length;
+    const allStepsCompleted = completedSteps === totalSteps();
+    if (isLastStep && !allStepsCompleted) {
       // It's the last step, but not all steps have been completed,
       // find the first step that has been completed
       newActiveStep = steps.findIndex((step, i) => !(i in completed));
@@ -113,14 +118,6 @@ function ApplicationStepper({
   }
   const handleBack = () => setActiveStep(activeStep - 1);
   const handleStep = step => () => setActiveStep(step);
-
-  useEffect(() => {
-    let firstIncomplete;
-    Object.keys(completed).forEach(step => {
-      if (!completed[step] && !firstIncomplete) firstIncomplete = step; 
-    });
-    if (firstIncomplete) setActiveStep(firstIncomplete);
-  }, [completed]);
 
   return (
     <Paper>
@@ -140,7 +137,7 @@ function ApplicationStepper({
             Step {activeStep + 1}: {steps[activeStep].instructions}
           </Typography>
           <Divider className={classes.divider} />
-          {steps[activeStep].component}
+          {steps[activeStep].component()}
           <Divider className={classes.divider} />
           <div className={classes.buttons}>
             <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
