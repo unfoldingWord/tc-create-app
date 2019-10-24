@@ -50,7 +50,7 @@ function ApplicationStepper({
       if (!completed[step] && !firstIncomplete) firstIncomplete = step; 
     });
     if (firstIncomplete < activeStep) setActiveStep(firstIncomplete);
-  }, [completed, activeStep]);
+  }, [activeStep, completed]);
 
   const steps = [
     {
@@ -59,7 +59,7 @@ function ApplicationStepper({
       component: () => (
         <Authentication
           authentication={authentication}
-          onAuthentication={(auth) => {setAuthentication(auth); handleNext();}}
+          onAuthentication={setAuthentication}
           config={authenticationConfig}
         />
       )
@@ -70,7 +70,7 @@ function ApplicationStepper({
       component: () => (
         <LanguageSelect
           language={language}
-          onLanguage={(lang) => {setLanguage(lang); handleNext();}}
+          onLanguage={setLanguage}
         />
       )
     },
@@ -82,7 +82,7 @@ function ApplicationStepper({
           config={repositoryConfig}
           urls={repositoryConfig.urls}
           repository={sourceRepository}
-          onRepository={(repo) => {setSourceRepository(repo); handleNext();}}
+          onRepository={setSourceRepository}
         />
       )
     },
@@ -112,7 +112,7 @@ function ApplicationStepper({
       // find the first step that has been completed
       newActiveStep = steps.findIndex((step, i) => !(i in completed));
     } else {
-      newActiveStep = activeStep + 1;
+      newActiveStep = parseInt(activeStep) + 1;
     }
     setActiveStep(newActiveStep);
   }

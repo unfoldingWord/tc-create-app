@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/unfoldingWord-box3/gateway-language-translation-suite-prototype"
   },
-  "version": "0.8.1",
+  "version": "0.8.3",
   "license": "MIT",
   "private": false,
   "dependencies": {
@@ -17,7 +17,7 @@
     "@material-ui/lab": "^3.0.0-alpha.30",
     "datatable-translatable": "^0.4.0",
     "deep-freeze": "^0.0.1",
-    "gitea-react-toolkit": "0.4.10",
+    "gitea-react-toolkit": "0.4.11",
     "markdown-translatable": "0.7.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
