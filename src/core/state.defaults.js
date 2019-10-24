@@ -1,6 +1,6 @@
 import appPackage from '../../package.json';
 
-const server = 'https://git.door43.org';
+const server = 'https://bg.door43.org';
 
 const config = {
   authenticationConfig: {

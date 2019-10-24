@@ -59,7 +59,7 @@ function ApplicationStepper({
       component: () => (
         <Authentication
           authentication={authentication}
-          onAuthentication={setAuthentication}
+          onAuthentication={(auth) => {setAuthentication(auth); handleNext();}}
           config={authenticationConfig}
         />
       )
@@ -70,7 +70,7 @@ function ApplicationStepper({
       component: () => (
         <LanguageSelect
           language={language}
-          onLanguage={setLanguage}
+          onLanguage={(lang) => {setLanguage(lang); handleNext();}}
         />
       )
     },
@@ -82,7 +82,7 @@ function ApplicationStepper({
           config={repositoryConfig}
           urls={repositoryConfig.urls}
           repository={sourceRepository}
-          onRepository={setSourceRepository}
+          onRepository={(repo) => {setSourceRepository(repo); handleNext();}}
         />
       )
     },
@@ -106,7 +106,7 @@ function ApplicationStepper({
     const totalSteps = steps.length;
     const isLastStep = activeStep === totalSteps - 1;
     const completedSteps = Object.keys(completed).length;
-    const allStepsCompleted = completedSteps === totalSteps();
+    const allStepsCompleted = completedSteps === totalSteps;
     if (isLastStep && !allStepsCompleted) {
       // It's the last step, but not all steps have been completed,
       // find the first step that has been completed
