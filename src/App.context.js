@@ -95,6 +95,8 @@ export function AppContextProvider({
         sourceFile,
       });
       setTargetFilePopulator(_targetFilePopulator);
+    } else {
+      setTargetFilePopulator();
     }
   }, [setTargetFile, setTargetFilePopulator, filePopulator, authentication, sourceFile, targetRepository, targetBlob]);
 
