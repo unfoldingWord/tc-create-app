@@ -15,7 +15,6 @@ import {
 import components from './Components';
 
 function LanguageSelect ({
-  theme,
   language,
   onLanguage,
 }) {
@@ -24,16 +23,6 @@ function LanguageSelect ({
     const languageId = object.value;
     const _language = getLanguage({languageId});
     onLanguage(_language);
-  };
-
-  const selectStyles = {
-    input: base => ({
-      ...base,
-      color: theme.palette.text.primary,
-      '& input': {
-        font: 'inherit',
-      },
-    }),
   };
 
   const options = gatewayLanguages
@@ -55,7 +44,6 @@ function LanguageSelect ({
       <NoSsr>
         <Select
           classes={classes}
-          styles={selectStyles}
           options={options}
           components={components}
           value={value}
@@ -82,14 +70,14 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     display: 'flex',
-    padding: 0,
+    marginBottom: `${theme.spacing(0.5)}px`
   },
   valueContainer: {
     display: 'flex',
     flexWrap: 'wrap',
     flex: 1,
     alignItems: 'center',
-    overflow: 'hidden',
+    // overflow: 'hidden',
   },
   noOptionsMessage: {
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
