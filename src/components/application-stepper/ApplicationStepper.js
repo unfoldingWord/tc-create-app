@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'reactn';
-import { withStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {
   Stepper,
   Step,
@@ -14,9 +14,8 @@ import { Authentication, Repositories, Tree } from 'gitea-react-toolkit';
 import { LanguageSelect } from '../languages';
 import { AppContext } from '../../App.context';
 
-function ApplicationStepper({
-  classes,
-}) {
+function ApplicationStepper() {
+  const classes = useStyles();
   const {
     state: {
       authentication,
@@ -160,32 +159,32 @@ function ApplicationStepper({
   );
 }
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    padding: `${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing(2)}px`,
   },
   step: {
     maxWidth: '600px',
     margin: 'auto',
-    padding: `0 ${theme.spacing.unit * 2}px`,
+    padding: `0 ${theme.spacing(2)}px`,
   },
   divider: {
-    margin: `${theme.spacing.unit * 2}px 0`,
+    margin: `${theme.spacing(2)}px 0`,
   },
   buttons: {
     display: 'flex',
     justifyContent: 'space-around',
   },
   button: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
   completed: {
     display: 'inline-block',
   },
   instructions: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
-});
+}));
 
-export default withStyles(styles)(ApplicationStepper);
+export default ApplicationStepper;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import { 
   List,
   ListItem,
@@ -9,6 +9,7 @@ import {
   Switch,
   IconButton,
   Typography,
+  Slider,
 } from '@material-ui/core';
 import {
   ViewDay,
@@ -18,17 +19,17 @@ import {
   FeedbackOutlined,
   BugReportOutlined,
 } from '@material-ui/icons';
-import { Slider } from '@material-ui/lab';
 
 import appPackage from '../../../package.json';
 
 function DrawerMenu ({
-  classes,
   sectionable,
   onSectionable,
   fontScale,
   onFontScale,
 }) {
+  const classes = useStyles();
+
   const toggleSectionable = () => onSectionable(!sectionable);
   const handleFontScale = (event, value) => onFontScale(value);
   const handleResetFontScale = () => onFontScale(100);
@@ -84,12 +85,12 @@ function DrawerMenu ({
   );
 }
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   icon: {
     margin: 0,
   },
   secondaryIcon: {
-    margin: `0 ${theme.spacing.unit}px`,
+    margin: `0 ${theme.spacing(1)}px`,
   },
   typography: {
     lineHeight: '1',
@@ -97,12 +98,12 @@ const styles = theme => ({
   },
   sliderDiv: {
     width: '100%',
-    padding: `0 ${theme.spacing.unit * 2}px`,
-    marginRight: `${theme.spacing.unit * 2}px`,
+    marginRight: `${theme.spacing(2)}px`,
+    paddingRight: `${theme.spacing(2)}px`,
   },
   slider: {
-    padding: `${theme.spacing.unit / 2}px 0`,
+    padding: `${theme.spacing(0.5)}px 0`,
   },
-});
+}));
 
-export default withStyles(styles)(DrawerMenu);
+export default DrawerMenu;

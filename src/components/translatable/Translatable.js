@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {
   Grid,
   Chip,
@@ -16,7 +16,6 @@ import RowHeader from './RowHeader';
 import { getLanguage } from '../languages/helpers';
 
 function Translatable ({
-  classes,
   sourceRepository,
   targetRepository,
   sourceFile,
@@ -24,6 +23,7 @@ function Translatable ({
   language,
   sectionable,
 }) {
+  const classes = useStyles();
   const sourceLanguage = getLanguage({languageId: sourceRepository.name.split('_')[0]});
   let translatableComponent;
   if (sourceFile.filepath.match(/\.md$/)) {
@@ -71,7 +71,7 @@ function Translatable ({
 
   return (
     <>
-      <Grid className={classes.headers} container wrap="nowrap" spacing={16}>
+      <Grid className={classes.headers} container wrap="nowrap" spacing={2}>
         <Grid item xs={12}>
           <Chip
             icon={<Translate />}
@@ -100,16 +100,16 @@ function Translatable ({
   );
 }
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
   },
   headers: {
-    marginBottom: `${theme.spacing.unit}px`,
+    marginBottom: `${theme.spacing(0.5)}px`,
   },
   header: {
     justifyContent: 'space-between',
     width: '100%',
   }
-});
+}));
 
-export default withStyles(styles)(Translatable);
+export default Translatable;

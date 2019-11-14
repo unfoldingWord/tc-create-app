@@ -42,7 +42,7 @@ function AppComponent() {
   const style = {
     app: { fontSize: `${fontScale/100}em` },
     headroom: { zIndex: '200' },
-    workspace: { margin: `${theme.spacing.unit * 2}px` },
+    workspace: { margin: `${theme.spacing(2)}px` },
   };
 
   return (

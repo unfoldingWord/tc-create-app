@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import { withStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {
   NoSsr,
 } from '@material-ui/core';
@@ -14,12 +14,12 @@ import {
 } from './helpers';
 import components from './Components';
 
-function LanguageSelectComponent ({
-  classes,
+function LanguageSelect ({
   theme,
   language,
   onLanguage,
 }) {
+  const classes = useStyles();
   const handleChange = object => {
     const languageId = object.value;
     const _language = getLanguage({languageId});
@@ -68,14 +68,14 @@ function LanguageSelectComponent ({
   );
 }
 
-LanguageSelectComponent.propTypes = {
+LanguageSelect.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   language: PropTypes.object,
   onLanguage: PropTypes.func.isRequired,
 };
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     height: 250,
@@ -92,7 +92,7 @@ const styles = theme => ({
     overflow: 'hidden',
   },
   noOptionsMessage: {
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
   },
   singleValue: {
     fontSize: 16,
@@ -105,13 +105,13 @@ const styles = theme => ({
   paper: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     left: 0,
     right: 0,
   },
   divider: {
-    height: theme.spacing.unit * 2,
+    height: theme.spacing(2),
   },
-});
+}));
 
-export const LanguageSelect = withStyles(styles, { withTheme: true })(LanguageSelectComponent);
+export default LanguageSelect;
