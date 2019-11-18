@@ -27,8 +27,8 @@ export const useStateReducer = () => {
   const setSourceRepository = useCallback((value) => {
     dispatch({type: 'set_source_repository', value});
     saveState('sourceRepository', value);
-    if (!value) setTargetRepository();
-  },[setTargetRepository]);
+    if (!value) dispatch({type: 'set_target_repository'});
+  },[]);
 
   const setTargetFile = useCallback((value) => {
     dispatch({type: 'set_target_file', value});
@@ -36,25 +36,27 @@ export const useStateReducer = () => {
 
   const setSourceFile = useCallback((value) => {
     dispatch({type: 'set_source_file', value});
-    if (!value) setTargetFile();
-  },[setTargetFile]);
+  },[]);
 
   const setSourceBlob = useCallback((value) => {
     dispatch({type: 'set_source_blob', value});
     saveState('sourceBlob', value);
-    dispatch({type: 'set_target_blob', value}); // populate targetBlob when sourceBlob is updated
-    if (!value) setSourceFile();
-    if (!value) setTargetFile();
-  },[setSourceFile, setTargetFile]);
+    if (!value) dispatch({type: 'set_source_file'});
+  },[]);
 
-  const setTargetFilePopulator = useCallback((value) => {
-    dispatch({type: 'set_target_file_populator', value});
+  const setTargetBlob = useCallback((value) => {
+    dispatch({type: 'set_target_blob', value});
+    if (!value) dispatch({type: 'set_target_file'});
   },[]);
 
   const setSourceFilePopulator = useCallback((value) => {
     dispatch({type: 'set_source_file_populator', value});
-    if (!value) setTargetFilePopulator();
-  },[setTargetFilePopulator]);
+    if (!value) dispatch({type: 'set_target_file_populator'});
+  },[]);
+
+  const setTargetFilePopulator = useCallback((value) => {
+    dispatch({type: 'set_target_file_populator', value});
+  },[]);
 
   const setTargetRepoFromSourceRepo = useCallback(({authentication, sourceRepository, language}) => {
     if (authentication && sourceRepository && language) {
@@ -95,8 +97,9 @@ export const useStateReducer = () => {
     setConfig,
     setSourceRepository,
     setTargetRepository,
-    setSourceFile,
     setSourceBlob,
+    setTargetBlob,
+    setSourceFile,
     setTargetFile,
     setSourceFilePopulator,
     setTargetFilePopulator,

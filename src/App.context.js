@@ -18,6 +18,7 @@ export function AppContextProvider({
     sourceBlob,
     targetBlob,
     sourceFile,
+    targetFile,
     sourceFilePopulator,
     targetFilePopulator,
   } = state;
@@ -25,8 +26,9 @@ export function AppContextProvider({
   const {
     setLanguage,
     setSourceRepository,
-    setSourceFile,
     setSourceBlob,
+    setTargetBlob,
+    setSourceFile,
     setTargetFile,
     setSourceFilePopulator,
     setTargetFilePopulator,
@@ -34,14 +36,17 @@ export function AppContextProvider({
   } = actions;
 
   useEffect(() => {
-    setTargetRepoFromSourceRepo({authentication, sourceRepository, language});
+    if (authentication && sourceRepository)
+      setTargetRepoFromSourceRepo({authentication, sourceRepository, language});
   }, [setTargetRepoFromSourceRepo, authentication, sourceRepository, language]);
 
   useEffect(() => {
+    console.log('loadState("language")');
     loadState('language').then(setLanguage);
   }, [setLanguage]);
 
   useEffect(() => {
+    console.log('loadState("sourceRepository")');
     loadState('sourceRepository').then(repo => {
       if (repo) repo.close = setSourceRepository;
       setSourceRepository(repo);
@@ -49,20 +54,24 @@ export function AppContextProvider({
   }, [setSourceRepository]);
 
   useEffect(() => {
-    loadState('sourceBlob').then(setSourceBlob);
-  }, [setSourceBlob]);
+    console.log('loadState("sourceBlob")');
+    if (authentication && sourceRepository)
+      loadState('sourceBlob').then(setSourceBlob);
+  }, [authentication, sourceRepository, setSourceBlob]);
 
-  const filePopulator = useCallback(({repository, blob, onFile, authentication, sourceFile}) => {
+  const filePopulator = useCallback(({repository, blob, onFile, type}) => {
     let _filePopulator;
-    if (repository && blob) {
+    if (authentication && repository && blob) {
       let fileConfig;
-      if (sourceFile) {
+      if (type === 'target' && sourceFile) {
         const {filepath, content} = sourceFile;
         fileConfig = {filepath, defaultContent: content, ...authentication.config};
       }
+      const repoString = JSON.stringify(repository);
+      const blobString = JSON.stringify(blob);
       _filePopulator = (
         <FilePopulator
-          key={Math.random()}
+          key={repoString + blobString}
           authentication={authentication}
           repository={repository}
           blob={blob}
@@ -72,33 +81,42 @@ export function AppContextProvider({
       );
     }
     return _filePopulator;
-  }, []);
+  }, [authentication, sourceFile]);
 
   // populate sourceFile when blob is updated
   useEffect(()=> {
-    const _sourceFilePopulator = filePopulator({
-      authentication,
-      repository: sourceRepository,
-      blob: sourceBlob,
-      onFile: setSourceFile,
-    });
-    setSourceFilePopulator(_sourceFilePopulator);
-  }, [setSourceFile, setSourceFilePopulator, filePopulator, authentication, sourceRepository, sourceBlob]);
+    const newFile = !sourceFile || (sourceBlob && sourceBlob.filepath !== sourceFile.filepath);
+    if (newFile && sourceRepository && sourceBlob) {
+      const _sourceFilePopulator = filePopulator({
+        repository: sourceRepository,
+        blob: sourceBlob,
+        onFile: setSourceFile,
+        type: 'source',
+      });
+      setSourceFilePopulator(_sourceFilePopulator);
+      console.log('sourceFilePopulator', (sourceBlob ? sourceBlob.filepath : ''));
+    }
+  }, [sourceFile, setSourceFile, setSourceFilePopulator, filePopulator, sourceRepository, sourceBlob]);
   // populate targetFile when blob is updated
   useEffect(()=> {
-    if (sourceFile) {
+    const newFile = !targetFile || (targetBlob && targetBlob.filepath !== targetFile.filepath);
+    const pathMatch = (sourceFile && targetBlob && sourceFile.filepath === targetBlob.filepath);
+    if (targetRepository && newFile && pathMatch) {
       const _targetFilePopulator = filePopulator({
-        authentication,
         repository: targetRepository,
         blob: targetBlob,
         onFile: setTargetFile,
-        sourceFile,
+        type: 'target',
       });
       setTargetFilePopulator(_targetFilePopulator);
-    } else {
-      setTargetFilePopulator();
+      console.log('targetFilePopulator', (targetBlob ? targetBlob.filepath: ''));
     }
-  }, [setTargetFile, setTargetFilePopulator, filePopulator, authentication, sourceFile, targetRepository, targetBlob]);
+  }, [targetFile, setTargetFile, setTargetFilePopulator, filePopulator, sourceFile, targetRepository, targetBlob]);
+  // populate targetBlob when sourceBlob is updated
+  useEffect(() => {
+    const newBlob = !targetBlob || (sourceBlob && sourceBlob.filepath !== targetBlob.filepath);
+    if (newBlob) setTargetBlob(sourceBlob);
+  }, [sourceBlob, targetBlob, setTargetBlob]);
 
   const value = {
     state,

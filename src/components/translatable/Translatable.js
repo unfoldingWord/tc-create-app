@@ -31,7 +31,7 @@ function Translatable ({
       original: sourceFile.content,
       translation: targetFile.content,
       onTranslation: targetFile.saveContent,
-    }
+    };
     if (sectionable) {
       translatableComponent = <DocumentTranslatable {...translatableProps} />;
     } else {
@@ -41,8 +41,8 @@ function Translatable ({
     const delimiters = { row: '\n', cell: '\t'};
     const rowHeader = (rowData, actionsMenu) => (
       <RowHeader rowData={rowData} actionsMenu={actionsMenu} delimiters={delimiters} />
-    );
-    const config = {
+      );
+      const config = {
       compositeKeyIndices: [0,1,2,3],
       columnsFilter: [1,2,4],
       columnsShowDefault: [4,5,7,8],
@@ -54,7 +54,7 @@ function Translatable ({
       onSave: targetFile.saveContent,
       delimiters,
       config,
-    }
+    };
     translatableComponent = <DataTable {...translatableProps} />;
   }
   const openLink = (link) => window.open(link,'_blank');

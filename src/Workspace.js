@@ -4,9 +4,7 @@ import ApplicationStepper from './components/application-stepper/ApplicationStep
 import Translatable from './components/translatable/Translatable';
 import { AppContext } from './App.context';
 
-function Workspace ({
-  classes,
-}) {
+function Workspace () {
   const {
     state: {
       sourceRepository,

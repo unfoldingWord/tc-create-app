@@ -56,7 +56,7 @@ function DrawerMenu ({
           </Typography>
           <Slider
             classes={{ container: classes.slider }}
-            value={fontScale}
+            defaultValue={fontScale}
             aria-labelledby="label"
             onChange={handleFontScale}
             min={50}
