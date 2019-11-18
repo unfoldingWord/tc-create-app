@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/unfoldingWord/gateway-language-translation-suite-prototype"
   },
-  "version": "0.9.0-alpha.4",
+  "version": "0.9.0-alpha.5",
   "license": "MIT",
   "private": false,
   "dependencies": {
@@ -18,7 +18,7 @@
     "datatable-translatable": "^0.5.3",
     "deep-freeze": "^0.0.1",
     "gitea-react-toolkit": "0.5.2",
-    "markdown-translatable": "0.7.1",
+    "markdown-translatable": "0.8.1",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-headroom": "^3.0.0",
