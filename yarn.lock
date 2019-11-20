@@ -6884,6 +6884,19 @@ markdown-translatable@0.7.1:
     turndown "^5.0.3"
     turndown-plugin-gfm "^1.0.2"
 
+markdown-translatable@0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.8.1.tgz#5c4ef117504af136be34a8eba7448d306ad21d80"
+  integrity sha512-9Xmv/Uz2cAcxx9BtybcJY+2k4AVWwr9fKf9EuMLIYniZhsiF42XVx92V+fSWRWMGXY0LNt3csXVYxIra2DeMiw==
+  dependencies:
+    deep-freeze "^0.0.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-markdown "^4.0.6"
+    showdown "^1.9.0"
+    turndown "^5.0.3"
+    turndown-plugin-gfm "^1.0.2"
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -9606,10 +9619,10 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-scripture-resources-rcl@^0.9.6:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.9.6.tgz#4a425d1a0432569fc4275738c1ff760b52620a8f"
-  integrity sha512-uQkosbRm1pdpi1G8a9Y8DN8E7C7ZGF8NGZ/shs4gWeoO+qf4BNGJ2OXBhg1nywdTpp5z5WPaUSftxtJz5rNi8w==
+scripture-resources-rcl@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.10.3.tgz#5935753b1fc2c1cd9b9b36ff120e7d49d0f66167"
+  integrity sha512-iU+F3AFL5DEZTQprybVcvZ/NMDcaxHcEKAljEK7dyaf06VU1YJgGkCQYavsB+cssEFmntIBBP+EemR6hEy1E2Q==
   dependencies:
     deep-freeze "^0.0.1"
     gitea-react-toolkit "^0.3.5"
