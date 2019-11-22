@@ -10,6 +10,7 @@ function QuoteSelector({
   quote,
   onQuote,
   reference,
+  buttons,
 }) {  
   const config = {server: 'https://git.door43.org'};
   const resourceLinks = [
@@ -27,6 +28,7 @@ function QuoteSelector({
         quote={quote}
         onQuote={onQuote}
         height='250px'
+        buttons={buttons}
       />
     </MuiThemeProvider>
   );

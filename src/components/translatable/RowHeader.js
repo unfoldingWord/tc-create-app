@@ -1,4 +1,5 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import {Waypoint} from 'react-waypoint';
 
 import {
@@ -12,9 +13,14 @@ function RowHeader({
   actionsMenu,
   delimiters,
 }) {
-  const _quote = rowData[5].split(delimiters.cell)[0];
+  const classes = useStyles();
+  const _quote = rowData[5].split(delimiters.cell)[1];
   const [quote, setQuote] = useState(_quote);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setQuote(_quote);
+  },[_quote]);
 
   const book = rowData[0].split(delimiters.cell)[0];
   const chapter = rowData[1].split(delimiters.cell)[0];
@@ -27,40 +33,50 @@ function RowHeader({
     chapter: parseInt(chapter),
     verse: parseInt(verse)
   };
-  let quoteComponent = <></>;
-  if (show && reference.bookId && reference.chapter && reference.verse) {
-    quoteComponent = (
-      <QuoteSelector
-        reference={reference}
-        quote={quote}
-        onQuote={setQuote}
-        height='250px'
-      />
-    );
-  }
 
-  const component = (
+  let component = (
     <Waypoint onEnter={onEnter}>
-      <div style={{width: '100%'}}>
-        <div style={{width: '100%', display: 'flex', alignContent: 'center', justifyContent: 'space-between'}}>
-          <Typography variant='h6' style={style}>
-            {`${book} ${chapter}:${verse}`}
-          </Typography>
-          {actionsMenu}
-        </div>
-        <div style={{width: '100%'}}>
-          {quoteComponent}
-        </div>
+      <div className={classes.defaultHeader}>
+        <Typography variant='h6' className={classes.title}>
+          {`${book} ${chapter}:${verse}`}
+        </Typography>
+        {actionsMenu}
       </div>
     </Waypoint>
   );
+
+  if (show && reference.bookId && reference.chapter && reference.verse) {
+    component = (
+      <div className={classes.quoteHeader}>
+        <QuoteSelector
+          reference={reference}
+          quote={quote}
+          // onQuote={setQuote}
+          height='250px'
+          buttons={actionsMenu}
+        />
+      </div>
+    );
+  }
+
   return component;
 };
 
-const style = {
-  lineHeight: '1.0',
-  fontWeight: 'bold',
-  paddingTop: '11px',
-};
+const useStyles = makeStyles(theme => ({
+  defaultHeader: {
+    width: '100%',
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+  },
+  quoteHeader: {
+    width: '100%'
+  },
+  title: {
+    lineHeight: '1.0',
+    fontWeight: 'bold',
+    paddingTop: '11px',
+  },
+}));
 
 export default RowHeader;
