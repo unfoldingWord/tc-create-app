@@ -905,6 +905,14 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-transform-typescript" "^7.3.2"
 
+"@babel/runtime-corejs2@^7.2.0":
+  version "7.7.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.7.4.tgz#b9c2b1b5882762005785bc47740195a0ac780888"
+  integrity sha512-hKNcmHQbBSJFnZ82ewYtWDZ3fXkP/l1XcfRtm7c8gHPM/DMecJtFFBEp7KMLZTuHwwb7RfemHdsEnd7L916Z6A==
+  dependencies:
+    core-js "^2.6.5"
+    regenerator-runtime "^0.13.2"
+
 "@babel/runtime@7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.3.tgz#79888e452034223ad9609187a0ad1fe0d2ad4bdc"
@@ -3179,6 +3187,11 @@ core-js@^2.4.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.1.tgz#87416ae817de957a3f249b3b5ca475d4aaed6042"
   integrity sha512-L72mmmEayPJBejKIWe2pYtGis5r0tQ5NaJekdhyXgeMQTpJoBsH0NL4ElY2LfSoV15xeQWKQ+XTTOZdyero5Xg==
+
+core-js@^2.6.5:
+  version "2.6.10"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
+  integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -9619,15 +9632,16 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-scripture-resources-rcl@^0.10.7:
-  version "0.10.7"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.10.7.tgz#16fddb2566902402f4f614ecd75cd316d2207d4a"
-  integrity sha512-i5xyaWL+M6J7Fz4u2j9w02s3v5BfLyvcMPm0+hOJSOT7dswoxKdt73C1Y0yXUan5nh7xbkQxh5YW7ENEDnXd7Q==
+scripture-resources-rcl@^0.10.8:
+  version "0.10.8"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.10.8.tgz#8eaf3b141b5dcc05ef2dd6e4144875d839017f72"
+  integrity sha512-ZaEqrJbVqMSH2hBTwnmWTCgGaVasO0ztx254QPCT1xMeGTED7jJj97yy11n5xOWE2S3tNKOr6W1x9UgTn8SfrQ==
   dependencies:
     deep-freeze "^0.0.1"
     gitea-react-toolkit "^0.3.5"
     js-yaml-parser "^1.0.0"
     react-waypoint "^9.0.2"
+    string-punctuation-tokenizer "^2.0.0-beta.2"
     usfm-js "^2.0.2"
 
 select-hose@^2.0.0:
@@ -10108,6 +10122,15 @@ string-length@^2.0.0:
   dependencies:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
+
+string-punctuation-tokenizer@^2.0.0-beta.2:
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.0.0-beta.2.tgz#ef1da7ac697930edf7cbba6111d362a92d0a08f4"
+  integrity sha512-U4gUY4BTGtWrAhU4bGkfaPhShfKCW5SnuM+JxKjQD/tMamr2NkO67mWzwdqFHlphb06t7TA6eLK4+J8PRo3BqA==
+  dependencies:
+    babel-runtime "^6.26.0"
+    transform-runtime "0.0.0"
+    xregexp "^4.1.1"
 
 string-width@^1.0.1:
   version "1.0.2"
@@ -11364,6 +11387,13 @@ xregexp@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-4.0.0.tgz#e698189de49dd2a18cc5687b05e17c8e43943020"
   integrity sha512-PHyM+sQouu7xspQQwELlGwwd05mXUFqwFYfqPO0cC7x4fxyHnnuetmQr6CjJiafIDoH4MogHb9dOoJzR/Y4rFg==
+
+xregexp@^4.1.1:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-4.2.4.tgz#02a4aea056d65a42632c02f0233eab8e4d7e57ed"
+  integrity sha512-sO0bYdYeJAJBcJA8g7MJJX7UrOZIfJPd8U2SC7B2Dd/J24U0aQNoGp33shCaBSWeb0rD5rh6VBUIXOkGal1TZA==
+  dependencies:
+    "@babel/runtime-corejs2" "^7.2.0"
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.1"
