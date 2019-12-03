@@ -18,7 +18,6 @@ function AppComponent() {
     authentication,
     sourceRepository,
     sourceBlob,
-    sectionable,
     fontScale,
     config,
   } = state;
@@ -26,18 +25,9 @@ function AppComponent() {
     setAuthentication,
     setSourceRepository,
     setSourceBlob,
-    setSectionable,
-    setFontScale,
   } = actions;
 
-  const drawerMenu = (
-    <DrawerMenu
-      sectionable={sectionable}
-      onSectionable={setSectionable}
-      fontScale={fontScale}
-      onFontScale={setFontScale}
-    />
-  );
+  const drawerMenu = <DrawerMenu />;
 
   const style = {
     app: { fontSize: `${fontScale/100}em` },

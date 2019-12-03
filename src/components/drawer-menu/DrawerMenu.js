@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import { 
   List,
@@ -21,18 +21,23 @@ import {
 } from '@material-ui/icons';
 
 import appPackage from '../../../package.json';
+import { AppContext } from '../../App.context';
 
-function DrawerMenu ({
-  sectionable,
-  onSectionable,
-  fontScale,
-  onFontScale,
-}) {
+function DrawerMenu () {
   const classes = useStyles();
+  const {state, actions} = useContext(AppContext);
+  const {
+    sectionable,
+    fontScale,
+  } = state;
+  const {
+    setSectionable,
+    setFontScale,
+  } = actions;
 
-  const toggleSectionable = () => onSectionable(!sectionable);
-  const handleFontScale = (event, value) => onFontScale(value);
-  const handleResetFontScale = () => onFontScale(100);
+  const toggleSectionable = () => setSectionable(!sectionable);
+  const handleFontScale = (event, value) => setFontScale(value);
+  const handleResetFontScale = () => setFontScale(100);
   const openLink = (link) => window.open(link,'_blank');
   const handleFeedback = () => openLink(appPackage.bugs.url);
   return (
@@ -56,7 +61,7 @@ function DrawerMenu ({
           </Typography>
           <Slider
             classes={{ container: classes.slider }}
-            defaultValue={fontScale}
+            value={fontScale}
             aria-labelledby="label"
             onChange={handleFontScale}
             min={50}
