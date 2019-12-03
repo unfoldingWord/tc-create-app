@@ -22,10 +22,10 @@ function RowHeader({
     setQuote(_quote);
   },[_quote]);
 
-  const book = rowData[0].split(delimiters.cell)[0];
-  const chapter = rowData[1].split(delimiters.cell)[0];
-  const verse = rowData[2].split(delimiters.cell)[0];
-  const occurrence = rowData[6].split(delimiters.cell)[0];
+  const book = rowData[0].split(delimiters.cell)[1];
+  const chapter = rowData[1].split(delimiters.cell)[1];
+  const verse = rowData[2].split(delimiters.cell)[1];
+  const occurrence = rowData[6].split(delimiters.cell)[1];
 
   const onEnter = useCallback(() => { setShow(true); }, []);
   
