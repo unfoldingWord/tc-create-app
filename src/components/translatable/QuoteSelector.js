@@ -9,6 +9,7 @@ const ParallelScriptureWithResources = withResources(ParallelScripture);
 function QuoteSelector({
   quote,
   onQuote,
+  occurrence,
   reference,
   buttons,
 }) {  
@@ -27,6 +28,7 @@ function QuoteSelector({
         reference={reference}
         quote={quote}
         onQuote={onQuote}
+        occurrence={occurrence}
         height='250px'
         buttons={buttons}
       />

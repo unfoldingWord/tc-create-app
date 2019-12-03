@@ -25,6 +25,7 @@ function RowHeader({
   const book = rowData[0].split(delimiters.cell)[0];
   const chapter = rowData[1].split(delimiters.cell)[0];
   const verse = rowData[2].split(delimiters.cell)[0];
+  const occurrence = rowData[6].split(delimiters.cell)[0];
 
   const onEnter = useCallback(() => { setShow(true); }, []);
   
@@ -51,7 +52,8 @@ function RowHeader({
         <QuoteSelector
           reference={reference}
           quote={quote}
-          // onQuote={setQuote}
+          onQuote={setQuote}
+          occurrence={occurrence}
           height='250px'
           buttons={actionsMenu}
         />
