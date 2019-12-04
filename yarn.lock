@@ -3560,10 +3560,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.5.3.tgz#a3933175c495de943e4e28cabc1d9d79323fe51d"
-  integrity sha512-TXw+cR+nLwuV71FZBTEbA4reKrymjvFSrIVj5qW83IvYcSZICMbqxPN3auSUzvWP5MU7YhpIxJva2mHLdaaUWQ==
+datatable-translatable@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.5.4.tgz#ad84c68d8f8b467abb0b3c5ba6d8a6b6dfc87fbe"
+  integrity sha512-CpHf21ecyROGjPNI4uZ5gYhAOdu4AP2zHjcWD2SbUr4sJDn1kBzzCq8Tz/U2P6bwkNdLHVFnrhi/ih2pXMuTGg==
   dependencies:
     deep-freeze "^0.0.1"
     markdown-translatable "0.7.1"
