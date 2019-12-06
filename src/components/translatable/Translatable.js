@@ -25,8 +25,9 @@ function Translatable ({
 }) {
   const classes = useStyles();
   const sourceLanguage = getLanguage({languageId: sourceRepository.name.split('_')[0]});
+
   let translatableComponent;
-  if (sourceFile.filepath.match(/\.md$/)) {
+  if (sourceFile && targetFile && sourceFile.filepath.match(/\.md$/)) {
     let translatableProps = {
       original: sourceFile.content,
       translation: targetFile.content,
@@ -37,15 +38,15 @@ function Translatable ({
     } else {
       translatableComponent = <SectionTranslatable sectionFocus {...translatableProps} />;
     }
-  } else if (sourceFile.filepath.match(/\.tsv$/)) {
+  } else if (sourceFile && targetFile && sourceFile.filepath.match(/\.tsv$/)) {
     const delimiters = { row: '\n', cell: '\t'};
     const rowHeader = (rowData, actionsMenu) => (
       <RowHeader rowData={rowData} actionsMenu={actionsMenu} delimiters={delimiters} />
     );
     const config = {
       compositeKeyIndices: [0,1,2,3],
-      columnsFilter: [1,2,4],
-      columnsShowDefault: [4,5,7,8],
+      columnsFilter: ['Chapter', 'SupportReference'],
+      columnsShowDefault: ['SupportReference', 'OrigQuote', 'Occurrence', 'OccurrenceNote'],
       rowHeader,
     };
     let translatableProps = {
@@ -57,7 +58,7 @@ function Translatable ({
     };
     translatableComponent = <DataTable {...translatableProps} />;
   }
-  const openLink = (link) => window.open(link,'_blank');
+  const openLink = (link) => window.open(link, '_blank');
   const sourceChipData = {
     label: `${sourceRepository.owner.username} - ${sourceLanguage.languageName}`,
     handleLink: () => openLink(sourceFile.html_url),

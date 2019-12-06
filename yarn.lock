@@ -2126,7 +2126,7 @@ autoprefixer@^9.4.9:
     postcss "^7.0.14"
     postcss-value-parser "^3.3.1"
 
-awesome-debounce-promise@^2.1.0:
+awesome-debounce-promise@2.1.0, awesome-debounce-promise@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/awesome-debounce-promise/-/awesome-debounce-promise-2.1.0.tgz#7c21cadf2eaa1fa0a29449dd4dfdbd5004811e53"
   integrity sha512-0Dv4j2wKk5BrNZh4jgV2HUdznaeVgEK/WTvcHhZWUElhmQ1RR+iURRoLEwICFyR0S/5VtxfcvY6gR+qSe95jNg==
@@ -2158,6 +2158,15 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
 
+axios-cache-adapter@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/axios-cache-adapter/-/axios-cache-adapter-2.4.1.tgz#c9b736dae5fe17a5e12c2a2d0a595c3bf990ebd3"
+  integrity sha512-RTqieW2OjRyEqzWr3cJjNIG8J7SwoPkW0JIkc5OQaJ1n35yBJ4HgqiZC+O56YmIicUPaDTXq8kdtGA9O5B+/fQ==
+  dependencies:
+    axios "0.18.1"
+    cache-control-esm "1.0.0"
+    lodash "^4.17.11"
+
 axios-cache-adapter@^2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/axios-cache-adapter/-/axios-cache-adapter-2.3.2.tgz#c86ffc44f37f34de5fe4c45a8f99f95447d3af8b"
@@ -2166,10 +2175,18 @@ axios-cache-adapter@^2.3.0:
     axios "^0.18.0"
     lodash "^4.17.11"
 
-axios@^0.18.0:
+axios@0.18.1, axios@^0.18.0:
   version "0.18.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
   integrity sha512-0BfJq4NSfQXd+SkFdrvFbG7addhYSBA2mQwISr46pD6E5iqkWg02RAs8vyTT/j0RTnoYmeXauBuSv1qKwR179g==
+  dependencies:
+    follow-redirects "1.5.10"
+    is-buffer "^2.0.2"
+
+axios@0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
+  integrity sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
   dependencies:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
@@ -2372,7 +2389,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base-64@^0.1.0:
+base-64@0.1.0, base-64@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
   integrity sha1-eAqZyE59YAJgNhURxId2E78k9rs=
@@ -2667,6 +2684,11 @@ cache-base@^1.0.1:
     to-object-path "^0.3.0"
     union-value "^1.0.0"
     unset-value "^1.0.0"
+
+cache-control-esm@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/cache-control-esm/-/cache-control-esm-1.0.0.tgz#417647ecf1837a5e74155f55d5a4ae32a84e2581"
+  integrity sha512-Fa3UV4+eIk4EOih8FTV6EEsVKO0W5XWtNs6FC3InTfVz+EjurjPfDXY5wZDo/lxjDxg5RjNcurLyxEJBcEUx9g==
 
 call-me-maybe@^1.0.1:
   version "1.0.1"
@@ -3560,14 +3582,14 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.5.4.tgz#ad84c68d8f8b467abb0b3c5ba6d8a6b6dfc87fbe"
-  integrity sha512-CpHf21ecyROGjPNI4uZ5gYhAOdu4AP2zHjcWD2SbUr4sJDn1kBzzCq8Tz/U2P6bwkNdLHVFnrhi/ih2pXMuTGg==
+datatable-translatable@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.6.0.tgz#23ac1071531161408f2b8978501996c57d47a02c"
+  integrity sha512-S6XDvFTZ83J5n37+VoY2rngf8DIVrF2IQJvR17YNt4YxpuBHo3s9YPvkHjMeuR2m5Kt0imqFxXzkC3XxBlU6Ug==
   dependencies:
     deep-freeze "^0.0.1"
     markdown-translatable "0.7.1"
-    mui-datatables "^2.6.1"
+    mui-datatables "^2.13.2"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -4831,18 +4853,19 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.5.2.tgz#ecccac7e7849564a4191c99de3996df27233e593"
-  integrity sha512-OlQ4vJE9AQY/dMlZqmIZOeoBSDcZF56odilGuLZDP0+f9xQSOR+ZIPcB8HhWF67MSn1V7DYC0WndJSy34fJj7Q==
+gitea-react-toolkit@0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.6.6.tgz#7149a02de462347fc88d7bd1812c3d7309d44e2c"
+  integrity sha512-ss6fx/9CjeQhxH8E3n4shZOk4f/xnE0k7awyZJnnUuBri+ov7cKoRMYcw9JH73xAeRRR8b3g2oreJGThoW4yHQ==
   dependencies:
-    awesome-debounce-promise "^2.1.0"
-    axios-cache-adapter "^2.3.0"
-    base-64 "^0.1.0"
-    jszip "^3.2.1"
-    localforage "^1.7.3"
-    prop-types "^15.7.2"
-    utf8 "^3.0.0"
+    awesome-debounce-promise "2.1.0"
+    axios "0.19.0"
+    axios-cache-adapter "2.4.1"
+    base-64 "0.1.0"
+    jszip "3.2.1"
+    localforage "1.7.3"
+    prop-types "15.7.2"
+    utf8 "3.0.0"
 
 gitea-react-toolkit@^0.3.5:
   version "0.3.5"
@@ -6531,7 +6554,7 @@ jsx-ast-utils@^2.0.1:
   dependencies:
     array-includes "^3.0.3"
 
-jszip@^3.2.1:
+jszip@3.2.1, jszip@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.2.1.tgz#c5d32df7274042282b157efb16e522b43435e01a"
   integrity sha512-iCMBbo4eE5rb1VCpm5qXOAaUiRKRUKiItn8ah2YQQx9qymmSAY98eyQfioChEYcVQLh0zxJ3wS4A0mh90AVPvw==
@@ -6688,7 +6711,7 @@ loader-utils@1.2.3, loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
-localforage@^1.7.3:
+localforage@1.7.3, localforage@^1.7.3:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.3.tgz#0082b3ca9734679e1bd534995bdd3b24cf10f204"
   integrity sha512-1TulyYfc4udS7ECSBT2vwJksWbkwwTX8BzeUIiq8Y07Riy7bDAAnxDaPU/tWyOVmQAcWJIEIFP9lPfBGqVoPgQ==
@@ -6715,6 +6738,11 @@ lodash._reinterpolate@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+
+lodash.assignwith@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.assignwith/-/lodash.assignwith-4.2.0.tgz#127a97f02adc41751a954d24b0de17e100e038eb"
+  integrity sha1-EnqX8CrcQXUalU0ksN4X4QDgOOs=
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -7181,12 +7209,13 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
-mui-datatables@^2.6.1:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-2.6.3.tgz#1d2d0e4e6d44d9e593ec7f40a925667724ada137"
-  integrity sha512-L9MfnhTkJ4Rdko6DCTGi7Xr/9wEYgoHoZITrcN1l5vVldlqCuOJwKDe3ZaNeAKW2JdiF/nzlmT7oxLfqynAPpg==
+mui-datatables@^2.13.2:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-2.13.2.tgz#9ebe318a6dacdf38e05c2a67c0ed598289c9b965"
+  integrity sha512-3FelOhyNu3kj/5TaTumP1xoBS/6K3KkgljKR6InmT+PEQ2FrJypurSoInw/DHr5Wu3QoCyfUq/Ftc5Lu7EWQ7g==
   dependencies:
     classnames "^2.2.5"
+    lodash.assignwith "^4.2.0"
     lodash.clonedeep "^4.5.0"
     lodash.find "^4.6.0"
     lodash.get "^4.4.2"
@@ -8734,7 +8763,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.0.0, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.0.0, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9632,10 +9661,10 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-scripture-resources-rcl@^0.10.16:
-  version "0.10.16"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.10.16.tgz#1b6a5dd88225f48e9c9a04ffe10d7f94ec1c08dc"
-  integrity sha512-2dFvzVcjwASRLJGPO5UvuV6haDmh4TxJvPS1+xz1AElCPxiiZ4Y0aCtAOxZ1EA1x/TTtbgY4fYlSZUuuR0i3ow==
+scripture-resources-rcl@^0.10.17:
+  version "0.10.17"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.10.17.tgz#c2a48a7ceea695e88c3658d1b3900c0160b28596"
+  integrity sha512-sILZsHLh+8tNl6BfH0FWRopWa4KEyJykGd2evxKCKQTucLvzCCkCAAWKLfSXZbQX0E/0BNpRDmTFGYjhsX23zw==
   dependencies:
     deep-freeze "^0.0.1"
     gitea-react-toolkit "^0.3.5"
@@ -10817,7 +10846,7 @@ usfm-js@^2.0.2:
     rimraf "^2.6.3"
     transform-runtime "0.0.0"
 
-utf8@^3.0.0:
+utf8@3.0.0, utf8@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/utf8/-/utf8-3.0.0.tgz#f052eed1364d696e769ef058b183df88c87f69d1"
   integrity sha512-E8VjFIQ/TyQgp+TZfS6l8yp/xWppSAHzidGiRrqe4bK4XP9pTRyKFgGJpO3SN7zdX4DeomTrwaseCHovfpFcqQ==
