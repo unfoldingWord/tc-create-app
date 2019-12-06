@@ -26,7 +26,7 @@ function Translatable ({
   const classes = useStyles();
   const sourceLanguage = getLanguage({languageId: sourceRepository.name.split('_')[0]});
 
-  let translatableComponent;
+  let translatableComponent = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
   if (sourceFile && targetFile && sourceFile.filepath.match(/\.md$/)) {
     let translatableProps = {
       original: sourceFile.content,
