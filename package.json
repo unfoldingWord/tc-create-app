@@ -58,8 +58,8 @@
     "deploy": "git push",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "nyc:report": "nyc --reporter=json-summary --reporter=text cypress:open",
-    "test": "start-test 3000 cypress:open",
+    "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
+    "test": "start-test 3000 test:cov",
     "create-coverage-badge": "bash scripts/create-badge-json.sh"
   },
   "eslintConfig": {
