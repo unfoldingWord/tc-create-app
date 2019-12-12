@@ -35,25 +35,29 @@ function AppComponent() {
     workspace: { margin: `${theme.spacing(2)}px` },
   };
 
+  const applicationBar = (
+    <Headroom style={style.headroom}>
+      <ApplicationBar
+        title={title}
+        // buttons={buttons}
+        authentication={authentication}
+        onAuthentication={setAuthentication}
+        authenticationConfig={config.authenticationConfig}
+        repository={sourceRepository}
+        onRepository={setSourceRepository}
+        repositoryConfig={config.repositoryConfig}
+        blob={sourceBlob}
+        onBlob={setSourceBlob}
+        drawerMenu={drawerMenu}
+      />
+    </Headroom>
+  );
+
   return (
     <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>
         <header id="App-header">
-          <Headroom style={style.headroom}>
-            <ApplicationBar
-              title={title}
-              // buttons={buttons}
-              authentication={authentication}
-              onAuthentication={setAuthentication}
-              authenticationConfig={config.authenticationConfig}
-              repository={sourceRepository}
-              onRepository={setSourceRepository}
-              repositoryConfig={config.repositoryConfig}
-              blob={sourceBlob}
-              onBlob={setSourceBlob}
-              drawerMenu={drawerMenu}
-            />
-          </Headroom>
+          {applicationBar}
         </header>
         <div style={style.workspace}>
           <Workspace />

@@ -80,13 +80,13 @@ export const useStateReducer = () => {
 
   const setAuthentication = useCallback((value) => {
     dispatch({type: 'set_authentication', value});
-    if (!value) setSourceRepository();
-  },[setSourceRepository]);
+    if (!value && !!state.sourceRepository) setSourceRepository(); // reset if logged out
+  },[setSourceRepository, state.sourceRepository]);
 
   const setLanguage = useCallback((value) => {
     dispatch({type: 'set_language', value});
     saveState('language', value);
-    if (!value) setSourceRepository();
+    if (!value) setSourceRepository(); // reset if no language
   },[setSourceRepository]);
 
   const actions = {
