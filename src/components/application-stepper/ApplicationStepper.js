@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'reactn';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Stepper,
   Step,
@@ -46,7 +46,7 @@ function ApplicationStepper() {
   useEffect(() => {
     let firstIncomplete;
     Object.keys(completed).forEach(step => {
-      if (!completed[step] && !firstIncomplete) firstIncomplete = step; 
+      if (!completed[step] && !firstIncomplete) firstIncomplete = step;
     });
     if (firstIncomplete < activeStep) setActiveStep(firstIncomplete);
   }, [activeStep, completed]);
@@ -99,7 +99,7 @@ function ApplicationStepper() {
       )
     },
   ];
-  
+
   const handleNext = () => {
     let newActiveStep;
     const totalSteps = steps.length;
@@ -120,41 +120,42 @@ function ApplicationStepper() {
 
   return (
     <Paper>
-    <div className={classes.root}>
-      <Stepper nonLinear activeStep={activeStep}>
-        {steps.map((step, index) => (
-          <Step key={step.label}>
-            <StepButton onClick={handleStep(index)} completed={completed[index]}>
-              {step.label}
-            </StepButton>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
-        <div className={classes.step}>
-          <Typography variant="h5" className={classes.instructions}>
-            Step {activeStep + 1}: {steps[activeStep].instructions}
-          </Typography>
-          <Divider className={classes.divider} />
-          {steps[activeStep].component()}
-          <Divider className={classes.divider} />
-          <div className={classes.buttons}>
-            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-              Back
+      <div className={classes.root}>
+        <Stepper nonLinear activeStep={activeStep}>
+          {steps.map((step, index) => (
+            <Step key={step.label}>
+              <StepButton onClick={handleStep(index)} completed={completed[index]}>
+                {step.label}
+              </StepButton>
+            </Step>
+          ))}
+        </Stepper>
+        <div>
+          <div className={classes.step}>
+            <Typography variant="h5" className={classes.instructions}>
+              Step {activeStep + 1}: {steps[activeStep].instructions}
+            </Typography>
+            <Divider className={classes.divider} />
+            {steps[activeStep].component()}
+            <Divider className={classes.divider} />
+            <div className={classes.buttons}>
+              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                Back
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              className={classes.button}
-              disabled={!completed[activeStep] || activeStep === steps.length - 1}
-            >
-              Next
+              <Button
+                data-test="stepper-next"
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.button}
+                disabled={!completed[activeStep] || activeStep === steps.length - 1}
+              >
+                Next
             </Button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </Paper>
   );
 }

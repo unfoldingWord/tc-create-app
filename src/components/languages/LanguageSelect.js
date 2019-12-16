@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   NoSsr,
 } from '@material-ui/core';
@@ -14,35 +14,36 @@ import {
 } from './helpers';
 import components from './Components';
 
-function LanguageSelect ({
+function LanguageSelect({
   language,
   onLanguage,
 }) {
   const classes = useStyles();
   const handleChange = object => {
     const languageId = object.value;
-    const _language = getLanguage({languageId});
+    const _language = getLanguage({ languageId });
     onLanguage(_language);
   };
 
   const options = gatewayLanguages
-  .map(({languageId, languageName, localized, region, gateway}) => {
-    const value = languageId;
-    const name = `${languageId} - ${languageName} - ${localized}`;
-    const gatewayLabel = `(${region} ${gateway ? 'Gateway' : 'Other'})`;
-    const label = `${name} ${gatewayLabel}`;
-    return {value, label};
-  });
+    .map(({ languageId, languageName, localized, region, gateway }) => {
+      const value = languageId;
+      const name = `${languageId} - ${languageName} - ${localized}`;
+      const gatewayLabel = `(${region} ${gateway ? 'Gateway' : 'Other'})`;
+      const label = `${name} ${gatewayLabel}`;
+      return { value, label };
+    });
 
   let value;
   if (language) {
-    value = options.filter(object => (object.value === language.languageId) )[0];
+    value = options.filter(object => (object.value === language.languageId))[0];
   }
 
   return (
     <div className={classes.root}>
       <NoSsr>
         <Select
+          className="language-select-dropdown"
           classes={classes}
           options={options}
           components={components}
