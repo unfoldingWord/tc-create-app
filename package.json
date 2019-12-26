@@ -1,6 +1,17 @@
 {
   "name": "gateway-language-translation-suite-prototype",
   "homepage": "https://glts.netlify.com/",
+  "scripts": {
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "deploy": "git push",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
+    "test:unit": "jest __tests__",
+    "test": "start-test 3000 test:cov",
+    "create-coverage-badge": "bash scripts/create-badge-json.sh"
+  },
   "bugs": {
     "url": "https://github.com/unfoldingWord/gateway-language-translation-suite-prototype/issues"
   },
@@ -57,17 +68,6 @@
     "@material-ui/lab": "^4.0.0-alpha.32",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
-  },
-  "scripts": {
-    "start": "rescripts start",
-    "build": "rescripts build",
-    "deploy": "git push",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
-    "test:unit": "jest __tests__",
-    "test": "start-test 3000 test:cov",
-    "create-coverage-badge": "bash scripts/create-badge-json.sh"
   },
   "eslintConfig": {
     "extends": "react-app"

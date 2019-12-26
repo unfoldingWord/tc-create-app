@@ -8,7 +8,9 @@
 # testing
 /coverage
 /.nyc_output
-**/**.mp4
+**/videos
+cypress.env.json
+
 
 # production
 /build
