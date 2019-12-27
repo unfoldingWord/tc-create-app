@@ -6,14 +6,11 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction,
-  Switch,
   IconButton,
   Typography,
   Slider,
 } from '@material-ui/core';
 import {
-  ViewDay,
-  ViewDayOutlined,
   FormatSize,
   Undo,
   FeedbackOutlined,
@@ -27,30 +24,18 @@ function DrawerMenu () {
   const classes = useStyles();
   const {state, actions} = useContext(AppContext);
   const {
-    sectionable,
     fontScale,
   } = state;
   const {
-    setSectionable,
     setFontScale,
   } = actions;
 
-  const toggleSectionable = () => setSectionable(!sectionable);
   const handleFontScale = (event, value) => setFontScale(value);
   const handleResetFontScale = () => setFontScale(100);
   const openLink = (link) => window.open(link,'_blank');
   const handleFeedback = () => openLink(appPackage.bugs.url);
   return (
     <List>
-      <ListItem button onClick={toggleSectionable}>
-        <ListItemIcon className={classes.icon}>
-          {sectionable ? <ViewDayOutlined /> : <ViewDay />}
-        </ListItemIcon>
-        <ListItemText primary="Heading Sections" />
-        <ListItemSecondaryAction>
-          <Switch onChange={toggleSectionable} checked={sectionable} color="primary" />
-        </ListItemSecondaryAction>
-      </ListItem>
       <ListItem>
         <ListItemIcon className={classes.icon}>
           <FormatSize />

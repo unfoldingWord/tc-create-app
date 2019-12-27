@@ -19,7 +19,6 @@ const config = {
 };
 
 export default {
-  sectionable: true,
   fontScale: 100,
   config,
 };

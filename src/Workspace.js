@@ -12,7 +12,6 @@ function Workspace () {
       sourceFile,
       targetFile,
       language,
-      sectionable,
     }
   } = useContext(AppContext);
 
@@ -25,7 +24,6 @@ function Workspace () {
         sourceFile={sourceFile}
         targetFile={targetFile}
         language={language}
-        sectionable={sectionable}
       />
     );
   } else {
