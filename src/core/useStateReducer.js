@@ -8,10 +8,6 @@ import defaults from './state.defaults';
 export const useStateReducer = () => {
   const [state, dispatch] = useReducer(stateReducer, defaults);
 
-  const setSectionable = useCallback((value) => {
-    dispatch({type: 'set_sectionable', value});
-  },[]);
-
   const setFontScale = useCallback((value) => {
     dispatch({type: 'set_font_scale', value});
   },[]);
@@ -92,7 +88,6 @@ export const useStateReducer = () => {
   const actions = {
     setAuthentication,
     setLanguage,
-    setSectionable,
     setFontScale,
     setConfig,
     setSourceRepository,

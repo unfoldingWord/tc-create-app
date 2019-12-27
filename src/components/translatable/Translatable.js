@@ -9,7 +9,7 @@ import {
   Link,
 } from '@material-ui/icons';
 
-import { DocumentTranslatable, SectionTranslatable } from 'markdown-translatable';
+import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
 
 import RowHeader from './RowHeader';
@@ -21,7 +21,6 @@ function Translatable ({
   sourceFile,
   targetFile,
   language,
-  sectionable,
 }) {
   const classes = useStyles();
   const sourceLanguage = getLanguage({languageId: sourceRepository.name.split('_')[0]});
@@ -33,11 +32,7 @@ function Translatable ({
       translation: targetFile.content,
       onTranslation: targetFile.saveContent,
     };
-    if (sectionable) {
-      translatableComponent = <DocumentTranslatable {...translatableProps} />;
-    } else {
-      translatableComponent = <SectionTranslatable sectionFocus {...translatableProps} />;
-    }
+    translatableComponent = <MarkDownTranslatable {...translatableProps} />;
   } else if (sourceFile && targetFile && sourceFile.filepath.match(/\.tsv$/)) {
     const delimiters = { row: '\n', cell: '\t'};
     const rowHeader = (rowData, actionsMenu) => (
