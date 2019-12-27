@@ -8,6 +8,7 @@ const stateStore = localforage.createInstance({
 
 export const loadState = async (key) => {
   let value;
+
   try {
     const valueString = await stateStore.getItem(key);
     value = JSON.parse(valueString);
@@ -19,6 +20,7 @@ export const loadState = async (key) => {
 
 export const saveState = async (key, value) => {
   let response;
+
   if (value) {
     const valueString = JSON.stringify(value);
     response = await stateStore.setItem(key, valueString);
