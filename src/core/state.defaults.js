@@ -1,6 +1,6 @@
 import appPackage from '../../package.json';
 
-const server = 'https://bg.door43.org';
+const server = 'https://git.door43.org';
 
 const config = {
   authenticationConfig: {
@@ -10,10 +10,10 @@ const config = {
   repositoryConfig: {
     server,
     urls: [
-      'https://bg.door43.org/api/v1/repos/unfoldingword/en_ta',
-      'https://bg.door43.org/api/v1/repos/unfoldingword/en_tw',
-      'https://bg.door43.org/api/v1/repos/unfoldingword/en_tn',
-      'https://bg.door43.org/api/v1/repos/unfoldingword/en_obs',
+      'https://git.door43.org/api/v1/repos/unfoldingword/en_ta',
+      'https://git.door43.org/api/v1/repos/unfoldingword/en_tw',
+      'https://git.door43.org/api/v1/repos/unfoldingword/en_tn',
+      'https://git.door43.org/api/v1/repos/unfoldingword/en_obs',
     ],
   },
 };
