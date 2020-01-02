@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import {ParallelScripture, withResources} from 'scripture-resources-rcl';
+import {testament} from '../../core/bcv.js';
 
 import { getMuiTheme } from './muiTheme';
 
@@ -14,8 +15,13 @@ function QuoteSelector({
   buttons,
 }) {  
   const config = {server: 'https://git.door43.org'};
+  const _testament = useMemo(() => testament(reference), [reference]);
+  let hebrewLink = 'unfoldingWord/hbo/uhb/master';
+  let greekLink = 'unfoldingWord/el-x-koine/ugnt/master';
+  let originalLink = (_testament === 'old') ? hebrewLink : greekLink;
+
   const resourceLinks = [
-    'unfoldingWord/el-x-koine/ugnt/master',
+    originalLink,
     'unfoldingWord/en/ult/master',
     'unfoldingWord/en/ust/master',
   ];
