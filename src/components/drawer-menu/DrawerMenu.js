@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import { 
+import React, { useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import {
   List,
   ListItem,
   ListItemIcon,
@@ -20,9 +20,10 @@ import {
 import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
 
-function DrawerMenu () {
+function DrawerMenu() {
   const classes = useStyles();
-  const {state, actions} = useContext(AppContext);
+  debugger;
+  const { state, actions } = useContext(AppContext);
   const {
     fontScale,
   } = state;
@@ -32,7 +33,7 @@ function DrawerMenu () {
 
   const handleFontScale = (event, value) => setFontScale(value);
   const handleResetFontScale = () => setFontScale(100);
-  const openLink = (link) => window.open(link,'_blank');
+  const openLink = (link) => window.open(link, '_blank');
   const handleFeedback = () => openLink(appPackage.bugs.url);
   return (
     <List>
