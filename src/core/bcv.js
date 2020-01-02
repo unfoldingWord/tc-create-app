@@ -6,22 +6,19 @@ export const bookData = ({bookId}) => {
 };
 
 export const testament = ({bookId}) => {
-  const _testament = bookData({bookId}).testament;
-  return _testament;
+  const book = bookData({bookId});
+  return (!!book) ? book.testament : null;
 };
 
 export const chaptersInBook = ({bookId}) => {
-  try {
-    let chapters;
-    if (bookId === 'obs') {
-      chapters = [...Array(50).keys()].map(i=>i+1);
-    } else {
-      chapters = bookData({bookId}).chapters;
-    }
-    return chapters;
-  } catch(error) {
-    return null;
+  let chapters = [];
+  if (bookId === 'obs') {
+    chapters = [...Array(50).keys()].map(i=>i+1);
+  } else {
+    const book = bookData({bookId});
+    if (book) chapters = book.chapters;
   }
+  return chapters;
 };
 
 export const versesInChapter = ({bookId, chapter}) => {

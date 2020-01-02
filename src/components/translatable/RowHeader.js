@@ -37,7 +37,7 @@ function RowHeader({
   const onEnter = useCallback(() => { setShowReference(reference); }, [reference]);
   useEffect(() => {
     if (showReference && reference.bookId !== showReference.bookId) setShowReference();
-  }, [showReference, reference]);
+  }, [showReference, reference.bookId]);
 
   const defaultHeader = (
     <div className={classes.defaultHeader}>

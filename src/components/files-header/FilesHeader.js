@@ -39,14 +39,14 @@ function FilesHeader ({
     const onDelete = () => openLink(sourceFile.html_url);
     const style = {background: '#fff9'};
     return chip({label, onDelete, style});
-  }, [sourceRepository, sourceFile, chip, openLink]);
+  }, [sourceRepository, sourceFile.html_url, chip, openLink]);
 
   const targetChip = useMemo(() => {
     const label= `${targetRepository.owner.username} - ${language.languageName}`;
     const onDelete = () => openLink(targetFile.html_url);
     const style = {background: '#fff9'};
     return chip({label, onDelete, style});
-  }, [targetRepository, language, targetFile, chip, openLink]);
+  }, [targetRepository, language, targetFile.html_url, chip, openLink]);
 
   return (
     <Grid className={classes.headers} container wrap="nowrap" spacing={2}>
