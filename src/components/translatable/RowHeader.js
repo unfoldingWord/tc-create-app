@@ -49,7 +49,6 @@ function RowHeader({
   );
 
   if (show && reference.bookId && reference.chapter && reference.verse) {
-    console.log('Render Verse - ', reference);
     component = (
       <div className={classes.quoteHeader}>
         <QuoteSelector
