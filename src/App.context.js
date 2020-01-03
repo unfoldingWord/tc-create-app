@@ -122,7 +122,7 @@ export function AppContextProvider({
     state,
     actions,
   };
-  debugger;
+
   return (
     <AppContext.Provider value={value}>
       {sourceFilePopulator}

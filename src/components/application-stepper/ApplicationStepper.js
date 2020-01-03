@@ -16,7 +16,7 @@ import { AppContext } from '../../App.context';
 
 function ApplicationStepper() {
   const classes = useStyles();
-  debugger;
+
   const {
     state: {
       authentication,

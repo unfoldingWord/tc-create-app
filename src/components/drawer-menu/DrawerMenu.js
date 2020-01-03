@@ -22,7 +22,7 @@ import { AppContext } from '../../App.context';
 
 function DrawerMenu() {
   const classes = useStyles();
-  debugger;
+
   const { state, actions } = useContext(AppContext);
   const {
     fontScale,

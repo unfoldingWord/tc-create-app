@@ -1,5 +1,7 @@
 ```js
-import React from 'react';
+import { AppContextProvider } from '../../App.context';
 
-<ApplicationStepper />
+<AppContextProvider>
+  <ApplicationStepper />
+</AppContextProvider>
 ```

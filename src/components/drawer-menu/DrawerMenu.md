@@ -1,3 +1,7 @@
 ```js
-<DrawerMenu />
+import { AppContextProvider } from '../../App.context';
+
+<AppContextProvider>
+  <DrawerMenu />
+</AppContextProvider>
 ```
