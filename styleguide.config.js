@@ -57,15 +57,9 @@ module.exports = {
       ]),
     },
     {
-      name: 'Translatable',
+      name: 'Workspace',
       components: () => ([
-        path.resolve(__dirname, `src/components/translatable`, `Translatable.js`),
-      ]),
-    },
-    {
-      name: 'FilePopulator',
-      components: () => ([
-        path.resolve(__dirname, `src/components`, `FilePopulator.js`),
+        path.resolve(__dirname, `src`, `Workspace.js`),
       ]),
     }
   ]
