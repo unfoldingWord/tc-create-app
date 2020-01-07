@@ -89,7 +89,8 @@
       "**/*.spec.js"
     ],
     "include": [
-      "**/components/**"
+      "**/components/**/**.js",
+      "**/components/**.js"
     ]
   }
 }
