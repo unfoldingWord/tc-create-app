@@ -6361,7 +6361,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@^0.6.6:
+gitea-react-toolkit@^0.6.6, gitea-react-toolkit@^0.6.9:
   version "0.6.9"
   resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.6.9.tgz#db228a8263c036aa58d2e2bf9bc3ae0e2a745b0a"
   integrity sha512-o0tzBS7UX/6kMxcJmDbHn4gAXqtUmsQLMcQSQ0Gc2CpW5tACzB+DWnkU9rhiyZfnrQfrAOyH3HgnxqawA9AEGw==
@@ -12162,15 +12162,19 @@ schema-utils@^2.0.1, schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"
 
-scripture-resources-rcl@^0.10.18:
-  version "0.10.19"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.10.19.tgz#2cb37cbf6b34d20156bc081065b516856495c119"
-  integrity sha512-mXhfJNcxvhu46uNGOQla4W6MxgkzH2BeEN/uNjHnlWpbzE7KxbkAK+WOAVdOPncK/8G7s30K2aUZUs/sEjLwyg==
+scripture-resources-rcl@^0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.12.2.tgz#fef32af5b47b93f29988b9989da34e51413b9cd3"
+  integrity sha512-d6Tivg3YpmmgF4c4wPC4TpQ2zk0z11rx36elXf/cIBx6EHxUvJ38sXKpjvx0B/PP6Kt8+NqLlHm8ibaEM1YYlw==
   dependencies:
-    deep-freeze "^0.0.1"
+    deep-freeze "0.0.1"
+    gitea-react-toolkit "^0.6.9"
     js-yaml-parser "^1.0.0"
+    lodash "^4.17.15"
+    prop-types "^15.7.2"
     react-waypoint "^9.0.2"
     string-punctuation-tokenizer "^2.0.0-beta.2"
+    usfm-js "^2.0.2"
 
 select-hose@^2.0.0:
   version "2.0.0"

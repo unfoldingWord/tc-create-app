@@ -1,19 +1,11 @@
 import React, {useMemo} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {
-  Grid,
-  Chip,
-} from '@material-ui/core';
-import {
-  Translate,
-  Link,
-} from '@material-ui/icons';
 
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
 
 import RowHeader from './RowHeader';
-import { getLanguage } from '../languages/helpers';
+import {FilesHeader} from '../files-header';
 
 function Translatable ({
   sourceRepository,
@@ -23,7 +15,6 @@ function Translatable ({
   language,
 }) {
   const classes = useStyles();
-  const sourceLanguage = getLanguage({languageId: sourceRepository.name.split('_')[0]});
 
   const translatableComponent = useMemo(() => {
     let _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
@@ -59,59 +50,23 @@ function Translatable ({
     return _translatable;
   }, [sourceFile, targetFile]);
 
-  const openLink = (link) => window.open(link, '_blank');
-  const sourceChipData = {
-    label: `${sourceRepository.owner.username} - ${sourceLanguage.languageName}`,
-    handleLink: () => openLink(sourceFile.html_url),
-    style: {background: '#fff9'},
-  };
-  const targetChipData = {
-    label: `${targetRepository.owner.username} - ${language.languageName}`,
-    handleLink: () => openLink(targetFile.html_url),
-    style: {background: 'white'},
-  };
-
   return (
-    <>
-      <Grid className={classes.headers} container wrap="nowrap" spacing={2}>
-        <Grid item xs={12}>
-          <Chip
-            icon={<Translate />}
-            label={sourceChipData.label}
-            onDelete={sourceChipData.handleLink}
-            deleteIcon={<Link />}
-            variant="outlined"
-            className={classes.header}
-            style={sourceChipData.style}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Chip
-            icon={<Translate />}
-            label={targetChipData.label}
-            onDelete={targetChipData.handleLink}
-            deleteIcon={<Link />}
-            variant="outlined"
-            className={classes.header}
-            style={targetChipData.style}
-          />
-        </Grid>
-      </Grid>
+    <div className={classes.root}>
+      <FilesHeader
+        sourceRepository={sourceRepository}
+        targetRepository={targetRepository}
+        sourceFile={sourceFile}
+        targetFile={targetFile}
+        language={language}
+      />
       {translatableComponent}
-    </>
+    </div>
   );
 }
 
 const useStyles = makeStyles(theme => ({
   root: {
   },
-  headers: {
-    marginBottom: `${theme.spacing(0.5)}px`,
-  },
-  header: {
-    justifyContent: 'space-between',
-    width: '100%',
-  }
 }));
 
 export default Translatable;
