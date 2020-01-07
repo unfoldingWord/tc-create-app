@@ -38,7 +38,6 @@
     "react-headroom": "^3.0.0",
     "react-select": "^3.0.4",
     "react-waypoint": "^9.0.2",
-    "reactn": "^2.1.4",
     "scripture-resources-rcl": "^0.12.2",
     "usfm-js": "^2.0.2"
   },
