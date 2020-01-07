@@ -9,7 +9,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
-    "test:unit": "jest __tests__",
+    "test:unit": "jest __tests__ && nyc report --reporter=text-lcov | coveralls",
     "test": "start-test 3000 test:cov",
     "create-coverage-badge": "bash scripts/create-badge-json.sh"
   },
