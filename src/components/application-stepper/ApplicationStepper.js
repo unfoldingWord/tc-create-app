@@ -119,45 +119,59 @@ function ApplicationStepper() {
   const handleBack = () => setActiveStep(activeStep - 1);
   const handleStep = step => () => setActiveStep(step);
 
+  const netlifyBadge = (
+    <div className={classes.netlifyBadge}>
+      <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">
+        <img
+          src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg"
+          alt="Deploys by Netlify"
+        />
+      </a>
+    </div>
+  );
+
   return (
-    <Paper>
-      <div className={classes.root}>
-        <Stepper nonLinear activeStep={activeStep}>
-          {steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepButton onClick={handleStep(index)} completed={completed[index]}>
-                {step.label}
-              </StepButton>
-            </Step>
-          ))}
-        </Stepper>
-        <div>
-          <div className={classes.step}>
-            <Typography variant="h5" className={classes.instructions}>
-              Step {activeStep + 1}: {steps[activeStep].instructions}
-            </Typography>
-            <Divider className={classes.divider} />
-            {steps[activeStep].component()}
-            <Divider className={classes.divider} />
-            <div className={classes.buttons}>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
-            </Button>
-              <Button
-                data-test="stepper-next"
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-                disabled={!completed[activeStep] || activeStep === steps.length - 1}
-              >
-                Next
-            </Button>
+    <>
+      <Paper>
+        <div className={classes.root}>
+          <Stepper nonLinear activeStep={activeStep}>
+            {steps.map((step, index) => (
+              <Step key={step.label}>
+                <StepButton onClick={handleStep(index)} completed={completed[index]}>
+                  {step.label}
+                </StepButton>
+              </Step>
+            ))}
+          </Stepper>
+          <div>
+            <div className={classes.step}>
+              <Typography variant="h5" className={classes.instructions}>
+                Step {activeStep + 1}: {steps[activeStep].instructions}
+              </Typography>
+              <Divider className={classes.divider} />
+              {steps[activeStep].component()}
+              <Divider className={classes.divider} />
+              <div className={classes.buttons}>
+                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                  Back
+              </Button>
+                <Button
+                  data-test="stepper-next"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  className={classes.button}
+                  disabled={!completed[activeStep] || activeStep === steps.length - 1}
+                >
+                  Next
+              </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Paper>
+      </Paper>
+      {netlifyBadge}
+    </>
   );
 }
 
@@ -186,6 +200,11 @@ const useStyles = makeStyles(theme => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+  },
+  netlifyBadge: {
+    width: '100%',
+    textAlign: 'center',
+    marginTop: theme.spacing(2),
   },
 }));
 
