@@ -11398,13 +11398,6 @@ react@^16.12.0:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-reactn@^2.1.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/reactn/-/reactn-2.2.4.tgz#f42168177f865feeeba057c8ad558d5456c730f9"
-  integrity sha512-ROZGocaVrunwcyxmmi7tQWk0/NhersX55Zh0yInDXxD2sc7L4iriSu6oG0Cmq2QcwfEJTFXIEL+ASBpDgAYywQ==
-  dependencies:
-    use-force-update "^1.0.5"
-
 read-only-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/read-only-stream/-/read-only-stream-2.0.0.tgz#2724fd6a8113d73764ac288d4386270c1dbf17f0"
@@ -13543,11 +13536,6 @@ url@0.11.0, url@^0.11.0, url@~0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
-
-use-force-update@^1.0.5:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/use-force-update/-/use-force-update-1.0.7.tgz#f5e672633f5a398b25c33b2287150918bcb3526b"
-  integrity sha512-k5dppYhO+I5X/cd7ildbrzeMZJkWwdAh5adaIk0qKN2euh7J0h2GBGBcB4QZ385eyHHnp7LIygvebdRx3XKdwA==
 
 use@^3.1.0:
   version "3.1.1"
