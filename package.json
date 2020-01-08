@@ -2,13 +2,14 @@
   "name": "gateway-language-translation-suite-prototype",
   "homepage": "https://glts.netlify.com/",
   "scripts": {
+    "styleguide": "styleguidist server",
     "start": "rescripts start",
     "build": "rescripts build",
     "deploy": "git push",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
-    "test:unit": "jest __tests__",
+    "test:unit": "jest __tests__ && cat ./coverage/lcov.info | coveralls",
     "test": "start-test 3000 test:cov",
     "create-coverage-badge": "bash scripts/create-badge-json.sh"
   },
@@ -37,7 +38,6 @@
     "react-headroom": "^3.0.0",
     "react-select": "^3.0.4",
     "react-waypoint": "^9.0.2",
-    "reactn": "^2.1.4",
     "scripture-resources-rcl": "^0.12.2",
     "usfm-js": "^2.0.2"
   },
@@ -50,6 +50,7 @@
     "@unfoldingword/eslint-config": "^1.0.11",
     "babel-plugin-istanbul": "5.2.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "coveralls": "^3.0.9",
     "css-loader": "^3.2.0",
     "cypress": "^3.6.1",
     "eslint-plugin-chai-friendly": "0.5.0",
@@ -57,8 +58,10 @@
     "eslint-plugin-react": "7.12.4",
     "file-loader": "^4.2.0",
     "istanbul-lib-coverage": "2.0.5",
+    "lodash": "^4.17.11",
     "nyc": "14.1.1",
     "react-scripts": "3.0.1",
+    "react-styleguidist": "10.4.0",
     "start-server-and-test": "^1.10.6",
     "style-loader": "^1.0.0"
   },
@@ -86,7 +89,16 @@
       "**/*.spec.js"
     ],
     "include": [
-      "**/components/**"
+      "**/components/**/**.js",
+      "**/components/**.js"
+    ]
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/core/**.{js,jsx,ts}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
     ]
   }
 }

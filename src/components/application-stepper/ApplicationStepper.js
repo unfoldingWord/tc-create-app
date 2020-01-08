@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'reactn';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -16,6 +16,7 @@ import { AppContext } from '../../App.context';
 
 function ApplicationStepper() {
   const classes = useStyles();
+
   const {
     state: {
       authentication,

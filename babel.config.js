@@ -3,12 +3,5 @@ module.exports = {
 		'@babel/env',
 		'@babel/react',
 	],
-	plugins: ['@babel/transform-runtime', ["istanbul", {
-		"include": [
-			"src/components/**/**.js"
-		],
-		"exclude": [
-			"**/mocks/**"
-		]
-	}]]
+	plugins: ['@babel/transform-runtime']
 };
