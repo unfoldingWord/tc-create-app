@@ -5,3 +5,17 @@
 
 ![GLTS Logo](./public/glts_logo.png)
 [Logo](https://www.onlinewebfonts.com/icon/474664) is licensed by CC BY 3.0
+
+
+# Development and Deployment Process
+
+## Changes completed: 
+- Github: `develop` branch created and made default on `gateway-language-translation-suite` repo.
+- Netlify branch deploys enabled for `develop` branch: https://develop--glts.netlify.com
+
+## Workflow: 
+- PRs will automatically be created against `develop` branch from here.
+- PRs will build and deploy on Netlify for previews.
+- Merges to `develop` branch will build and deploy here: https://develop--glts.netlify.com
+- QA and others can verify `develop` before merging to `master`.
+- When `master` is updated, production will be deployed: https://glts.netlify.com
