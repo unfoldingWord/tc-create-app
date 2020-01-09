@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/unfoldingWord/gateway-language-translation-suite-prototype"
   },
-  "version": "0.9.0-alpha.20",
+  "version": "0.9.0-alpha.21",
   "license": "MIT",
   "private": false,
   "dependencies": {
@@ -31,14 +31,14 @@
     "axios": "^0.19.0",
     "datatable-translatable": "^0.6.0",
     "deep-freeze": "^0.0.1",
-    "gitea-react-toolkit": "^0.6.6",
+    "gitea-react-toolkit": "^0.6.10",
     "markdown-translatable": "^0.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-headroom": "^3.0.0",
     "react-select": "^3.0.4",
     "react-waypoint": "^9.0.2",
-    "scripture-resources-rcl": "^0.12.2",
+    "scripture-resources-rcl": "^0.12.3",
     "usfm-js": "^2.0.2"
   },
   "devDependencies": {
