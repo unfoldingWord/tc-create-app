@@ -3,9 +3,9 @@
   "homepage": "https://glts.netlify.com/",
   "scripts": {
     "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build",
+    "styleguide:build": "styleguidist build && mv styleguide build",
     "start": "rescripts start",
-    "build": "rescripts build",
+    "build": "rescripts build && yarn styleguide:build",
     "deploy": "git push",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
