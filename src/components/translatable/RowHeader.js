@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useMemo} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Waypoint} from 'react-waypoint';
 
@@ -16,7 +16,7 @@ function RowHeader({
   const classes = useStyles();
   const _quote = rowData[5].split(delimiters.cell)[1];
   const [quote, setQuote] = useState(_quote);
-  const [show, setShow] = useState(false);
+  const [showReference, setShowReference] = useState();
 
   useEffect(() => {
     setQuote(_quote);
@@ -26,10 +26,6 @@ function RowHeader({
   const chapter = rowData[1].split(delimiters.cell)[1];
   const verse = rowData[2].split(delimiters.cell)[1];
   const occurrence = rowData[6].split(delimiters.cell)[1];
-  
-  const onEnter = useCallback(() => {
-    setShow(true);
-  }, []);
 
   const reference = {
     bookId: book.toLowerCase(),
@@ -37,31 +33,39 @@ function RowHeader({
     verse: parseInt(verse)
   };
 
-  let component = (
-    <Waypoint onEnter={onEnter}>
-      <div className={classes.defaultHeader}>
-        <Typography variant='h6' className={classes.title}>
-          {`${book} ${chapter}:${verse}`}
-        </Typography>
-        {actionsMenu}
-      </div>
-    </Waypoint>
-  );
+  const onEnter = useCallback(() => {
+    const _showReference = JSON.stringify(reference);
+    setShowReference(_showReference);
+  }, [reference]);
 
-  if (show && reference.bookId && reference.chapter && reference.verse) {
-    component = (
-      <div className={classes.quoteHeader}>
-        <QuoteSelector
-          reference={reference}
-          quote={quote}
-          onQuote={setQuote}
-          occurrence={occurrence}
-          height='250px'
-          buttons={actionsMenu}
-        />
-      </div>
+  const component = useMemo(() => {
+    let _component = (
+      <Waypoint onEnter={onEnter}>
+        <div className={classes.defaultHeader}>
+          <Typography variant='h6' className={classes.title}>
+            {`${book} ${chapter}:${verse}`}
+          </Typography>
+          {actionsMenu}
+        </div>
+      </Waypoint>
     );
-  }
+    const _showReference = JSON.stringify(reference);
+    if (showReference === _showReference && reference.bookId && reference.chapter && reference.verse) {
+      _component = (
+        <div className={classes.quoteHeader}>
+          <QuoteSelector
+            reference={reference}
+            quote={quote}
+            onQuote={setQuote}
+            occurrence={occurrence}
+            height='250px'
+            buttons={actionsMenu}
+          />
+        </div>
+      );
+    }
+    return _component;
+  }, [onEnter, classes, book, chapter, verse, actionsMenu, showReference, reference, quote, occurrence]);
 
   return component;
 };
