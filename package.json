@@ -1,18 +1,9 @@
 {
   "name": "gateway-language-translation-suite-prototype",
   "homepage": "https://glts.netlify.com/",
-  "scripts": {
-    "styleguide": "styleguidist server",
-    "start": "rescripts start",
-    "build": "rescripts build",
-    "deploy": "git push",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
-    "test:unit": "jest __tests__ && cat ./coverage/lcov.info | coveralls",
-    "test": "start-test 3000 test:cov",
-    "create-coverage-badge": "bash scripts/create-badge-json.sh"
-  },
+  "version": "0.9.0-alpha.23",
+  "license": "MIT",
+  "private": false,
   "bugs": {
     "url": "https://github.com/unfoldingWord/gateway-language-translation-suite-prototype/issues"
   },
@@ -20,9 +11,6 @@
     "type": "git",
     "url": "https://github.com/unfoldingWord/gateway-language-translation-suite-prototype"
   },
-  "version": "0.9.0-alpha.20",
-  "license": "MIT",
-  "private": false,
   "dependencies": {
     "@material-ui/core": "^4.7.2",
     "@material-ui/icons": "^4.5.1",
@@ -31,14 +19,14 @@
     "axios": "^0.19.0",
     "datatable-translatable": "^0.6.0",
     "deep-freeze": "^0.0.1",
-    "gitea-react-toolkit": "^0.6.6",
+    "gitea-react-toolkit": "^0.6.10",
     "markdown-translatable": "^0.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-headroom": "^3.0.0",
     "react-select": "^3.0.4",
     "react-waypoint": "^9.0.2",
-    "scripture-resources-rcl": "^0.12.2",
+    "scripture-resources-rcl": "^0.12.4",
     "usfm-js": "^2.0.2"
   },
   "devDependencies": {
@@ -64,6 +52,18 @@
     "react-styleguidist": "10.4.0",
     "start-server-and-test": "^1.10.6",
     "style-loader": "^1.0.0"
+  },
+  "scripts": {
+    "styleguide": "styleguidist server",
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "deploy": "git push",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
+    "test:unit": "jest __tests__ && cat ./coverage/lcov.info | coveralls",
+    "test": "start-test 3000 test:cov",
+    "create-coverage-badge": "bash scripts/create-badge-json.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
