@@ -1,6 +1,8 @@
 export function disableBackButton() {
-  window.history.pushState(null, null, window.location.href);
-  window.onpopstate = function () {
-    window.history.go(1);
-  };
+  window.addEventListener('load', function () {
+    window.history.pushState(null, document.title, window.location.href);
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, document.title, window.location.href);
+    });
+  })
 }
