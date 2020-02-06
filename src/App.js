@@ -10,7 +10,7 @@ import theme from './theme';
 import { AppContext, AppContextProvider } from './App.context';
 
 const { version } = require('../package.json');
-const title = `GLtS v${version}`
+const title = `translationCore Create v${version}`
 
 function AppComponent() {
   const {state, actions} = useContext(AppContext);
