@@ -3,6 +3,8 @@
 ![Coveralls github](https://img.shields.io/coveralls/github/unfoldingWord/tc-create-app?label=Unit%20Tests)
 ![ ](https://github.com/unfoldingWord/tc-create-app/workflows/Install%2C%20Build%20%26%20Run%20Cypress/badge.svg?branch=master)
 
+https://create.translationcore.com
+
 # Development and Deployment Process
 
 ## Changes completed: 
