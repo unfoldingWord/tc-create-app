@@ -10,7 +10,7 @@ describe('Application Stepper', function () {
     cy.get('[data-test=username-input] input').type(Cypress.env('TEST_USERNAME'));
     cy.get('[data-test=password-input] input').type(Cypress.env('TEST_PASSWORD'));
     cy.get('[data-test=submit-button]').click();
-    cy.get('[data-test=submit-button]').should('have.text', 'Logout');
+    cy.get('[data-test=logout-button]').should('have.text', 'Logout');
     cy.get('[data-test=stepper-next]').click();
 
     /** Select language */

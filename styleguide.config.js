@@ -1,13 +1,13 @@
 const path = require('path');
 const upperFirst = require('lodash/upperFirst');
 const camelCase = require('lodash/camelCase');
-const { name, version } = require('./package.json');
+const { name, version, repository } = require('./package.json');
 const { styles, theme } = require('./styleguide.styles');
 
 module.exports = {
   title: `${upperFirst(camelCase(name))} v${version}`,
   ribbon: {
-    url: 'https://github.com/unfoldingWord/gateway-language-translation-suite-prototype',
+    url: repository.url,
     text: 'View me on GitHub'
   },
   webpackConfig: {
