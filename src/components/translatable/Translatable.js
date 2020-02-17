@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect,  useCallback} from 'react';
+import React, { useMemo, useEffect,  useCallback, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
@@ -6,7 +6,6 @@ import { DataTable } from 'datatable-translatable';
 
 import RowHeader from './RowHeader';
 import { FilesHeader } from '../files-header';
-let dataTableElement = null;
 function Translatable({
   sourceRepository,
   targetRepository,
@@ -14,6 +13,7 @@ function Translatable({
   targetFile,
   language,
 }) {
+  const [dataTableElement, setDataTableElement] = useState();
   const classes = useStyles();
 
   const scrollToTop = useCallback(() => {
@@ -50,7 +50,7 @@ function Translatable({
           delimiters,
           config,
         };
-        _translatable = <DataTable onRef={(element) => dataTableElement = element} {...translatableProps} />;
+        _translatable = <DataTable onRef={setDataTableElement} {...translatableProps} />;
       }
     }
     return _translatable;
