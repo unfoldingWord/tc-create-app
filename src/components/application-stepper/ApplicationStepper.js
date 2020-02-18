@@ -45,12 +45,15 @@ function ApplicationStepper() {
   };
 
   useEffect(() => {
-    let firstIncomplete;
-    Object.keys(completed).forEach(step => {
-      if (!completed[step] && !firstIncomplete) firstIncomplete = step;
-    });
-    if (firstIncomplete < activeStep) setActiveStep(firstIncomplete);
-  }, [activeStep, completed]);
+    debugger;
+    const stepValues = Object.values(completed);
+    const currentStep = stepValues.reduce((curr, next, index) => {
+      return stepValues[index - 1] ? curr + 1 : curr;
+    }, 1)
+    setActiveStep(currentStep - 1);
+  }, [completed]);
+  console.log("activeStep", activeStep);
+  console.log("completed", completed);
 
   const steps = [
     {
