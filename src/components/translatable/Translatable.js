@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect,  useCallback, useState} from 'react';
+import React, { useMemo, useEffect, useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
@@ -13,14 +13,14 @@ function Translatable({
   targetFile,
   language,
 }) {
-  const [dataTableElement, setDataTableElement] = useState();
+  const [wrapperElement, setWrapperElement] = useState(null);
   const classes = useStyles();
 
   const scrollToTop = useCallback(() => {
-    if (dataTableElement && dataTableElement.tableRef) {
-      window.scrollTo(0, dataTableElement.tableRef.offsetParent.offsetTop);
+    if (wrapperElement && wrapperElement) {
+      window.scrollTo(0, wrapperElement.offsetParent.offsetTop);
     }
-  }, []);
+  }, [wrapperElement]);
 
   const translatableComponent = useMemo(() => {
     let _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
@@ -50,20 +50,20 @@ function Translatable({
           delimiters,
           config,
         };
-        _translatable = <DataTable onRef={setDataTableElement} {...translatableProps} />;
+        _translatable = <DataTable {...translatableProps} />;
       }
     }
     return _translatable;
   }, [sourceFile, targetFile]);
 
   useEffect(() => {
-    if (sourceFile && targetFile && sourceFile.content && targetFile.content) {
+    if (targetFile) {
       scrollToTop();
     }
-  }, [sourceFile, scrollToTop, targetFile])
+  }, [targetFile, scrollToTop])
 
   return (
-    <div className={classes.root}>
+    <div ref={setWrapperElement} className={classes.root}>
       <FilesHeader
         sourceRepository={sourceRepository}
         targetRepository={targetRepository}
