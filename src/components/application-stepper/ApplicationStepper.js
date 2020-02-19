@@ -48,6 +48,7 @@ function ApplicationStepper() {
   useEffect(() => {
     const newActiveStep = getActiveStep(completed);
     setActiveStep(newActiveStep);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const steps = [
     {
