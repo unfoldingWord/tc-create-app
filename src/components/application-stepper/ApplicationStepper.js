@@ -13,6 +13,7 @@ import { Authentication, Repositories, Tree } from 'gitea-react-toolkit';
 
 import { LanguageSelect } from '../languages';
 import { AppContext } from '../../App.context';
+import { getActiveStep } from './helpers';
 
 function ApplicationStepper() {
   const classes = useStyles();
@@ -45,16 +46,9 @@ function ApplicationStepper() {
   };
 
   useEffect(() => {
-    debugger;
-    const stepValues = Object.values(completed);
-    const currentStep = stepValues.reduce((curr, next, index) => {
-      return stepValues[index - 1] ? curr + 1 : curr;
-    }, 1)
-    setActiveStep(currentStep - 1);
-  }, [completed]);
-  console.log("activeStep", activeStep);
-  console.log("completed", completed);
-
+    const newActiveStep = getActiveStep(completed);
+    setActiveStep(newActiveStep);
+  }, []);
   const steps = [
     {
       label: 'Login',
