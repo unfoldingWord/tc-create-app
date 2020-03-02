@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -38,18 +38,27 @@ function ApplicationStepper() {
   } = useContext(AppContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
-  let completed = {
+  const [completed, setCompleted] = useState({
     0: !!authentication,
     1: !!language,
     2: !!sourceRepository,
     3: !!sourceBlob,
-  };
+  });
+
+  useEffect(() => {
+    setCompleted({
+      0: !!authentication,
+      1: !!language,
+      2: !!sourceRepository,
+      3: !!sourceBlob,
+    })
+  }, [authentication, language, sourceRepository, sourceBlob])
 
   useEffect(() => {
     const newActiveStep = getActiveStep(completed);
     setActiveStep(newActiveStep);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [completed, setActiveStep]);
+
   const steps = [
     {
       label: 'Login',
@@ -128,49 +137,52 @@ function ApplicationStepper() {
     </div>
   );
 
-  return (
-    <>
-      <Paper>
-        <div className={classes.root}>
-          <Stepper nonLinear activeStep={activeStep}>
-            {steps.map((step, index) => (
-              <Step key={step.label}>
-                <StepButton onClick={handleStep(index)} completed={completed[index]}>
-                  {step.label}
-                </StepButton>
-              </Step>
-            ))}
-          </Stepper>
-          <div>
-            <div className={classes.step}>
-              <Typography variant="h5" className={classes.instructions}>
-                Step {activeStep + 1}: {steps[activeStep].instructions}
-              </Typography>
-              <Divider className={classes.divider} />
-              {steps[activeStep].component()}
-              <Divider className={classes.divider} />
-              <div className={classes.buttons}>
-                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                  Back
+
+  if (steps[activeStep]) {
+    return (
+      <>
+        <Paper>
+          <div className={classes.root}>
+            <Stepper nonLinear activeStep={activeStep}>
+              {steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepButton onClick={handleStep(index)} completed={completed[index]}>
+                    {step.label}
+                  </StepButton>
+                </Step>
+              ))}
+            </Stepper>
+            <div>
+              <div className={classes.step}>
+                <Typography variant="h5" className={classes.instructions}>
+                  Step {activeStep + 1}: {steps[activeStep].instructions}
+                </Typography>
+                <Divider className={classes.divider} />
+                {steps[activeStep].component()}
+                <Divider className={classes.divider} />
+                <div className={classes.buttons}>
+                  <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                    Back
               </Button>
-                <Button
-                  data-test="stepper-next"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                  disabled={!completed[activeStep] || activeStep === steps.length - 1}
-                >
-                  Next
+                  <Button
+                    data-test="stepper-next"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                    disabled={!completed[activeStep] || activeStep === steps.length - 1}
+                  >
+                    Next
               </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Paper>
-      {netlifyBadge}
-    </>
-  );
+        </Paper>
+        {netlifyBadge}
+      </>
+    );
+  } else return <div />;
 }
 
 const useStyles = makeStyles(theme => ({
