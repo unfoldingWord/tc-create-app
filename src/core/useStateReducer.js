@@ -60,15 +60,23 @@ export const useStateReducer = () => {
       const resourceNameArray = repositoryNameArray.slice(1);
       const translationRepoName = `${language.languageId}_${resourceNameArray.join('_')}`;
       const {description} = sourceRepository;
-      const params = {
-        owner: authentication.user.username,
-        repo: translationRepoName,
-        config: authentication.config,
-        settings: {description},
-      };
-      ensureRepo(params).then((_targetRepository) => {
-        setTargetRepository(_targetRepository);
-      });
+      const sourceRepoPush = sourceRepository.permissions.push;
+      const sameRepositoryName = translationRepoName === sourceRepository.name;
+      const editSource = (sourceRepoPush && sameRepositoryName);
+      if (editSource) {
+        setTargetRepository(sourceRepository);
+      } else {
+        const owner = authentication.user.username;
+        const params = {
+          owner,
+          repo: translationRepoName,
+          config: authentication.config,
+          settings: {description},
+        };
+        ensureRepo(params).then((_targetRepository) => {
+          setTargetRepository(_targetRepository);
+        });
+      }
     } else {
       setTargetRepository();
     }

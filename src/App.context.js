@@ -65,7 +65,10 @@ export function AppContextProvider({
       let fileConfig;
       if (type === 'target' && sourceFile) {
         const { filepath, content } = sourceFile;
-        fileConfig = { filepath, defaultContent: content, ...authentication.config };
+        const {username} = authentication.user;
+        const ref = username;
+        const branch = username;
+        fileConfig = { branch, params: {ref}, filepath, defaultContent: content, ...authentication.config };
       }
       const repoString = JSON.stringify(repository);
       const blobString = JSON.stringify(blob);

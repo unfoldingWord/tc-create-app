@@ -79,7 +79,7 @@ function ApplicationStepper() {
       instructions: 'Select Resource to Translate',
       component: () => (
         <Repositories
-          config={repositoryConfig}
+          config={authenticationConfig || repositoryConfig}
           urls={repositoryConfig.urls}
           repository={sourceRepository}
           onRepository={setSourceRepository}
