@@ -14,7 +14,7 @@
     "test": "start-test 3000 test:cov",
     "create-coverage-badge": "bash scripts/create-badge-json.sh"
   },
-  "version": "0.9.0-beta.4",
+  "version": "0.9.0-beta.6",
   "license": "MIT",
   "private": false,
   "bugs": {
@@ -39,7 +39,7 @@
     "react-headroom": "^3.0.0",
     "react-select": "^3.0.4",
     "react-waypoint": "^9.0.2",
-    "scripture-resources-rcl": "^0.12.5",
+    "scripture-resources-rcl": "^0.13.1",
     "usfm-js": "^2.0.2"
   },
   "devDependencies": {
