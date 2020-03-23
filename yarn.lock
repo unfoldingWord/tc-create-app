@@ -6501,10 +6501,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@^0.6.14:
-  version "0.6.14"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.6.14.tgz#77750cfbdbc806aa9d6d186667d108371d770629"
-  integrity sha512-kS9yo5pH4tC39mIEvNCwF7V0nJMtjqNPWV7sGKAv3LLSy6SPyiRMcky/IfBgFKBXjg/RXNzyjw/yvmMuAoYCjA==
+gitea-react-toolkit@^0.6.9:
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.6.9.tgz#db228a8263c036aa58d2e2bf9bc3ae0e2a745b0a"
+  integrity sha512-o0tzBS7UX/6kMxcJmDbHn4gAXqtUmsQLMcQSQ0Gc2CpW5tACzB+DWnkU9rhiyZfnrQfrAOyH3HgnxqawA9AEGw==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -6515,10 +6515,10 @@ gitea-react-toolkit@^0.6.14:
     prop-types "15.7.2"
     utf8 "3.0.0"
 
-gitea-react-toolkit@^0.6.9:
-  version "0.6.9"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.6.9.tgz#db228a8263c036aa58d2e2bf9bc3ae0e2a745b0a"
-  integrity sha512-o0tzBS7UX/6kMxcJmDbHn4gAXqtUmsQLMcQSQ0Gc2CpW5tACzB+DWnkU9rhiyZfnrQfrAOyH3HgnxqawA9AEGw==
+gitea-react-toolkit@^1.0.0-alpha.4:
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.0.0-alpha.4.tgz#65b34722c070332bac0eebc8fe24cef9d2bd4f19"
+  integrity sha512-AwJBxEwqfYasaNgnUbOtjYz0Q+cAP/Ti/0BAM7e0jMJEYJzEfdI18xaBMTbgP6CxQrGL9Q8eEayFT52wy8I+Cg==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -12358,10 +12358,10 @@ schema-utils@^2.0.1, schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"
 
-scripture-resources-rcl@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.13.1.tgz#9b1bc20fee35dd9bc6a9fafe34fc391bc4a97bae"
-  integrity sha512-egCAnJkgJRm4kh5CtJWLot3W49mF1YR/rv0PxxSeVffq7ynej/3Uy/qoQDY5y3DD653Vpk6ZS94eQLOaphmMjw==
+scripture-resources-rcl@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.13.2.tgz#c11899578a290f0ba824e32d4193bcc4c7c34eb4"
+  integrity sha512-I2Wkurkv9pMek2ie6KQeaamNSSDxl1S2DmPCUtRE11I/YZL5xoausMOwxIpQgtS4qmjLrzrrDBPFP6CdPFyNQA==
   dependencies:
     deep-freeze "0.0.1"
     gitea-react-toolkit "^0.6.9"
