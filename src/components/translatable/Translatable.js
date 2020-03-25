@@ -1,20 +1,25 @@
-import React, { useMemo, useEffect, useCallback, useState } from 'react';
+import React, { useMemo, useEffect, useCallback, useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useFile } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
 
 import RowHeader from './RowHeader';
 import { FilesHeader } from '../files-header';
-function Translatable({
-  sourceRepository,
-  targetRepository,
-  sourceFile,
-  targetFile,
-  language,
-}) {
-  const [wrapperElement, setWrapperElement] = useState(null);
+import { AppContext } from '../../App.context';
+import { TargetFileContext } from '../../core/TargetFile.context';
+
+function Translatable() {
   const classes = useStyles();
+  const [wrapperElement, setWrapperElement] = useState(null);
+  const {
+    state: {
+      language, sourceRepository, targetRepository, sourceFile, targetFile,
+    },
+  } = useContext(AppContext);
+
+  const { actions: targetFileActions } = useContext(TargetFileContext);
 
   const scrollToTop = useCallback(() => {
     if (wrapperElement && wrapperElement) {
@@ -29,7 +34,7 @@ function Translatable({
         let translatableProps = {
           original: sourceFile.content,
           translation: targetFile.content,
-          onTranslation: targetFile.saveContent,
+          onTranslation: targetFileActions.save,
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
@@ -46,7 +51,7 @@ function Translatable({
         let translatableProps = {
           sourceFile: sourceFile.content,
           targetFile: targetFile.content,
-          onSave: targetFile.saveContent,
+          onSave: targetFileActions.save,
           delimiters,
           config,
         };
@@ -54,23 +59,27 @@ function Translatable({
       }
     }
     return _translatable;
-  }, [sourceFile, targetFile]);
+  }, [sourceFile, targetFile, targetFileActions.save]);
 
   useEffect(() => {
     if (targetFile) {
       scrollToTop();
     }
-  }, [targetFile, scrollToTop])
+  }, [targetFile, scrollToTop]);
+
+  const filesHeader = targetFile && (
+    <FilesHeader
+      sourceRepository={sourceRepository}
+      targetRepository={targetRepository}
+      sourceFile={sourceFile}
+      targetFile={targetFile}
+      language={language}
+    />
+  );
 
   return (
     <div ref={setWrapperElement} className={classes.root}>
-      <FilesHeader
-        sourceRepository={sourceRepository}
-        targetRepository={targetRepository}
-        sourceFile={sourceFile}
-        targetFile={targetFile}
-        language={language}
-      />
+      {filesHeader}
       {translatableComponent}
     </div>
   );

@@ -3,33 +3,26 @@ import React, { useContext } from 'react';
 import ApplicationStepper from './components/application-stepper/ApplicationStepper';
 import Translatable from './components/translatable/Translatable';
 import { AppContext } from './App.context';
+import { TargetFileContextProvider } from './core/TargetFile.context';  
 
 function Workspace () {
   const {
     state: {
       sourceRepository,
-      targetRepository,
       sourceFile,
       targetFile,
-      language,
     }
   } = useContext(AppContext);
 
   let component;
-  if (sourceRepository && sourceFile && targetFile) {
+  if (sourceRepository && sourceFile) {
     component = (
-      <Translatable
-        sourceRepository={sourceRepository}
-        targetRepository={targetRepository}
-        sourceFile={sourceFile}
-        targetFile={targetFile}
-        language={language}
-      />
+      <TargetFileContextProvider>
+        <Translatable />
+      </TargetFileContextProvider>
     );
   } else {
-    component = (
-      <ApplicationStepper />
-    );
+    component = <ApplicationStepper />;
   }
 
   return component;

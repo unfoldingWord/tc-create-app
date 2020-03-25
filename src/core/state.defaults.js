@@ -3,12 +3,11 @@ import appPackage from '../../package.json';
 const server = 'https://bg.door43.org';
 
 const config = {
-  authenticationConfig: {
+  authentication: {
     server,
     tokenid: appPackage.name,
   },
-  repositoryConfig: {
-    server,
+  repository: {
     urls: [
       server + '/api/v1/repos/unfoldingword/en_ta',
       server + '/api/v1/repos/unfoldingword/en_tw',

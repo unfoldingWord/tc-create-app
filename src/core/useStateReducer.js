@@ -26,32 +26,12 @@ export const useStateReducer = () => {
     if (!value) dispatch({type: 'set_target_repository'});
   },[]);
 
-  const setTargetFile = useCallback((value) => {
-    dispatch({type: 'set_target_file', value});
-  },[]);
-
   const setSourceFile = useCallback((value) => {
     dispatch({type: 'set_source_file', value});
   },[]);
 
-  const setSourceBlob = useCallback((value) => {
-    dispatch({type: 'set_source_blob', value});
-    saveState('sourceBlob', value);
-    if (!value) dispatch({type: 'set_source_file'});
-  },[]);
-
-  const setTargetBlob = useCallback((value) => {
-    dispatch({type: 'set_target_blob', value});
-    if (!value) dispatch({type: 'set_target_file'});
-  },[]);
-
-  const setSourceFilePopulator = useCallback((value) => {
-    dispatch({type: 'set_source_file_populator', value});
-    if (!value) dispatch({type: 'set_target_file_populator'});
-  },[]);
-
-  const setTargetFilePopulator = useCallback((value) => {
-    dispatch({type: 'set_target_file_populator', value});
+  const setTargetFile = useCallback((value) => {
+    dispatch({type: 'set_target_file', value});
   },[]);
 
   const setTargetRepoFromSourceRepo = useCallback(({authentication, sourceRepository, language}) => {
@@ -64,7 +44,9 @@ export const useStateReducer = () => {
       const sameRepositoryName = translationRepoName === sourceRepository.name;
       const editSource = (sourceRepoPush && sameRepositoryName);
       if (editSource) {
-        setTargetRepository(sourceRepository);
+        const branch = `${authentication.user.username}-tc-create-1`;
+        const _targetRepository = { ...sourceRepository, branch };
+        setTargetRepository(_targetRepository);
       } else {
         const owner = authentication.user.username;
         const params = {
@@ -100,12 +82,8 @@ export const useStateReducer = () => {
     setConfig,
     setSourceRepository,
     setTargetRepository,
-    setSourceBlob,
-    setTargetBlob,
     setSourceFile,
     setTargetFile,
-    setSourceFilePopulator,
-    setTargetFilePopulator,
     setTargetRepoFromSourceRepo,
   };
   return [state, actions];

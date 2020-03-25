@@ -1,13 +1,20 @@
 import React, { useContext } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Headroom from 'react-headroom';
-import { ApplicationBar } from 'gitea-react-toolkit';
+import {
+  ApplicationBar,
+  AuthenticationContextProvider,
+  RepositoryContextProvider,
+  FileContextProvider,
+} from 'gitea-react-toolkit';
+
 import DrawerMenu from './components/drawer-menu/DrawerMenu';
 import Workspace from './Workspace';
 
 import theme from './theme';
 
 import { AppContext, AppContextProvider } from './App.context';
+import { TargetFileContextProvider } from './core/TargetFile.context';
 
 const { version } = require('../package.json');
 const title = `translationCore Create - v${version}`
@@ -17,14 +24,14 @@ function AppComponent() {
   const {
     authentication,
     sourceRepository,
-    sourceBlob,
+    sourceFile,
     fontScale,
     config,
   } = state;
   const {
     setAuthentication,
     setSourceRepository,
-    setSourceBlob,
+    setSourceFile,
   } = actions;
 
   const drawerMenu = <DrawerMenu />;
@@ -35,33 +42,38 @@ function AppComponent() {
     workspace: { margin: `${theme.spacing(2)}px` },
   };
 
-  const applicationBar = (
-    <Headroom style={style.headroom}>
-      <ApplicationBar
-        title={title}
-        // buttons={buttons}
-        authentication={authentication}
-        onAuthentication={setAuthentication}
-        authenticationConfig={config.authenticationConfig}
-        repository={sourceRepository}
-        onRepository={setSourceRepository}
-        repositoryConfig={config.repositoryConfig}
-        blob={sourceBlob}
-        onBlob={setSourceBlob}
-        drawerMenu={drawerMenu}
-      />
-    </Headroom>
-  );
-
   return (
     <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>
-        <header id="App-header">
-          {applicationBar}
-        </header>
-        <div style={style.workspace}>
-          <Workspace />
-        </div>
+        <AuthenticationContextProvider
+          authentication={authentication}
+          onAuthentication={setAuthentication}
+          config={config.authentication}
+        >
+          <RepositoryContextProvider
+            repository={sourceRepository}
+            onRepository={setSourceRepository}
+            urls={config.repository.urls}
+          >
+            <FileContextProvider
+              file={sourceFile}
+              onFile={setSourceFile}
+            >
+              <header id="App-header">
+                <Headroom style={style.headroom}>
+                  <ApplicationBar
+                    title={title}
+                    // buttons={buttons}
+                    drawerMenu={drawerMenu}
+                  />
+                </Headroom>
+              </header>
+              <div style={style.workspace}>
+                <Workspace />
+              </div>
+            </FileContextProvider>
+          </RepositoryContextProvider>
+        </AuthenticationContextProvider>
       </MuiThemeProvider>
     </div>
   );
