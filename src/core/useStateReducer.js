@@ -28,6 +28,7 @@ export const useStateReducer = () => {
 
   const setSourceFile = useCallback((value) => {
     dispatch({type: 'set_source_file', value});
+    saveState('sourceFile', value);
   },[]);
 
   const setTargetFile = useCallback((value) => {

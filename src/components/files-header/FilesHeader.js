@@ -43,34 +43,35 @@ function FilesHeader({
   const targetBranch = targetRepository.branch || targetRepository.default_branch;
 
   let sourceCompareLink, targetCompareLink;
-  if (sourceRepository.full_name === targetRepository.full_name) {
-    sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceBranch}`
-    targetCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetBranch}`
-  } else {
-    const sourceOwner = sourceRepository.owner.login;
-    const targetOwner = targetRepository.owner.login;
-    sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`
-    targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`
-  
+  const sourceLanguage = getLanguage({ languageId: sourceRepository.name.split('_')[0] });
+  if (sourceLanguage.languageName === language.languageName) {
+    if (sourceRepository.full_name === targetRepository.full_name) {
+      sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceBranch}`
+      targetCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetBranch}`
+    } else {
+      const sourceOwner = sourceRepository.owner.username;
+      const targetOwner = targetRepository.owner.username;
+      sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`
+      targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`
+    }
   }
 
   const sourceChip = useMemo(() => {
-    const sourceLanguage = getLanguage({ languageId: sourceRepository.name.split('_')[0] });
     const { full_name } = sourceRepository;
     const label = `${sourceLanguage.languageName} - ${full_name}/${sourceBranch}`;
     const onClick = () => openLink(sourceFile.html_url);
-    const onDelete = () => openLink(sourceCompareLink);
+    const onDelete = () => sourceCompareLink && openLink(sourceCompareLink);
     const style = { background: '#fff9' };
     const deleteIcon = <GetApp />;
     return chip({ label, onDelete, style, onClick, deleteIcon });
-  }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch]);
+  }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
 
   const targetChip = useMemo(() => {
     const { full_name } = targetRepository;
     const label = `${language.languageName} - ${full_name}/${targetBranch}`;
     const onClick = () => openLink(targetFile.html_url);
     const style = { background: '#fff9' };
-    const onDelete = () => openLink(targetCompareLink);
+    const onDelete = () => targetCompareLink && openLink(targetCompareLink);
     const deleteIcon = <Publish />;
     return chip({ label, onDelete, style, onClick, deleteIcon });
   }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink, targetBranch]);

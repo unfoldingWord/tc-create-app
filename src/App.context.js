@@ -19,6 +19,7 @@ export function AppContextProvider({
     setLanguage,
     setSourceRepository,
     setTargetRepoFromSourceRepo,
+    setSourceFile,
   } = actions;
 
   useEffect(() => {
@@ -35,6 +36,11 @@ export function AppContextProvider({
     console.log('loadState("sourceRepository")');
     loadState('sourceRepository').then(setSourceRepository);
   }, [setSourceRepository]);
+
+  useEffect(() => {
+    console.log('loadState("sourceFile")');
+    loadState('sourceFile').then(setSourceFile);
+  }, [setSourceFile]);
 
   const value = {
     state,
