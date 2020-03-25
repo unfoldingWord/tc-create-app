@@ -6560,10 +6560,10 @@ gitea-react-toolkit@^0.6.9:
     prop-types "15.7.2"
     utf8 "3.0.0"
 
-gitea-react-toolkit@^1.0.0-alpha.5:
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.0.0-alpha.5.tgz#eba6594014f92a7384e3b1821671f560cdc58473"
-  integrity sha512-LeFUx//s7YFbtwHOe0ZHSHMVPrLyi27GEdKX6drzplD110tGXmme0GTQt9uXthWz/njsbKeKQ5j0+S+KOQ+XBQ==
+gitea-react-toolkit@^1.0.0-alpha.6:
+  version "1.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.0.0-alpha.6.tgz#ae015e0332c797da09cc2422f8f8a4ef28442927"
+  integrity sha512-duK8TLNiyDUAw2F7K/fb+GakyYw4U6D9JlnkFj7te/8a4ayaNsFaAsOaQ3vdXI6ffMZhdgWHX3udBNqsGsmR5A==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"

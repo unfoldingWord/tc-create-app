@@ -19,7 +19,7 @@ function TargetFileContextProvider({
   } = useContext(AppContext);
 
   const {
-    state, actions, component, components, config,
+    state, actions, actions: { read }, component, components, config,
   } = useFile({
     config: (authentication && authentication.config),
     authentication,
@@ -30,7 +30,14 @@ function TargetFileContextProvider({
     onFile: setTargetFile,
   });
 
-  console.log(targetFile);
+  const sourceFilepath = sourceFile && sourceFile.filepath;
+  const targetFilepath = targetFile && targetFile.filepath;
+  useEffect(() => {
+    const needTarget = (!!sourceFilepath && !targetFilepath);
+    const oldTarget = (sourceFilepath !== targetFilepath);
+    
+    if (needTarget || oldTarget) read(sourceFilepath);
+  }, [sourceFilepath, targetFilepath, read]);
 
   const context = {
     state,
