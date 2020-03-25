@@ -14,7 +14,6 @@ import Workspace from './Workspace';
 import theme from './theme';
 
 import { AppContext, AppContextProvider } from './App.context';
-import { TargetFileContextProvider } from './core/TargetFile.context';
 
 const { version } = require('../package.json');
 const title = `translationCore Create - v${version}`

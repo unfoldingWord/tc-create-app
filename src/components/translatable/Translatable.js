@@ -1,7 +1,6 @@
 import React, { useMemo, useEffect, useCallback, useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useFile } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
 

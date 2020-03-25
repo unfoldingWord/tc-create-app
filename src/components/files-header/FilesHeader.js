@@ -6,7 +6,8 @@ import {
 } from '@material-ui/core';
 import {
   Translate,
-  Publish
+  Publish,
+  GetApp,
 } from '@material-ui/icons';
 
 import { getLanguage } from '../languages/helpers';
@@ -25,43 +26,54 @@ function FilesHeader({
   });
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
 
-  const chip = useCallback(({ label, onDelete, style, onClick }) => (
+  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon }) => (
     <Chip
       onClick={onClick}
       icon={<Translate />}
       label={label}
       onDelete={onDelete}
-      deleteIcon={<Publish />}
+      deleteIcon={deleteIcon}
       variant="outlined"
       className={classes.header}
       style={style}
     />
   ), [classes.header]);
-  const sourceBranchMatches = sourceFile.url.match(/\?ref=(.*)/) || [];
-  const sourceBranch = sourceBranchMatches[1];
-  const targetBranchMatches = targetFile.url.match(/\?ref=(.*)/) || [];
-  const targetBranch = targetBranchMatches[1];
-  const sourceOwner = sourceRepository.owner.login;
-  const targetOwner = targetRepository.owner.login;
-  const sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`
-  const targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`
+
+  const sourceBranch = sourceRepository.branch || sourceRepository.default_branch;
+  const targetBranch = targetRepository.branch || targetRepository.default_branch;
+
+  let sourceCompareLink, targetCompareLink;
+  if (sourceRepository.full_name === targetRepository.full_name) {
+    sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceBranch}`
+    targetCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetBranch}`
+  } else {
+    const sourceOwner = sourceRepository.owner.login;
+    const targetOwner = targetRepository.owner.login;
+    sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`
+    targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`
+  
+  }
 
   const sourceChip = useMemo(() => {
     const sourceLanguage = getLanguage({ languageId: sourceRepository.name.split('_')[0] });
-    const label = `${sourceRepository.owner.username} - ${sourceLanguage.languageName}`;
+    const { full_name } = sourceRepository;
+    const label = `${sourceLanguage.languageName} - ${full_name}/${sourceBranch}`;
     const onClick = () => openLink(sourceFile.html_url);
     const onDelete = () => openLink(sourceCompareLink);
     const style = { background: '#fff9' };
-    return chip({ label, onDelete, style, onClick });
-  }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink]);
+    const deleteIcon = <GetApp />;
+    return chip({ label, onDelete, style, onClick, deleteIcon });
+  }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch]);
 
   const targetChip = useMemo(() => {
-    const label = `${targetRepository.owner.username} - ${language.languageName}`;
+    const { full_name } = targetRepository;
+    const label = `${language.languageName} - ${full_name}/${targetBranch}`;
     const onClick = () => openLink(targetFile.html_url);
     const style = { background: '#fff9' };
     const onDelete = () => openLink(targetCompareLink);
-    return chip({ label, onDelete, style, onClick });
-  }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink]);
+    const deleteIcon = <Publish />;
+    return chip({ label, onDelete, style, onClick, deleteIcon });
+  }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink, targetBranch]);
 
   return (
     <Grid className={classes.headers} container wrap="nowrap" spacing={2}>

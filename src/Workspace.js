@@ -6,13 +6,7 @@ import { AppContext } from './App.context';
 import { TargetFileContextProvider } from './core/TargetFile.context';  
 
 function Workspace () {
-  const {
-    state: {
-      sourceRepository,
-      sourceFile,
-      targetFile,
-    }
-  } = useContext(AppContext);
+  const { state: { sourceRepository, sourceFile } } = useContext(AppContext);
 
   let component;
   if (sourceRepository && sourceFile) {
