@@ -14,7 +14,7 @@ function Translatable() {
   const [wrapperElement, setWrapperElement] = useState(null);
   const {
     state: {
-      language, sourceRepository, targetRepository, sourceFile, targetFile,
+      language, sourceRepository, targetRepository, sourceFile, targetFile, filepath,
     },
   } = useContext(AppContext);
 
@@ -28,7 +28,7 @@ function Translatable() {
 
   const translatableComponent = useMemo(() => {
     let _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
-    if (sourceFile && targetFile && sourceFile.content && targetFile.content) {
+    if (filepath && sourceFile && targetFile && (filepath === sourceFile.filepath) && (filepath === targetFile.filepath)) {
       if (sourceFile.filepath.match(/\.md$/)) {
         let translatableProps = {
           original: sourceFile.content,
@@ -58,7 +58,7 @@ function Translatable() {
       }
     }
     return _translatable;
-  }, [sourceFile, targetFile, targetFileActions.save]);
+  }, [filepath, sourceFile, targetFile, targetFileActions.save]);
 
   useEffect(() => {
     if (targetFile) {

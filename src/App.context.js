@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import { loadState } from './core/persistence';
 import { useStateReducer } from './core/useStateReducer';
@@ -16,31 +16,33 @@ export function AppContextProvider({
   } = state;
 
   const {
-    setLanguage,
-    setSourceRepository,
     setTargetRepoFromSourceRepo,
-    setSourceFile,
+    resumeState,
   } = actions;
 
-  useEffect(() => {
-    if (authentication && sourceRepository)
-      setTargetRepoFromSourceRepo({ authentication, sourceRepository, language });
-  }, [setTargetRepoFromSourceRepo, authentication, sourceRepository, language]);
+  console.log('AppContextProvider');
+
+  const authMemo = authentication && JSON.stringify(authentication);
 
   useEffect(() => {
-    console.log('loadState("language")');
-    loadState('language').then(setLanguage);
-  }, [setLanguage]);
+    if (authMemo && sourceRepository) {
+      console.log('setTargetRepoFromSourceRepo');
+      const _authentication = JSON.parse(authMemo);
+      setTargetRepoFromSourceRepo({ authentication: _authentication, sourceRepository, language });
+    }
+  }, [authMemo, sourceRepository, language]);
+
+  const _resumeState = useCallback(async () => {
+    console.log('loadState');
+    const _language = await loadState('language');
+    const _sourceRepository = await loadState('sourceRepository');
+    const _filepath = await loadState('filepath');
+    await resumeState({ language: _language, sourceRepository: _sourceRepository, filepath: _filepath });
+  }, [resumeState]);
 
   useEffect(() => {
-    console.log('loadState("sourceRepository")');
-    loadState('sourceRepository').then(setSourceRepository);
-  }, [setSourceRepository]);
-
-  useEffect(() => {
-    console.log('loadState("sourceFile")');
-    loadState('sourceFile').then(setSourceFile);
-  }, [setSourceFile]);
+    _resumeState();
+  }, [_resumeState]);
 
   const value = {
     state,

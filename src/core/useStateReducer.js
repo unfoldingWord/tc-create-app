@@ -26,13 +26,21 @@ export const useStateReducer = () => {
     if (!value) dispatch({type: 'set_target_repository'});
   },[]);
 
-  const setSourceFile = useCallback((value) => {
-    dispatch({type: 'set_source_file', value});
-    saveState('sourceFile', value);
+  const setFilepath = useCallback((value) => {
+    dispatch({type: 'set_filepath', value});
+    saveState('filepath', value);
   },[]);
 
+  const setSourceFile = useCallback((value) => {
+    dispatch({type: 'set_source_file', value});
+  },[]);  
+  
   const setTargetFile = useCallback((value) => {
     dispatch({type: 'set_target_file', value});
+  },[]);
+
+  const resumeState = useCallback((value) => {
+    dispatch({type: 'resume_state', value});
   },[]);
 
   const setTargetRepoFromSourceRepo = useCallback(({authentication, sourceRepository, language}) => {
@@ -86,6 +94,8 @@ export const useStateReducer = () => {
     setSourceFile,
     setTargetFile,
     setTargetRepoFromSourceRepo,
+    setFilepath,
+    resumeState,
   };
   return [state, actions];
 };

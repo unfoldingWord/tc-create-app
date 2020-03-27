@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   useFile,
@@ -13,31 +13,23 @@ function TargetFileContextProvider({
 }) {
   const {
     state: {
-      authentication, targetRepository, sourceFile, targetFile,
+      authentication, targetRepository, sourceFile, filepath, setFilepath, targetFile,
     }={},
     actions: { setTargetFile },
   } = useContext(AppContext);
 
   const {
-    state, actions, actions: { read }, component, components, config,
+    state, actions, component, components, config,
   } = useFile({
     config: (authentication && authentication.config),
     authentication,
     repository: targetRepository,
-    filepath: (sourceFile && sourceFile.filepath),
+    filepath,
+    onFilepath: setFilepath,
     defaultContent: (sourceFile && sourceFile.content),
     file: targetFile,
     onFile: setTargetFile,
   });
-
-  const sourceFilepath = sourceFile && sourceFile.filepath;
-  const targetFilepath = targetFile && targetFile.filepath;
-  useEffect(() => {
-    const needTarget = (!!sourceFilepath && !targetFilepath);
-    const oldTarget = (sourceFilepath !== targetFilepath);
-    
-    if (needTarget || oldTarget) read(sourceFilepath);
-  }, [sourceFilepath, targetFilepath, read]);
 
   const context = {
     state,

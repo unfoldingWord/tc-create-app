@@ -24,6 +24,7 @@ function AppComponent() {
     authentication,
     sourceRepository,
     sourceFile,
+    filepath,
     fontScale,
     config,
   } = state;
@@ -31,6 +32,7 @@ function AppComponent() {
     setAuthentication,
     setSourceRepository,
     setSourceFile,
+    setFilepath,
   } = actions;
 
   const drawerMenu = <DrawerMenu />;
@@ -40,6 +42,8 @@ function AppComponent() {
     headroom: { zIndex: '200' },
     workspace: { margin: `${theme.spacing(2)}px` },
   };
+
+  console.log('AppComponent');
 
   return (
     <div className="App" style={style.app}>
@@ -57,6 +61,8 @@ function AppComponent() {
             <FileContextProvider
               file={sourceFile}
               onFile={setSourceFile}
+              filepath={filepath}
+              onFilepath={setFilepath}
             >
               <header id="App-header">
                 <Headroom style={style.headroom}>
