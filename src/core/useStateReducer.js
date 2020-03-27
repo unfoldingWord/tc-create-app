@@ -5,8 +5,11 @@ import {stateReducer} from './state.reducer';
 import {saveState} from './persistence';
 import defaults from './state.defaults';
 
-export const useStateReducer = () => {
-  const [state, dispatch] = useReducer(stateReducer, defaults);
+export const useStateReducer = ({
+  authentication, language, sourceRepository, filepath,
+}) => {
+  const _defaults = { ...defaults, authentication, sourceRepository, language, filepath };
+  const [state, dispatch] = useReducer(stateReducer, _defaults);
 
   const setFontScale = useCallback((value) => {
     dispatch({type: 'set_font_scale', value});
@@ -16,28 +19,50 @@ export const useStateReducer = () => {
     dispatch({type: 'set_config', value});
   },[]);
 
-  const setTargetRepository = useCallback((value) => {
-    dispatch({type: 'set_target_repository', value});
-  },[]);
-
   const setSourceRepository = useCallback((value) => {
     dispatch({type: 'set_source_repository', value});
     saveState('sourceRepository', value);
     if (!value) dispatch({type: 'set_target_repository'});
   },[]);
 
-  const setFilepath = useCallback((value) => {
-    dispatch({type: 'set_filepath', value});
-    saveState('filepath', value);
+  const setAuthentication = useCallback((value) => {
+    if (JSON.stringify(value) !== JSON.stringify(state.authentication)) {
+      dispatch({type: 'set_authentication', value});
+      saveState('authentication', value);
+      if (!value && !!state.sourceRepository) setSourceRepository(); // reset if logged out
+    };
+  }, [state.authentication, state.sourceRepository, setSourceRepository]);
+
+  const setLanguage = useCallback((value) => {
+    if (value !== state.language) {
+      dispatch({type: 'set_language', value});
+      saveState('language', value);
+      if (!value) setSourceRepository(); // reset if no language
+    };
+  }, [state.language, setSourceRepository]);
+
+  const setTargetRepository = useCallback((value) => {
+    dispatch({type: 'set_target_repository', value});
   },[]);
 
+  const setFilepath = useCallback((value) => {
+    if (value !== state.filepath) {
+      dispatch({type: 'set_filepath', value});
+      saveState('filepath', value);
+    };
+  },[state.filepath]);
+
   const setSourceFile = useCallback((value) => {
-    dispatch({type: 'set_source_file', value});
-  },[]);  
+    if (JSON.stringify(value) !== JSON.stringify(state.sourceFile)) {
+      dispatch({type: 'set_source_file', value});
+    };
+  }, [state.sourceFile]);  
   
   const setTargetFile = useCallback((value) => {
-    dispatch({type: 'set_target_file', value});
-  },[]);
+    if (JSON.stringify(value) !== JSON.stringify(state.targetFile)) {
+      dispatch({type: 'set_target_file', value});
+    };
+  }, [state.targetFile]);
 
   const resumeState = useCallback((value) => {
     dispatch({type: 'resume_state', value});
@@ -72,17 +97,6 @@ export const useStateReducer = () => {
       setTargetRepository();
     }
   },[setTargetRepository]);
-
-  const setAuthentication = useCallback((value) => {
-    dispatch({type: 'set_authentication', value});
-    if (!value && !!state.sourceRepository) setSourceRepository(); // reset if logged out
-  },[setSourceRepository, state.sourceRepository]);
-
-  const setLanguage = useCallback((value) => {
-    dispatch({type: 'set_language', value});
-    saveState('language', value);
-    if (!value) setSourceRepository(); // reset if no language
-  },[setSourceRepository]);
 
   const actions = {
     setAuthentication,

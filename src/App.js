@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Headroom from 'react-headroom';
 import {
@@ -9,6 +9,7 @@ import {
 } from 'gitea-react-toolkit';
 
 import DrawerMenu from './components/drawer-menu/DrawerMenu';
+import { loadState } from './core/persistence';
 import Workspace from './Workspace';
 
 import theme from './theme';
@@ -54,11 +55,14 @@ function AppComponent() {
           config={config.authentication}
         >
           <RepositoryContextProvider
+            authentication={authentication}
             repository={sourceRepository}
             onRepository={setSourceRepository}
             urls={config.repository.urls}
           >
             <FileContextProvider
+              authentication={authentication}
+              repository={sourceRepository}
               file={sourceFile}
               onFile={setSourceFile}
               filepath={filepath}
@@ -85,11 +89,29 @@ function AppComponent() {
 }
 
 function App(props) {
-  return (
-    <AppContextProvider {...props}>
+  const [resumedState, setResumedState] = useState();
+
+  const resumeState = useCallback(async () => {
+    console.log('resumeState');
+    const authentication = await loadState('authentication');
+    const language = await loadState('language');
+    const sourceRepository = await loadState('sourceRepository');
+    const filepath = await loadState('filepath');
+    const _resumedState = { authentication, language, sourceRepository, filepath };
+    setResumedState(_resumedState);
+  }, []);
+
+  useEffect(() => {
+    resumeState();
+  }, [resumeState]);
+
+  const _props = { ...props, ...resumedState };
+  
+  return (!resumedState) ? <></> : (
+    <AppContextProvider {..._props}>
       <AppComponent {...props} />
     </AppContextProvider>
   );
-}
+};
 
 export default App;

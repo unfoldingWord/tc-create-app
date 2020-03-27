@@ -1,14 +1,24 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 
-import { loadState } from './core/persistence';
+// import { loadState } from './core/persistence';
 import { useStateReducer } from './core/useStateReducer';
 
 export const AppContext = React.createContext();
 
 export function AppContextProvider({
+  authentication: __authentication,
+  language: __language,
+  sourceRepository: __sourceRepository,
+  filepath: __filepath,
   children,
 }) {
-  const [state, actions] = useStateReducer();
+  const [state, actions] = useStateReducer({
+    authentication: __authentication,
+    language: __language,
+    sourceRepository: __sourceRepository,
+    filepath: __filepath,
+  });
+
   const {
     authentication,
     language,
@@ -17,7 +27,7 @@ export function AppContextProvider({
 
   const {
     setTargetRepoFromSourceRepo,
-    resumeState,
+    // resumeState,
   } = actions;
 
   console.log('AppContextProvider');
@@ -30,19 +40,7 @@ export function AppContextProvider({
       const _authentication = JSON.parse(authMemo);
       setTargetRepoFromSourceRepo({ authentication: _authentication, sourceRepository, language });
     }
-  }, [authMemo, sourceRepository, language]);
-
-  const _resumeState = useCallback(async () => {
-    console.log('loadState');
-    const _language = await loadState('language');
-    const _sourceRepository = await loadState('sourceRepository');
-    const _filepath = await loadState('filepath');
-    await resumeState({ language: _language, sourceRepository: _sourceRepository, filepath: _filepath });
-  }, [resumeState]);
-
-  useEffect(() => {
-    _resumeState();
-  }, [_resumeState]);
+  }, [authMemo, sourceRepository, language, setTargetRepoFromSourceRepo]);
 
   const value = {
     state,
