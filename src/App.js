@@ -44,8 +44,6 @@ function AppComponent() {
     workspace: { margin: `${theme.spacing(2)}px` },
   };
 
-  console.log('AppComponent');
-
   return (
     <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>
@@ -92,7 +90,6 @@ function App(props) {
   const [resumedState, setResumedState] = useState();
 
   const resumeState = useCallback(async () => {
-    console.log('resumeState');
     const authentication = await loadState('authentication');
     const language = await loadState('language');
     const sourceRepository = await loadState('sourceRepository');

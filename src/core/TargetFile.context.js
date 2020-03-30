@@ -31,8 +31,6 @@ function TargetFileContextProvider({
     onFile: setTargetFile,
   });
 
-  console.log('TargetFileContextProvider');
-
   const context = {
     state,
     actions,

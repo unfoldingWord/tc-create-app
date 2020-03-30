@@ -30,13 +30,10 @@ export function AppContextProvider({
     // resumeState,
   } = actions;
 
-  console.log('AppContextProvider');
-
   const authMemo = authentication && JSON.stringify(authentication);
 
   useEffect(() => {
     if (authMemo && sourceRepository) {
-      console.log('setTargetRepoFromSourceRepo');
       const _authentication = JSON.parse(authMemo);
       setTargetRepoFromSourceRepo({ authentication: _authentication, sourceRepository, language });
     }

@@ -15,7 +15,6 @@ function Workspace () {
     let _component = <ApplicationStepper />;
     if (sourceRepoMemo && sourceFilepath && filepath) {
       if (sourceFilepath === filepath) {
-        console.log('WorkspaceComponent');
         _component = (
           <TargetFileContextProvider>
             <Translatable />
