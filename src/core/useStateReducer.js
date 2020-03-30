@@ -89,9 +89,7 @@ export const useStateReducer = ({
           config: authentication.config,
           settings: {description},
         };
-        ensureRepo(params).then((_targetRepository) => {
-          setTargetRepository(_targetRepository);
-        });
+        ensureRepo(params).then(setTargetRepository);
       }
     } else {
       setTargetRepository();
