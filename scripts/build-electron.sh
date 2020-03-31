@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CLONETARGET="tca-electron"
+CLONETARGET="build-electron"
 
 if [ "$1x" != "x" ] 
 then
@@ -45,7 +45,7 @@ echo +-------------------------------------------------------------+
 echo Build the react web app with yarn build
 echo +-------------------------------------------------------------+
 
-rescripts build
+yarn electron:build
 
 echo +-------------------------------------------------------------+
 echo Add capacitor
