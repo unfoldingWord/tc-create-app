@@ -1,19 +1,18 @@
 import appPackage from '../../package.json';
 
-const server = 'https://git.door43.org';
+const server = 'https://bg.door43.org';
 
 const config = {
-  authenticationConfig: {
+  authentication: {
     server,
     tokenid: appPackage.name,
   },
-  repositoryConfig: {
-    server,
+  repository: {
     urls: [
-      'https://git.door43.org/api/v1/repos/unfoldingword/en_ta',
-      'https://git.door43.org/api/v1/repos/unfoldingword/en_tw',
-      'https://git.door43.org/api/v1/repos/unfoldingword/en_tn',
-      'https://git.door43.org/api/v1/repos/unfoldingword/en_obs',
+      server + '/api/v1/repos/unfoldingword/en_ta',
+      server + '/api/v1/repos/unfoldingword/en_tw',
+      server + '/api/v1/repos/unfoldingword/en_tn',
+      server + '/api/v1/repos/unfoldingword/en_obs',
     ],
   },
 };

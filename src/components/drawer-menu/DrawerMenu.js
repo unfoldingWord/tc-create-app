@@ -46,7 +46,7 @@ function DrawerMenu() {
             {`Font Size ${fontScale}%`}
           </Typography>
           <Slider
-            classes={{ container: classes.slider }}
+            // classes={{ container: classes.slider }}
             value={fontScale}
             aria-labelledby="label"
             onChange={handleFontScale}
