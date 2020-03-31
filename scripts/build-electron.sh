@@ -1,6 +1,7 @@
 #!/bin/sh
 
 CLONETARGET="build-electron"
+REPOGIT=git@github.com:mandolyte/tc-create-app.git
 
 if [ "$1x" != "x" ] 
 then
@@ -26,7 +27,6 @@ echo Clone the repo
 echo Start at `date`
 echo +-------------------------------------------------------------+
 
-REPOGIT=git@github.com:unfoldingWord/tc-create-app.git
 git clone $REPOGIT $CLONETARGET
 
 echo +-------------------------------------------------------------+
