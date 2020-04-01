@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CLONETARGET="build-electron"
-REPOGIT=git@github.com:mandolyte/tc-create-app.git
+REPOGIT=git@github.com:unfoldingword/tc-create-app.git
 
 if [ "$1x" != "x" ] 
 then
