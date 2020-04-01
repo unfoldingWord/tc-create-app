@@ -1,0 +1,46 @@
+{
+  "name": "tc-create-app",
+  "version": "0.9.0-beta.9",
+  "description": "Create Translation Core",
+  "main": "index.js",
+  "homepage": "https://create.translationcore.com/",
+  "scripts": {
+    "electron:start": "electron ./",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "org.unfoldingword.tc-create-app",
+    "linux": {
+      "target": "deb",
+      "icon": "app/glts_logo_white.png",
+      "maintainer": "unfoldingword.org"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "app/glts_logo_white.png"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": "default",
+      "icon": "app/glts_logo_white.png"
+    }
+  },
+  "dependencies": {
+    "@capacitor/electron": "^1.5.1",
+    "electron-is-dev": "^1.1.0"
+  },
+  "devDependencies": {
+    "electron": "^8.1.1",
+    "electron-builder": "^22.4.1"
+  },
+  "keywords": [
+    "capacitor",
+    "electron"
+  ],
+  "author": {
+    "name": "unfoldingword.org",
+    "email": "dev@unfoldingword.org"
+  },
+  "license": "MIT"
+}
