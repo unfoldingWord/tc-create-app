@@ -23,7 +23,7 @@ function ApplicationStepper() {
   const { state: { language }, actions: { setLanguage } } = useContext(AppContext);
 
   const { state: authentication, component: authenticationComponent } = useContext(AuthenticationContext);
-  const { state: sourceRepository, component: repositoryComponent } = useContext(RepositoryContext);
+  const { state: sourceRepository, components: { browse: repositoryComponent } } = useContext(RepositoryContext);
   const { state: sourceFile, component: fileComponent } = useContext(FileContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
