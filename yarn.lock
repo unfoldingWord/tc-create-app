@@ -6489,7 +6489,7 @@ gitea-react-toolkit@^0.6.9:
     prop-types "15.7.2"
     utf8 "3.0.0"
 
-gitea-react-toolkit@^1.0.0-beta.6:
+gitea-react-toolkit@^1.0.0-beta.7:
   version "1.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.0.0-beta.7.tgz#778923f2839b251b30d3f3361976768a160e101d"
   integrity sha512-ZQ4NOIzAIHgmrAoV211QmhE9fsGLpb8X0Z3DB5ZI2lQ+iKs1dIOqYn5w+9jJUd+b18JtvfOpQFamYy+G271a3g==
