@@ -10,7 +10,7 @@ const ParallelScriptureWithResources = withResources(ParallelScripture);
 function QuoteSelector({
   quote,
   onQuote,
-  occurrence,
+  occurrence: _occurrence,
   reference,
   buttons,
 }) {
@@ -25,6 +25,7 @@ function QuoteSelector({
     'unfoldingWord/en/ult/master',
     'unfoldingWord/en/ust/master',
   ];
+  const occurrence = (_occurrence == "\\-1") ? -1 : _occurrence;
 
   return (
     <MuiThemeProvider theme={getMuiTheme}>

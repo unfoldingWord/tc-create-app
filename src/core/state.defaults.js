@@ -1,19 +1,18 @@
 import appPackage from '../../package.json';
 
-const server = process.env.REACT_APP_DOOR43_SERVER_URL
+const server = process.env.REACT_APP_DOOR43_SERVER_URL;
 
 const config = {
-  authenticationConfig: {
+  authentication: {
     server,
     tokenid: appPackage.name,
   },
-  repositoryConfig: {
-    server,
+  repository: {
     urls: [
-      `${process.env.REACT_APP_DOOR43_SERVER_URL}/api/v1/repos/unfoldingword/en_ta`,
-      `${process.env.REACT_APP_DOOR43_SERVER_URL}/api/v1/repos/unfoldingword/en_tw`,
-      `${process.env.REACT_APP_DOOR43_SERVER_URL}/api/v1/repos/unfoldingword/en_tn`,
-      `${process.env.REACT_APP_DOOR43_SERVER_URL}/api/v1/repos/unfoldingword/en_obs`,
+      server + '/api/v1/repos/unfoldingword/en_ta',
+      server + '/api/v1/repos/unfoldingword/en_tw',
+      server + '/api/v1/repos/unfoldingword/en_tn',
+      server + '/api/v1/repos/unfoldingword/en_obs',
     ],
   },
 };

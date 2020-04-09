@@ -14,6 +14,46 @@ import {
 } from './helpers';
 import components from './Components';
 
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    height: 250,
+  },
+  input: {
+    display: 'flex',
+    marginBottom: `${theme.spacing(0.5)}px`
+  },
+  valueContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flex: 1,
+    alignItems: 'center',
+    // overflow: 'hidden',
+  },
+  noOptionsMessage: {
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+  },
+  singleValue: {
+    fontSize: 16,
+  },
+  placeholder: {
+    position: 'absolute',
+    left: 2,
+    fontSize: 16,
+  },
+  paper: {
+    position: 'absolute',
+    zIndex: 1,
+    marginTop: theme.spacing(1),
+    left: 0,
+    right: 0,
+  },
+  divider: {
+    height: theme.spacing(2),
+  },
+}));
+
 function LanguageSelect({
   language,
   onLanguage,
@@ -58,49 +98,9 @@ function LanguageSelect({
 }
 
 LanguageSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
   language: PropTypes.object,
   onLanguage: PropTypes.func.isRequired,
 };
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    height: 250,
-  },
-  input: {
-    display: 'flex',
-    marginBottom: `${theme.spacing(0.5)}px`
-  },
-  valueContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flex: 1,
-    alignItems: 'center',
-    // overflow: 'hidden',
-  },
-  noOptionsMessage: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-  },
-  singleValue: {
-    fontSize: 16,
-  },
-  placeholder: {
-    position: 'absolute',
-    left: 2,
-    fontSize: 16,
-  },
-  paper: {
-    position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing(1),
-    left: 0,
-    right: 0,
-  },
-  divider: {
-    height: theme.spacing(2),
-  },
-}));
 
 export default LanguageSelect;

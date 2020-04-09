@@ -1,8 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Headroom from 'react-headroom';
-import { ApplicationBar } from 'gitea-react-toolkit';
+import {
+  ApplicationBar,
+  AuthenticationContextProvider,
+  RepositoryContextProvider,
+  FileContextProvider,
+} from 'gitea-react-toolkit';
+
 import DrawerMenu from './components/drawer-menu/DrawerMenu';
+import { loadState } from './core/persistence';
 import Workspace from './Workspace';
 
 import theme from './theme';
@@ -17,14 +24,16 @@ function AppComponent() {
   const {
     authentication,
     sourceRepository,
-    sourceBlob,
+    sourceFile,
+    filepath,
     fontScale,
     config,
   } = state;
   const {
     setAuthentication,
     setSourceRepository,
-    setSourceBlob,
+    setSourceFile,
+    setFilepath,
   } = actions;
 
   const drawerMenu = <DrawerMenu />;
@@ -35,44 +44,71 @@ function AppComponent() {
     workspace: { margin: `${theme.spacing(2)}px` },
   };
 
-  const applicationBar = (
-    <Headroom style={style.headroom}>
-      <ApplicationBar
-        title={title}
-        // buttons={buttons}
-        authentication={authentication}
-        onAuthentication={setAuthentication}
-        authenticationConfig={config.authenticationConfig}
-        repository={sourceRepository}
-        onRepository={setSourceRepository}
-        repositoryConfig={config.repositoryConfig}
-        blob={sourceBlob}
-        onBlob={setSourceBlob}
-        drawerMenu={drawerMenu}
-      />
-    </Headroom>
-  );
-
   return (
     <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>
-        <header id="App-header">
-          {applicationBar}
-        </header>
-        <div style={style.workspace}>
-          <Workspace />
-        </div>
+        <AuthenticationContextProvider
+          authentication={authentication}
+          onAuthentication={setAuthentication}
+          config={config.authentication}
+        >
+          <RepositoryContextProvider
+            authentication={authentication}
+            repository={sourceRepository}
+            onRepository={setSourceRepository}
+            urls={config.repository.urls}
+          >
+            <FileContextProvider
+              authentication={authentication}
+              repository={sourceRepository}
+              file={sourceFile}
+              onFile={setSourceFile}
+              filepath={filepath}
+              onFilepath={setFilepath}
+            >
+              <header id="App-header">
+                <Headroom style={style.headroom}>
+                  <ApplicationBar
+                    title={title}
+                    // buttons={buttons}
+                    drawerMenu={drawerMenu}
+                  />
+                </Headroom>
+              </header>
+              <div style={style.workspace}>
+                <Workspace />
+              </div>
+            </FileContextProvider>
+          </RepositoryContextProvider>
+        </AuthenticationContextProvider>
       </MuiThemeProvider>
     </div>
   );
 }
 
 function App(props) {
-  return (
-    <AppContextProvider {...props}>
+  const [resumedState, setResumedState] = useState();
+
+  const resumeState = useCallback(async () => {
+    const authentication = await loadState('authentication');
+    const language = await loadState('language');
+    const sourceRepository = await loadState('sourceRepository');
+    const filepath = await loadState('filepath');
+    const _resumedState = { authentication, language, sourceRepository, filepath };
+    setResumedState(_resumedState);
+  }, []);
+
+  useEffect(() => {
+    resumeState();
+  }, [resumeState]);
+
+  const _props = { ...props, ...resumedState };
+  
+  return (!resumedState) ? <></> : (
+    <AppContextProvider {..._props}>
       <AppComponent {...props} />
     </AppContextProvider>
   );
-}
+};
 
 export default App;
