@@ -28,10 +28,10 @@ function FilesHeader({
   });
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
 
-  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon, iconToolip, deleteIconTooltip }) => (
+  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip }) => (
     <Chip
       onClick={onClick}
-      icon={<Tooltip title={localString(iconToolip)} arrow><Translate /></Tooltip> }
+      icon={<Tooltip title={localString(iconTooltip)} arrow><Translate /></Tooltip> }
       label={label}
       onDelete={onDelete}
       deleteIcon={<Tooltip title={localString(deleteIconTooltip)} arrow>{deleteIcon}</Tooltip>}
