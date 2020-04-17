@@ -18,9 +18,9 @@
 //
 const strings = {
     en:{
-        OpenSourceText:"Open Source Text",
+        OpenSourceText:"Go to Article",
         CompareSource:"Compare Master",
-        OpenTargetText:"Open Target Text",
+        OpenTargetText:"Go to Article",
         CompareTarget:"Compare Branch",
         /* do not remove these two */
         StringMissing:"String Id missing",

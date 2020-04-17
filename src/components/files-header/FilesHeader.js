@@ -65,9 +65,9 @@ function FilesHeader({
     const onDelete = () => sourceCompareLink && openLink(sourceCompareLink);
     const style = { background: '#fff9' };
     const deleteIcon = <GetApp />;
-    const iconToolip='OpenSourceText';
+    const iconTooltip='OpenSourceText';
     const deleteIconTooltip = 'CompareSource'
-    return chip({ label, onDelete, style, onClick, deleteIcon, iconToolip, deleteIconTooltip });
+    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip });
   }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
 
   const targetChip = useMemo(() => {
@@ -77,9 +77,9 @@ function FilesHeader({
     const style = { background: '#fff9' };
     const onDelete = () => targetCompareLink && openLink(targetCompareLink);
     const deleteIcon = <Publish />;
-    const iconToolip='OpenTargetText';
+    const iconTooltip='OpenTargetText';
     const deleteIconTooltip = 'CompareTarget'
-    return chip({ label, onDelete, style, onClick, deleteIcon, iconToolip, deleteIconTooltip });
+    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip });
   }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink, targetBranch]);
 
   return (
