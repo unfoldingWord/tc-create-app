@@ -20,4 +20,5 @@ const config = {
 export default {
   fontScale: 100,
   config,
+  SERVER_URL: server
 };
