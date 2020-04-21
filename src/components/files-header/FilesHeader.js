@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
   Chip,
+  Tooltip,
 } from '@material-ui/core';
 import {
   Translate,
@@ -11,6 +12,7 @@ import {
 } from '@material-ui/icons';
 
 import { getLanguage } from '../languages/helpers';
+import { localString } from '../../core/localStrings';
 
 function FilesHeader({
   sourceRepository,
@@ -26,13 +28,13 @@ function FilesHeader({
   });
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
 
-  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon }) => (
+  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip }) => (
     <Chip
       onClick={onClick}
-      icon={<Translate />}
+      icon={<Tooltip title={localString(iconTooltip)} arrow><Translate /></Tooltip> }
       label={label}
       onDelete={onDelete}
-      deleteIcon={deleteIcon}
+      deleteIcon={<Tooltip title={localString(deleteIconTooltip)} arrow>{deleteIcon}</Tooltip>}
       variant="outlined"
       className={classes.header}
       style={style}
@@ -63,7 +65,9 @@ function FilesHeader({
     const onDelete = () => sourceCompareLink && openLink(sourceCompareLink);
     const style = { background: '#fff9' };
     const deleteIcon = <GetApp />;
-    return chip({ label, onDelete, style, onClick, deleteIcon });
+    const iconTooltip='OpenSourceText';
+    const deleteIconTooltip = 'CompareSource'
+    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip });
   }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
 
   const targetChip = useMemo(() => {
@@ -73,7 +77,9 @@ function FilesHeader({
     const style = { background: '#fff9' };
     const onDelete = () => targetCompareLink && openLink(targetCompareLink);
     const deleteIcon = <Publish />;
-    return chip({ label, onDelete, style, onClick, deleteIcon });
+    const iconTooltip='OpenTargetText';
+    const deleteIconTooltip = 'CompareTarget'
+    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip });
   }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink, targetBranch]);
 
   return (
