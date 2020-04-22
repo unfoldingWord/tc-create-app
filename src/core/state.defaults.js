@@ -1,18 +1,18 @@
 import appPackage from '../../package.json';
 
-const server = process.env.REACT_APP_DOOR43_SERVER_URL;
+const SERVER_URL = process.env.REACT_APP_DOOR43_SERVER_URL;
 
 const config = {
   authentication: {
-    server,
+    server: SERVER_URL,
     tokenid: appPackage.name,
   },
   repository: {
     urls: [
-      server + '/api/v1/repos/unfoldingword/en_ta',
-      server + '/api/v1/repos/unfoldingword/en_tw',
-      server + '/api/v1/repos/unfoldingword/en_tn',
-      server + '/api/v1/repos/unfoldingword/en_obs',
+      SERVER_URL + '/api/v1/repos/unfoldingword/en_ta',
+      SERVER_URL + '/api/v1/repos/unfoldingword/en_tw',
+      SERVER_URL + '/api/v1/repos/unfoldingword/en_tn',
+      SERVER_URL + '/api/v1/repos/unfoldingword/en_obs',
     ],
   },
 };
@@ -20,5 +20,5 @@ const config = {
 export default {
   fontScale: 100,
   config,
-  SERVER_URL: server
+  SERVER_URL
 };
