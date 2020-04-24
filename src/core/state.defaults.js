@@ -1,6 +1,6 @@
 import appPackage from '../../package.json';
 
-const SERVER_URL = process.env.REACT_APP_DOOR43_SERVER_URL;
+export const SERVER_URL = process.env.REACT_APP_DOOR43_SERVER_URL;
 
 const config = {
   authentication: {
@@ -21,5 +21,3 @@ export default {
   fontScale: 100,
   config
 };
-
-export const SERVER_URL;
