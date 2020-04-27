@@ -25,6 +25,6 @@ describe('Application Stepper', function () {
     cy.contains('01.md').should('be.be.visible').click();
 
     /** Testing file selection*/
-    cy.contains('Translation in an Acceptable Style');
+    cy.contains('Translation in an Acceptable Style', { timeout: 10000 });
   });
 })

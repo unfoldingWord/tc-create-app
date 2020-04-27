@@ -19,3 +19,9 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+
+before(() => {
+  cy.deleteIndexDB();
+  cy.wait(1000);
+});
