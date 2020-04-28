@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
-  useFile,
+  useFile, FileContext,
 } from 'gitea-react-toolkit';
 
 import { AppContext } from '../App.context';
@@ -13,10 +13,11 @@ function TargetFileContextProvider({
 }) {
   const {
     state: {
-      authentication, targetRepository, sourceFile, filepath, setFilepath, targetFile,
+      authentication, targetRepository, filepath, setFilepath,
     }={},
-    actions: { setTargetFile },
   } = useContext(AppContext);
+
+  const { state: sourceFile } = useContext(FileContext);
 
   const {
     state, actions, component, components, config,
@@ -27,8 +28,6 @@ function TargetFileContextProvider({
     filepath,
     onFilepath: setFilepath,
     defaultContent: (sourceFile && sourceFile.content),
-    file: targetFile,
-    onFile: setTargetFile,
   });
 
   const context = {

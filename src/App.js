@@ -24,7 +24,6 @@ function AppComponent() {
   const {
     authentication,
     sourceRepository,
-    sourceFile,
     filepath,
     fontScale,
     config,
@@ -32,7 +31,6 @@ function AppComponent() {
   const {
     setAuthentication,
     setSourceRepository,
-    setSourceFile,
     setFilepath,
   } = actions;
 
@@ -61,8 +59,6 @@ function AppComponent() {
             <FileContextProvider
               authentication={authentication}
               repository={sourceRepository}
-              file={sourceFile}
-              onFile={setSourceFile}
               filepath={filepath}
               onFilepath={setFilepath}
             >

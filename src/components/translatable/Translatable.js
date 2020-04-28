@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useCallback, useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { FileContext } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
 
@@ -14,11 +14,12 @@ function Translatable() {
   const [wrapperElement, setWrapperElement] = useState(null);
   const {
     state: {
-      language, sourceRepository, targetRepository, sourceFile, targetFile, filepath,
+      language, sourceRepository, targetRepository, filepath,
     },
   } = useContext(AppContext);
+  const { state: sourceFile } = useContext(FileContext);
 
-  const { actions: targetFileActions } = useContext(TargetFileContext);
+  const { state: targetFile, actions: targetFileActions } = useContext(TargetFileContext);
 
   const scrollToTop = useCallback(() => {
     if (wrapperElement && wrapperElement) {

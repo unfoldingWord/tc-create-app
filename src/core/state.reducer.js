@@ -22,12 +22,6 @@ export const stateReducer = (state, action) => {
     case 'set_target_repository':
       _state['targetRepository'] = value;
       break;
-    case 'set_source_file':
-      _state['sourceFile'] = value;
-      break;
-    case 'set_target_file':
-      _state['targetFile'] = value;
-      break;
     case 'set_filepath':
       _state['filepath'] = value;
       break;

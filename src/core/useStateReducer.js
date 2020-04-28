@@ -52,18 +52,6 @@ export const useStateReducer = ({
     };
   },[state.filepath]);
 
-  const setSourceFile = useCallback((value) => {
-    if (JSON.stringify(value) !== JSON.stringify(state.sourceFile)) {
-      dispatch({type: 'set_source_file', value});
-    };
-  }, [state.sourceFile]);  
-  
-  const setTargetFile = useCallback((value) => {
-    if (JSON.stringify(value) !== JSON.stringify(state.targetFile)) {
-      dispatch({type: 'set_target_file', value});
-    };
-  }, [state.targetFile]);
-
   const resumeState = useCallback((value) => {
     dispatch({type: 'resume_state', value});
   },[]);
@@ -103,8 +91,6 @@ export const useStateReducer = ({
     setConfig,
     setSourceRepository,
     setTargetRepository,
-    setSourceFile,
-    setTargetFile,
     setTargetRepoFromSourceRepo,
     setFilepath,
     resumeState,
