@@ -62,10 +62,8 @@ function Translatable() {
   }, [filepath, sourceFile, targetFile, targetFileActions.save]);
 
   useEffect(() => {
-    if (targetFile) {
       scrollToTop();
-    }
-  }, [targetFile, scrollToTop]);
+  }, [filepath, scrollToTop]);
 
   const filesHeader = targetFile && (
     <FilesHeader
