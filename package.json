@@ -33,14 +33,14 @@
     "axios": "^0.19.0",
     "datatable-translatable": "^0.8.0",
     "deep-freeze": "^0.0.1",
-    "gitea-react-toolkit": "^1.0.0-rc.3",
-    "markdown-translatable": "^0.12.0",
+    "gitea-react-toolkit": "^1.0.0-beta.7",
+    "scripture-resources-rcl": "^0.14.2",
+    "markdown-translatable": "^0.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-headroom": "^3.0.0",
     "react-select": "^3.0.4",
     "react-waypoint": "^9.0.2",
-    "scripture-resources-rcl": "^0.14.2",
     "usfm-js": "^2.0.2"
   },
   "devDependencies": {
