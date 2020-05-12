@@ -6,7 +6,6 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import {
-  //Translate,
   Publish,
   GetApp,
 } from '@material-ui/icons';
