@@ -10,6 +10,7 @@ export function AppContextProvider({
   language: __language,
   sourceRepository: __sourceRepository,
   filepath: __filepath,
+  organization: __organization,
   children,
 }) {
   const [state, actions] = useStateReducer({
@@ -17,12 +18,14 @@ export function AppContextProvider({
     language: __language,
     sourceRepository: __sourceRepository,
     filepath: __filepath,
+    organization: __organization,
   });
 
   const {
     authentication,
     language,
     sourceRepository,
+    organization
   } = state;
 
   const {
@@ -33,11 +36,11 @@ export function AppContextProvider({
   const authMemo = authentication && JSON.stringify(authentication);
 
   useEffect(() => {
-    if (authMemo && sourceRepository) {
+    if (authMemo && sourceRepository && organization) {
       const _authentication = JSON.parse(authMemo);
-      setTargetRepoFromSourceRepo({ authentication: _authentication, sourceRepository, language });
+      setTargetRepoFromSourceRepo({ authentication: _authentication, sourceRepository, language, organization });
     }
-  }, [authMemo, sourceRepository, language, setTargetRepoFromSourceRepo]);
+  }, [authMemo, sourceRepository, language, setTargetRepoFromSourceRepo, organization]);
 
   const value = {
     state,

@@ -22,6 +22,8 @@ export const stateReducer = (state, action) => {
     case 'set_target_repository':
       _state['targetRepository'] = value;
       break;
+    case 'set_organization':
+      _state['organization'] = value;
     case 'set_filepath':
       _state['filepath'] = value;
       break;
@@ -29,6 +31,7 @@ export const stateReducer = (state, action) => {
       _state['language'] = value.language;
       _state['filepath'] = value.filepath;
       _state['sourceRepository'] = value.sourceRepository;
+      _state['organization'] = value.organization;
       break;
     default:
       throw new Error(`Unsupported action type: ${action.type}`);
