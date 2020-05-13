@@ -71,7 +71,7 @@ export const useStateReducer = ({
       const editSource = (sourceRepoPush && sameRepositoryName);
       if (editSource) {
         const branch = `${authentication.user.username}-tc-create-1`;
-        const _targetRepository = { ...sourceRepository, branch };
+        const _targetRepository = { ...organization, branch };
         setTargetRepository(_targetRepository);
       } else {
         const owner = organization.username;
