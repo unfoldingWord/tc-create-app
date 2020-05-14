@@ -65,14 +65,16 @@ export const useStateReducer = ({
       const repositoryNameArray = sourceRepository.name.split('_');
       const resourceNameArray = repositoryNameArray.slice(1);
       const translationRepoName = `${language.languageId}_${resourceNameArray.join('_')}`;
-      const sourceRepoPush = sourceRepository.permissions.push;
-      const sameRepositoryName = translationRepoName === sourceRepository.name;
-      const editSource = (sourceRepoPush && sameRepositoryName);
-      if (editSource) {
-        const branch = `${authentication.user.username}-tc-create-1`;
-        const _targetRepository = { ...organization, branch };
-        setTargetRepository(_targetRepository);
+      const branch = `${authentication.user.username}-tc-create-1`;
+      const owner = organization.username;
+      const params = {
+        owner,
+        repo: translationRepoName,
+        config: authentication.config,
+        settings: { description },
+        branch
       }
+      ensureRepo(params).then(setTargetRepository);
     } else {
       setTargetRepository();
     }
