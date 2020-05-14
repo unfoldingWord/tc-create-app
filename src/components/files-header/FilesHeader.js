@@ -68,7 +68,8 @@ function FilesHeader({
     const deleteIcon = <GetApp />;
     const iconTooltip='OpenSourceText';
     const deleteIconTooltip = 'CompareSource'
-    const licenseLink= sourceRepository.html_url+'/src/branch/master/LICENSE.md';
+    const licenseLink= sourceRepository.html_url +
+      '/src/branch/' + sourceBranch + '/LICENSE.md';
     return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink });
   }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
 
@@ -81,7 +82,8 @@ function FilesHeader({
     const deleteIcon = <Publish />;
     const iconTooltip='OpenTargetText';
     const deleteIconTooltip = 'CompareTarget'
-    const licenseLink= targetRepository.html_url+'/src/branch/master/LICENSE.md';
+    const licenseLink= targetRepository.html_url +
+      '/src/branch/' + targetBranch + '/LICENSE.md';
     return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink });
   }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink, targetBranch]);
 
