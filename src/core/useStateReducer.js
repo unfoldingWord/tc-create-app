@@ -67,6 +67,7 @@ export const useStateReducer = ({
       const translationRepoName = `${language.languageId}_${resourceNameArray.join('_')}`;
       const branch = `${authentication.user.username}-tc-create-1`;
       const owner = organization.username;
+      const {description} = sourceRepository;
       const params = {
         owner,
         repo: translationRepoName,

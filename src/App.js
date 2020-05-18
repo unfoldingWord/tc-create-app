@@ -6,6 +6,7 @@ import {
   AuthenticationContextProvider,
   RepositoryContextProvider,
   FileContextProvider,
+  OrganizationContextProvider
 } from 'gitea-react-toolkit';
 
 import DrawerMenu from './components/drawer-menu/DrawerMenu';
