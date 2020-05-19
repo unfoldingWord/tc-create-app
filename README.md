@@ -5,15 +5,3 @@
 
 https://create.translationcore.com
 
-# Development and Deployment Process
-
-## Changes completed: 
-- Github: `develop` branch created and made default on `tc-create-app` repo.
-- Netlify branch deploys enabled for `develop` branch: https://develop--tc-create-app.netlify.com
-
-## Workflow: 
-- PRs will automatically be created against `develop` branch from here.
-- PRs will build and deploy on Netlify for previews.
-- Merges to `develop` branch will build and deploy here: https://develop--tc-create-app.netlify.com
-- QA and others can verify `develop` before merging to `master`.
-- When `master` is updated, production will be deployed: https://tc-create-app.netlify.com
