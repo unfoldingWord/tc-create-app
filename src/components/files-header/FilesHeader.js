@@ -6,10 +6,10 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import {
-  Translate,
   Publish,
   GetApp,
 } from '@material-ui/icons';
+import {License} from 'scripture-resources-rcl';
 
 import { getLanguage } from '../languages/helpers';
 import { localString } from '../../core/localStrings';
@@ -26,13 +26,14 @@ function FilesHeader({
       cursor: 'pointer'
     }
   });
+ 
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
 
-  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip }) => (
+  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink }) => (
     <Chip
       onClick={onClick}
-      icon={<Tooltip title={localString(iconTooltip)} arrow><Translate /></Tooltip> }
-      label={label}
+      icon={<License rights='View License (type unknown)' licenseLink={licenseLink}  /> }
+      label={<Tooltip title={localString(iconTooltip)} arrow><span>{label}</span></Tooltip>}
       onDelete={onDelete}
       deleteIcon={<Tooltip title={localString(deleteIconTooltip)} arrow>{deleteIcon}</Tooltip>}
       variant="outlined"
@@ -67,7 +68,9 @@ function FilesHeader({
     const deleteIcon = <GetApp />;
     const iconTooltip='OpenSourceText';
     const deleteIconTooltip = 'CompareSource'
-    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip });
+    const licenseLink= sourceRepository.html_url +
+      '/src/branch/' + sourceBranch + '/LICENSE.md';
+    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink });
   }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
 
   const targetChip = useMemo(() => {
@@ -79,7 +82,9 @@ function FilesHeader({
     const deleteIcon = <Publish />;
     const iconTooltip='OpenTargetText';
     const deleteIconTooltip = 'CompareTarget'
-    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip });
+    const licenseLink= targetRepository.html_url +
+      '/src/branch/' + targetBranch + '/LICENSE.md';
+    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink });
   }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink, targetBranch]);
 
   return (
