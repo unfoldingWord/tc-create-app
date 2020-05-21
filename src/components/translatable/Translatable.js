@@ -29,7 +29,7 @@ function Translatable() {
   }, [wrapperElement]);
 
   const translatableComponent = useMemo(() => {
-    let _translatable = <CircularProgress />;
+    let _translatable = <div style={{ 'text-align': 'center'}} ><CircularProgress /> </div>;
     if (filepath && sourceFile && targetFile && (filepath === sourceFile.filepath) && (filepath === targetFile.filepath)) {
       if (sourceFile.filepath.match(/\.md$/)) {
         let translatableProps = {
@@ -58,7 +58,7 @@ function Translatable() {
         };
         _translatable = <DataTable {...translatableProps} />;
       } else {
-        _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
+        _translatable = <h3 style={{ 'text-align': 'center'}} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
     } 
     return _translatable;
