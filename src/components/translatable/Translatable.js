@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect, useCallback, useState, useContext } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { FileContext } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
@@ -28,7 +29,7 @@ function Translatable() {
   }, [wrapperElement]);
 
   const translatableComponent = useMemo(() => {
-    let _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
+    let _translatable = <CircularProgress />;
     if (filepath && sourceFile && targetFile && (filepath === sourceFile.filepath) && (filepath === targetFile.filepath)) {
       if (sourceFile.filepath.match(/\.md$/)) {
         let translatableProps = {
@@ -56,8 +57,10 @@ function Translatable() {
           config,
         };
         _translatable = <DataTable {...translatableProps} />;
+      } else {
+        _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
       }
-    }
+    } 
     return _translatable;
   }, [filepath, sourceFile, targetFile, targetFileActions.save]);
 
