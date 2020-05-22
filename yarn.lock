@@ -2014,6 +2014,13 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
+"@types/use-deep-compare-effect@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/use-deep-compare-effect/-/use-deep-compare-effect-1.2.0.tgz#d55d9bda6fea5ff7c93038c53052db1b3145f5d9"
+  integrity sha512-2uNqaSobMvUTGR7G72tUHDX+Kx341q25OuM0m2B6VID7eljIvYuDaFTKfmDnbvej67yEhCc35zA6dmIYriwOXA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/webpack-sources@*":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-0.1.7.tgz#0a330a9456113410c74a5d64180af0cbca007141"
@@ -4941,6 +4948,11 @@ deps-sort@^2.0.0:
     shasum-object "^1.0.0"
     subarg "^1.0.0"
     through2 "^2.0.0"
+
+dequal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-1.0.0.tgz#41c6065e70de738541c82cdbedea5292277a017e"
+  integrity sha512-/Nd1EQbQbI9UbSHrMiKZjFLrXSnU328iQdZKPQf78XQI6C+gutkFUeoHpG5J08Ioa6HeRbRNFpSIclh1xyG0mw==
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -12389,16 +12401,10 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.4:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-<<<<<<< HEAD
-scripture-resources-rcl@^0.14.2:
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.14.2.tgz#f19c2b0a24b7d8112bd94e5fac14b55e7446bc15"
-  integrity sha512-LWCqhLkRBj9HZOVLDzyEPvUxpmRsGRNM/ul4ymJ+QcePBBYaH2BzH7ULgQ8vDEs1LSrhO2R393J1nOFjdY4ExA==
-=======
-scripture-resources-rcl@unfoldingword/scripture-resources-rcl#feature-cn-license-info:
-  version "0.13.3"
-  resolved "https://codeload.github.com/unfoldingword/scripture-resources-rcl/tar.gz/4758df1d612e74cc126b27bcecf0858a28dce83d"
->>>>>>> d98dbfcd9de85b4b1e37d31c4f4f6cc1752c1ac1
+scripture-resources-rcl@^1.0.0-alpha.1:
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.0-alpha.1.tgz#a51cc7bad12ed3f53050ffb5c8fed98f34c29b2b"
+  integrity sha512-MfWHzvEmA1PWgDOlxQxtDOju/nXPWd/j3wPGJ0fZQPrxbUFfqjS10OSOLgkFmAhne+lFA3iWmGKQEX6Gj/FJMQ==
   dependencies:
     deep-freeze "0.0.1"
     gitea-react-toolkit "^0.6.9"
@@ -12408,6 +12414,7 @@ scripture-resources-rcl@unfoldingword/scripture-resources-rcl#feature-cn-license
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
     string-punctuation-tokenizer "2.0.2"
+    use-deep-compare-effect "1.3.1"
     usfm-js "^2.0.2"
 
 select-hose@^2.0.0:
@@ -13043,17 +13050,10 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-<<<<<<< HEAD
 string-punctuation-tokenizer@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.0.2.tgz#4b10b2b7e676e81e035cfbc0df4774443e757c05"
   integrity sha512-CFAUA4E25X98ZsvlMEv93CgXTcEo/KGi/13SV9YokapjrPs35XZpVESSsF4EVU8wsakVrOLLiieAgHdOWQ5Few==
-=======
-string-punctuation-tokenizer@^2.0.0-beta.2:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.0.0.tgz#eeee7d541c97ca16e90d6daa2528f96e1cb51792"
-  integrity sha512-MBp21k/6OJeOVgBAQawX1hezw6lYwg9gtasL4OwtKsp0WAaw/rrq7BeJkbXi2NZ+rcAqKvJNqKq9K4GwkHpk+g==
->>>>>>> d98dbfcd9de85b4b1e37d31c4f4f6cc1752c1ac1
   dependencies:
     xregexp "^4.1.1"
 
@@ -13966,6 +13966,15 @@ url@0.11.0, url@^0.11.0, url@~0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-deep-compare-effect@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.3.1.tgz#90bdbed97e1acb8423f7bb0bf24de58590d021af"
+  integrity sha512-ejL+Al+aeDyC9Sywx56ti4PtSwkf6BH27tEptMWF2cfO41/auG0nRRsArh6Vv5bUyBe3z7IyxmgQCK5nas70hg==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    "@types/use-deep-compare-effect" "^1.2.0"
+    dequal "^1.0.0"
 
 use@^3.1.0:
   version "3.1.1"

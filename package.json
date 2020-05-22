@@ -34,7 +34,7 @@
     "datatable-translatable": "^0.8.0",
     "deep-freeze": "^0.0.1",
     "gitea-react-toolkit": "^1.0.0-rc.3",
-    "scripture-resources-rcl": "^0.14.2",
+    "scripture-resources-rcl": "^1.0.0-alpha.1",
     "markdown-translatable": "^0.12.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
