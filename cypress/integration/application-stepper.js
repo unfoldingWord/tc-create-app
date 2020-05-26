@@ -21,7 +21,7 @@ describe('Application Stepper', function () {
 
     /** Select language */
     cy.get('.language-select-dropdown').click();
-    cy.focused().type('hindi{enter}');
+    cy.focused().type('en{enter}');
 
     /** Select file */
     cy.contains('checking/').should('be.be.visible').click();

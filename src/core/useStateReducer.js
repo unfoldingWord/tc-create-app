@@ -64,6 +64,7 @@ export const useStateReducer = ({
   }, []);
 
   const setTargetRepoFromSourceRepo = useCallback(({ authentication, sourceRepository, language, organization }) => {
+    debugger;
     if (authentication && sourceRepository && language) {
       const repositoryNameArray = sourceRepository.name.split('_');
       const resourceNameArray = repositoryNameArray.slice(1);
