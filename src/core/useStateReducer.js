@@ -12,7 +12,10 @@ export const useStateReducer = ({
   const [state, dispatch] = useReducer(stateReducer, _defaults);
 
   const setOrganization = useCallback((value) => {
-    dispatch({ type: 'set_organization', value });
+    if (value !== state.organization) {
+      dispatch({ type: 'set_organization', value });
+      saveState('organization', value);
+    }
   }, [])
 
   const setFontScale = useCallback((value) => {
