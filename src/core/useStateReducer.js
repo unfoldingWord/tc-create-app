@@ -16,7 +16,7 @@ export const useStateReducer = ({
       dispatch({ type: 'set_organization', value });
       saveState('organization', value);
     }
-  }, [])
+  }, [state.organization])
 
   const setFontScale = useCallback((value) => {
     dispatch({ type: 'set_font_scale', value });

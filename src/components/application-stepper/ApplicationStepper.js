@@ -145,8 +145,7 @@ function ApplicationStepper() {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={!completed[activeStep] || activeStep === steps.length - 1}
-                  >
+                    disabled={!completed[activeStep] || activeStep === steps.length - 1}>
                     Next
               </Button>
                 </div>
