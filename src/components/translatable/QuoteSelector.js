@@ -1,10 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useContext } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 //import { ParallelScripture, withResources } from 'scripture-resources-rcl';
-import {ParallelScripture, ResourcesContextProvider} 
+import {ParallelScripture, ResourcesContext} 
   from "scripture-resources-rcl";
-import { testament } from '../../core/bcv.js';
-import { SERVER_URL } from '../../core/state.defaults';
 import { getMuiTheme } from './muiTheme';
 
 //const ParallelScriptureWithResources = withResources(ParallelScripture);
@@ -16,35 +14,12 @@ function QuoteSelector({
   reference,
   buttons,
 }) {
-  const config = { server: SERVER_URL };
-  const _testament = useMemo(() => testament(reference), [reference]);
-  let hebrewLink = 'unfoldingWord/hbo/uhb/master';
-  let greekLink = 'unfoldingWord/el-x-koine/ugnt/master';
-  let originalLink = (_testament === 'old') ? hebrewLink : greekLink;
-
-  // need to add reference bookId to resource links
-  const _resourceLinks = [
-    originalLink,
-    'unfoldingWord/en/ult/master',
-    'unfoldingWord/en/ust/master',
-  ];
-  const bookId = reference.bookId;
-  const resourceLinks = _resourceLinks.map( (link) => {
-    return link+'/'+bookId;
-  });
   const occurrence = (_occurrence == "\\-1") ? -1 : _occurrence;
 
-  // manage the state of the resources for the provider context
-  const [ resources, setResources ] = React.useState([]);
+  const { state: resources } = useContext(ResourcesContext);
 
   return (
     <MuiThemeProvider theme={getMuiTheme}>
-      <ResourcesContextProvider
-        resourceLinks={resourceLinks}
-        resources={resources}
-        onResources={setResources}
-        config={config}
-      >
         <ParallelScripture
           resources={resources}
           reference={reference}
@@ -54,7 +29,6 @@ function QuoteSelector({
           height='250px'
           buttons={buttons}
         />
-      </ResourcesContextProvider>
     </MuiThemeProvider>
   );
 };
