@@ -78,7 +78,10 @@ export const useStateReducer = ({
         settings: { description },
         branch
       }
-      ensureRepo(params).then(setTargetRepository);
+      ensureRepo(params).then(setTargetRepository).catch((err) => {
+        alert('There was a problem setting up your repo, please contact your organization administrator');
+        console.error(err)
+      })
     } else {
       setTargetRepository();
     }
