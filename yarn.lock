@@ -6537,10 +6537,10 @@ gitea-react-toolkit@^0.6.9:
     prop-types "15.7.2"
     utf8 "3.0.0"
 
-gitea-react-toolkit@^1.0.0-rc.3:
-  version "1.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.0.0-rc.3.tgz#0f817d5268be90b5b01492b39c5689bef9dc7af8"
-  integrity sha512-8d0IbZnouhMDXErnZM0x+b8sqvygxtHsUbzNq0EqRnlJBvm0HdSdNUvu4kZNaPmOQL3c4pwfS/pf5wRlEHv9MA==
+gitea-react-toolkit@^1.0.0-rc.6:
+  version "1.0.0-rc.6"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.0.0-rc.6.tgz#d79467b3ef4844afe321459a1ba4929679751856"
+  integrity sha512-g9gg5HUq2yp5qkMaQX/fwolfOh8ruV+6RMvInlowf9AF/iz/q2wKZftKxO847VNssVt5gxFemwoAse4w9KYPWA==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -12389,16 +12389,10 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.4:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-<<<<<<< HEAD
 scripture-resources-rcl@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-0.14.2.tgz#f19c2b0a24b7d8112bd94e5fac14b55e7446bc15"
   integrity sha512-LWCqhLkRBj9HZOVLDzyEPvUxpmRsGRNM/ul4ymJ+QcePBBYaH2BzH7ULgQ8vDEs1LSrhO2R393J1nOFjdY4ExA==
-=======
-scripture-resources-rcl@unfoldingword/scripture-resources-rcl#feature-cn-license-info:
-  version "0.13.3"
-  resolved "https://codeload.github.com/unfoldingword/scripture-resources-rcl/tar.gz/4758df1d612e74cc126b27bcecf0858a28dce83d"
->>>>>>> d98dbfcd9de85b4b1e37d31c4f4f6cc1752c1ac1
   dependencies:
     deep-freeze "0.0.1"
     gitea-react-toolkit "^0.6.9"
@@ -13043,17 +13037,10 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-<<<<<<< HEAD
 string-punctuation-tokenizer@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.0.2.tgz#4b10b2b7e676e81e035cfbc0df4774443e757c05"
   integrity sha512-CFAUA4E25X98ZsvlMEv93CgXTcEo/KGi/13SV9YokapjrPs35XZpVESSsF4EVU8wsakVrOLLiieAgHdOWQ5Few==
-=======
-string-punctuation-tokenizer@^2.0.0-beta.2:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.0.0.tgz#eeee7d541c97ca16e90d6daa2528f96e1cb51792"
-  integrity sha512-MBp21k/6OJeOVgBAQawX1hezw6lYwg9gtasL4OwtKsp0WAaw/rrq7BeJkbXi2NZ+rcAqKvJNqKq9K4GwkHpk+g==
->>>>>>> d98dbfcd9de85b4b1e37d31c4f4f6cc1752c1ac1
   dependencies:
     xregexp "^4.1.1"
 

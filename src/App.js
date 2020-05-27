@@ -44,7 +44,6 @@ function AppComponent() {
     headroom: { zIndex: '200' },
     workspace: { margin: `${theme.spacing(2)}px` },
   };
-
   return (
     <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>

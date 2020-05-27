@@ -10,38 +10,41 @@ import {
   Divider,
 } from '@material-ui/core';
 import {
-  AuthenticationContext, RepositoryContext, FileContext,
+  AuthenticationContext, RepositoryContext,
+   FileContext, OrganizationContext
 } from 'gitea-react-toolkit';
 
 import { LanguageSelect } from '../languages';
 import { AppContext } from '../../App.context';
 import { getActiveStep } from './helpers';
-
 function ApplicationStepper() {
   const classes = useStyles();
 
   const { state: { language }, actions: { setLanguage } } = useContext(AppContext);
 
   const { state: authentication, component: authenticationComponent } = useContext(AuthenticationContext);
+  const { state: organization, component: organizationComponent } = useContext(OrganizationContext);
   const { state: sourceRepository, components: { browse: repositoryComponent } } = useContext(RepositoryContext);
   const { state: sourceFile, component: fileComponent } = useContext(FileContext);
-
+  
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = useState({
     0: !!authentication,
-    1: !!language,
+    1: !!organization,
     2: !!sourceRepository,
-    3: !!sourceFile,
+    3: !!language,
+    4: !!sourceFile,
   });
 
   useEffect(() => {
     setCompleted({
       0: !!authentication,
-      1: !!language,
+      1: !!organization,
       2: !!sourceRepository,
-      3: !!sourceFile,
+      3: !!language,
+      4: !!sourceFile,
     })
-  }, [authentication, language, sourceRepository, sourceFile])
+  }, [authentication, language, sourceRepository, sourceFile, organization])
 
   useEffect(() => {
     const newActiveStep = getActiveStep(completed);
@@ -55,6 +58,16 @@ function ApplicationStepper() {
       component: () => (authenticationComponent),
     },
     {
+      label: 'Organization',
+      instructions: 'Select Your Organization',
+      component: () => (organizationComponent),
+    },
+    {
+      label: 'Resource',
+      instructions: 'Select Resource to Translate',
+      component: () => (repositoryComponent),
+    },
+    {
       label: 'Language',
       instructions: 'Select Your Language',
       component: () => (
@@ -63,11 +76,6 @@ function ApplicationStepper() {
           onLanguage={setLanguage}
         />
       )
-    },
-    {
-      label: 'Resource',
-      instructions: 'Select Resource to Translate',
-      component: () => (repositoryComponent),
     },
     {
       label: 'File',
@@ -105,7 +113,6 @@ function ApplicationStepper() {
     </div>
   );
 
-
   if (steps[activeStep]) {
     return (
       <>
@@ -138,8 +145,7 @@ function ApplicationStepper() {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={!completed[activeStep] || activeStep === steps.length - 1}
-                  >
+                    disabled={!completed[activeStep] || activeStep === steps.length - 1}>
                     Next
               </Button>
                 </div>

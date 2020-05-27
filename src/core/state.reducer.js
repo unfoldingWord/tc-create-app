@@ -24,6 +24,7 @@ export const stateReducer = (state, action) => {
       break;
     case 'set_organization':
       _state['organization'] = value;
+      break;
     case 'set_filepath':
       _state['filepath'] = value;
       break;
