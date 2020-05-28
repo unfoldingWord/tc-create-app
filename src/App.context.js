@@ -25,20 +25,20 @@ export function AppContextProvider({
     authentication,
     language,
     sourceRepository,
-    organization
+    organization,
   } = state;
 
-  const {
-    setTargetRepoFromSourceRepo,
-    // resumeState,
-  } = actions;
+  const { setTargetRepoFromSourceRepo } = actions;
 
   const authMemo = authentication && JSON.stringify(authentication);
 
   useEffect(() => {
     if (authMemo && sourceRepository && organization) {
       const _authentication = JSON.parse(authMemo);
-      setTargetRepoFromSourceRepo({ authentication: _authentication, sourceRepository, language, organization });
+
+      setTargetRepoFromSourceRepo({
+        authentication: _authentication, sourceRepository, language, organization,
+      });
     }
   }, [authMemo, sourceRepository, language, setTargetRepoFromSourceRepo, organization]);
 

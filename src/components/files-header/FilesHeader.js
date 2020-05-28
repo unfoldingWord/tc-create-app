@@ -9,7 +9,7 @@ import {
   Publish,
   GetApp,
 } from '@material-ui/icons';
-import {License} from 'scripture-resources-rcl';
+import { License } from 'scripture-resources-rcl';
 
 import { getLanguage } from '../languages/helpers';
 import { localString } from '../../core/localStrings';
@@ -21,18 +21,16 @@ function FilesHeader({
   targetFile,
   language,
 }) {
-  const classes = useStyles({
-    header: {
-      cursor: 'pointer'
-    }
-  });
- 
+  const classes = useStyles({ header: { cursor: 'pointer' } });
+
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
 
-  const chip = useCallback(({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink }) => (
+  const chip = useCallback(({
+    label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
+  }) => (
     <Chip
       onClick={onClick}
-      icon={<License rights='View License (type unknown)' licenseLink={licenseLink}  /> }
+      icon={<License rights='View License (type unknown)' licenseLink={licenseLink} /> }
       label={<Tooltip title={localString(iconTooltip)} arrow><span>{label}</span></Tooltip>}
       onDelete={onDelete}
       deleteIcon={<Tooltip title={localString(deleteIconTooltip)} arrow>{deleteIcon}</Tooltip>}
@@ -41,21 +39,21 @@ function FilesHeader({
       style={style}
     />
   ), [classes.header]);
-
   const sourceBranch = sourceRepository.branch || sourceRepository.default_branch;
   const targetBranch = targetRepository.branch || targetRepository.default_branch;
 
   let sourceCompareLink, targetCompareLink;
   const sourceLanguage = getLanguage({ languageId: sourceRepository.name.split('_')[0] });
+
   if (sourceLanguage.languageName === language.languageName) {
     if (sourceRepository.full_name === targetRepository.full_name) {
-      sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceBranch}`
-      targetCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetBranch}`
+      sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceBranch}`;
+      targetCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetBranch}`;
     } else {
       const sourceOwner = sourceRepository.owner.username;
       const targetOwner = targetRepository.owner.username;
-      sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`
-      targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`
+      sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`;
+      targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`;
     }
   }
 
@@ -67,10 +65,12 @@ function FilesHeader({
     const style = { background: '#fff9' };
     const deleteIcon = <GetApp />;
     const iconTooltip='OpenSourceText';
-    const deleteIconTooltip = 'CompareSource'
+    const deleteIconTooltip = 'CompareSource';
     const licenseLink= sourceRepository.html_url +
       '/src/branch/' + sourceBranch + '/LICENSE.md';
-    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink });
+    return chip({
+      label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
+    });
   }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
 
   const targetChip = useMemo(() => {
@@ -81,10 +81,12 @@ function FilesHeader({
     const onDelete = () => targetCompareLink && openLink(targetCompareLink);
     const deleteIcon = <Publish />;
     const iconTooltip='OpenTargetText';
-    const deleteIconTooltip = 'CompareTarget'
+    const deleteIconTooltip = 'CompareTarget';
     const licenseLink= targetRepository.html_url +
       '/src/branch/' + targetBranch + '/LICENSE.md';
-    return chip({ label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink });
+    return chip({
+      label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
+    });
   }, [targetRepository, language, targetFile.html_url, chip, openLink, targetCompareLink, targetBranch]);
 
   return (
@@ -100,13 +102,11 @@ function FilesHeader({
 }
 
 const useStyles = makeStyles(theme => ({
-  headers: {
-    marginBottom: `${theme.spacing(0.5)}px`,
-  },
+  headers: { marginBottom: `${theme.spacing(0.5)}px` },
   header: {
     justifyContent: 'space-between',
     width: '100%',
-  }
+  },
 }));
 
 export default FilesHeader;

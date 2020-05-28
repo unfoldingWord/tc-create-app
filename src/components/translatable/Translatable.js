@@ -1,13 +1,15 @@
-import React, { useMemo, useEffect, useCallback, useState, useContext } from 'react';
+import React, {
+  useMemo, useEffect, useCallback, useState, useContext,
+} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { FileContext } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
 
-import RowHeader from './RowHeader';
 import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import { TargetFileContext } from '../../core/TargetFile.context';
+import RowHeader from './RowHeader';
 
 function Translatable() {
   const classes = useStyles();
@@ -29,6 +31,7 @@ function Translatable() {
 
   const translatableComponent = useMemo(() => {
     let _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
+
     if (filepath && sourceFile && targetFile && (filepath === sourceFile.filepath) && (filepath === targetFile.filepath)) {
       if (sourceFile.filepath.match(/\.md$/)) {
         let translatableProps = {
@@ -62,7 +65,7 @@ function Translatable() {
   }, [filepath, sourceFile, targetFile, targetFileActions.save]);
 
   useEffect(() => {
-      scrollToTop();
+    scrollToTop();
   }, [filepath, scrollToTop]);
 
   const filesHeader = targetFile && (
@@ -83,9 +86,6 @@ function Translatable() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-  },
-}));
+const useStyles = makeStyles(theme => ({ root: {} }));
 
 export default Translatable;

@@ -6,9 +6,11 @@ import { saveState } from './persistence';
 import defaults from './state.defaults';
 
 export const useStateReducer = ({
-  authentication, language, sourceRepository, filepath, organization
+  authentication, language, sourceRepository, filepath, organization,
 }) => {
-  const _defaults = { ...defaults, authentication, sourceRepository, language, filepath, organization };
+  const _defaults = {
+    ...defaults, authentication, sourceRepository, language, filepath, organization,
+  };
   const [state, dispatch] = useReducer(stateReducer, _defaults);
 
   const setOrganization = useCallback((value) => {
@@ -16,7 +18,7 @@ export const useStateReducer = ({
       dispatch({ type: 'set_organization', value });
       saveState('organization', value);
     }
-  }, [state.organization])
+  }, [state.organization]);
 
   const setFontScale = useCallback((value) => {
     dispatch({ type: 'set_font_scale', value });
@@ -29,14 +31,20 @@ export const useStateReducer = ({
   const setSourceRepository = useCallback((value) => {
     dispatch({ type: 'set_source_repository', value });
     saveState('sourceRepository', value);
-    if (!value) dispatch({ type: 'set_target_repository' });
+
+    if (!value) {
+      dispatch({ type: 'set_target_repository' });
+    }
   }, []);
 
   const setAuthentication = useCallback((value) => {
     if (JSON.stringify(value) !== JSON.stringify(state.authentication)) {
       dispatch({ type: 'set_authentication', value });
       saveState('authentication', value);
-      if (!value && !!state.sourceRepository) setSourceRepository(); // reset if logged out
+
+      if (!value && !!state.sourceRepository) {
+        setSourceRepository();
+      } // reset if logged out
     };
   }, [state.authentication, state.sourceRepository, setSourceRepository]);
 
@@ -44,7 +52,10 @@ export const useStateReducer = ({
     if (value !== state.language) {
       dispatch({ type: 'set_language', value });
       saveState('language', value);
-      if (!value) setSourceRepository(); // reset if no language
+
+      if (!value) {
+        setSourceRepository();
+      } // reset if no language
     };
   }, [state.language, setSourceRepository]);
 
@@ -59,29 +70,31 @@ export const useStateReducer = ({
     };
   }, [state.filepath]);
 
-  const resumeState = useCallback((value) => {
-    dispatch({ type: 'resume_state', value });
-  }, []);
-
-  const setTargetRepoFromSourceRepo = useCallback(({ authentication, sourceRepository, language, organization }) => {
+  const setTargetRepoFromSourceRepo = useCallback(({
+    authentication, sourceRepository, language, organization,
+  }) => {
     if (authentication && sourceRepository && language) {
       const repositoryNameArray = sourceRepository.name.split('_');
       const resourceNameArray = repositoryNameArray.slice(1);
       const translationRepoName = `${language.languageId}_${resourceNameArray.join('_')}`;
       const branch = `${authentication.user.username}-tc-create-1`;
       const owner = organization.username;
-      const {description} = sourceRepository;
+      const { description } = sourceRepository;
       const params = {
         owner,
         repo: translationRepoName,
         config: authentication.config,
         settings: { description },
-        branch
-      }
-      ensureRepo(params).then(setTargetRepository).catch((err) => {
+        branch,
+      };
+
+      ensureRepo(params).then((res) => {
+        const repo = { ...res, branch };
+        setTargetRepository(repo);
+      }).catch((err) => {
         alert('There was a problem setting up your repo, please contact your organization administrator');
-        console.error(err)
-      })
+        console.error(err);
+      });
     } else {
       setTargetRepository();
     }
@@ -96,7 +109,6 @@ export const useStateReducer = ({
     setTargetRepository,
     setTargetRepoFromSourceRepo,
     setFilepath,
-    resumeState,
     setOrganization,
   };
   return [state, actions];
