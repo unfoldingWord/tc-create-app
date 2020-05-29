@@ -30,7 +30,7 @@ function FilesHeader({
   }) => (
     <Chip
       onClick={onClick}
-      icon={<License rights='View License (type unknown)' licenseLink={licenseLink} /> }
+      icon={<License rights='View License' licenseLink={licenseLink}  /> }
       label={<Tooltip title={localString(iconTooltip)} arrow><span>{label}</span></Tooltip>}
       onDelete={onDelete}
       deleteIcon={<Tooltip title={localString(deleteIconTooltip)} arrow>{deleteIcon}</Tooltip>}
