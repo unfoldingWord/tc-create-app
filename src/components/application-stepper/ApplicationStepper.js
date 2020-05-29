@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useState,
+} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -10,7 +12,8 @@ import {
   Divider,
 } from '@material-ui/core';
 import {
-  AuthenticationContext, RepositoryContext, FileContext,
+  AuthenticationContext, RepositoryContext,
+  FileContext, OrganizationContext,
 } from 'gitea-react-toolkit';
 
 import { LanguageSelect } from '../languages';
@@ -23,25 +26,28 @@ function ApplicationStepper() {
   const { state: { language }, actions: { setLanguage } } = useContext(AppContext);
 
   const { state: authentication, component: authenticationComponent } = useContext(AuthenticationContext);
+  const { state: organization, components:{ list: organizationComponent } } = useContext(OrganizationContext);
   const { state: sourceRepository, components: { browse: repositoryComponent } } = useContext(RepositoryContext);
   const { state: sourceFile, component: fileComponent } = useContext(FileContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = useState({
     0: !!authentication,
-    1: !!language,
+    1: !!organization,
     2: !!sourceRepository,
-    3: !!sourceFile,
+    3: !!language,
+    4: !!sourceFile,
   });
 
   useEffect(() => {
     setCompleted({
       0: !!authentication,
-      1: !!language,
+      1: !!organization,
       2: !!sourceRepository,
-      3: !!sourceFile,
-    })
-  }, [authentication, language, sourceRepository, sourceFile])
+      3: !!language,
+      4: !!sourceFile,
+    });
+  }, [authentication, language, sourceRepository, sourceFile, organization]);
 
   useEffect(() => {
     const newActiveStep = getActiveStep(completed);
@@ -55,6 +61,16 @@ function ApplicationStepper() {
       component: () => (authenticationComponent),
     },
     {
+      label: 'Organization',
+      instructions: 'Select Your Organization',
+      component: () => (organizationComponent),
+    },
+    {
+      label: 'Resource',
+      instructions: 'Select Resource to Translate',
+      component: () => (repositoryComponent),
+    },
+    {
       label: 'Language',
       instructions: 'Select Your Language',
       component: () => (
@@ -62,12 +78,7 @@ function ApplicationStepper() {
           language={language}
           onLanguage={setLanguage}
         />
-      )
-    },
-    {
-      label: 'Resource',
-      instructions: 'Select Resource to Translate',
-      component: () => (repositoryComponent),
+      ),
     },
     {
       label: 'File',
@@ -82,6 +93,7 @@ function ApplicationStepper() {
     const isLastStep = activeStep === totalSteps - 1;
     const completedSteps = Object.keys(completed).length;
     const allStepsCompleted = completedSteps === totalSteps;
+
     if (isLastStep && !allStepsCompleted) {
       // It's the last step, but not all steps have been completed,
       // find the first step that has been completed
@@ -90,7 +102,8 @@ function ApplicationStepper() {
       newActiveStep = parseInt(activeStep) + 1;
     }
     setActiveStep(newActiveStep);
-  }
+  };
+
   const handleBack = () => setActiveStep(activeStep - 1);
   const handleStep = step => () => setActiveStep(step);
 
@@ -104,7 +117,6 @@ function ApplicationStepper() {
       </a>
     </div>
   );
-
 
   if (steps[activeStep]) {
     return (
@@ -131,7 +143,7 @@ function ApplicationStepper() {
                 <div className={classes.buttons}>
                   <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                     Back
-              </Button>
+                  </Button>
                   <Button
                     data-test="stepper-next"
                     variant="contained"
@@ -141,7 +153,7 @@ function ApplicationStepper() {
                     disabled={!completed[activeStep] || activeStep === steps.length - 1}
                   >
                     Next
-              </Button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -150,31 +162,25 @@ function ApplicationStepper() {
         {netlifyBadge}
       </>
     );
-  } else return <div />;
+  } else {
+    return <div />;
+  }
 }
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    padding: `${theme.spacing(2)}px`,
-  },
+  root: { padding: `${theme.spacing(2)}px` },
   step: {
     maxWidth: '600px',
     margin: 'auto',
     padding: `0 ${theme.spacing(2)}px`,
   },
-  divider: {
-    margin: `${theme.spacing(2)}px 0`,
-  },
+  divider: { margin: `${theme.spacing(2)}px 0` },
   buttons: {
     display: 'flex',
     justifyContent: 'space-around',
   },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  completed: {
-    display: 'inline-block',
-  },
+  button: { marginRight: theme.spacing(1) },
+  completed: { display: 'inline-block' },
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
