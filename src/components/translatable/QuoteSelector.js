@@ -14,7 +14,8 @@ function QuoteSelector({
   reference,
   buttons,
 }) {
-  const occurrence = (_occurrence == "\\-1") ? -1 : _occurrence;
+  const __occurrence = (_occurrence === "\\-1") ? -1 : _occurrence;
+  const occurrence = Number(__occurrence);
 
   const { state: resources } = useContext(ResourcesContext);
 

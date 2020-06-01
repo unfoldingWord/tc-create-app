@@ -49,7 +49,7 @@ function Translatable() {
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
-        const bookId = sourceFile.filepath.split(/\d+-/)[1];
+        const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
         const delimiters = { row: '\n', cell: '\t' };
         const rowHeader = (rowData, actionsMenu) => (
           <RowHeader rowData={rowData} actionsMenu={actionsMenu} delimiters={delimiters} />
