@@ -6571,6 +6571,22 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+gitea-react-toolkit@1.1.0-rc.1:
+  version "1.1.0-rc.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.0-rc.1.tgz#34205a3d27ee9be4bb95ebf5103ed2cad06bc471"
+  integrity sha512-q7viubCjZMimTd8OCsp7zHrjVGmDOo5BD4T5atYxdGOHrY5d7/6bmDj4Ml6UYhFyNcyOucwhVU6na2aj8ihRMg==
+  dependencies:
+    awesome-debounce-promise "2.1.0"
+    axios "0.19.0"
+    axios-cache-adapter "2.4.1"
+    base-64 "0.1.0"
+    jszip "3.2.1"
+    localforage "1.7.3"
+    prop-types "15.7.2"
+    react-json-view "^1.19.1"
+    use-deep-compare-effect "^1.3.1"
+    utf8 "3.0.0"
+
 gitea-react-toolkit@^0.6.9:
   version "0.6.14"
   resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.6.14.tgz#77750cfbdbc806aa9d6d186667d108371d770629"
@@ -6583,21 +6599,6 @@ gitea-react-toolkit@^0.6.9:
     jszip "3.2.1"
     localforage "1.7.3"
     prop-types "15.7.2"
-    utf8 "3.0.0"
-
-gitea-react-toolkit@^1.0.0-rc.6:
-  version "1.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.0.0-rc.6.tgz#d79467b3ef4844afe321459a1ba4929679751856"
-  integrity sha512-g9gg5HUq2yp5qkMaQX/fwolfOh8ruV+6RMvInlowf9AF/iz/q2wKZftKxO847VNssVt5gxFemwoAse4w9KYPWA==
-  dependencies:
-    awesome-debounce-promise "2.1.0"
-    axios "0.19.0"
-    axios-cache-adapter "2.4.1"
-    base-64 "0.1.0"
-    jszip "3.2.1"
-    localforage "1.7.3"
-    prop-types "15.7.2"
-    react-json-view "^1.19.1"
     utf8 "3.0.0"
 
 github-slugger@^1.2.1:
@@ -12469,7 +12470,7 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.4:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-scripture-resources-rcl@^1.0.0-rc.1:
+scripture-resources-rcl@1.0.0-rc.1:
   version "1.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.0-rc.1.tgz#5bd4c18f348f92a047f8c9462f63047e9bff221a"
   integrity sha512-T9Zj4odNjR5MByXsJkL5Kc8waAYCshm1TiryHKijaS1JH2hGImYKzpanxn1N+v16mIQSslp2NDnjCe+3Daj2Eg==
@@ -14042,7 +14043,7 @@ url@0.11.0, url@^0.11.0, url@~0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-deep-compare-effect@1.3.1:
+use-deep-compare-effect@1.3.1, use-deep-compare-effect@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.3.1.tgz#90bdbed97e1acb8423f7bb0bf24de58590d021af"
   integrity sha512-ejL+Al+aeDyC9Sywx56ti4PtSwkf6BH27tEptMWF2cfO41/auG0nRRsArh6Vv5bUyBe3z7IyxmgQCK5nas70hg==
