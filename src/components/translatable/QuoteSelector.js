@@ -35,16 +35,3 @@ function QuoteSelector({
 };
 
 export default QuoteSelector;
-
-/*
-        <ParallelScriptureWithResources
-          resourceLinks={resourceLinks}
-          config={config}
-          reference={reference}
-          quote={quote}
-          onQuote={onQuote}
-          occurrence={occurrence}
-          height='250px'
-          buttons={buttons}
-        />
-*/
