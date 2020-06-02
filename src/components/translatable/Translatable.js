@@ -6,11 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FileContext } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
+import { ResourcesContextProvider } from 'scripture-resources-rcl';
 
 import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import { TargetFileContext } from '../../core/TargetFile.context';
-import { ResourcesContextProvider } from "scripture-resources-rcl";
 
 import { testament } from '../../core/bcv.js';
 import { SERVER_URL } from '../../core/state.defaults';
