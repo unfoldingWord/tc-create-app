@@ -6571,10 +6571,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@1.1.0-alpha.1:
-  version "1.1.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.0-alpha.1.tgz#1f426ccff12ccec9e94d59b9dac797025bddf952"
-  integrity sha512-42jBucpBqbMJFdVeR64LNLfIarflzyl3FYkYH1Qyrwk4Fqo9ktVA/NmhiQy+dqjUlAAGIdbIPZtiK1BI1jI96w==
+gitea-react-toolkit@1.1.0-beta.1:
+  version "1.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.0-beta.1.tgz#a3fa31f001fab7a957685fc9226f30a8e980e684"
+  integrity sha512-YY7KIE8ZPjCXx1sz1TgTcuDIVhYhi2GtdRf1591Ir8NGXP0NQ3s9BsvDimcb333Mbb87LYcH4B0H+y4FFMEP/w==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
