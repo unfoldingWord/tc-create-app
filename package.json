@@ -1,7 +1,7 @@
 {
   "name": "tc-create-app",
   "homepage": "https://create.translationcore.com/",
-  "version": "0.9.0-rc.1",
+  "version": "0.9.0-rc.5",
   "license": "MIT",
   "private": false,
   "bugs": {
@@ -33,14 +33,14 @@
     "axios": "^0.19.0",
     "datatable-translatable": "^0.8.0",
     "deep-freeze": "^0.0.1",
-    "gitea-react-toolkit": "^1.0.0-rc.6",
+    "scripture-resources-rcl": "1.0.0-rc.1",
+    "gitea-react-toolkit": "1.1.0-rc.1",
     "markdown-translatable": "^0.12.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-headroom": "^3.0.0",
     "react-select": "^3.0.4",
     "react-waypoint": "^9.0.2",
-    "scripture-resources-rcl": "^0.14.2",
     "usfm-js": "^2.0.2"
   },
   "devDependencies": {
