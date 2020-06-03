@@ -103,6 +103,8 @@ function Translatable() {
             <DataTable {...translatableProps} />
           </ResourcesContextProvider>
         );
+      } else {
+        _translatable = <h3 style={{ 'text-align': 'center'}} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
     } 
     return _translatable;
