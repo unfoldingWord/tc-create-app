@@ -2,7 +2,7 @@ import React, {
   useMemo, useEffect, useCallback, useState, useContext,
 } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { FileContext } from 'gitea-react-toolkit';
+import { FileContext, RepositoryContext } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 import { DataTable } from 'datatable-translatable';
 
@@ -16,10 +16,11 @@ function Translatable() {
   const [wrapperElement, setWrapperElement] = useState(null);
   const {
     state: {
-      language, sourceRepository, targetRepository, filepath,
+      language, sourceRepository, targetRepository, filepath, authentication,
     },
   } = useContext(AppContext);
   const { state: sourceFile } = useContext(FileContext);
+  const { actions: { close: closeRepo } } = useContext(RepositoryContext);
 
   const { state: targetFile, actions: targetFileActions } = useContext(TargetFileContext);
 
@@ -31,6 +32,11 @@ function Translatable() {
 
   const translatableComponent = useMemo(() => {
     let _translatable = <h3>Unsupported File. Please select .md or .tsv files.</h3>;
+
+    if (!targetFile && sourceFile && language && sourceRepository && authentication) {
+      alert('The repository selected was not found for this organization, please make sure that the selected repository exists on the selected organization. \nTo get help please contact your organization administrator.');
+      closeRepo();
+    }
 
     if (filepath && sourceFile && targetFile && (filepath === sourceFile.filepath) && (filepath === targetFile.filepath)) {
       if (sourceFile.filepath.match(/\.md$/)) {
@@ -62,7 +68,7 @@ function Translatable() {
       }
     }
     return _translatable;
-  }, [filepath, sourceFile, targetFile, targetFileActions.save]);
+  }, [authentication, closeRepo, filepath, language, sourceFile, sourceRepository, targetFile, targetFileActions.save]);
 
   useEffect(() => {
     scrollToTop();

@@ -92,7 +92,7 @@ export const useStateReducer = ({
         const repo = { ...res, branch };
         setTargetRepository(repo);
       }).catch((err) => {
-        alert('There was a problem setting up your repo, please contact your organization administrator');
+        alert('There was a problem setting up your repository, please contact your organization administrator');
         console.error(err);
       });
     } else {
