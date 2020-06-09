@@ -37,16 +37,12 @@ export const useStateReducer = ({
     }
   }, []);
 
-  const setAuthentication = useCallback((value) => {
-    if (JSON.stringify(value) !== JSON.stringify(state.authentication)) {
-      dispatch({ type: 'set_authentication', value });
-      saveState('authentication', value);
-
-      if (!value && !!state.sourceRepository) {
-        setSourceRepository();
-      } // reset if logged out
+  const setFilepath = useCallback((value) => {
+    if (value !== state.filepath) {
+      dispatch({ type: 'set_filepath', value });
+      saveState('filepath', value);
     };
-  }, [state.authentication, state.sourceRepository, setSourceRepository]);
+  }, [state.filepath]);
 
   const setLanguage = useCallback((value) => {
     if (value !== state.language) {
@@ -59,16 +55,29 @@ export const useStateReducer = ({
     };
   }, [state.language, setSourceRepository]);
 
+
+  const clearState = useCallback(() => {
+    setOrganization();
+    setSourceRepository();
+    setLanguage();
+    setFilepath();
+  }, [setFilepath, setLanguage, setOrganization, setSourceRepository]);
+
+  const setAuthentication = useCallback((value) => {
+    if (JSON.stringify(value) !== JSON.stringify(state.authentication)) {
+      dispatch({ type: 'set_authentication', value });
+      saveState('authentication', value);
+
+      if (!value) {
+        //logged out reset state
+        clearState();
+      }
+    };
+  }, [clearState, state.authentication]);
+
   const setTargetRepository = useCallback((value) => {
     dispatch({ type: 'set_target_repository', value });
   }, []);
-
-  const setFilepath = useCallback((value) => {
-    if (value !== state.filepath) {
-      dispatch({ type: 'set_filepath', value });
-      saveState('filepath', value);
-    };
-  }, [state.filepath]);
 
   const setTargetRepoFromSourceRepo = useCallback(({
     authentication, sourceRepository, language, organization,
@@ -92,13 +101,16 @@ export const useStateReducer = ({
         const repo = { ...res, branch };
         setTargetRepository(repo);
       }).catch((err) => {
-        alert('There was a problem setting up your repo, please contact your organization administrator');
+        setTimeout(() => {
+          clearState();
+          alert(`The organization "${owner}" does not contain the selected translation ${language.languageName} for the repository "${description}"\nPlease make sure that your repository has been set up correctly by your organization administrator.`);
+        }, 200);
         console.error(err);
       });
     } else {
       setTargetRepository();
     }
-  }, [setTargetRepository]);
+  }, [clearState, setTargetRepository]);
 
   const actions = {
     setAuthentication,
