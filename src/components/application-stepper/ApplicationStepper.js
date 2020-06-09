@@ -123,7 +123,7 @@ function ApplicationStepper() {
       <>
         <Paper>
           <div className={classes.root}>
-            <Stepper nonLinear activeStep={activeStep}>
+            <Stepper activeStep={activeStep}>
               {steps.map((step, index) => (
                 <Step key={step.label}>
                   <StepButton onClick={handleStep(index)} completed={completed[index]}>
