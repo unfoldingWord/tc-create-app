@@ -16,6 +16,7 @@ import { testament } from '../../core/bcv.js';
 import { SERVER_URL } from '../../core/state.defaults';
 
 import RowHeader from './RowHeader';
+import { ForumOutlined } from '@material-ui/icons';
 
 function Translatable() {
   const classes = useStyles();
