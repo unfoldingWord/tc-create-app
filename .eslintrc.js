@@ -9,6 +9,10 @@ module.exports = {
     "cypress",
     "chai-friendly"
   ],
+  "rules": {
+    "react/jsx-tag-spacing": ["error"],
+    "react/jsx-closing-bracket-location": ["error", "line-aligned"]
+  },
   "env": {
     "browser": true,
     "node": true,

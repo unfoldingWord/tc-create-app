@@ -11,13 +11,17 @@ describe('Application Stepper', function () {
     cy.get('[data-test=password-input] input').type(Cypress.env('TEST_PASSWORD'));
     cy.get('[data-test=submit-button]').click();
 
-    /** Select language */
-    cy.get('.language-select-dropdown').click();
-    cy.focused().type('hindi{enter}');
+    /** Select organization */
+    cy.wait(1000);
+    cy.get('[data-test=organization-item]').eq(0).click();
 
     /** Select resource */
     cy.wait(1000);
     cy.get('[data-test=repository-item]').eq(0).click();
+
+    /** Select language */
+    cy.get('.language-select-dropdown').click();
+    cy.focused().type('english{enter}');
 
     /** Select file */
     cy.contains('checking/').should('be.be.visible').click();
@@ -25,6 +29,6 @@ describe('Application Stepper', function () {
     cy.contains('01.md').should('be.be.visible').click();
 
     /** Testing file selection*/
-    cy.contains('Translation in an Acceptable Style');
+    cy.contains('Translation in an Acceptable Style', { timeout: 10000 });
   });
 })
