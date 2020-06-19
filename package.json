@@ -19,7 +19,7 @@
     "electron:build": "react-scripts build",
     "deploy": "git push",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --record --browser chrome",
+    "cypress:run": "cypress run",
     "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
     "test:unit": "jest __tests__ && cat ./coverage/lcov.info | coveralls",
     "test": "start-test 3000 test:cov",
