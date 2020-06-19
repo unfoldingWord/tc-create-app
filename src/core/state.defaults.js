@@ -1,6 +1,6 @@
 import appPackage from '../../package.json';
 
-export const SERVER_URL = 'https://bg.door43.org';
+export const SERVER_URL = process.env.REACT_APP_DOOR43_SERVER_URL;
 
 const config = {
   authentication: {
