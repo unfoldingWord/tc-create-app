@@ -1,13 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider } from 'scripture-resources-rcl';
 
 import { FileContext } from 'gitea-react-toolkit';
 
-import { TargetFileContext } from '../../core/TargetFile.context';
-import { testament } from '../../core/bcv.js';
+import {
+  stripDefaultsFromResourceLinks,
+  generateAllResourceLinks,
+} from '../../core/resourceLinks';
 import { SERVER_URL } from '../../core/state.defaults';
+import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
@@ -15,11 +18,10 @@ import RowHeader from './RowHeader';
 function TranslatableTSV() {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
-  const [resourceLinks, setResourceLinks] = useState([]);
 
   const {
-    state: { resourceLinks: userResourceLinks },
-    actions: { setResourceLinks: setUserResourceLinks },
+    state: { resourceLinks },
+    actions: { setResourceLinks },
   } = useContext(AppContext);
 
   const { state: sourceFile } = useContext(FileContext);
@@ -27,39 +29,26 @@ function TranslatableTSV() {
     TargetFileContext
   );
 
-  // Appends book ID to the general resourcePath accepted by the UI.
-  const addResourceLink = (newResourceLink) => {
-    // Persist the ORIGINAL path without the bookId.
-    const _userResourceLinks = [...userResourceLinks, newResourceLink];
-    setUserResourceLinks(_userResourceLinks);
-
-    // Transform, appending bookId.
-    return newResourceLink + bookId;
-  };
-
   const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
 
-  useEffect(() => {
-    const reference = { bookId };
-    const _testament = testament(reference);
-    let hebrewLink = 'unfoldingWord/hbo/uhb/master';
-    let greekLink = 'unfoldingWord/el-x-koine/ugnt/master';
-    let originalLink = _testament === 'old' ? hebrewLink : greekLink;
+  const onResourceLinks = useCallback(
+    (_resourceLinks) => {
+      // Remove bookId and remove defaults:
+      const persistedResourceLinks = stripDefaultsFromResourceLinks({
+        resourceLinks: _resourceLinks,
+        bookId,
+      });
+      // Persist to App context:
+      setResourceLinks(persistedResourceLinks);
+    },
+    [bookId, setResourceLinks]
+  );
 
-    // need to add reference bookId to resource links
-    const _resourceLinks = [
-      originalLink,
-      'unfoldingWord/en/ult/master',
-      'unfoldingWord/en/ust/master',
-      ...userResourceLinks,
-    ];
-
-    // Add bookId to all resource paths:
-    const resourceLinksWithBookId = _resourceLinks.map((link) => {
-      return link + '/' + bookId;
-    });
-    setResourceLinks(resourceLinksWithBookId);
-  }, [bookId, userResourceLinks, setResourceLinks]);
+  // Build bookId and add defaults:
+  const allResourceLinksWithBookId = generateAllResourceLinks({
+    bookId,
+    resourceLinks,
+  });
 
   const delimiters = { row: '\n', cell: '\t' };
   const rowHeader = (rowData, actionsMenu) => (
@@ -97,9 +86,8 @@ function TranslatableTSV() {
 
   return (
     <ResourcesContextProvider
-      resourceLinks={resourceLinks}
-      onResourceLinks={setResourceLinks}
-      onAddResourceLink={addResourceLink}
+      resourceLinks={allResourceLinksWithBookId}
+      onResourceLinks={onResourceLinks}
       resources={resources}
       onResources={setResources}
       config={serverConfig}
