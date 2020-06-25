@@ -12470,10 +12470,10 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.4:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-scripture-resources-rcl@1.0.0-rc.6:
-  version "1.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.0-rc.6.tgz#ed249b5580b265512ac7cd48cda027ea82b1b5ec"
-  integrity sha512-boumApP9nPTiKz8Jgk68JSLnMs1FJ1HyWy1vrHWcKZ9rHCea/zuU9Yz6dNXSRsPPckMzzwgDMhZ5cqKp9weltg==
+scripture-resources-rcl@1.0.1-rc.1:
+  version "1.0.1-rc.1"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.1-rc.1.tgz#e0e87c8363ee6f1ac37ced40addb02da0e8c801a"
+  integrity sha512-9zHCtVpgy7t8QndMXl+0hEos3XJjrcIZJNlutggqnKmTP54fTptArrEImEvEG/eb03oqVw3659udo6EH1RRrPg==
   dependencies:
     deep-freeze "0.0.1"
     gitea-react-toolkit "^0.6.9"

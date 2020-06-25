@@ -6,7 +6,7 @@ const greekResourceLink = 'unfoldingWord/el-x-koine/ugnt/master';
 const enUltResourceLink = 'unfoldingWord/en/ult/master';
 const enUstResourceLink = 'unfoldingWord/en/ust/master';
 
-const defaultResourceLinks = [
+export const defaultResourceLinks = [
   hebrewResourceLink,
   greekResourceLink,
   enUltResourceLink,

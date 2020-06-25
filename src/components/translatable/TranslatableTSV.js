@@ -6,6 +6,7 @@ import { ResourcesContextProvider } from 'scripture-resources-rcl';
 import { FileContext } from 'gitea-react-toolkit';
 
 import {
+  defaultResourceLinks,
   stripDefaultsFromResourceLinks,
   generateAllResourceLinks,
 } from '../../core/resourceLinks';
@@ -45,6 +46,10 @@ function TranslatableTSV() {
   );
 
   // Build bookId and add defaults:
+  const defaultResourceLinksWithBookId = generateAllResourceLinks({
+    bookId,
+    defaultResourceLinks,
+  });
   const allResourceLinksWithBookId = generateAllResourceLinks({
     bookId,
     resourceLinks,
@@ -86,6 +91,7 @@ function TranslatableTSV() {
 
   return (
     <ResourcesContextProvider
+      defaultResourceLinks={defaultResourceLinksWithBookId}
       resourceLinks={allResourceLinksWithBookId}
       onResourceLinks={onResourceLinks}
       resources={resources}
