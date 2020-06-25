@@ -19,5 +19,5 @@ const config = {
 
 export default {
   fontScale: 100,
-  config
+  config,
 };
