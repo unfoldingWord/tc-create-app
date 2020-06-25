@@ -13,6 +13,7 @@ const config = {
       SERVER_URL + '/api/v1/repos/unfoldingword/en_tw',
       SERVER_URL + '/api/v1/repos/unfoldingword/en_tn',
       SERVER_URL + '/api/v1/repos/unfoldingword/en_obs',
+      SERVER_URL + '/api/v1/repos/unfoldingword/en_obs-tn',
     ],
   },
 };
