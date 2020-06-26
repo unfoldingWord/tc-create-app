@@ -4659,13 +4659,13 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.1.tgz#9bede14291eee923133280652cbcf54ccef54e01"
-  integrity sha512-JUg7aLCgAsb42ouc79TQzlD1aMvRHdeIRg8Nms/CheuhAT8XoDeBa33SxLO7maq89TR7A9Y7FdAROPPHNjNtHA==
+datatable-translatable@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.2.tgz#3011f5ed24ba07ca791ce870f8cdd24fd2f4536f"
+  integrity sha512-LhtJTH1Fwuojk7J1cN+rldGAUMf+buUQl65P/+xOv9W2VP+SjJ8WSxSPh375wyUmmB1y7bNVmVOsQS17ud2TBQ==
   dependencies:
     deep-freeze "^0.0.1"
-    markdown-translatable "0.10.1"
+    markdown-translatable "1.0.2-rc.1"
     mui-datatables "^2.14.0"
 
 date-fns@^1.27.2:
@@ -9076,23 +9076,10 @@ markdown-to-jsx@^6.10.3:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-0.10.1.tgz#cf01c3a42ac579884873420964e3ecb433a4efc6"
-  integrity sha512-f1cAw3HYl1l7rllwGUXzyO7wNOrvGtd76B2yG6aphOEdTC2V+3RmG+J+9nodZz9N5IguQqPWd7yVf6HzkVeRvw==
-  dependencies:
-    deep-freeze "^0.0.1"
-    md5 "^2.2.1"
-    prop-types "^15.7.2"
-    react-markdown "^4.0.6"
-    showdown "^1.9.0"
-    turndown "^5.0.3"
-    turndown-plugin-gfm "^1.0.2"
-
-markdown-translatable@^1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.0-rc.1.tgz#2fa3a8756f940e270b7e521625676741c64dbb70"
-  integrity sha512-z0ELRp0x/Ak6qQ+YfJv0zPjZ4CLdba0pw7MEkNxZa35uO3woiyL3ZohZVogf2Y/Rbt81+oONlEyqyjwVbzD+5Q==
+markdown-translatable@1.0.2-rc.1, markdown-translatable@^1.0.2-rc.1:
+  version "1.0.2-rc.1"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.2-rc.1.tgz#23a6695974eeccf013b6b9a7df50a9e40355d87b"
+  integrity sha512-PoBAteBobLsCGcyby7S39bDz7b2JY2u8u+oxbTBsqVO8iT84C/h7KCTg/AbzXnBTY0jr7UXubNWru7bhrs8l7A==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
