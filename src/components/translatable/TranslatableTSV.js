@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, {
+  useState, useCallback, useContext,
+} from 'react';
 
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider } from 'scripture-resources-rcl';
@@ -74,18 +76,27 @@ function TranslatableTSV() {
     ],
     rowHeader,
   };
+
+
+  const generateRowId = (rowData) => {
+    const [chapter] = rowData[2].split(delimiters.cell);
+    const [verse] = rowData[3].split(delimiters.cell);
+    const [uid] = rowData[4].split(delimiters.cell);
+    return `header-${chapter}-${verse}-${uid}`;
+  };
+
   let translatableProps = {
     sourceFile: sourceFile.content,
     targetFile: targetFile.content,
     onSave: targetFileActions.save,
     delimiters,
     config,
+    generateRowId,
   };
 
   const serverConfig = {
     server: SERVER_URL,
-    cache: {
-      maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
+    cache: { maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
     },
   };
 

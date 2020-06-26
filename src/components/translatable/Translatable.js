@@ -20,7 +20,9 @@ function Translatable() {
   const [wrapperElement, setWrapperElement] = useState(null);
 
   const {
-    state: { language, sourceRepository, targetRepository, filepath },
+    state: {
+      language, sourceRepository, targetRepository, filepath,
+    },
   } = useContext(AppContext);
 
   const { state: sourceFile } = useContext(FileContext);
