@@ -42,7 +42,8 @@ function Translatable() {
 
 
   const translatableComponent = useMemo(() => {
-    let _translatable = <div style={{ 'text-align': 'center'}} ><CircularProgress /> </div>;
+    let _translatable = <div style={{ 'text-align': 'center' }} ><CircularProgress /> </div>;
+
     if (filepath && sourceFile && targetFile && (filepath === sourceFile.filepath) && (filepath === targetFile.filepath)) {
       if (sourceFile.filepath.match(/\.md$/)) {
         let translatableProps = {
@@ -63,33 +64,39 @@ function Translatable() {
           columnsShowDefault: ['SupportReference', 'OrigQuote', 'Occurrence', 'OccurrenceNote'],
           rowHeader,
         };
+
+        const generateRowId = (rowData) => {
+          const [chapter] = rowData[2].split(delimiters.cell);
+          const [verse] = rowData[3].split(delimiters.cell);
+          const [uid] = rowData[4].split(delimiters.cell);
+          return `header-${chapter}-${verse}-${uid}`;
+        };
+
         let translatableProps = {
           sourceFile: sourceFile.content,
           targetFile: targetFile.content,
           onSave: targetFileActions.save,
           delimiters,
           config,
+          generateRowId,
         };
         const reference = { bookId };
         const _testament = testament(reference);
         let hebrewLink = 'unfoldingWord/hbo/uhb/master';
         let greekLink = 'unfoldingWord/el-x-koine/ugnt/master';
         let originalLink = (_testament === 'old') ? hebrewLink : greekLink;
-      
+
         // need to add reference bookId to resource links
         const _resourceLinks = [
           originalLink,
           'unfoldingWord/en/ult/master',
           'unfoldingWord/en/ust/master',
         ];
-        const resourceLinks = _resourceLinks.map( (link) => {
-          return link+'/'+bookId;
-        });
-      
-        const serverConfig = { 
+        const resourceLinks = _resourceLinks.map( (link) => link+'/'+bookId);
+
+        const serverConfig = {
           server: SERVER_URL,
-          cache: {
-            maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
+          cache: { maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
           },
         };
 
@@ -104,9 +111,9 @@ function Translatable() {
           </ResourcesContextProvider>
         );
       } else {
-        _translatable = <h3 style={{ 'text-align': 'center'}} >Unsupported File. Please select .md or .tsv files.</h3>;
+        _translatable = <h3 style={{ 'text-align': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
-    } 
+    }
     return _translatable;
   }, [filepath, sourceFile, targetFile, targetFileActions.save, resources]);
 
