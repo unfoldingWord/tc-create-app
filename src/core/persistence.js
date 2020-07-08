@@ -14,10 +14,19 @@ export const loadState = async (key) => {
 export const saveState = async (key, value) => {
   let response;
 
-  if ( value === null ) {
+  if ( value === null || value === undefined ) {
     response = await stateStore.removeItem(key);
   } else {
     response = await stateStore.setItem(key, value);
   }
   return response;
+};
+
+
+export const loadAuthentication = async () => {
+  return loadState('authentication');
+};
+
+export const saveAuthentication = async (authentication) => {
+  saveState('authentication', authentication)
 };
