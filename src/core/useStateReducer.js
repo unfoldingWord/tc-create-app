@@ -86,7 +86,9 @@ export const useStateReducer = ({
     (value) => {
       if (JSON.stringify(value) !== JSON.stringify(state.authentication)) {
         dispatch({ type: 'set_authentication', value });
+        /*
         saveState('authentication', value);
+        */
 
         if (!value) {
           //logged out reset state

@@ -4659,13 +4659,13 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.2.tgz#3011f5ed24ba07ca791ce870f8cdd24fd2f4536f"
-  integrity sha512-LhtJTH1Fwuojk7J1cN+rldGAUMf+buUQl65P/+xOv9W2VP+SjJ8WSxSPh375wyUmmB1y7bNVmVOsQS17ud2TBQ==
+datatable-translatable@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.3.tgz#b0483d124c2a25f698ae726469e5e18ae60a9364"
+  integrity sha512-n+yIv7jyO83PoJvhmnY8879JXlW6uw0d6wUJ3xCkSrzhu6zk7UM9VxBjnIHXctcK4rQLc3b3aXy0SDwkZzsePg==
   dependencies:
     deep-freeze "^0.0.1"
-    markdown-translatable "1.0.2-rc.1"
+    markdown-translatable "1.0.2-rc.2"
     mui-datatables "^2.14.0"
 
 date-fns@^1.27.2:
@@ -9076,10 +9076,10 @@ markdown-to-jsx@^6.10.3:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@1.0.2-rc.1, markdown-translatable@^1.0.2-rc.1:
-  version "1.0.2-rc.1"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.2-rc.1.tgz#23a6695974eeccf013b6b9a7df50a9e40355d87b"
-  integrity sha512-PoBAteBobLsCGcyby7S39bDz7b2JY2u8u+oxbTBsqVO8iT84C/h7KCTg/AbzXnBTY0jr7UXubNWru7bhrs8l7A==
+markdown-translatable@1.0.2-rc.2, markdown-translatable@^1.0.2-rc.2:
+  version "1.0.2-rc.2"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.2-rc.2.tgz#9cf4f48e081ef2117e3aa28f726538f5615ea34d"
+  integrity sha512-oHD75TpzhwkFtpBazorhMXmo9e08CZ+OPYhi/alS56eTLsg1ErKSwHV2wipAwCOgw+ZKb5JtY226N1CVrGWajQ==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
@@ -12383,10 +12383,10 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.4:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-scripture-resources-rcl@1.0.1-rc.2:
-  version "1.0.1-rc.2"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.1-rc.2.tgz#41166c5b456569b8cea2bd929849b442a10a325c"
-  integrity sha512-8gngO5iCkcjAFx78Ijm2iD9AeJHhJ1ra2AwdV48lLQKkhZdb6XVrzJCUNJyK8eYSSuRfoZ7M3Ip20JjVHPa80g==
+scripture-resources-rcl@1.0.1-rc.3:
+  version "1.0.1-rc.3"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.1-rc.3.tgz#ab3aa7916dee73e0d231367989118647f2c20742"
+  integrity sha512-UpbTWjoJnNMTFDbRZYq3teEczQsmpNVOgzJAsOpKESxEYgtYIhxrMwQPfnSs36B+Gqy/4DVxsUlQ/lt57pw6Lw==
   dependencies:
     deep-freeze "0.0.1"
     gitea-react-toolkit "^0.6.9"
