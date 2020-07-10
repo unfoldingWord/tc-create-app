@@ -13,7 +13,6 @@ describe('Application Stepper', function () {
 
     /** Select organization */
     cy.wait(1000);
-    cy.contains('unfoldingWord');
     cy.get('[data-test=organization-item]').eq(0).click();
 
     /** Select resource */
@@ -32,4 +31,4 @@ describe('Application Stepper', function () {
     /** Testing file selection*/
     cy.contains('Translation in an Acceptable Style', { timeout: 10000 });
   });
-});
+})
