@@ -11,7 +11,10 @@ import {
 
 import DrawerMenu from './components/drawer-menu/DrawerMenu';
 
-import { loadState, loadAuthentication, saveAuthentication 
+import {
+  loadState,
+  loadAuthentication,
+  saveAuthentication,
 } from './core/persistence';
 
 import Workspace from './Workspace';
@@ -54,7 +57,7 @@ function AppComponent() {
           authentication={authentication}
           onAuthentication={setAuthentication}
           config={config.authentication}
-          saveAuthentication={saveAuthentication}        
+          saveAuthentication={saveAuthentication}
         >
           <OrganizationContextProvider
             authentication={authentication}
@@ -98,14 +101,16 @@ function App(props) {
   const [resumedState, setResumedState] = useState();
 
   const resumeState = useCallback(async () => {
-    const organization = await loadState('organization');
-    // note that the authentication context manages its own 
+    // note that the authentication context manages its own
     // state via provided persistence load and save closures
     const authentication = await loadAuthentication('authentication');
-    const language = await loadState('language');
-    const sourceRepository = await loadState('sourceRepository');
-    const resourceLinks = await loadState('resourceLinks');
-    const filepath = await loadState('filepath');
+
+    const organization = authentication && (await loadState('organization'));
+    const language = authentication && (await loadState('language'));
+    const sourceRepository =
+      authentication && (await loadState('sourceRepository'));
+    const resourceLinks = authentication && (await loadState('resourceLinks'));
+    const filepath = authentication && (await loadState('filepath'));
     const _resumedState = {
       authentication,
       language,
