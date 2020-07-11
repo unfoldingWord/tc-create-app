@@ -23,8 +23,14 @@ export const saveState = async (key, value) => {
 };
 
 export const loadAuthentication = async () => {
-  let _authentication = loadState('authentication');
-  if (_authentication && !_authentication.username) _authentication = null;
+  debugger;
+  let _authentication = await loadState('authentication');
+  if (
+    _authentication &&
+    !_authentication.user &&
+    !_authentication.user.username
+  )
+    _authentication = null;
   return _authentication;
 };
 
