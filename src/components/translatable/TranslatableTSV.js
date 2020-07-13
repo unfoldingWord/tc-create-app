@@ -85,13 +85,22 @@ function TranslatableTSV() {
     return `header-${chapter}-${verse}-${uid}`;
   };
 
+  const options = {
+    page: 0,
+    rowsPerPage: 25,
+    rowsPerPageOptions: [10, 25, 50, 100],
+  };
+
   let translatableProps = {
     sourceFile: sourceFile.content,
     targetFile: targetFile.content,
-    onSave: targetFileActions.save,
+    onSave: (data) => {
+      targetFileActions.save(data);
+    },
     delimiters,
     config,
     generateRowId,
+    options,
   };
 
   const serverConfig = {
