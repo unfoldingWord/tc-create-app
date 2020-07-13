@@ -4669,9 +4669,9 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-"datatable-translatable@https://github.com/unfoldingWord/datatable-translatable.git#feature-jay-174":
+datatable-translatable@./datatable-translatable-0.8.4.tgz:
   version "0.8.4"
-  resolved "https://github.com/unfoldingWord/datatable-translatable.git#7226d1fdf602470c25e8685b6b4b9bc235d956de"
+  resolved "./datatable-translatable-0.8.4.tgz#ce9f47b6f1aed8892ff8c577e6cdcafed9d56f21"
   dependencies:
     deep-freeze "^0.0.1"
     markdown-translatable "1.0.2-rc.2"
@@ -6517,6 +6517,13 @@ getpass@^0.1.1:
   integrity sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
   dependencies:
     assert-plus "^1.0.0"
+
+git@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/git/-/git-0.1.5.tgz#9ef62df93f851c27542143bf52d1c68b1017ca15"
+  integrity sha1-nvYt+T+FHCdUIUO/UtHGixAXyhU=
+  dependencies:
+    mime "1.2.9"
 
 gitea-react-toolkit@1.1.0-rc.2:
   version "1.1.0-rc.2"
@@ -9278,6 +9285,11 @@ mime-types@~2.1.17, mime-types@~2.1.24:
   integrity sha512-01paPWYgLrkqAyrlDorC1uDwl2p3qZT7yl806vW7DvDoxwXi46jsjFbg+WdwotBIk6/MbEhO/dh5aZ5sNj/dWQ==
   dependencies:
     mime-db "1.43.0"
+
+mime@1.2.9:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-1.2.9.tgz#009cd40867bd35de521b3b966f04e2f8d4d13d09"
+  integrity sha1-AJzUCGe9Nd5SGzuWbwTi+NTRPQk=
 
 mime@1.6.0:
   version "1.6.0"
