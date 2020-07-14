@@ -4659,7 +4659,7 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.8.5:
+datatable-translatable@^0.8.6:
   version "0.8.6"
   resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.6.tgz#b6e0aa6174b03aa6c7418091383f166b8472a5ce"
   integrity sha512-Nd+GrORQBrAHfRSL1BGdVXuPtKrHPClVIaUqEBUjywv+nKqbm7gsvloF0UYLexBCBA1nSVHjnLFWYOQUoYMAwQ==
