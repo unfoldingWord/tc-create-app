@@ -14,7 +14,7 @@ export const loadState = async (key) => {
 export const saveState = async (key, value) => {
   let response;
 
-  if ( value === null || value === undefined ) {
+  if (value === null || value === undefined) {
     response = await stateStore.removeItem(key);
   } else {
     response = await stateStore.setItem(key, value);
@@ -22,11 +22,16 @@ export const saveState = async (key, value) => {
   return response;
 };
 
-
 export const loadAuthentication = async () => {
-  return loadState('authentication');
+  let _authentication = await loadState('authentication');
+  if (
+    _authentication &&
+    !(_authentication.user && _authentication.user.username)
+  )
+    _authentication = null;
+  return _authentication;
 };
 
 export const saveAuthentication = async (authentication) => {
-  saveState('authentication', authentication)
+  saveState('authentication', authentication);
 };
