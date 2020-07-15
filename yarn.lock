@@ -4659,14 +4659,15 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.8.6:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.6.tgz#b6e0aa6174b03aa6c7418091383f166b8472a5ce"
-  integrity sha512-Nd+GrORQBrAHfRSL1BGdVXuPtKrHPClVIaUqEBUjywv+nKqbm7gsvloF0UYLexBCBA1nSVHjnLFWYOQUoYMAwQ==
+datatable-translatable@^0.8.7:
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.7.tgz#936aefbb657e357d1570d9a39d2ae172c7b07d0c"
+  integrity sha512-JkBG9Xc7W99IT5whbs6GZzRSd78fIaKyqEEPVaEK/PGT6RQznXG/NDt30rhs8j58D/4Q/uz6Ki7/AKQdt1jh7A==
   dependencies:
     deep-freeze "^0.0.1"
     markdown-translatable "1.0.2-rc.2"
-    mui-datatables "^2.14.0"
+    mui-datatables "2.15.0"
+    use-deep-compare-effect "^1.3.1"
 
 date-fns@^1.27.2:
   version "1.30.1"
@@ -9429,10 +9430,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-mui-datatables@^2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-2.14.0.tgz#ca68308c18fd54f1b6e9815c3808ef3b292b19d9"
-  integrity sha512-0N1bqQhmHwlKekxyQOhU1A5qyzhncwB0m2MiMZE+vrzV7uqjvg69Fr/o6iGDOj2l8YEVFoEkQDNry1hUORvpIg==
+mui-datatables@2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-2.15.0.tgz#23761a6258424edcc950d084c08593262734e6d1"
+  integrity sha512-3hZJcKSqDHdzZfoGDBUMqc262QLdfEfkw4XL/x4aCfUJrQxq4STYAlyScOjwMvR4HcYMoCWFiroaJKoE1lW2Tg==
   dependencies:
     classnames "^2.2.5"
     lodash.assignwith "^4.2.0"
