@@ -1,6 +1,4 @@
-import React, {
-  useContext, useState, useCallback, useEffect,
-} from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Headroom from 'react-headroom';
 import {
@@ -12,7 +10,13 @@ import {
 } from 'gitea-react-toolkit';
 
 import DrawerMenu from './components/drawer-menu/DrawerMenu';
-import { loadState } from './core/persistence';
+
+import {
+  loadState,
+  loadAuthentication,
+  saveAuthentication,
+} from './core/persistence';
+
 import Workspace from './Workspace';
 
 import theme from './theme';
@@ -47,12 +51,13 @@ function AppComponent() {
     workspace: { margin: `${theme.spacing(2)}px` },
   };
   return (
-    <div className="App" style={style.app}>
+    <div className='App' style={style.app}>
       <MuiThemeProvider theme={theme}>
         <AuthenticationContextProvider
           authentication={authentication}
           onAuthentication={setAuthentication}
           config={config.authentication}
+          saveAuthentication={saveAuthentication}
         >
           <OrganizationContextProvider
             authentication={authentication}
@@ -71,7 +76,7 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
               >
-                <header id="App-header">
+                <header id='App-header'>
                   <Headroom style={style.headroom}>
                     <ApplicationBar
                       title={title}
@@ -96,13 +101,23 @@ function App(props) {
   const [resumedState, setResumedState] = useState();
 
   const resumeState = useCallback(async () => {
-    const organization = await loadState('organization');
-    const authentication = await loadState('authentication');
-    const language = await loadState('language');
-    const sourceRepository = await loadState('sourceRepository');
-    const filepath = await loadState('filepath');
+    // note that the authentication context manages its own
+    // state via provided persistence load and save closures
+    const authentication = await loadAuthentication('authentication');
+
+    const organization = authentication && (await loadState('organization'));
+    const language = authentication && (await loadState('language'));
+    const sourceRepository =
+      authentication && (await loadState('sourceRepository'));
+    const resourceLinks = authentication && (await loadState('resourceLinks'));
+    const filepath = authentication && (await loadState('filepath'));
     const _resumedState = {
-      authentication, language, sourceRepository, filepath, organization,
+      authentication,
+      language,
+      sourceRepository,
+      filepath,
+      organization,
+      resourceLinks,
     };
     setResumedState(_resumedState);
   }, []);
@@ -113,11 +128,13 @@ function App(props) {
 
   const _props = { ...props, ...resumedState };
 
-  return (!resumedState) ? <></> : (
+  return !resumedState ? (
+    <></>
+  ) : (
     <AppContextProvider {..._props}>
       <AppComponent {...props} />
     </AppContextProvider>
   );
-};
+}
 
 export default App;
