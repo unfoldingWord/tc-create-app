@@ -1,4 +1,6 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, {
+  useContext, useState, useCallback, useEffect,
+} from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Headroom from 'react-headroom';
 import {
@@ -51,7 +53,7 @@ function AppComponent() {
     workspace: { margin: `${theme.spacing(2)}px` },
   };
   return (
-    <div className='App' style={style.app}>
+    <div className="App" style={style.app}>
       <MuiThemeProvider theme={theme}>
         <AuthenticationContextProvider
           authentication={authentication}
@@ -76,7 +78,7 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
               >
-                <header id='App-header'>
+                <header id="App-header">
                   <Headroom style={style.headroom}>
                     <ApplicationBar
                       title={title}
@@ -111,13 +113,9 @@ function App(props) {
       authentication && (await loadState('sourceRepository'));
     const resourceLinks = authentication && (await loadState('resourceLinks'));
     const filepath = authentication && (await loadState('filepath'));
+
     const _resumedState = {
-      authentication,
-      language,
-      sourceRepository,
-      filepath,
-      organization,
-      resourceLinks,
+      authentication, language, sourceRepository, filepath, organization,
     };
     setResumedState(_resumedState);
   }, []);
@@ -128,13 +126,11 @@ function App(props) {
 
   const _props = { ...props, ...resumedState };
 
-  return !resumedState ? (
-    <></>
-  ) : (
+  return (!resumedState) ? <></> : (
     <AppContextProvider {..._props}>
       <AppComponent {...props} />
     </AppContextProvider>
   );
-}
+};
 
 export default App;

@@ -12,7 +12,6 @@ export function AppContextProvider({
   filepath: __filepath,
   organization: __organization,
   children,
-  resourceLinks: __resourceLinks,
 }) {
   const [state, actions] = useStateReducer({
     authentication: __authentication,
@@ -20,10 +19,14 @@ export function AppContextProvider({
     sourceRepository: __sourceRepository,
     filepath: __filepath,
     organization: __organization,
-    resourceLinks: __resourceLinks,
   });
 
-  const { authentication, language, sourceRepository, organization } = state;
+  const {
+    authentication,
+    language,
+    sourceRepository,
+    organization,
+  } = state;
 
   const { setTargetRepoFromSourceRepo } = actions;
 
@@ -34,24 +37,19 @@ export function AppContextProvider({
       const _authentication = JSON.parse(authMemo);
 
       setTargetRepoFromSourceRepo({
-        authentication: _authentication,
-        sourceRepository,
-        language,
-        organization,
+        authentication: _authentication, sourceRepository, language, organization,
       });
     }
-  }, [
-    authMemo,
-    sourceRepository,
-    language,
-    setTargetRepoFromSourceRepo,
-    organization,
-  ]);
+  }, [authMemo, sourceRepository, language, setTargetRepoFromSourceRepo, organization]);
 
   const value = {
     state,
     actions,
   };
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-}
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+    </AppContext.Provider>
+  );
+};
