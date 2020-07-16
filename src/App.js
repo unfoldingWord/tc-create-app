@@ -115,7 +115,7 @@ function App(props) {
     const filepath = authentication && (await loadState('filepath'));
 
     const _resumedState = {
-      authentication, language, sourceRepository, filepath, organization,
+      authentication, language, sourceRepository, filepath, organization, resourceLinks,
     };
     setResumedState(_resumedState);
   }, []);
