@@ -70,8 +70,6 @@ function TranslatableTSV() {
     columnsFilter: ['Chapter', 'SupportReference'],
     columnsShowDefault: [
       'SupportReference',
-      'OrigQuote',
-      'Occurrence',
       'OccurrenceNote',
     ],
     rowHeader,
