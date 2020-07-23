@@ -27,9 +27,6 @@ jobs:
       - name: Get yarn cache directory
         id: yarn-cache-directory
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Get cypress cache directory
-        id: cypress-cache-directory
-        run: echo "::set-output name=dir::$(yarn cypress cache path | sed -n 3p)"
       - name: Load Cached Yarn Modules
         uses: actions/cache@v1
         with:
