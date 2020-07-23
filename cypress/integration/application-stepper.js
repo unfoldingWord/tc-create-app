@@ -31,7 +31,4 @@ describe('Application Stepper', function () {
     /** Testing file selection*/
     cy.contains('Translation in an Acceptable Style', { timeout: 10000 });
   });
-  it('test', () => {
-    expect(true).to.eq(true);
-  });
 });
