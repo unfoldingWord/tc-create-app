@@ -40,7 +40,7 @@ jobs:
       - name: Load Cached Cypress
         uses: actions/cache@v1
         with:
-          path: ${{ steps.cypress-cache-directory.outputs.dir }}
+          path: ${{ env.CYPRESS_CACHE_FOLDER }}
           key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-cypress-
