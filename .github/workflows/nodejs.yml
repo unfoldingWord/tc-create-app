@@ -8,6 +8,7 @@ env:
   CYPRESS_TEST_USERNAME: ${{ secrets.CYPRESS_TEST_USERNAME }}
   CYPRESS_TEST_PASSWORD: ${{ secrets.CYPRESS_TEST_PASSWORD }}
   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+  CYPRESS_CACHE_FOLDER: ${{ secrets.CYPRESS_CACHE_FOLDER }}
 jobs:
   test:
     runs-on: macos-latest
@@ -23,20 +24,23 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Get yarn cache
-        id: yarn-cache
+      - name: Get yarn cache directory
+        id: yarn-cache-directory
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache Yarn Modules
+      - name: Get cypress cache directory
+        id: cypress-cache-directory
+        run: echo "::set-output name=dir::$(yarn cypress cache path | sed -n 3p)"
+      - name: Load Cached Yarn Modules
         uses: actions/cache@v1
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
+          path: ${{ steps.yarn-cache-directory.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Cache Cypress
+      - name: Load Cached Cypress
         uses: actions/cache@v1
         with:
-          path: ~/.cache/Cypress
+          path: ${{ steps.cypress-cache-directory.outputs.dir }}
           key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-cypress-
