@@ -4659,10 +4659,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^0.8.8:
-  version "0.8.8"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.8.tgz#a7e03dbff62c6d7f08e8cb88b596366e176db949"
-  integrity sha512-Pv1jBQHQYLw+HtIDoqF3wTySEdYgCEie9Ke8fvV+lN0t4NMAEwVbX0MvNnfN7K0eswpZcfGC5oomCmPwxJavXQ==
+datatable-translatable@0.8.9:
+  version "0.8.9"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.9.tgz#1cfe53e2cb3af996c358e74a3df0f8331eaad7fa"
+  integrity sha512-MSgB0kSrqhO/+7nP1qnF1pETzusNs5iX2w3F1/+G4ejC8ikV+1TZ/z2CfwzuoZv8J3MV3W/QGool3JfQWyAKqw==
   dependencies:
     deep-freeze "^0.0.1"
     markdown-translatable "1.0.2-rc.2"
@@ -6498,10 +6498,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@1.1.0-rc.3:
-  version "1.1.0-rc.3"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.0-rc.3.tgz#9ac09b1ac57756268fbdabbe07467c2caa2137b9"
-  integrity sha512-ESBZkJAmIDTlI3dVgW/iVr/DQXq7MhDjEoqwoiuh+qrcYKhD8fFS5wXfj10SpMUSy6V/pTLOaT7qRshKHezHTA==
+gitea-react-toolkit@1.1.0-rc.4:
+  version "1.1.0-rc.4"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.0-rc.4.tgz#dca106630a7478bcad42449743f738006ea8fd33"
+  integrity sha512-e7b/QNLW0yeUmuGbH91H6ilf6H/3NiOVMCg7oMBDMA+vzGigeAE2vvMa8mmCfqJRskrbpTcAYJDCSQgj3Pmpng==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
