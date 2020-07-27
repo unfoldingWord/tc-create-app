@@ -15,7 +15,7 @@
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build && mv styleguide build",
     "start": "rescripts start",
-    "build": "cross-env NODE_ENV=production rescripts build && yarn styleguide:build && yarn cypress cache path",
+    "build": "cross-env NODE_ENV=production rescripts build && yarn styleguide:build",
     "electron:build": "react-scripts build",
     "deploy": "git push",
     "cypress:open": "REACT_APP_DOOR43_SERVER_URL=https://jfvoldksj.door43.org NODE_ENV=test cypress open",
