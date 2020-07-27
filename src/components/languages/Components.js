@@ -6,7 +6,7 @@ import {
   MenuItem,
 } from '@material-ui/core';
 
-const NoOptionsMessage = (props) => (
+export const NoOptionsMessage = (props) => (
   <Typography
     color="textSecondary"
     className={props.selectProps.classes.noOptionsMessage}
@@ -16,10 +16,10 @@ const NoOptionsMessage = (props) => (
   </Typography>
 );
 
-const inputComponent = ({ inputRef, ...props }) =>
+export const inputComponent = ({ inputRef, ...props }) =>
   <div ref={inputRef} {...props} />;
 
-const Control = (props) => (
+export const Control = (props) => (
   <TextField
     fullWidth
     InputProps={{
@@ -35,7 +35,7 @@ const Control = (props) => (
   />
 );
 
-const Option = (props) => (
+export const Option = (props) => (
   <MenuItem
     buttonRef={props.innerRef}
     selected={props.isFocused}
@@ -49,7 +49,7 @@ const Option = (props) => (
   </MenuItem>
 );
 
-const Placeholder = (props) => (
+export const Placeholder = (props) => (
   <Typography
     color="textSecondary"
     className={props.selectProps.classes.placeholder}
@@ -59,32 +59,20 @@ const Placeholder = (props) => (
   </Typography>
 );
 
-const SingleValue = (props) => (
+export const SingleValue = (props) => (
   <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
     {props.children}
   </Typography>
 );
 
-const ValueContainer = (props) => (
+export const ValueContainer = (props) => (
   <div className={props.selectProps.classes.valueContainer}>
     {props.children}
   </div>
 );
 
-const Menu = (props) => (
+export const Menu = (props) => (
   <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
     {props.children}
   </Paper>
 );
-
-const components = {
-  Control,
-  Menu,
-  NoOptionsMessage,
-  Option,
-  Placeholder,
-  SingleValue,
-  ValueContainer,
-};
-
-export default components;
