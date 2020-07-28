@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`useStateReducer  1`] = `
+exports[`useStateReducer should use default state and match snapshots of objects 1`] = `
 Object {
   "authentication": Object {
     "config": Object {
@@ -193,7 +193,7 @@ Object {
 }
 `;
 
-exports[`useStateReducer  2`] = `
+exports[`useStateReducer should use default state and match snapshots of objects 2`] = `
 Object {
   "setAuthentication": [Function],
   "setConfig": [Function],
