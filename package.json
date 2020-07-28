@@ -48,6 +48,8 @@
     "@cypress/code-coverage": "1.10.4",
     "@rescripts/cli": "^0.0.13",
     "@rescripts/rescript-env": "^0.0.11",
+    "@testing-library/react-hooks": "^3.4.1",
+    "@types/jest": "^26.0.7",
     "@unfoldingword/eslint-config": "^1.1.0",
     "babel-loader": "8.0.5",
     "babel-plugin-istanbul": "5.2.0",
@@ -66,6 +68,7 @@
     "nyc": "14.1.1",
     "react-scripts": "3.0.1",
     "react-styleguidist": "10.4.0",
+    "react-test-renderer": "^16.13.1",
     "start-server-and-test": "^1.10.6",
     "style-loader": "^1.0.0"
   },
@@ -95,14 +98,6 @@
     "include": [
       "**/components/**/**.js",
       "**/components/**.js"
-    ]
-  },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/core/**.{js,jsx,ts}",
-      "!**/node_modules/**",
-      "!**/vendor/**"
     ]
   }
 }
