@@ -30,7 +30,7 @@ function FilesHeader({
   }) => (
     <Chip
       onClick={onClick}
-      icon={<License rights='View License' licenseLink={licenseLink}  /> }
+      icon={<License rights='View License' licenseLink={licenseLink} /> }
       label={<Tooltip title={localString(iconTooltip)} arrow><span>{label}</span></Tooltip>}
       onDelete={onDelete}
       deleteIcon={<Tooltip title={localString(deleteIconTooltip)} arrow>{deleteIcon}</Tooltip>}
@@ -44,17 +44,20 @@ function FilesHeader({
 
   let sourceCompareLink, targetCompareLink;
   const sourceLanguage = getLanguage({ languageId: sourceRepository.name.split('_')[0] });
+  const sourceOwner = sourceRepository.owner.username;
+  const targetOwner = targetRepository.owner.username;
 
   if (sourceLanguage.languageName === language.languageName) {
     if (sourceRepository.full_name === targetRepository.full_name) {
       sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceBranch}`;
       targetCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetBranch}`;
     } else {
-      const sourceOwner = sourceRepository.owner.username;
-      const targetOwner = targetRepository.owner.username;
       sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`;
       targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`;
     }
+  } else {
+    sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...master`;
+    targetCompareLink = `${targetRepository.html_url}/compare/master...${targetBranch}`;
   }
 
   const sourceChip = useMemo(() => {
