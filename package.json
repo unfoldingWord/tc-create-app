@@ -68,7 +68,7 @@
     "lodash": "^4.17.15",
     "nyc": "14.1.1",
     "react-scripts": "3.0.1",
-    "react-styleguidist": "10.4.0",
+    "react-styleguidist": "11.0.8",
     "react-test-renderer": "^16.13.1",
     "start-server-and-test": "^1.10.6",
     "style-loader": "^1.0.0"
