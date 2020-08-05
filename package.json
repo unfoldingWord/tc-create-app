@@ -67,7 +67,7 @@
     "istanbul-lib-coverage": "2.0.5",
     "lodash": "^4.17.15",
     "nyc": "14.1.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.4.1",
     "react-styleguidist": "10.4.0",
     "react-test-renderer": "^16.13.1",
     "start-server-and-test": "^1.10.6",
