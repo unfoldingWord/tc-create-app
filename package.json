@@ -65,7 +65,7 @@
     "eslint-plugin-react": "7.12.4",
     "file-loader": "^6.0.0",
     "istanbul-lib-coverage": "2.0.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "nyc": "14.1.1",
     "react-scripts": "3.0.1",
     "react-styleguidist": "10.4.0",
