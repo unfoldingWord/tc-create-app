@@ -63,7 +63,8 @@ jobs:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
           branch: ${{ env.BRANCH }}
   Dependabot_Auto_Merge:
-    needs: [Test, Lint]
+    ## Identifies any jobs that must complete successfully before this job will run.
+    needs: [test]
     runs-on: ubuntu-latest
     if: |
       github.actor == 'dependabot[bot]' &&
