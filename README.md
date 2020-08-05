@@ -13,15 +13,14 @@ tC Create allows users to translate from unfoldingWord’s English Translation N
 
 ## ![|624x184](https://lh5.googleusercontent.com/-AeATTog0tOcS9Fv1b0SEjPpIJvrKZpguWhMTTUtUyDgnaa0seG7nqBfQYlXXpK7yTh9uUKD_AHrypekRYbzpj7F7xE-L9aE7Liyj7rqD22-gLerjMmm4aJnNBxoIFmQXXu--dUX) Features:
 
-* Supports unfoldingWord’s markdown (.md) and tab-separated values (.tsv) files
-* Parallel view of the text allows for comparison to the original file
-* Text can be edited in smaller portions or in larger blocks
-* Directly reads and writes to the Door43 Content Service
-* Branched workflow protects the master files from unauthorized changes
+- Supports unfoldingWord’s markdown (.md) and tab-separated values (.tsv) files
+- Parallel view of the text allows for comparison to the original file
+- Text can be edited in smaller portions or in larger blocks
+- Directly reads and writes to the Door43 Content Service
+- Branched workflow protects the master files from unauthorized changes
 
 ## Learn More:
 
 [translationCore Create: How to video](https://drive.google.com/file/d/12cpPTgEnQULFMhefLoPN9Skzm3Kcl9Nj/view?usp=sharing)
 
 tC Create is built using [React Component Libraries](https://forum.door43.org/t/component-libraries/396). These libraries ([listed here](https://forum.door43.org/t/component-list/468)) can be used for other applications and we hope that others will contribute libraries to this effort.
-

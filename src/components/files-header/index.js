@@ -1,1 +1,1 @@
-export {default as FilesHeader} from './FilesHeader';
+export { default as FilesHeader } from './FilesHeader';

@@ -24,12 +24,8 @@ function DrawerMenu() {
   const classes = useStyles();
 
   const { state, actions } = useContext(AppContext);
-  const {
-    fontScale,
-  } = state;
-  const {
-    setFontScale,
-  } = actions;
+  const { fontScale } = state;
+  const { setFontScale } = actions;
 
   const handleFontScale = (event, value) => setFontScale(value);
   const handleResetFontScale = () => setFontScale(100);
@@ -77,12 +73,8 @@ function DrawerMenu() {
 }
 
 const useStyles = makeStyles(theme => ({
-  icon: {
-    margin: 0,
-  },
-  secondaryIcon: {
-    margin: `0 ${theme.spacing(1)}px`,
-  },
+  icon: { margin: 0 },
+  secondaryIcon: { margin: `0 ${theme.spacing(1)}px` },
   typography: {
     lineHeight: '1',
     marginBottom: '2px',
@@ -92,9 +84,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: `${theme.spacing(2)}px`,
     paddingRight: `${theme.spacing(2)}px`,
   },
-  slider: {
-    padding: `${theme.spacing(0.5)}px 0`,
-  },
+  slider: { padding: `${theme.spacing(0.5)}px 0` },
 }));
 
 export default DrawerMenu;

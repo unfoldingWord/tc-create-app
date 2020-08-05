@@ -60,8 +60,9 @@ function Translatable() {
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
         _translatable = <TranslatableTSV />;
-      }
-    }
+      } else {
+        _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
+      }    }
     return _translatable;
   }, [filepath, sourceFile, targetFile, targetFileActions.save]);
 

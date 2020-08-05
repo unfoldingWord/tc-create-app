@@ -13,8 +13,7 @@ describe('Application Stepper', function () {
 
     /** Select organization */
     cy.wait(1000);
-    cy.contains('unfoldingWord');
-    cy.get('[data-test=organization-item]').eq(0).click();
+    cy.contains('unfoldingWord').click();
 
     /** Select resource */
     cy.wait(1000);
