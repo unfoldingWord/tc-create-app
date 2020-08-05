@@ -1,7 +1,9 @@
-version: 2
-updates:
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "daily"
+    automerged_updates:
+      - match:
+          dependency_type: "all"
+          update_type: "all"
