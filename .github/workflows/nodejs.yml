@@ -62,7 +62,7 @@ jobs:
         with:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
           branch: ${{ env.BRANCH }}
-  Dependabot Auto Merge:
+  Dependabot_Auto_Merge:
     needs: [Test, Lint]
     runs-on: ubuntu-latest
     if: |
