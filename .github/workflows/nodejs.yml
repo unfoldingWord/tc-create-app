@@ -62,7 +62,7 @@ jobs:
         with:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
           branch: ${{ env.BRANCH }}
-  Automerge:
+  Dependabot Auto Merge:
     needs: [Test, Lint]
     runs-on: ubuntu-latest
     if: |
@@ -73,7 +73,7 @@ jobs:
       - name: "@dependabot merge"
         uses: actions/github-script@v2
         with:
-          github-token: ${{secrets.GH_TOKEN}}
+          github-token: ${{secrets.ACTIONS_TOKEN}}
           script: |
             await github.issues.createComment({
               owner: context.payload.repository.owner.login,
