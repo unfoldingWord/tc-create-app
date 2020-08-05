@@ -23,7 +23,9 @@ export function AppContextProvider({
     resourceLinks: __resourceLinks,
   });
 
-  const { authentication, language, sourceRepository, organization } = state;
+  const {
+    authentication, language, sourceRepository, organization,
+  } = state;
 
   const { setTargetRepoFromSourceRepo } = actions;
 

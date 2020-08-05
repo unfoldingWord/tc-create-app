@@ -1,4 +1,6 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, {
+  useContext, useState, useCallback, useEffect,
+} from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Headroom from 'react-headroom';
 import {
@@ -9,7 +11,7 @@ import {
   OrganizationContextProvider,
 } from 'gitea-react-toolkit';
 
-import DrawerMenu from './components/drawer-menu/DrawerMenu';
+import { DrawerMenu } from './components/';
 
 import {
   loadState,

@@ -1,16 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import {
-  useFile, FileContext,
-} from 'gitea-react-toolkit';
+import { useFile, FileContext } from 'gitea-react-toolkit';
 
 import { AppContext } from '../App.context';
 
 const TargetFileContext = React.createContext();
 
-function TargetFileContextProvider({
-  children,
-}) {
+function TargetFileContextProvider({ children }) {
   const {
     state: {
       authentication, targetRepository, filepath, setFilepath,

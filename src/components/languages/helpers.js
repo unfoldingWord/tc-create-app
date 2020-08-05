@@ -1,32 +1,32 @@
 import languagesJSON from './languages.json';
 
-export const getLanguage = ({languageId}) => {
+export const getLanguage = ({ languageId }) => {
   let _language;
   const language = languagesJSON.filter(object => object.lc === languageId)[0];
-  _language = formatLanguage({language});
+  _language = formatLanguage({ language });
   return _language;
 };
 
-export const getLanguageName = ({languageId}) => {
-  const language = getLanguage({languageId});
+export const getLanguageName = ({ languageId }) => {
+  const language = getLanguage({ languageId });
   const languageName = language ? language.ln : null;
   return languageName;
 };
 
 export const getLanguages = () => {
   const _languages = languagesJSON
-  .map(language => formatLanguage({language}));
+    .map(language => formatLanguage({ language }));
   return _languages;
 };
 
 export const getGatewayLanguages = () => {
   const _languages = languagesJSON
-  .filter(language => language.gw)
-  .map(language => formatLanguage({language}));
+    .filter(language => language.gw)
+    .map(language => formatLanguage({ language }));
   return _languages;
 }
 
-export const formatLanguage = ({language}) => {
+export const formatLanguage = ({ language }) => {
   let _language = {};
   if (language) {
     _language = {
