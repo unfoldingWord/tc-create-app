@@ -1,9 +1,15 @@
-version: 1
-update_configs:
-  - package_manager: "javascript"
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
     directory: "/"
-    update_schedule: "daily"
-    automerged_updates:
-      - match:
-          dependency_type: "all"
-          update_type: "all"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+
+  # Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
