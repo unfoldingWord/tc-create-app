@@ -72,12 +72,12 @@ jobs:
     #   startsWith(github.event.pull_request.title, 'Bump')
     steps:
       - name: "@dependabot merge"
-        uses: actions/github-script@v2
+        uses: actions/github-script@v2.0.0
         with:
           github-token: ${{secrets.ACTIONS_TOKEN}}
           script: |
             github.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: context.payload.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'test'
