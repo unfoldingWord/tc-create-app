@@ -62,3 +62,21 @@ jobs:
         with:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
           branch: ${{ env.BRANCH }}
+  Dependabot_Auto_Merge:
+    ## Identifies any jobs that must complete successfully before this job will run.
+    # needs: [test]
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    steps:
+      - name: "@dependabot merge"
+        uses: actions/github-script@v2
+        with:
+          github-token: ${{secrets.ACTIONS_TOKEN}}
+          script: |
+          console.log(context)
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '@dependabot merge'
+            })
