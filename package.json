@@ -51,7 +51,7 @@
     "@types/jest": "^26.0.7",
     "@unfoldingword/eslint-config": "^1.1.0",
     "babel-loader": "8.0.5",
-    "babel-plugin-istanbul": "5.2.0",
+    "babel-plugin-istanbul": "6.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "coveralls": "^3.0.9",
     "cross-env": "^7.0.2",
