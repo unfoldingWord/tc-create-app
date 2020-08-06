@@ -1,0 +1,35 @@
+name: Dependabot
+
+on: [pull_request]
+jobs:
+  status_check:
+    steps:
+      - name: Wait for build to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN }}
+          checkName: test
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Do something with a passing build
+        if: steps.wait-for-build.outputs.conclusion == 'failure'
+        run: exit 1;
+  auto_merge:
+    needs: [status_check]
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'pull_request' && 
+      (github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]')
+    steps:
+      - name: "@dependabot merge"
+        uses: actions/github-script@v2
+        with:
+          github-token: ${{secrets.ACTIONS_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '@dependabot merge'
+            })
