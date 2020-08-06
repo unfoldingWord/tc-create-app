@@ -3,6 +3,10 @@ name: Dependabot
 on: [pull_request]
 jobs:
   status_check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.15.1]
     steps:
       - name: Wait for build to succeed
         uses: fountainhead/action-wait-for-check@v1.0.0
