@@ -12,7 +12,6 @@ env:
 jobs:
   test:
     runs-on: macos-latest
-    if: github.event_name == 'push'
     strategy:
       matrix:
         node-version: [10.15.1]
