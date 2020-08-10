@@ -53,8 +53,10 @@ jobs:
       - name: Run Coverage Tests
         run: yarn test;
       - name: Create Badge For Coverage Results
+        if: github.event_name == 'push'
         run: yarn create-coverage-badge;
       - name: Commit Coverage Results
+        if: github.event_name == 'push'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -62,6 +64,7 @@ jobs:
           git checkout .
           git diff-index --quiet HEAD || git commit -m "Add Coverage Results"
       - name: Push changes
+        if: github.event_name == 'push'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
