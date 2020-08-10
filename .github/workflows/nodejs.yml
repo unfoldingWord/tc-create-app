@@ -16,19 +16,17 @@ jobs:
       matrix:
         node-version: [10.15.1]
     steps:
-      - name: just echo a message
-        run: |
-          echo Hello there!
-      - name: Extract Branch Name (PR)
+      - name: Extract Branch Name
         run: |
           echo "::set-env name=BRANCH::${GITHUB_REF#refs/heads/}"
           echo ${GITHUB_REF#refs/heads/}
-        if: github.event_name == 'pull_request'
-      - name: Extract Branch Name (Push)
-        run: |
-          echo "::set-env name=BRANCH::${GITHUB_REF##*/}"
-          echo ${GITHUB_REF##*/}
-        if: github.event_name == 'push'
+          echo ${GITHUB_REF}
+        # if: github.event_name == 'pull_request'
+      # - name: Extract Branch Name (Push)
+      #   run: |
+      #     echo "::set-env name=BRANCH::${GITHUB_REF##*/}"
+      #     echo ${GITHUB_REF##*/}
+      #   if: github.event_name == 'push'
       - uses: actions/checkout@v2.3.1
         with:
           ref: ${{ env.BRANCH }}
