@@ -78,8 +78,8 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     if: |
-      github.event_name == 'pull_request' &&
-      (github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]')
+      ((github.event_name == 'pull_request' &&
+      ((github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'))))
     steps:
       - name: "@dependabot merge"
         uses: actions/github-script@v2
