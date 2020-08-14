@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { Typography } from '@material-ui/core';
 import QuoteSelector from './QuoteSelector';
 
 function RowHeader({
@@ -27,7 +28,13 @@ function RowHeader({
     verse: parseInt(verse),
   };
 
-  let _component = <div />;
+  let _component = (
+    <div className={classes.defaultHeader}>
+      <Typography variant='h6' className={classes.title}>
+        {`${book} ${chapter}:${verse}`}
+      </Typography>
+      {actionsMenu}
+    </div>);
 
   if (reference && reference.bookId && reference.chapter && reference.verse) {
     _component = (
