@@ -118,7 +118,9 @@ function TranslatableTSV(props) {
   return books ? (
     <DataTable {...props} />
   ) :
-    <CircularProgress />;
+    <center>
+      <CircularProgress />
+    </center>;
 }
 
 export default TranslatableTSVWrapper;
