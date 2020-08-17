@@ -9548,10 +9548,23 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@1.0.2-rc.2, markdown-translatable@^1.0.2-rc.2:
+markdown-translatable@1.0.2-rc.2:
   version "1.0.2-rc.2"
   resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.2-rc.2.tgz#9cf4f48e081ef2117e3aa28f726538f5615ea34d"
   integrity sha512-oHD75TpzhwkFtpBazorhMXmo9e08CZ+OPYhi/alS56eTLsg1ErKSwHV2wipAwCOgw+ZKb5JtY226N1CVrGWajQ==
+  dependencies:
+    deep-freeze "^0.0.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-markdown "^4.0.6"
+    showdown "^1.9.0"
+    turndown "^5.0.3"
+    turndown-plugin-gfm "^1.0.2"
+
+markdown-translatable@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.2.tgz#2b82e5d62cb752cb712c791198890c48bd35dba6"
+  integrity sha512-72u9YvGiMMBt953zYSodn0bP9M27Tg4I1xpLzT1p9MBNNzAT3cuRbRWeQvhBwavCiA4eaiiFfn7AMaKQBIBl9g==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
