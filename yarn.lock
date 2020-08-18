@@ -4861,12 +4861,13 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-"datatable-translatable@file:.yalc/datatable-translatable":
-  version "0.8.9"
+datatable-translatable@0.8.12:
+  version "0.8.12"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.12.tgz#420c06a716a369f179892a62fd2c6c935720df6e"
+  integrity sha512-qSlsh7RKuVpCwxnYEamzI3OL0YjyJrqfzsx7rCjzLaTVOSLmwJ5sZJ7omjElEoGPNemWpcf5FpCLQr8DinBrag==
   dependencies:
     deep-freeze "^0.0.1"
-    lodash.isequal "^4.5.0"
-    markdown-translatable "1.0.2-rc.2"
+    markdown-translatable "1.0.3"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -6830,22 +6831,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@^0.6.9:
-  version "0.6.14"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-0.6.14.tgz#77750cfbdbc806aa9d6d186667d108371d770629"
-  integrity sha512-kS9yo5pH4tC39mIEvNCwF7V0nJMtjqNPWV7sGKAv3LLSy6SPyiRMcky/IfBgFKBXjg/RXNzyjw/yvmMuAoYCjA==
-  dependencies:
-    awesome-debounce-promise "2.1.0"
-    axios "0.19.0"
-    axios-cache-adapter "2.4.1"
-    base-64 "0.1.0"
-    jszip "3.2.1"
-    localforage "1.7.3"
-    prop-types "15.7.2"
-    utf8 "3.0.0"
-
-"gitea-react-toolkit@file:.yalc/gitea-react-toolkit":
-  version "1.1.0-rc.5"
+gitea-react-toolkit@1.1.1, gitea-react-toolkit@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.1.tgz#80023f8ee0936cfe0fa01a1b75287569fad5a163"
+  integrity sha512-j8KWyzGfTer+vMEpoaCigxGDsKawgvvRW0QrkNBk6ucfrXq/BrpcYyXZtEj/9AWUtVDreKgn7vRrvn6M7+Sj/A==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -9525,7 +9514,20 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@1.0.2-rc.2, markdown-translatable@^1.0.2-rc.2:
+markdown-translatable@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.3.tgz#543f2c2939db5aa621a80cc33cfac13ae9c66bf8"
+  integrity sha512-yFyr3KU8nT3Vs0LBB1Q2q/Q81B4Ke9u8lMsHx0JVvk0tui+c4OQ8EB5QnCLVV4OMnr1Q000V5U2r+cA0rA8sUQ==
+  dependencies:
+    deep-freeze "^0.0.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-markdown "^4.0.6"
+    showdown "^1.9.0"
+    turndown "^5.0.3"
+    turndown-plugin-gfm "^1.0.2"
+
+markdown-translatable@^1.0.2-rc.2:
   version "1.0.2-rc.2"
   resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.2-rc.2.tgz#9cf4f48e081ef2117e3aa28f726538f5615ea34d"
   integrity sha512-oHD75TpzhwkFtpBazorhMXmo9e08CZ+OPYhi/alS56eTLsg1ErKSwHV2wipAwCOgw+ZKb5JtY226N1CVrGWajQ==
@@ -12964,17 +12966,19 @@ schema-utils@^2.6.4, schema-utils@^2.6.5, schema-utils@^2.7.0:
     ajv "^6.12.2"
     ajv-keywords "^3.4.1"
 
-"scripture-resources-rcl@file:.yalc/scripture-resources-rcl":
-  version "1.0.1-rc.3"
+scripture-resources-rcl@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.2.tgz#e5ea87fec9d6b9b85f4c765cfcf11a0623768d72"
+  integrity sha512-1EpR/1iA0yzzAexrgX8WQQIrdFj4FNYZkNOMxjpgOXdyWyZ98iyZBCE6LN6DqaePwEooBd6lUNTSMi+REGc1+w==
   dependencies:
     deep-freeze "0.0.1"
-    gitea-react-toolkit "^0.6.9"
+    gitea-react-toolkit "^1.1.1"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
-    string-punctuation-tokenizer "2.0.2"
+    string-punctuation-tokenizer "2.1.1"
     use-deep-compare-effect "1.3.1"
     usfm-js "^2.0.2"
 
@@ -13621,10 +13625,10 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-string-punctuation-tokenizer@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.0.2.tgz#4b10b2b7e676e81e035cfbc0df4774443e757c05"
-  integrity sha512-CFAUA4E25X98ZsvlMEv93CgXTcEo/KGi/13SV9YokapjrPs35XZpVESSsF4EVU8wsakVrOLLiieAgHdOWQ5Few==
+string-punctuation-tokenizer@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.1.1.tgz#5d3555c55399d0704dc951954db4a5f2b7b75c2f"
+  integrity sha512-t+XO/G24dstD72U6Eo8BlY5jpT43stVnZ0Uzpvl3UMKJjzsXPgKnSI79E6JAEMEsmiV+8Bas2g2JxHCazyHVfw==
   dependencies:
     xregexp "^4.1.1"
 
