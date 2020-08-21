@@ -3,10 +3,11 @@ import React, {
 } from 'react';
 
 import { DataTable } from 'datatable-translatable';
-import { ResourcesContextProvider } from 'scripture-resources-rcl';
+import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
 
 import { FileContext } from 'gitea-react-toolkit';
 
+import { CircularProgress } from '@material-ui/core';
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -18,7 +19,7 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
 
-function TranslatableTSV() {
+function TranslatableTSVWrapper() {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
 
@@ -107,9 +108,22 @@ function TranslatableTSV() {
       onResources={setResources}
       config={serverConfig}
     >
-      <DataTable {...translatableProps} />
+      <TranslatableTSV {...translatableProps} />
     </ResourcesContextProvider>
   );
 }
 
-export default TranslatableTSV;
+function TranslatableTSV(props) {
+  const { state:{ books } } = useContext(ResourcesContext);
+  return books ? (
+    <DataTable {...props} />
+  ) :
+    <div style={{
+      width: '100%', display:'flex', justifyContent: 'center',
+    }}
+    >
+      <CircularProgress />
+    </div>;
+}
+
+export default TranslatableTSVWrapper;

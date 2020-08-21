@@ -1,11 +1,7 @@
-import React, {useState, useCallback, useEffect, useMemo} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import {Waypoint} from 'react-waypoint';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-import {
-  Typography,
-} from '@material-ui/core';
-
+import { Typography } from '@material-ui/core';
 import QuoteSelector from './QuoteSelector';
 
 function RowHeader({
@@ -16,7 +12,6 @@ function RowHeader({
   const classes = useStyles();
   const _quote = rowData[5].split(delimiters.cell)[1];
   const [quote, setQuote] = useState(_quote);
-  const [showReference, setShowReference] = useState();
 
   useEffect(() => {
     setQuote(_quote);
@@ -30,44 +25,32 @@ function RowHeader({
   const reference = {
     bookId: book.toLowerCase(),
     chapter: parseInt(chapter),
-    verse: parseInt(verse)
+    verse: parseInt(verse),
   };
 
-  const onEnter = useCallback(() => {
-    const _showReference = JSON.stringify(reference);
-    setShowReference(_showReference);
-  }, [reference]);
+  let _component = (
+    <div className={classes.defaultHeader}>
+      <Typography variant='h6' className={classes.title}>
+        {`${book} ${chapter}:${verse}`}
+      </Typography>
+      {actionsMenu}
+    </div>);
 
-  const component = useMemo(() => {
-    let _component = (
-      <Waypoint onEnter={onEnter}>
-        <div className={classes.defaultHeader}>
-          <Typography variant='h6' className={classes.title}>
-            {`${book} ${chapter}:${verse}`}
-          </Typography>
-          {actionsMenu}
-        </div>
-      </Waypoint>
+  if (reference && reference.bookId && reference.chapter && reference.verse) {
+    _component = (
+      <div className={classes.quoteHeader}>
+        <QuoteSelector
+          reference={reference}
+          quote={quote}
+          onQuote={setQuote}
+          occurrence={occurrence}
+          height='250px'
+          buttons={actionsMenu}
+        />
+      </div>
     );
-    const _showReference = JSON.stringify(reference);
-    if (showReference === _showReference && reference.bookId && reference.chapter && reference.verse) {
-      _component = (
-        <div className={classes.quoteHeader}>
-          <QuoteSelector
-            reference={reference}
-            quote={quote}
-            onQuote={setQuote}
-            occurrence={occurrence}
-            height='250px'
-            buttons={actionsMenu}
-          />
-        </div>
-      );
-    }
-    return _component;
-  }, [onEnter, classes, book, chapter, verse, actionsMenu, showReference, reference, quote, occurrence]);
-
-  return component;
+  }
+  return _component;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -77,9 +60,7 @@ const useStyles = makeStyles(theme => ({
     alignContent: 'center',
     justifyContent: 'space-between',
   },
-  quoteHeader: {
-    width: '100%'
-  },
+  quoteHeader: { width: '100%' },
   title: {
     lineHeight: '1.0',
     fontWeight: 'bold',
