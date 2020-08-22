@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useMemo } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ParallelScripture, ResourcesContext }
+import { ParallelScripture }
   from 'scripture-resources-rcl';
 import { getMuiTheme } from './muiTheme';
 
@@ -13,21 +13,20 @@ function QuoteSelector({
 }) {
   const __occurrence = (_occurrence === '\\-1') ? -1 : _occurrence;
   const occurrence = Number(__occurrence);
-
-  const { state: resources } = useContext(ResourcesContext);
+  const component = useMemo(() => (
+    <ParallelScripture
+      reference={reference}
+      quote={quote}
+      onQuote={onQuote}
+      occurrence={occurrence}
+      height='250px'
+      buttons={buttons}
+    />), [buttons, occurrence, onQuote, quote, reference]);
   return (
     <MuiThemeProvider theme={getMuiTheme}>
-      <ParallelScripture
-        resources={resources}
-        reference={reference}
-        quote={quote}
-        onQuote={onQuote}
-        occurrence={occurrence}
-        height='250px'
-        buttons={buttons}
-      />
+      {component}
     </MuiThemeProvider>
   );
 };
 
-export default QuoteSelector;
+export default React.memo(QuoteSelector);
