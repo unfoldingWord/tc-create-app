@@ -39,7 +39,7 @@ export const useStateReducer = ({
   }, []);
 
   const setExpandedScripture = useCallback((value) => {
-    dispatch({ type: 'set_expanded_scripture_pane', value });
+    dispatch({ type: 'set_expanded_scripture', value });
   }, []);
 
   const setConfig = useCallback((value) => {

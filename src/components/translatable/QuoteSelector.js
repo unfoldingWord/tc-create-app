@@ -10,18 +10,20 @@ function QuoteSelector({
   occurrence: _occurrence,
   reference,
   buttons,
+  open,
 }) {
   const __occurrence = (_occurrence === '\\-1') ? -1 : _occurrence;
   const occurrence = Number(__occurrence);
   const component = useMemo(() => (
     <ParallelScripture
+      open={open}
       reference={reference}
       quote={quote}
       onQuote={onQuote}
       occurrence={occurrence}
       height='250px'
       buttons={buttons}
-    />), [buttons, occurrence, onQuote, quote, reference]);
+    />), [buttons, occurrence, onQuote, open, quote, reference]);
   return (
     <MuiThemeProvider theme={getMuiTheme}>
       {component}

@@ -19,6 +19,7 @@ const config = {
 };
 
 export default {
+  expandedScripture: true,
   fontScale: 100,
   config,
 };

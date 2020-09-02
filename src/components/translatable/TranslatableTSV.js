@@ -33,7 +33,7 @@ function TranslatableTSVWrapper() {
   const [resources, setResources] = useState([]);
 
   const {
-    state: { resourceLinks },
+    state: { resourceLinks, expandedScripture },
     actions: { setResourceLinks },
   } = useContext(AppContext);
 
@@ -68,11 +68,12 @@ function TranslatableTSVWrapper() {
   });
   const rowHeader = useCallback((rowData, actionsMenu) => (
     <RowHeader
+      open={expandedScripture}
       rowData={rowData}
       actionsMenu={actionsMenu}
       delimiters={delimiters}
     />
-  ), []);
+  ), [expandedScripture]);
 
 
   const generateRowId = useCallback((rowData) => {
