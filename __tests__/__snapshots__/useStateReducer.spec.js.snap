@@ -46,6 +46,7 @@ Object {
       ],
     },
   },
+  "expandedScripture": true,
   "filepath": null,
   "fontScale": 100,
   "language": Object {
@@ -197,6 +198,7 @@ exports[`useStateReducer should use default state and match snapshots of objects
 Object {
   "setAuthentication": [Function],
   "setConfig": [Function],
+  "setExpandedScripture": [Function],
   "setFilepath": [Function],
   "setFontScale": [Function],
   "setLanguage": [Function],

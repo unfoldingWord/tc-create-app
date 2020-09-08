@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useContext,
+  useState, useCallback, useContext, useMemo,
 } from 'react';
 
 import { DataTable } from 'datatable-translatable';
@@ -18,13 +18,22 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
+const delimiters = { row: '\n', cell: '\t' };
+const config = {
+  compositeKeyIndices: [0, 1, 2, 3],
+  columnsFilter: ['Chapter', 'SupportReference'],
+  columnsShowDefault: [
+    'SupportReference',
+    'OccurrenceNote',
+  ],
+};
 
 function TranslatableTSVWrapper() {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
 
   const {
-    state: { resourceLinks },
+    state: { resourceLinks, expandedScripture },
     actions: { setResourceLinks },
   } = useContext(AppContext);
 
@@ -57,47 +66,44 @@ function TranslatableTSVWrapper() {
     bookId,
     resourceLinks,
   });
-
-  const delimiters = { row: '\n', cell: '\t' };
-  const rowHeader = (rowData, actionsMenu) => (
+  const rowHeader = useCallback((rowData, actionsMenu) => (
     <RowHeader
+      open={expandedScripture}
       rowData={rowData}
       actionsMenu={actionsMenu}
       delimiters={delimiters}
     />
-  );
-  const config = {
-    compositeKeyIndices: [0, 1, 2, 3],
-    columnsFilter: ['Chapter', 'SupportReference'],
-    columnsShowDefault: [
-      'SupportReference',
-      'OccurrenceNote',
-    ],
-    rowHeader,
-  };
+  ), [expandedScripture]);
 
 
-  const generateRowId = (rowData) => {
+  const generateRowId = useCallback((rowData) => {
     const [chapter] = rowData[2].split(delimiters.cell);
     const [verse] = rowData[3].split(delimiters.cell);
     const [uid] = rowData[4].split(delimiters.cell);
     return `header-${chapter}-${verse}-${uid}`;
-  };
-
-  let translatableProps = {
-    sourceFile: sourceFile.content,
-    targetFile: targetFile.content,
-    onSave: targetFileActions.save,
-    delimiters,
-    config,
-    generateRowId,
-  };
+  }, []);
 
   const serverConfig = {
     server: SERVER_URL,
     cache: { maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
     },
   };
+
+  const _save = useCallback(targetFileActions.save, []);
+
+  const datatable = useMemo(() => {
+    config.rowHeader = rowHeader;
+    return (
+      <DataTable
+        sourceFile={sourceFile.content}
+        targetFile={targetFile.content}
+        onSave={_save}
+        delimiters={delimiters}
+        config={config}
+        generateRowId={generateRowId}
+      />
+    );
+  }, [rowHeader, sourceFile.content, targetFile.content, _save, generateRowId]);
 
   return (
     <ResourcesContextProvider
@@ -108,22 +114,18 @@ function TranslatableTSVWrapper() {
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTSV {...translatableProps} />
+      <TranslatableTSV datatable={datatable} />
     </ResourcesContextProvider>
   );
 }
 
-function TranslatableTSV(props) {
+function TranslatableTSV({ datatable }) {
   const { state:{ books } } = useContext(ResourcesContext);
-  return books ? (
-    <DataTable {...props} />
-  ) :
-    <div style={{
+  return books ? datatable :
+    (<div style={{
       width: '100%', display:'flex', justifyContent: 'center',
     }}
-    >
-      <CircularProgress />
-    </div>;
+    ><CircularProgress /></div>);
 }
 
 export default TranslatableTSVWrapper;

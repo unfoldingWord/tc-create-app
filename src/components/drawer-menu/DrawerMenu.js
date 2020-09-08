@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import MenuBookOutlined from '@material-ui/icons/MenuBookOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   List,
@@ -9,6 +10,7 @@ import {
   IconButton,
   Typography,
   Slider,
+  Switch,
 } from '@material-ui/core';
 import {
   FormatSize,
@@ -24,10 +26,11 @@ function DrawerMenu() {
   const classes = useStyles();
 
   const { state, actions } = useContext(AppContext);
-  const { fontScale } = state;
-  const { setFontScale } = actions;
+  const { fontScale, expandedScripture } = state;
+  const { setFontScale, setExpandedScripture } = actions;
 
   const handleFontScale = (event, value) => setFontScale(value);
+  const handleExpandScripture = (event) => setExpandedScripture(event.target.checked);
   const handleResetFontScale = () => setFontScale(100);
   const openLink = (link) => window.open(link, '_blank');
   const handleFeedback = () => openLink(appPackage.bugs.url);
@@ -67,6 +70,19 @@ function DrawerMenu() {
             <BugReportOutlined />
           </IconButton>
         </ListItemSecondaryAction>
+      </ListItem>
+      <ListItem>
+        <ListItemIcon className={classes.icon}>
+          <MenuBookOutlined />
+        </ListItemIcon>
+        <div>
+          <Switch
+            checked={expandedScripture}
+            onChange={handleExpandScripture}
+            name="default"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+        </div>
       </ListItem>
     </List>
   );

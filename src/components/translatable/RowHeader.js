@@ -8,6 +8,7 @@ function RowHeader({
   rowData,
   actionsMenu,
   delimiters,
+  open,
 }) {
   const classes = useStyles();
   const _quote = rowData[5].split(delimiters.cell)[1];
@@ -46,6 +47,7 @@ function RowHeader({
           occurrence={occurrence}
           height='250px'
           buttons={actionsMenu}
+          open={open}
         />
       </div>
     );
