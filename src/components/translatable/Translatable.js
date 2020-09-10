@@ -40,7 +40,7 @@ function Translatable() {
 
   const translatableComponent = useMemo(() => {
     let _translatable = (
-      <div style={{ 'text-align': 'center' }}>
+      <div style={{ textAlign: 'center' }}>
         <CircularProgress />{' '}
       </div>
     );
