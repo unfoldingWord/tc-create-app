@@ -6907,22 +6907,6 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.2.tgz#a6217205ddedcddaa1dda1e71099120bf95d3b78"
-  integrity sha512-Wjk1E2l6XS2t8OZwzMLNhh65QRN+765XqcQMJBbdu//G4XySYqZ6KqcbHo6oIAUmnuD2ceDgK4pUhhZRf/z8SQ==
-  dependencies:
-    awesome-debounce-promise "2.1.0"
-    axios "0.19.0"
-    axios-cache-adapter "2.4.1"
-    base-64 "0.1.0"
-    jszip "3.2.1"
-    localforage "1.7.3"
-    prop-types "15.7.2"
-    react-json-view "^1.19.1"
-    use-deep-compare-effect "^1.3.1"
-    utf8 "3.0.0"
-
 gitea-react-toolkit@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.1.3.tgz#3a49fcde82d48968f012a760b3048d4e989dbc59"
@@ -13141,13 +13125,13 @@ schema-utils@^2.6.4, schema-utils@^2.6.5, schema-utils@^2.7.0:
     ajv "^6.12.2"
     ajv-keywords "^3.4.1"
 
-scripture-resources-rcl@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.6.tgz#fb8c7e19845a2d96a93e7399bf900cb0a9a3dfe8"
-  integrity sha512-y431adNa0yCMsm30Rxpoo5ANQkG7TqS4EPNMcpzKEk1kXkE6VG5xEHBbvgiWZ7jTQhiN/zw3l1IVGESC7lPSnw==
+scripture-resources-rcl@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.7.tgz#d35356cc5f4359b5dc6dbf02f419415e7a16a679"
+  integrity sha512-zt08KXp4e5gUScF2uWy41XqmXVkRitgT4NQsLx4DS9DcsVtlzDzk33oYmuQHHtqTUGy951lDyPIc5IheEYItaw==
   dependencies:
     deep-freeze "0.0.1"
-    gitea-react-toolkit "1.1.2"
+    gitea-react-toolkit "^1.1.3"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
     nyc "^15.0.0-beta.3"
