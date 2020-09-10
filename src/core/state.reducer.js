@@ -11,6 +11,9 @@ export const stateReducer = (state, action) => {
   case 'set_language':
     _state['language'] = value;
     break;
+  case 'set_expanded_scripture':
+    _state['expandedScripture'] = value;
+    break;
   case 'set_font_scale':
     _state['fontScale'] = value;
     break;

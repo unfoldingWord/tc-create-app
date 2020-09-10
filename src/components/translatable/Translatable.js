@@ -30,6 +30,7 @@ function Translatable() {
   const { state: targetFile, actions: targetFileActions } = useContext(
     TargetFileContext
   );
+  const _save = useCallback(targetFileActions.save, []);
 
   const scrollToTop = useCallback(() => {
     if (wrapperElement && wrapperElement) {
@@ -39,7 +40,7 @@ function Translatable() {
 
   const translatableComponent = useMemo(() => {
     let _translatable = (
-      <div style={{ 'text-align': 'center' }}>
+      <div style={{ textAlign: 'center' }}>
         <CircularProgress />{' '}
       </div>
     );
@@ -55,16 +56,17 @@ function Translatable() {
         let translatableProps = {
           original: sourceFile.content,
           translation: targetFile.content,
-          onTranslation: targetFileActions.save,
+          onTranslation: _save,
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
         _translatable = <TranslatableTSV />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
-      }    }
+      }
+    }
     return _translatable;
-  }, [filepath, sourceFile, targetFile, targetFileActions.save]);
+  }, [_save, filepath, sourceFile, targetFile]);
 
   useEffect(() => {
     scrollToTop();
