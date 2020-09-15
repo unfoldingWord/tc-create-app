@@ -5087,13 +5087,14 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-"datatable-translatable@file:.yalc/datatable-translatable":
+datatable-translatable@0.8.13:
   version "0.8.13"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.8.13.tgz#f8978590d977f57ce1793933910d4b92a0af4491"
+  integrity sha512-qF72aX+tU39PA5JBJ0AMENsSK+jWlI4zZwYdYkBG+3hUmFcWoJR9m+zK0iz3NMltn85bwDsUlRbaSRKLS2v/jQ==
   dependencies:
     deep-freeze "^0.0.1"
-    lodash.isequal "^4.5.0"
-    markdown-translatable "file:../../../Library/Caches/Yarn/v6/npm-datatable-translatable-0.8.13-4dd5bffc-e599-48fb-9d5b-91731d20dcdf-1600189820718/node_modules/datatable-translatable/.yalc/markdown-translatable"
-    mui-datatables "^3.3.1"
+    markdown-translatable "1.0.3"
+    mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
 date-fns@^1.27.2:
@@ -8989,7 +8990,7 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jsdom@^11.5.1:
+jsdom@^11.5.1, jsdom@^11.9.0:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.12.0.tgz#1a80d40ddd378a1de59656e9e6dc5a3ba8657bc8"
   integrity sha512-y8Px43oyiBM13Zc1z780FrfNLJCXTL40EWlty/LXUtcjykRBNgLlCjWXpfSPBl2iv+N7koQN+dvqszHZgT/Fjw==
@@ -9846,6 +9847,19 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
+markdown-translatable@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.3.tgz#543f2c2939db5aa621a80cc33cfac13ae9c66bf8"
+  integrity sha512-yFyr3KU8nT3Vs0LBB1Q2q/Q81B4Ke9u8lMsHx0JVvk0tui+c4OQ8EB5QnCLVV4OMnr1Q000V5U2r+cA0rA8sUQ==
+  dependencies:
+    deep-freeze "^0.0.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-markdown "^4.0.6"
+    showdown "^1.9.0"
+    turndown "^5.0.3"
+    turndown-plugin-gfm "^1.0.2"
+
 markdown-translatable@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.4.tgz#c32e69192589b7daacb9b7cfac522f1b8f1531b2"
@@ -9858,9 +9872,6 @@ markdown-translatable@^1.0.4:
     showdown "^1.9.1"
     turndown "^6.0.0"
     turndown-plugin-gfm "^1.0.2"
-
-"markdown-translatable@file:.yalc/datatable-translatable/.yalc/markdown-translatable":
-  version "0.0.0"
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -10220,10 +10231,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-mui-datatables@^3.3.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-3.4.1.tgz#bd7825ec75cadc245842b64237a044ca29b7396c"
-  integrity sha512-4g62AXt5gyRdc3qUux9Zn8zH4NZOOWRFApU/W42LpWyGXLaNtUlOapsFteWCUloga9YF/Hd51QvhH8+aSkHULQ==
+mui-datatables@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-3.3.1.tgz#27bb9ea461eab26eb93dda85d1eb658542422851"
+  integrity sha512-R23quz9FRknkmOHbjg7w6sXmNh8hQCe6PfV3+epMsiWKSZhV8FPy9UOIq1owMas1odpQxRpVWP6MwWR+GZFJog==
   dependencies:
     clsx "^1.1.1"
     lodash.assignwith "^4.2.0"
@@ -13532,7 +13543,7 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-showdown@^1.9.1:
+showdown@^1.9.0, showdown@^1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/showdown/-/showdown-1.9.1.tgz#134e148e75cd4623e09c21b0511977d79b5ad0ef"
   integrity sha512-9cGuS382HcvExtf5AHk7Cb4pAeQQ+h0eTr33V1mu+crYWV4KvWAw6el92bDrqGEk5d46Ai/fhbEUwqJ/mTCNEA==
@@ -14604,6 +14615,13 @@ turndown-plugin-gfm@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/turndown-plugin-gfm/-/turndown-plugin-gfm-1.0.2.tgz#6f8678a361f35220b2bdf5619e6049add75bf1c7"
   integrity sha512-vwz9tfvF7XN/jE0dGoBei3FXWuvll78ohzCZQuOb+ZjWrs3a0XhQVomJEb2Qh4VHTPNRO4GPZh0V7VRbiWwkRg==
+
+turndown@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/turndown/-/turndown-5.0.3.tgz#a1350b66155d7891f10e451432170b0f7cd7449a"
+  integrity sha512-popfGXEiedpq6F5saRIAThKxq/bbEPVFnsDnUdjaDGIre9f3/OL9Yi/yPbPcZ7RYUDpekghr666bBfZPrwNnhQ==
+  dependencies:
+    jsdom "^11.9.0"
 
 turndown@^6.0.0:
   version "6.0.0"
