@@ -89,7 +89,6 @@ function TranslatableTSVWrapper() {
     },
   };
 
-  const _save = useCallback(targetFileActions.save, []);
 
   const datatable = useMemo(() => {
     config.rowHeader = rowHeader;
@@ -97,13 +96,13 @@ function TranslatableTSVWrapper() {
       <DataTable
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
-        onSave={_save}
+        onSave={targetFileActions.save}
         delimiters={delimiters}
         config={config}
         generateRowId={generateRowId}
       />
     );
-  }, [rowHeader, sourceFile.content, targetFile.content, _save, generateRowId]);
+  }, [rowHeader, sourceFile.content, targetFile.content, targetFileActions.save, generateRowId]);
 
   return (
     <ResourcesContextProvider
