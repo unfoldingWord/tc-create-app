@@ -55,8 +55,18 @@ jobs:
         run: yarn;
       - name: Run Unit Tests
         run: yarn test:unit;
-      - name: Run Coverage Tests
-        run: yarn test;
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          record: true
+          headless: true
+          browser: chrome
+          group: "Integration tests"
+          start: yarn start
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 360
+        env:
+          CYPRESS_RECORD_KEY: ${{ env.CYPRESS_RECORD_KEY }}
       - name: Create Badge For Coverage Results
         if: github.event_name == 'push'
         run: yarn create-coverage-badge;
@@ -74,6 +84,12 @@ jobs:
         with:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
           branch: ${{ env.BRANCH }}
+      - name: Archive test screenshots
+        uses: actions/upload-artifact@v1
+        with:
+          name: screenshots
+          path: cypress/screenshots
+        if: ${{ failure() }}
   auto_merge:
     needs: [test]
     runs-on: ubuntu-latest
