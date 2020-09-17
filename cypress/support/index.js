@@ -24,3 +24,10 @@ before(() => {
   cy.deleteIndexDB();
   cy.wait(1000);
 });
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  console.log('err :' + err);
+  console.log('runnable :' + runnable);
+  console.log('stack', err.stack);
+  return false;
+});
