@@ -4,11 +4,12 @@ Cypress.Commands.add(
   () =>
     new Cypress.Promise(resolve => {
       var request = indexedDB.deleteDatabase('tc-create-app-state-store');
-      request.onerror = function(event) {
+
+      request.onerror = function (event) {
         resolve();
       };
-       
-      request.onsuccess = function(event) {
+
+      request.onsuccess = function (event) {
         resolve();
       };
     })
