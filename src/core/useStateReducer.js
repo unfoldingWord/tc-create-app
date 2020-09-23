@@ -38,6 +38,10 @@ export const useStateReducer = ({
     dispatch({ type: 'set_font_scale', value });
   }, []);
 
+  const setExpandedScripture = useCallback((value) => {
+    dispatch({ type: 'set_expanded_scripture', value });
+  }, []);
+
   const setConfig = useCallback((value) => {
     dispatch({ type: 'set_config', value });
   }, []);
@@ -159,6 +163,7 @@ export const useStateReducer = ({
     setAuthentication,
     setLanguage,
     setFontScale,
+    setExpandedScripture,
     setConfig,
     setResourceLinks,
     setSourceRepository,

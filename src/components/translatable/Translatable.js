@@ -39,7 +39,7 @@ function Translatable() {
 
   const translatableComponent = useMemo(() => {
     let _translatable = (
-      <div style={{ 'text-align': 'center' }}>
+      <div style={{ textAlign: 'center' }}>
         <CircularProgress />{' '}
       </div>
     );
@@ -62,7 +62,8 @@ function Translatable() {
         _translatable = <TranslatableTSV />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
-      }    }
+      }
+    }
     return _translatable;
   }, [filepath, sourceFile, targetFile, targetFileActions.save]);
 
