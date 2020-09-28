@@ -30,7 +30,6 @@ function Translatable() {
   const { state: targetFile, actions: targetFileActions } = useContext(
     TargetFileContext
   );
-  const _save = useCallback(targetFileActions.save, []);
 
   const scrollToTop = useCallback(() => {
     if (wrapperElement && wrapperElement) {
@@ -56,7 +55,7 @@ function Translatable() {
         let translatableProps = {
           original: sourceFile.content,
           translation: targetFile.content,
-          onTranslation: _save,
+          onTranslation: targetFileActions.save,
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
@@ -66,7 +65,7 @@ function Translatable() {
       }
     }
     return _translatable;
-  }, [_save, filepath, sourceFile, targetFile]);
+  }, [filepath, sourceFile, targetFile, targetFileActions.save]);
 
   useEffect(() => {
     scrollToTop();
