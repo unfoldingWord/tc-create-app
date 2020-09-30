@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState, useEffect, useCallback,
+} from 'react';
+import isEqual from 'lodash.isequal';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
@@ -23,11 +26,11 @@ function RowHeader({
   const verse = rowData[2].split(delimiters.cell)[1];
   const occurrence = rowData[6].split(delimiters.cell)[1];
 
-  const reference = {
+  const reference = useCallback(() => ({
     bookId: book.toLowerCase(),
     chapter: parseInt(chapter),
     verse: parseInt(verse),
-  };
+  }), [book, chapter, verse]);
 
   let _component = (
     <div className={classes.defaultHeader}>
@@ -70,4 +73,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default RowHeader;
+const propsAreEqual = (prevProps, nextProps) => (
+  isEqual(prevProps.rowData, nextProps.rowData) &&
+  isEqual(prevProps.delimiters, nextProps.delimiters) &&
+  isEqual(prevProps.open, nextProps.open)
+);
+
+export default React.memo(RowHeader, propsAreEqual);
