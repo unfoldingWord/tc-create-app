@@ -28,7 +28,7 @@ const config = {
   ],
 };
 
-function TranslatableTSVWrapper() {
+function TranslatableTSVWrapper({ onSave }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
 
@@ -85,10 +85,10 @@ function TranslatableTSVWrapper() {
 
   const serverConfig = {
     server: SERVER_URL,
-    cache: { maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
+    cache: {
+      maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
     },
   };
-
 
   const datatable = useMemo(() => {
     config.rowHeader = rowHeader;
@@ -96,13 +96,13 @@ function TranslatableTSVWrapper() {
       <DataTable
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
-        onSave={targetFileActions.save}
+        onSave={onSave}
         delimiters={delimiters}
         config={config}
         generateRowId={generateRowId}
       />
     );
-  }, [rowHeader, sourceFile.content, targetFile.content, targetFileActions.save, generateRowId]);
+  }, [rowHeader, sourceFile.content, targetFile.content, onSave, generateRowId]);
 
   return (
     <ResourcesContextProvider
@@ -119,10 +119,10 @@ function TranslatableTSVWrapper() {
 }
 
 function TranslatableTSV({ datatable }) {
-  const { state:{ books } } = useContext(ResourcesContext);
+  const { state: { books } } = useContext(ResourcesContext);
   return books ? datatable :
     (<div style={{
-      width: '100%', display:'flex', justifyContent: 'center',
+      width: '100%', display: 'flex', justifyContent: 'center',
     }}
     ><CircularProgress /></div>);
 }
