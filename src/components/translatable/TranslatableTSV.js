@@ -106,6 +106,9 @@ function TranslatableTSVWrapper() {
 
   return (
     <ResourcesContextProvider
+      reference={{
+        chapter: 1, verse:1, bookId,
+      }}
       defaultResourceLinks={defaultResourceLinksWithBookId}
       resourceLinks={allResourceLinksWithBookId}
       onResourceLinks={onResourceLinks}
