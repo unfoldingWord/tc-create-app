@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useMemo, useRef,
+  useState, useEffect,
 } from 'react';
 import isEqual from 'lodash.isequal';
 import { makeStyles } from '@material-ui/core/styles';
