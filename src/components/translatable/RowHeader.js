@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useCallback,
+  useState, useEffect, useMemo, useRef,
 } from 'react';
 import isEqual from 'lodash.isequal';
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,12 +25,11 @@ function RowHeader({
   const chapter = rowData[1].split(delimiters.cell)[1];
   const verse = rowData[2].split(delimiters.cell)[1];
   const occurrence = rowData[6].split(delimiters.cell)[1];
-
-  const reference = useCallback(() => ({
+  const reference = {
     bookId: book.toLowerCase(),
     chapter: parseInt(chapter),
     verse: parseInt(verse),
-  }), [book, chapter, verse]);
+  };
 
   let _component = (
     <div className={classes.defaultHeader}>
