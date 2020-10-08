@@ -7143,23 +7143,6 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@1.3.7:
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.7.tgz#1954bc3dfd4b1164e7334a309299b6a690ad1035"
-  integrity sha512-opRIAbe/KunLJcaS/Qva9xFnUcY2t9ZVLrb2EHp19udJjZli49mynlB3g80Ro1WXV6ri4aZkDja9I53SrBtpIg==
-  dependencies:
-    awesome-debounce-promise "2.1.0"
-    axios "0.19.0"
-    axios-cache-adapter "2.4.1"
-    base-64 "0.1.0"
-    jszip "3.2.1"
-    localforage "1.7.3"
-    markdown-translatable "^1.1.1"
-    prop-types "15.7.2"
-    react-json-view "^1.19.1"
-    use-deep-compare-effect "^1.3.1"
-    utf8 "3.0.0"
-
 gitea-react-toolkit@^1.3.8:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.8.tgz#af0db80b9b7c0816d7bbcea79cdd09df1240d717"
@@ -9925,23 +9908,6 @@ markdown-to-jsx@^6.11.4:
   dependencies:
     prop-types "^15.6.2"
     unquote "^1.1.0"
-
-markdown-translatable@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.1.1.tgz#2bf91c1c9408409eebda5786f6a9c265b5910e27"
-  integrity sha512-PyHu2lnVZ9BpzdOwFD+i3kRLuNujA6cUHhzTles9QlVBnFB9rAZv4XRyiloz0lETB+EtsuzVb10vw4mD58E+3A==
-  dependencies:
-    deep-freeze "^0.0.1"
-    lodash.debounce "^4.0.8"
-    lodash.isequal "^4.5.0"
-    lodash.throttle "^4.1.1"
-    md5 "^2.2.1"
-    prop-types "^15.7.2"
-    react-contenteditable "^3.3.5"
-    react-markdown "^4.0.6"
-    showdown "^1.9.1"
-    turndown "^6.0.0"
-    turndown-plugin-gfm "^1.0.2"
 
 markdown-translatable@^1.1.2:
   version "1.1.2"
@@ -13401,19 +13367,19 @@ schema-utils@^2.6.6, schema-utils@^2.7.0, schema-utils@^2.7.1:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.8.tgz#504ba23167471af3c79eb84161f065ea78b35729"
-  integrity sha512-W0lkLm5TpEERAiKMDYsnlXSBUtqBksoU6EZBR6Sr9Va+TNDsGR7g2Fqf54fykg4KzBMig53dJWSWHC8JLRVi3Q==
+scripture-resources-rcl@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.9.tgz#080e2150d3d9a5bd5e6d77b9dc69ebc6bf77beaf"
+  integrity sha512-U+Z8OIaXycYNgK0qvc4M5pCzgxjLOlgpZD0/2MGCTFnBGInSbrp3gscxZ68iiqR0a2xvUI9tHB4N0WW8eBOA6g==
   dependencies:
     deep-freeze "0.0.1"
-    gitea-react-toolkit "1.3.7"
+    gitea-react-toolkit "^1.3.8"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
-    string-punctuation-tokenizer "2.1.2"
+    string-punctuation-tokenizer "^2.1.2"
     use-deep-compare-effect "1.3.1"
     usfm-js "^2.0.2"
 
@@ -14076,7 +14042,7 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-string-punctuation-tokenizer@2.1.2:
+string-punctuation-tokenizer@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.1.2.tgz#db2b5707bbab6d20540ebf0fd49c18280d94d898"
   integrity sha512-jFVSLxWca5xIjaoi8vTSipXXK0Ng3+BdbfAtjCgqS4ZxHTGLYvKrGaARpATtBHIAOEMXhwMaBKLrypnyQ6cR6A==
