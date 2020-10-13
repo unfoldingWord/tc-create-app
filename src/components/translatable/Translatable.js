@@ -11,7 +11,7 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { FileContext, AuthenticationContext, LoginForm } from 'gitea-react-toolkit';
+import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 
 import { FilesHeader } from '../files-header';
@@ -52,7 +52,7 @@ function Translatable() {
         closeAuthenticationModal();
       }
     }
-  }, [authentication, targetFile, targetFileActions, targetFileActions.save]);
+  }, [savingTargetFileContent, authentication]);
 
   useEffect(() => {
     // This does not work in the saveRetry() function.
@@ -68,7 +68,7 @@ function Translatable() {
             alert("Error saving file! File could not be saved.");
           });
     }
-  }, [doSaveRetry]);
+  }, [doSaveRetry, targetFileActions, savingTargetFileContent]);
 
   const authenticationModal = useMemo(() => {
     const saveRetry = ({ username, password, remember }) => {
@@ -93,9 +93,7 @@ function Translatable() {
         </Modal>
       )
     );
-  }, [config, isAuthenticationModalVisible, classes.modal,
-    , authenticationActions, authenticationActions.onLoginFormSubmitLogin
-    , targetFile, targetFileActions, targetFileActions.save, savingTargetFileContent]);
+  }, [config, isAuthenticationModalVisible, classes.modal, authenticationActions]);
 
   const scrollToTop = useCallback(() => {
     if (wrapperElement && wrapperElement) {
@@ -117,7 +115,13 @@ function Translatable() {
         try {
           await targetFileActions.save(content);
         } catch (error) {
-          openAuthenticationModal();
+          const friendlyError = parseError({ error });
+
+          if (friendlyError.isRecoverable) {
+            openAuthenticationModal();
+          } else {
+            alert("Error saving file! File could not be saved.");
+          }
         }
       }
     );
@@ -143,7 +147,7 @@ function Translatable() {
       }
     }
     return _translatable;
-  }, [config, authentication, filepath, sourceFile, targetFile, targetFileActions]);
+  }, [filepath, sourceFile, targetFile, targetFileActions]);
 
   useEffect(() => {
     scrollToTop();
