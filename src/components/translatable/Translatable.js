@@ -5,9 +5,13 @@ import React, {
   useState,
   useContext,
 } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import {
+  Modal,
+  Paper,
+  CircularProgress,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { FileContext } from 'gitea-react-toolkit';
+import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 
 import { FilesHeader } from '../files-header';
@@ -18,6 +22,17 @@ import TranslatableTSV from './TranslatableTSV';
 function Translatable() {
   const classes = useStyles();
   const [wrapperElement, setWrapperElement] = useState(null);
+
+  const { state: config } = useContext(AppContext);
+
+  const { component: authenticationComponent, actions: authenticationActions, state: authentication } = useContext(AuthenticationContext);
+
+  const [savingTargetFileContent, setSavingTargetFileContent] = useState();
+  const [doSaveRetry, setDoSaveRetry] = useState(false);
+
+  const [isAuthenticationModalVisible, setAuthenticationModalVisible] = useState(false);
+  const closeAuthenticationModal = () => setAuthenticationModalVisible(false);
+  const openAuthenticationModal = () => setAuthenticationModalVisible(true);
 
   const {
     state: {
@@ -30,6 +45,55 @@ function Translatable() {
   const { state: targetFile, actions: targetFileActions } = useContext(
     TargetFileContext
   );
+
+  useEffect(() => {
+    if (isAuthenticationModalVisible && authentication && authentication.user) {
+      if (savingTargetFileContent) {
+        closeAuthenticationModal();
+      }
+    }
+  }, [savingTargetFileContent, authentication]);
+
+  useEffect(() => {
+    // This does not work in the saveRetry() function.
+    if (doSaveRetry) {
+      setDoSaveRetry(false);
+
+      targetFileActions.save(savingTargetFileContent)
+        .then(() => {
+          // Saved successfully.
+        },
+          () => {
+            // Error saving:
+            alert("Error saving file! File could not be saved.");
+          });
+    }
+  }, [doSaveRetry, targetFileActions, savingTargetFileContent]);
+
+  const authenticationModal = useMemo(() => {
+    const saveRetry = ({ username, password, remember }) => {
+      authenticationActions.onLoginFormSubmitLogin({ username, password, remember })
+        .then(() => {
+          setDoSaveRetry(true);
+        });
+    };
+
+    return (
+      (!isAuthenticationModalVisible) ? <></> : (
+        <Modal open={true} onClose={closeAuthenticationModal}>
+          <Paper className={classes.modal}>
+            <LoginForm
+              config={config}
+              authentication={null/** Override to simulate logged out. */}
+              actionText={'Login to try again...'}
+              errorText={'Error! File was not saved.  Connection to the server was lost.'}
+              onSubmit={saveRetry}
+            />
+          </Paper>
+        </Modal>
+      )
+    );
+  }, [config, isAuthenticationModalVisible, classes.modal, authenticationActions]);
 
   const scrollToTop = useCallback(() => {
     if (wrapperElement && wrapperElement) {
@@ -44,6 +108,24 @@ function Translatable() {
       </div>
     );
 
+    const saveOnTranslation = (
+      async (content) => {
+        setSavingTargetFileContent(content);
+
+        try {
+          await targetFileActions.save(content);
+        } catch (error) {
+          const friendlyError = parseError({ error });
+
+          if (friendlyError.isRecoverable) {
+            openAuthenticationModal();
+          } else {
+            alert("Error saving file! File could not be saved.");
+          }
+        }
+      }
+    );
+
     if (
       filepath &&
       sourceFile &&
@@ -55,17 +137,17 @@ function Translatable() {
         let translatableProps = {
           original: sourceFile.content,
           translation: targetFile.content,
-          onTranslation: targetFileActions.save,
+          onTranslation: saveOnTranslation,
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
-        _translatable = <TranslatableTSV />;
+        _translatable = <TranslatableTSV onSave={saveOnTranslation} />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
     }
     return _translatable;
-  }, [filepath, sourceFile, targetFile, targetFileActions.save]);
+  }, [filepath, sourceFile, targetFile, targetFileActions]);
 
   useEffect(() => {
     scrollToTop();
@@ -85,10 +167,22 @@ function Translatable() {
     <div ref={setWrapperElement} className={classes.root}>
       {filesHeader}
       {translatableComponent}
+      {authenticationModal}
     </div>
   );
 }
 
-const useStyles = makeStyles((theme) => ({ root: {} }));
+const useStyles = makeStyles((theme) => (
+  {
+    root: {},
+    modal: {
+      position: 'absolute',
+      top: '10%',
+      left: '10%',
+      right: '10%',
+      maxHeight: '80%',
+      overflow: 'scroll',
+    }
+  }));
 
 export default Translatable;
