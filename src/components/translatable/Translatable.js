@@ -25,7 +25,7 @@ function Translatable() {
 
   const { state: config } = useContext(AppContext);
 
-  const { component: authenticationComponent, actions: authenticationActions, state: authentication } = useContext(AuthenticationContext);
+  const { actions: authenticationActions, state: authentication } = useContext(AuthenticationContext);
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
   const [doSaveRetry, setDoSaveRetry] = useState(false);
@@ -47,14 +47,6 @@ function Translatable() {
   );
 
   useEffect(() => {
-    if (isAuthenticationModalVisible && authentication && authentication.user) {
-      if (savingTargetFileContent) {
-        closeAuthenticationModal();
-      }
-    }
-  }, [savingTargetFileContent, authentication]);
-
-  useEffect(() => {
     // This does not work in the saveRetry() function.
     if (doSaveRetry) {
       setDoSaveRetry(false);
@@ -62,9 +54,11 @@ function Translatable() {
       targetFileActions.save(savingTargetFileContent)
         .then(() => {
           // Saved successfully.
+          closeAuthenticationModal();
         },
           () => {
             // Error saving:
+            closeAuthenticationModal();
             alert("Error saving file! File could not be saved.");
           });
     }

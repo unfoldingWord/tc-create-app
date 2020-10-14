@@ -38,7 +38,7 @@ function TranslatableTSVWrapper({ onSave }) {
   } = useContext(AppContext);
 
   const { state: sourceFile } = useContext(FileContext);
-  const { state: targetFile, actions: targetFileActions } = useContext(
+  const { state: targetFile } = useContext(
     TargetFileContext
   );
 
@@ -107,7 +107,7 @@ function TranslatableTSVWrapper({ onSave }) {
   return (
     <ResourcesContextProvider
       reference={{
-        chapter: 1, verse:1, bookId,
+        chapter: 1, verse: 1, bookId,
       }}
       defaultResourceLinks={defaultResourceLinksWithBookId}
       resourceLinks={allResourceLinksWithBookId}
