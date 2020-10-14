@@ -25,7 +25,7 @@ function Translatable() {
 
   const { state: config } = useContext(AppContext);
 
-  const { actions: authenticationActions, state: authentication } = useContext(AuthenticationContext);
+  const { actions: authenticationActions } = useContext(AuthenticationContext);
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
   const [doSaveRetry, setDoSaveRetry] = useState(false);
