@@ -72,7 +72,7 @@ function DrawerMenu() {
         </ListItemSecondaryAction>
       </ListItem>
       <ListItem>
-        <ListItemIcon data-test={`expanded-scripture-pane${expandedScripture ? ' active' : ''}`} className={classes.icon}>
+        <ListItemIcon data-test={`expanded-scripture-pane`} className={classes.icon + expandedScripture ? 'active' : null}>
           <MenuBookOutlined />
         </ListItemIcon>
         <ListItemText primary="Expand all Scripture" />
