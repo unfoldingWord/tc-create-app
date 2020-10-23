@@ -30,6 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.35",
     "@material-ui/styles": "^4.10.0",
     "axios": "^0.20.0",
+    "uw-content-validation": "0.8.12",
     "datatable-translatable": "^0.9.4",
     "deep-freeze": "^0.0.1",
     "lodash.isequal": "^4.5.0",

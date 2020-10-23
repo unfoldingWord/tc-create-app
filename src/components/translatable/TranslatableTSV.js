@@ -18,6 +18,9 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
+
+import * as cv from 'uw-content-validation';
+
 const delimiters = { row: '\n', cell: '\t' };
 const config = {
   compositeKeyIndices: [0, 1, 2, 3],
@@ -41,7 +44,7 @@ function TranslatableTSVWrapper({ onSave }) {
   const { state: targetFile } = useContext(
     TargetFileContext
   );
-
+  console.log("targetFile=", targetFile);
   const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
 
   const onResourceLinks = useCallback(
@@ -90,6 +93,19 @@ function TranslatableTSVWrapper({ onSave }) {
     },
   };
 
+  const onValidate = useCallback(async () => {
+    // sample name: en_tn_08-RUT.tsv
+    if ( targetFile ) {
+      const _name  = targetFile.name.split('_');
+      const langId = _name[0];
+      const bookID = _name[2].split('-')[1].split('.')[0];
+      const content = targetFile.content;
+      console.log("validating:", _name, langId, bookID);
+      const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', content, '');
+      console.log("validations:",rawResults);
+    }
+  },[targetFile]);
+
   const datatable = useMemo(() => {
     config.rowHeader = rowHeader;
     return (
@@ -97,13 +113,14 @@ function TranslatableTSVWrapper({ onSave }) {
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
         onSave={onSave}
+        onValidate={onValidate}
         delimiters={delimiters}
         config={config}
         generateRowId={generateRowId}
       />
     );
-  }, [rowHeader, sourceFile.content, targetFile.content, onSave, generateRowId]);
-
+  }, [rowHeader, sourceFile.content, targetFile.content, onSave, onValidate, generateRowId]);
+  console.log("returning TranslatableTSV");
   return (
     <ResourcesContextProvider
       reference={{
