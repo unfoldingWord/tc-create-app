@@ -20,6 +20,7 @@ import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
 
 import * as cv from 'uw-content-validation';
+import * as csv from '../../core/csvMaker';
 
 const delimiters = { row: '\n', cell: '\t' };
 const config = {
@@ -102,6 +103,30 @@ function TranslatableTSVWrapper({ onSave }) {
       const content = targetFile.content;
       console.log("validating:", _name, langId, bookID);
       const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', content, '');
+      const nl = rawResults.noticeList;
+      let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
+      let data = [];
+      data.push(hdrs);
+      Object.keys(nl).forEach ( key => {
+        const rowData = nl[key];
+        csv.addRow( data, [
+            String(rowData.priority),
+            String(rowData.C),
+            String(rowData.V),
+            String(rowData.lineNumber),
+            String(rowData.rowID),
+            String(rowData.details),
+            String(rowData.characterIndex),
+            String(rowData.extract),
+            String(rowData.message),
+            String(rowData.location),
+        ]);
+      });
+
+      let ts = new Date().toISOString();
+      let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
+      csv.download(fn, csv.toCSV(data));
+  
       console.log("validations:",rawResults);
     }
   },[targetFile]);
