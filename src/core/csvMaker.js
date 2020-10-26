@@ -28,10 +28,8 @@ export function addRow( csvdata, csvrow) {
     // 1. if a cell contains a quote, then the quote must doubled (rfc4180#7)
     // 2. if a cell contains commas, quotes, or line breaks, then the string must quoted (rfc4180#6)
     //    a line break will mean a carriage return (CR) or line feed (LF)
-    console.log("csvrow=",csvrow);
     for (let i=0; i < csvrow.length; i++) {
         let cell = csvrow[i];
-        console.log("cell:",cell);
         if ( cell.includes('"') ) {
             // double the quotes
             cell = cell.replace(/"/g,'""');

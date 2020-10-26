@@ -45,7 +45,6 @@ function TranslatableTSVWrapper({ onSave }) {
   const { state: targetFile } = useContext(
     TargetFileContext
   );
-  console.log("targetFile=", targetFile);
   const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
 
   const onResourceLinks = useCallback(
@@ -101,7 +100,6 @@ function TranslatableTSVWrapper({ onSave }) {
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
       const content = targetFile.content;
-      console.log("validating:", _name, langId, bookID);
       const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', content, '');
       const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
@@ -145,7 +143,7 @@ function TranslatableTSVWrapper({ onSave }) {
       />
     );
   }, [rowHeader, sourceFile.content, targetFile.content, onSave, onValidate, generateRowId]);
-  console.log("returning TranslatableTSV");
+
   return (
     <ResourcesContextProvider
       reference={{
