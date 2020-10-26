@@ -6504,6 +6504,11 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
+fast-deep-equal@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+  integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
+
 fast-deep-equal@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
@@ -7101,7 +7106,24 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@^1.1.3, gitea-react-toolkit@^1.3.5:
+gitea-react-toolkit@^1.3.10:
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.10.tgz#28df6131decab97c1386ec0f4facd05554e073bd"
+  integrity sha512-OUBjbDxdKWODJE60uXf4bqbuPa8eOlZiYKWLrydfCfuFkq+CSIJHw3RCEnflRs+o2trfjruN4fhqopobs0ouzg==
+  dependencies:
+    awesome-debounce-promise "2.1.0"
+    axios "0.19.0"
+    axios-cache-adapter "2.4.1"
+    base-64 "0.1.0"
+    jszip "3.2.1"
+    localforage "1.7.3"
+    markdown-translatable "^1.1.4"
+    prop-types "15.7.2"
+    react-json-view "^1.19.1"
+    use-deep-compare-effect "^1.3.1"
+    utf8 "3.0.0"
+
+gitea-react-toolkit@^1.3.5:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.5.tgz#c621921d505b70623902e675b4830d74b07a87a0"
   integrity sha512-dn9c5Ass125zcxF1I0hwRyad93CughAeqvQGnWhKGgaKsrh/WXYhnEosjk7E5r35AncsmbamvajJ282sIq/wVg==
@@ -9688,7 +9710,7 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
-lodash.throttle@^4.0.1:
+lodash.throttle@^4.0.1, lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
@@ -9875,6 +9897,23 @@ markdown-translatable@^1.0.4:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
     prop-types "^15.7.2"
+    react-markdown "^4.0.6"
+    showdown "^1.9.1"
+    turndown "^6.0.0"
+    turndown-plugin-gfm "^1.0.2"
+
+markdown-translatable@^1.1.4:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.0.tgz#e52b851ead62f783c274d10428b403d1b30fc4c1"
+  integrity sha512-tGQTOJAGRTRdx7HoTeFohshXsHVFHphHG6AvOkwKmHQD1zg1gbs0GCSkAar4+LJcH5+Sv5OZ1Cb3hMYntn0xzg==
+  dependencies:
+    deep-freeze "^0.0.1"
+    lodash.debounce "^4.0.8"
+    lodash.isequal "^4.5.0"
+    lodash.throttle "^4.1.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-contenteditable "^3.3.5"
     react-markdown "^4.0.6"
     showdown "^1.9.1"
     turndown "^6.0.0"
@@ -12044,7 +12083,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@15.7.2, prop-types@^15.0.0, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.0.0, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.1, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -12252,6 +12291,14 @@ react-base16-styling@^0.6.0:
     lodash.curry "^4.0.1"
     lodash.flow "^3.3.0"
     pure-color "^1.2.0"
+
+react-contenteditable@^3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.3.5.tgz#febff7a46570fdb2f5ff199e506c512e5924e22e"
+  integrity sha512-38A7hlRQfb2KQAQT0kIJC2YlQUU7jcyYM4eh1fj6kAYb3Hmk6hHlr0snelyxVSpPXjPdFllrnSsPkzUS5AtrEA==
+  dependencies:
+    fast-deep-equal "^2.0.1"
+    prop-types "^15.7.1"
 
 react-dev-utils@^7.0.0:
   version "7.0.5"
@@ -13307,19 +13354,20 @@ schema-utils@^2.6.6, schema-utils@^2.7.1:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.7.tgz#d35356cc5f4359b5dc6dbf02f419415e7a16a679"
-  integrity sha512-zt08KXp4e5gUScF2uWy41XqmXVkRitgT4NQsLx4DS9DcsVtlzDzk33oYmuQHHtqTUGy951lDyPIc5IheEYItaw==
+scripture-resources-rcl@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.12.tgz#462188f93d8f4f9dc4000b052212e1c362bfd4a8"
+  integrity sha512-ggmy6us/1ahJgN7a/ssds+y+7EU1+F03aOHUVsqjQdjKnREDW+3TgDGQw1UvWena9cbyBD23KakZSNp2UxfYTQ==
   dependencies:
     deep-freeze "0.0.1"
-    gitea-react-toolkit "^1.1.3"
+    gitea-react-toolkit "^1.3.10"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
+    markdown-translatable "^1.1.4"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
-    string-punctuation-tokenizer "2.1.2"
+    string-punctuation-tokenizer "^2.1.2"
     use-deep-compare-effect "1.3.1"
     usfm-js "^2.0.2"
 
@@ -13982,7 +14030,7 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-string-punctuation-tokenizer@2.1.2:
+string-punctuation-tokenizer@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.1.2.tgz#db2b5707bbab6d20540ebf0fd49c18280d94d898"
   integrity sha512-jFVSLxWca5xIjaoi8vTSipXXK0Ng3+BdbfAtjCgqS4ZxHTGLYvKrGaARpATtBHIAOEMXhwMaBKLrypnyQ6cR6A==
