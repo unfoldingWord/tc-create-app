@@ -9951,6 +9951,23 @@ markdown-translatable@^1.1.4, markdown-translatable@^1.2.0:
     turndown "^6.0.0"
     turndown-plugin-gfm "^1.0.2"
 
+markdown-translatable@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.0.tgz#e52b851ead62f783c274d10428b403d1b30fc4c1"
+  integrity sha512-tGQTOJAGRTRdx7HoTeFohshXsHVFHphHG6AvOkwKmHQD1zg1gbs0GCSkAar4+LJcH5+Sv5OZ1Cb3hMYntn0xzg==
+  dependencies:
+    deep-freeze "^0.0.1"
+    lodash.debounce "^4.0.8"
+    lodash.isequal "^4.5.0"
+    lodash.throttle "^4.1.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-contenteditable "^3.3.5"
+    react-markdown "^4.0.6"
+    showdown "^1.9.1"
+    turndown "^6.0.0"
+    turndown-plugin-gfm "^1.0.2"
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
