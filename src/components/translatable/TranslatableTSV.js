@@ -19,7 +19,7 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
 const delimiters = { row: '\n', cell: '\t' };
-const config = {
+const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
   columnsFilter: ['Chapter', 'SupportReference'],
   columnsShowDefault: [
@@ -66,15 +66,6 @@ function TranslatableTSVWrapper({ onSave }) {
     bookId,
     resourceLinks,
   });
-  const rowHeader = useCallback((rowData, actionsMenu) => (
-    <RowHeader
-      open={expandedScripture}
-      rowData={rowData}
-      actionsMenu={actionsMenu}
-      delimiters={delimiters}
-    />
-  ), [expandedScripture]);
-
 
   const generateRowId = useCallback((rowData) => {
     const [chapter] = rowData[2].split(delimiters.cell);
@@ -95,20 +86,28 @@ function TranslatableTSVWrapper({ onSave }) {
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
+  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeader
+    open={expandedScripture}
+    rowData={rowData}
+    actionsMenu={actionsMenu}
+    delimiters={delimiters}
+  />), [expandedScripture]);
+
+
   const datatable = useMemo(() => {
-    config.rowHeader = rowHeader;
+    _config.rowHeader = rowHeader;
     return (
       <DataTable
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
         onSave={onSave}
         delimiters={delimiters}
-        config={config}
+        config={_config}
         generateRowId={generateRowId}
         options={options}
       />
     );
-  }, [rowHeader, sourceFile.content, targetFile.content, onSave, generateRowId, options]);
+  }, [sourceFile.content, targetFile.content, onSave, generateRowId, options, rowHeader]);
   return (
     <ResourcesContextProvider
       reference={{ bookId }}
