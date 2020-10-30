@@ -93,15 +93,27 @@ function TranslatableTSVWrapper({ onSave }) {
     },
   };
 
-  const onValidate = useCallback(async () => {
+  const onValidate = useCallback(async (rows) => {
     // sample name: en_tn_08-RUT.tsv
-    if ( targetFile ) {
+    let tsvRows = "";
+    if ( targetFile && rows ) {
+      for ( let i=0; i < rows.length; i++ ) {
+        let _row = rows[i];
+        let _tsvRow = "";
+        // now each cell has both source and target values, delimited by tab
+        for ( let j=0; j < _row.length; j++ ) {
+          let values = _row[j].split("\t");
+          let targetValue = values[1];
+          _tsvRow = _tsvRow + targetValue + "\t";
+        }
+        // add new row and a newline at end of row
+        tsvRows = tsvRows + _tsvRow.trim("\t") + "\n";
+      }
       const _name  = targetFile.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
-      const content = targetFile.content;
-      const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', content, '');
-      const nl = rawResults.noticeList;
+      const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', tsvRows, '');
+      const nl = rawResults.noticeList.slice(1);
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
       data.push(hdrs);
@@ -113,7 +125,7 @@ function TranslatableTSVWrapper({ onSave }) {
             String(rowData.V),
             String(rowData.lineNumber),
             String(rowData.rowID),
-            String(rowData.details),
+            String(rowData.fieldName),
             String(rowData.characterIndex),
             String(rowData.extract),
             String(rowData.message),
