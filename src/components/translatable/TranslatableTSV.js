@@ -95,7 +95,10 @@ function TranslatableTSVWrapper({ onSave }) {
 
   const onValidate = useCallback(async (rows) => {
     // sample name: en_tn_08-RUT.tsv
-    let tsvRows = "";
+    // NOTE! the content on-screen, in-memory does NOT include
+    // the headers. So the initial value of tsvRows will be
+    // the headers.
+    let tsvRows = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
     if ( targetFile && rows ) {
       for ( let i=0; i < rows.length; i++ ) {
         let _row = rows[i];
@@ -104,6 +107,7 @@ function TranslatableTSVWrapper({ onSave }) {
         for ( let j=0; j < _row.length; j++ ) {
           let values = _row[j].split("\t");
           let targetValue = values[1];
+          targetValue = targetValue.replaceAll('\\[','[').replaceAll('\\]',']');
           _tsvRow = _tsvRow + targetValue + "\t";
         }
         // add new row and a newline at end of row
@@ -113,7 +117,7 @@ function TranslatableTSVWrapper({ onSave }) {
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
       const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', tsvRows, '');
-      const nl = rawResults.noticeList.slice(1);
+      const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
       data.push(hdrs);
@@ -125,8 +129,8 @@ function TranslatableTSVWrapper({ onSave }) {
             String(rowData.V),
             String(rowData.lineNumber),
             String(rowData.rowID),
-            String(rowData.fieldName),
-            String(rowData.characterIndex),
+            String(rowData.fieldName || ""),
+            String(rowData.characterIndex || ""),
             String(rowData.extract),
             String(rowData.message),
             String(rowData.location),
