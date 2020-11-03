@@ -5128,14 +5128,14 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-datatable-translatable@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.10.0.tgz#bc5188a5101695447233595f9a16cb40a2f10679"
-  integrity sha512-H2aR3SHF3rl4JENgxnBcto8Al834+O/JLMhtC4pHJwoBy/px1fhU0WXdyWOdoWO7xHE0XLKksWTUqYvxrJVC+A==
+datatable-translatable@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.10.1.tgz#695801ce3b4643c157821704ed995f1715af9215"
+  integrity sha512-UzjLaCtMiUWplQwpvX6lafexkfnDYWNBn243i6CdyMTFmW1ljf1ZXAL7ON0jo9OrryLXAwpgQx2Vfn/khqVOpA==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
-    markdown-translatable "^1.2.0"
+    markdown-translatable "^1.2.1"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -7153,10 +7153,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@^1.3.10, gitea-react-toolkit@^1.3.11:
-  version "1.3.11"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.11.tgz#5156a4f598a132ef538f4d4cad33d692b7d4f7a0"
-  integrity sha512-zz4M+PFQidM7me2LJXtSzssbruUhpYe4BZMBQfFQVL+GVoS4QDjEKcj4/fLr+2LgPe1poN+E10+kh8knTi2RCA==
+gitea-react-toolkit@^1.3.12:
+  version "1.3.12"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.12.tgz#d8e2f3ecd489a950f8ce876c91e90f511495fe7d"
+  integrity sha512-lhUcIqNCkt+0a+92BOn89Dm4L6DN+eJF4nDy7FBPcdVtCn8AxKG5b+00fn/bgNXq3bNetUkPd+w6rFjPWXhgYg==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -7164,7 +7164,7 @@ gitea-react-toolkit@^1.3.10, gitea-react-toolkit@^1.3.11:
     base-64 "0.1.0"
     jszip "3.2.1"
     localforage "1.7.3"
-    markdown-translatable "^1.1.4"
+    markdown-translatable "^1.2.1"
     prop-types "15.7.2"
     react-json-view "^1.19.1"
     use-deep-compare-effect "^1.3.1"
@@ -9922,27 +9922,10 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@^1.1.4, markdown-translatable@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.0.tgz#e52b851ead62f783c274d10428b403d1b30fc4c1"
-  integrity sha512-tGQTOJAGRTRdx7HoTeFohshXsHVFHphHG6AvOkwKmHQD1zg1gbs0GCSkAar4+LJcH5+Sv5OZ1Cb3hMYntn0xzg==
-  dependencies:
-    deep-freeze "^0.0.1"
-    lodash.debounce "^4.0.8"
-    lodash.isequal "^4.5.0"
-    lodash.throttle "^4.1.1"
-    md5 "^2.2.1"
-    prop-types "^15.7.2"
-    react-contenteditable "^3.3.5"
-    react-markdown "^4.0.6"
-    showdown "^1.9.1"
-    turndown "^6.0.0"
-    turndown-plugin-gfm "^1.0.2"
-
-markdown-translatable@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.0.tgz#e52b851ead62f783c274d10428b403d1b30fc4c1"
-  integrity sha512-tGQTOJAGRTRdx7HoTeFohshXsHVFHphHG6AvOkwKmHQD1zg1gbs0GCSkAar4+LJcH5+Sv5OZ1Cb3hMYntn0xzg==
+markdown-translatable@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.1.tgz#136ea96c4c6f51d9aeb1ff78c0330786a7fe68f6"
+  integrity sha512-tUwKEflZucYbWxnDjnPHuaSa47Gby2+YtZj7Ig81/G53hg5Nv6/4ewhIBeR6kyGJ3cbQyGFxj7QhxsEauE5TsA==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.debounce "^4.0.8"
@@ -13407,16 +13390,16 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.12.tgz#462188f93d8f4f9dc4000b052212e1c362bfd4a8"
-  integrity sha512-ggmy6us/1ahJgN7a/ssds+y+7EU1+F03aOHUVsqjQdjKnREDW+3TgDGQw1UvWena9cbyBD23KakZSNp2UxfYTQ==
+scripture-resources-rcl@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-1.0.13.tgz#e694b0732e50a1a9bc31a6ea544d9495f5a79e1b"
+  integrity sha512-/pnftItWm1Ay3SqLiwh19ZJ30BFwCeb0qqgn5OsrbD8Cg9azf8Fi9I8i+869ngPn9f36k5II07q6iPTBisjF3A==
   dependencies:
     deep-freeze "0.0.1"
-    gitea-react-toolkit "^1.3.10"
+    gitea-react-toolkit "^1.3.12"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
-    markdown-translatable "^1.1.4"
+    markdown-translatable "^1.2.1"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
