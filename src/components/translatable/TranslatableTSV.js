@@ -88,25 +88,11 @@ function TranslatableTSVWrapper({ onSave }) {
     // NOTE! the content on-screen, in-memory does NOT include
     // the headers. So the initial value of tsvRows will be
     // the headers.
-    let tsvRows = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
     if ( targetFile && rows ) {
-      for ( let i=0; i < rows.length; i++ ) {
-        let _row = rows[i];
-        let _tsvRow = "";
-        // now each cell has both source and target values, delimited by tab
-        for ( let j=0; j < _row.length; j++ ) {
-          let values = _row[j].split("\t");
-          let targetValue = values[1];
-          targetValue = targetValue.replaceAll('\\[','[').replaceAll('\\]',']');
-          _tsvRow = _tsvRow + targetValue + "\t";
-        }
-        // add new row and a newline at end of row
-        tsvRows = tsvRows + _tsvRow.trim("\t") + "\n";
-      }
       const _name  = targetFile.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
-      const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', tsvRows, '');
+      const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', rows, '');
       const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
