@@ -1,10 +1,13 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { FileContext } from 'gitea-react-toolkit';
 import { ApplicationStepper, Translatable } from './components/';
 import { AppContext } from './App.context';
 import { TargetFileContextProvider } from './core/TargetFile.context';
+import { Typography } from '@material-ui/core';
 
 function Workspace() {
+  const [validated, setValidated] = useState(false);
+  const [criticalErrors, setCriticalErrors] = useState('Validating');
   const { state: { sourceRepository, filepath } } = useContext(AppContext);
   const { state: sourceFile } = useContext(FileContext);
 
@@ -16,15 +19,22 @@ function Workspace() {
 
     if (sourceRepoMemo && sourceFilepath && filepath) {
       if (sourceFilepath === filepath) {
+        setValidated(false);
+        setCriticalErrors('Validating');
         _component = (
-          <TargetFileContextProvider>
-            <Translatable />
+          <TargetFileContextProvider 
+            validated={validated} onValidated={setValidated} 
+            onCriticalErrors={setCriticalErrors}
+          >
+            {(validated && <Translatable />) || 
+              <Typography>{criticalErrors}</Typography>
+            }
           </TargetFileContextProvider>
         );
       }
     }
     return _component;
-  }, [sourceRepoMemo, sourceFilepath, filepath]);
+  }, [sourceRepoMemo, sourceFilepath, filepath, validated, criticalErrors]);
 
   return component;
 }
