@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core';
 
 function Workspace() {
   const [validated, setValidated] = useState(false);
-  const [criticalErrors, setCriticalErrors] = useState('Validating');
+  const [criticalErrors, setCriticalErrors] = useState(['Validating']);
   const { state: { sourceRepository, filepath } } = useContext(AppContext);
   const { state: sourceFile } = useContext(FileContext);
 
@@ -19,15 +19,15 @@ function Workspace() {
 
     if (sourceRepoMemo && sourceFilepath && filepath) {
       if (sourceFilepath === filepath) {
-        //setValidated(false);
-        //setCriticalErrors('Validating');
         _component = (
           <TargetFileContextProvider 
             validated={validated} onValidated={setValidated} 
             onCriticalErrors={setCriticalErrors}
           >
             {(validated && <Translatable />) || 
-              <Typography>{criticalErrors}</Typography>
+              criticalErrors.map( msg => {
+                return <Typography>{msg}</Typography>
+              })
             }
           </TargetFileContextProvider>
         );

@@ -36,19 +36,17 @@ function TargetFileContextProvider({
     );
   }
 
-
-
-  //let errlist = {};
-  //let vdialog = <ValidateOnOpenDialog errors={errlist} />
-
   useEffect( () => {
-    if ( !validated && state?.content ) {
+    console.log("useEffect() validated, state.content=", validated, state?.content ? "has content": "no content");
+    if ( state?.content === undefined ) {
+      onValidated(false);
+      onCriticalErrors(['Validating...']);
+    } else if ( !validated ) {
       const _name  = state.name.split('_');
       const langId = _name[0];
       const bookID = _name[2]?.split('-')[1]?.split('.')[0];
-      const rawResults = validate(langId, bookID, state.content).then(
+      validate(langId, bookID, state.content).then(
         (value) => {
-          console.log("CV raw results:",value);
           let criticalNotices = [];
           for ( let i=0; i<value.noticeList.length; i++ ) {
             let notice = value.noticeList[i];
@@ -60,13 +58,9 @@ function TargetFileContextProvider({
               criticalNotices.push(msg);
             }
           }
-          console.log("Content Validation Notice List:\n",criticalNotices.join('\n'));
           if ( criticalNotices.length > 0 ) {
-            onCriticalErrors(criticalNotices.join('\n'));
-            console.log("set validated to false")
-            onValidated(false);
+            onCriticalErrors(criticalNotices);
           } else {
-            console.log("set validated to true")
             onValidated(true);
           }
         },
@@ -74,7 +68,6 @@ function TargetFileContextProvider({
           console.log("[TargetFile.context.js] rejected promise in validate on open");
         }
       );
-      console.log("target file validation=", rawResults);
     }
     }, [validated, onValidated, state, onCriticalErrors]);   
 
