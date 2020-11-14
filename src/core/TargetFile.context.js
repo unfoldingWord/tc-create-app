@@ -63,8 +63,10 @@ function TargetFileContextProvider({
           console.log("Content Validation Notice List:\n",criticalNotices.join('\n'));
           if ( criticalNotices.length > 0 ) {
             onCriticalErrors(criticalNotices.join('\n'));
+            console.log("set validated to false")
             onValidated(false);
           } else {
+            console.log("set validated to true")
             onValidated(true);
           }
         },

@@ -19,8 +19,8 @@ function Workspace() {
 
     if (sourceRepoMemo && sourceFilepath && filepath) {
       if (sourceFilepath === filepath) {
-        setValidated(false);
-        setCriticalErrors('Validating');
+        //setValidated(false);
+        //setCriticalErrors('Validating');
         _component = (
           <TargetFileContextProvider 
             validated={validated} onValidated={setValidated} 
