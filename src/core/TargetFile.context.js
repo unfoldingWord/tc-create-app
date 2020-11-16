@@ -37,11 +37,11 @@ function TargetFileContextProvider({
   }
 
   useEffect( () => {
-    console.log("useEffect() validated, state.content=", validated, state?.content ? "has content": "no content");
     if ( state?.content === undefined ) {
       onValidated(false);
       onCriticalErrors(['Validating...']);
     } else if ( !validated ) {
+      const link = state.html_url.replace('/src/','/blame/');
       const _name  = state.name.split('_');
       const langId = _name[0];
       const bookID = _name[2]?.split('-')[1]?.split('.')[0];
@@ -50,12 +50,19 @@ function TargetFileContextProvider({
           let criticalNotices = [];
           for ( let i=0; i<value.noticeList.length; i++ ) {
             let notice = value.noticeList[i];
-            if ( notice.priority >= 700 ) {
-              let msg = `On line ${notice.lineNumber}, ${notice.message}.`;
+            if ( notice.priority >= 746 ) {
+              let msgArray = [];
+              msgArray.push(`${link}#L${notice.lineNumber}`);
+              msgArray.push(`${notice.lineNumber}`);
+              msgArray.push(notice.message);
+              msgArray.push(notice.fieldName ? notice.fieldName : '');
+              msgArray.push(notice.details ? notice.details : '');
+              msgArray.push(notice.rowID ? `with row id=${notice.rowID}` : '');
+              let msg = `On {<Link href="">}line ${notice.lineNumber}{</Link>}, ${notice.message}.`;
               if ( notice.fieldName !== undefined ) msg = msg + '\n    ' + notice.fieldName;
               if ( notice.details !== undefined ) msg = msg + ' ' + notice.details;
               if ( notice.rowID !== undefined ) msg = msg + ' with row id=' + notice.rowID;
-              criticalNotices.push(msg);
+              criticalNotices.push(msgArray);
             }
           }
           if ( criticalNotices.length > 0 ) {
