@@ -3130,6 +3130,13 @@ axios@^0.19.2:
   dependencies:
     follow-redirects "1.5.10"
 
+axios@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
+  integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+  dependencies:
+    follow-redirects "^1.10.0"
+
 axios@^0.21.0:
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.0.tgz#26df088803a2350dff2c27f96fef99fe49442aca"
@@ -10147,6 +10154,23 @@ markdown-translatable@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.1.tgz#136ea96c4c6f51d9aeb1ff78c0330786a7fe68f6"
   integrity sha512-tUwKEflZucYbWxnDjnPHuaSa47Gby2+YtZj7Ig81/G53hg5Nv6/4ewhIBeR6kyGJ3cbQyGFxj7QhxsEauE5TsA==
+  dependencies:
+    deep-freeze "^0.0.1"
+    lodash.debounce "^4.0.8"
+    lodash.isequal "^4.5.0"
+    lodash.throttle "^4.1.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-contenteditable "^3.3.5"
+    react-markdown "^4.0.6"
+    showdown "^1.9.1"
+    turndown "^6.0.0"
+    turndown-plugin-gfm "^1.0.2"
+
+markdown-translatable@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.6.tgz#1edc10cbc3614ed69399ce005f5f9718f9d3c9ed"
+  integrity sha512-n0qMBih8c46Qchvgeme+P0MyIidt+NJSHYTerCpGcvABhg9O8i3QH+sUdUO4Iu/T4Pfe+5P7MkjpM5GBqll1yQ==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.debounce "^4.0.8"
