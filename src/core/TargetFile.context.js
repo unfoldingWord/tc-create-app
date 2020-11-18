@@ -37,46 +37,51 @@ function TargetFileContextProvider({
   }
 
   useEffect( () => {
-    if ( state?.content === undefined ) {
+    if ( state === undefined || state?.content === undefined ) {
       onValidated(false);
       onCriticalErrors(['Validating...']);
     } else if ( !validated ) {
       const link = state.html_url.replace('/src/','/blame/');
-      const _name  = state.name.split('_');
-      const langId = _name[0];
-      const bookID = _name[2]?.split('-')[1]?.split('.')[0];
-      validate(langId, bookID, state.content).then(
-        (value) => {
-          let criticalNotices = [];
-          for ( let i=0; i<value.noticeList.length; i++ ) {
-            let notice = value.noticeList[i];
-            if ( notice.priority >= 746 ) {
-              let msgArray = [];
-              msgArray.push(`${link}#L${notice.lineNumber}`);
-              msgArray.push(`${notice.lineNumber}`);
-              msgArray.push(notice.message);
-              msgArray.push(notice.fieldName ? notice.fieldName : '');
-              msgArray.push(notice.details ? notice.details : '');
-              msgArray.push(notice.rowID ? `with row id=${notice.rowID}` : '');
-              let msg = `On {<Link href="">}line ${notice.lineNumber}{</Link>}, ${notice.message}.`;
-              if ( notice.fieldName !== undefined ) msg = msg + '\n    ' + notice.fieldName;
-              if ( notice.details !== undefined ) msg = msg + ' ' + notice.details;
-              if ( notice.rowID !== undefined ) msg = msg + ' with row id=' + notice.rowID;
-              criticalNotices.push(msgArray);
-            }
+      let criticalNotices = [];
+      let tsvFile = state.content.trimEnd();
+      // Split into an array of rows
+      let rows = tsvFile.split('\n');
+      // Is the first row correct (must have the correct headers)
+      let tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
+      if ( tsvHeader !== rows[0] ) {
+        criticalNotices.push([
+          `${link}#L1`,
+          '1', 
+          `Bad TSV Header, expecting "${tsvHeader.replaceAll('\t',',')}"`]);
+      }
+
+      if ( rows.length > 1 ) {
+        for ( let i=1; i < rows.length; i++ ) {
+          let line = i+1;
+          let cols = rows[i].split('\t');
+          if ( cols.length < 9 ) {
+            criticalNotices.push([
+              `${link}#L${line}`,
+              `${line}`, 
+              `Not enough columns, expecting 9, found ${cols.length}`
+            ])
+          } else if ( cols.length > 9 ) {
+            criticalNotices.push([
+              `${link}#L${line}`,
+              `${line}`, 
+              `Too many columns, expecting 9, found ${cols.length}`
+            ])
           }
-          if ( criticalNotices.length > 0 ) {
-            onCriticalErrors(criticalNotices);
-          } else {
-            onValidated(true);
-          }
-        },
-        (value) => {
-          console.log("[TargetFile.context.js] rejected promise in validate on open");
         }
-      );
+      }
+      
+      if ( criticalNotices.length > 0 ) {
+        onCriticalErrors(criticalNotices);
+      } else {
+        onValidated(true);
+      }
     }
-    }, [validated, onValidated, state, onCriticalErrors]);   
+  }, [validated, onValidated, state, onCriticalErrors]);   
 
   const context = {
     state: {...state, validated}, // state true/false
