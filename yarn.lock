@@ -5128,14 +5128,12 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-datatable-translatable@^0.10.1:
+"datatable-translatable@file:.yalc/datatable-translatable":
   version "0.10.1"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.10.1.tgz#695801ce3b4643c157821704ed995f1715af9215"
-  integrity sha512-UzjLaCtMiUWplQwpvX6lafexkfnDYWNBn243i6CdyMTFmW1ljf1ZXAL7ON0jo9OrryLXAwpgQx2Vfn/khqVOpA==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
-    markdown-translatable "^1.2.1"
+    markdown-translatable "file:../../Users/ZPennington/AppData/Local/Yarn/Cache/v6/npm-datatable-translatable-0.10.1-d2168972-1ba4-429c-abc4-457afdaa5af6-1605725185705/node_modules/datatable-translatable/.yalc/markdown-translatable"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -9935,10 +9933,23 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@^1.2.1, markdown-translatable@^1.2.6:
+markdown-translatable@^1.2.1, "markdown-translatable@file:.yalc/datatable-translatable/.yalc/markdown-translatable":
   version "1.2.6"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.6.tgz#1edc10cbc3614ed69399ce005f5f9718f9d3c9ed"
-  integrity sha512-n0qMBih8c46Qchvgeme+P0MyIidt+NJSHYTerCpGcvABhg9O8i3QH+sUdUO4Iu/T4Pfe+5P7MkjpM5GBqll1yQ==
+  dependencies:
+    deep-freeze "^0.0.1"
+    lodash.debounce "^4.0.8"
+    lodash.isequal "^4.5.0"
+    lodash.throttle "^4.1.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-contenteditable "^3.3.5"
+    react-markdown "^4.0.6"
+    showdown "^1.9.1"
+    turndown "^6.0.0"
+    turndown-plugin-gfm "^1.0.2"
+
+"markdown-translatable@file:.yalc/markdown-translatable":
+  version "1.2.6"
   dependencies:
     deep-freeze "^0.0.1"
     lodash.debounce "^4.0.8"
@@ -13428,7 +13439,7 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@^2.0.8:
+scripture-resources-rcl@2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-2.0.8.tgz#b1bc5d380f1f0511dc6fca94b916a5482a971314"
   integrity sha512-Uw/ID9afSAZg2091f+mBeFI6vkHXVbBEWs3JZdH2ogDjkXx88bHKbA7cvn1gOMT3OJaksuMM6I494uC4g7llew==
