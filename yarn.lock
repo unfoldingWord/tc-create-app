@@ -2340,10 +2340,10 @@
     "@typescript-eslint/types" "4.4.0"
     eslint-visitor-keys "^2.0.0"
 
-"@unfoldingword/eslint-config@^1.1.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@unfoldingword/eslint-config/-/eslint-config-1.3.0.tgz#8633a42b1970c90ff2f78751dc2dba7a0f4bf248"
-  integrity sha512-FxRNp5cwtPxibFL54mpCqkOxFGhBhitok7/4xvTCXRDr+wKmyb1n8ZIZuSMwHZLZM9A1zGqqI1qz4wldCd0MHw==
+"@unfoldingword/eslint-config@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@unfoldingword/eslint-config/-/eslint-config-1.3.1.tgz#7a4e603ccd2b66e9815d8e8d0f3c727a8e7e4e08"
+  integrity sha512-TNquVudYeb5szHYA1/VjbVKXsYkMnIPdpokmxKKJck1T4cVVuuiQvDi+2TfKX2kL1+Otu2R5y2y8qXC4GuYBiA==
   dependencies:
     babel-eslint "^10.1.0"
     eslint "^7.6.0"
