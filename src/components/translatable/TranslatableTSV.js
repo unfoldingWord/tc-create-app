@@ -18,6 +18,7 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
+
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
@@ -76,7 +77,8 @@ function TranslatableTSVWrapper({ onSave }) {
 
   const serverConfig = {
     server: SERVER_URL,
-    cache: { maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
+    cache: {
+      maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
     },
   };
 
