@@ -5116,14 +5116,14 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-datatable-translatable@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.10.1.tgz#695801ce3b4643c157821704ed995f1715af9215"
-  integrity sha512-UzjLaCtMiUWplQwpvX6lafexkfnDYWNBn243i6CdyMTFmW1ljf1ZXAL7ON0jo9OrryLXAwpgQx2Vfn/khqVOpA==
+datatable-translatable@0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.10.2.tgz#14ca0de378542556d7a7d4eb1c2c1d02e67ec1b4"
+  integrity sha512-SVkE/j6K24YqCUsRX0bJxjyJBFDQbcuuTBCG5033YQr3mwQo7ACq0Kz6xsnPu/jCmeuAvn7jMQtKUFYBs2sTyg==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
-    markdown-translatable "^1.2.1"
+    markdown-translatable "1.2.8"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -5213,7 +5213,7 @@ deep-equal@^1.0.1:
     object-keys "^1.1.1"
     regexp.prototype.flags "^1.2.0"
 
-deep-freeze@0.0.1, deep-freeze@^0.0.1:
+deep-freeze@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/deep-freeze/-/deep-freeze-0.0.1.tgz#3a0b0005de18672819dfd38cd31f91179c893e84"
   integrity sha1-OgsABd4YZygZ39OM0x+RF5yJPoQ=
@@ -5335,11 +5335,6 @@ deps-sort@^2.0.0:
     shasum-object "^1.0.0"
     subarg "^1.0.0"
     through2 "^2.0.0"
-
-dequal@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/dequal/-/dequal-1.0.1.tgz#dbbf9795ec626e9da8bd68782f4add1d23700d8b"
-  integrity sha512-Fx8jxibzkJX2aJgyfSdLhr9tlRoTnHKrRJuu2XHlAgKioN2j19/Bcbe0d4mFXYZ3+wpE2KVobUVTfDutcD17xQ==
 
 dequal@^2.0.2:
   version "2.0.2"
@@ -6551,11 +6546,6 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-fast-deep-equal@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
-  integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
-
 fast-deep-equal@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
@@ -7162,10 +7152,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@1.3.12, gitea-react-toolkit@^1.3.12:
-  version "1.3.12"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.12.tgz#d8e2f3ecd489a950f8ce876c91e90f511495fe7d"
-  integrity sha512-lhUcIqNCkt+0a+92BOn89Dm4L6DN+eJF4nDy7FBPcdVtCn8AxKG5b+00fn/bgNXq3bNetUkPd+w6rFjPWXhgYg==
+gitea-react-toolkit@1.3.13:
+  version "1.3.13"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.3.13.tgz#be4e5cc7fca6096d2051bc2f535a147a7389b41e"
+  integrity sha512-Mbq8xRQRbbveH9CIRsvFgT7JULdfwuSYQcsmQOSAICREAL5LB1e70hTKWZEMyjsxESaQaYcyJ+41Xq/wQhQyOw==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -7173,7 +7163,7 @@ gitea-react-toolkit@1.3.12, gitea-react-toolkit@^1.3.12:
     base-64 "0.1.0"
     jszip "3.2.1"
     localforage "1.7.3"
-    markdown-translatable "^1.2.1"
+    markdown-translatable "1.2.8"
     prop-types "15.7.2"
     react-json-view "^1.19.1"
     use-deep-compare-effect "^1.3.1"
@@ -9778,7 +9768,7 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
-lodash.throttle@^4.0.1, lodash.throttle@^4.1.1:
+lodash.throttle@^4.0.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
@@ -9944,32 +9934,15 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.0.4.tgz#c32e69192589b7daacb9b7cfac522f1b8f1531b2"
-  integrity sha512-0WnJ096tH1hkVYiWW4Mj+zKB69wK+fk2a+oVQoWf3fJl3SwFowTppmQZ1iM2xsPKBpxqDzOvGfK/fpLulP2kZw==
+markdown-translatable@1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.8.tgz#730a9668cd65585d6d40a7e231f286d2d17f69e4"
+  integrity sha512-Yv80Ct6ZSheYWrXAy+7H66sGPkaBlczJfxKNkWhbdjMekbStWbISskf1RSgivtwdzWToAlvUHn+u2CBHE7t00w==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
     prop-types "^15.7.2"
-    react-markdown "^4.0.6"
-    showdown "^1.9.1"
-    turndown "^6.0.0"
-    turndown-plugin-gfm "^1.0.2"
-
-markdown-translatable@^1.2.1, markdown-translatable@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.6.tgz#1edc10cbc3614ed69399ce005f5f9718f9d3c9ed"
-  integrity sha512-n0qMBih8c46Qchvgeme+P0MyIidt+NJSHYTerCpGcvABhg9O8i3QH+sUdUO4Iu/T4Pfe+5P7MkjpM5GBqll1yQ==
-  dependencies:
-    deep-freeze "^0.0.1"
-    lodash.debounce "^4.0.8"
-    lodash.isequal "^4.5.0"
-    lodash.throttle "^4.1.1"
-    md5 "^2.2.1"
-    prop-types "^15.7.2"
-    react-contenteditable "^3.3.5"
-    react-markdown "^4.0.6"
+    react-markdown "4.0.6"
     showdown "^1.9.1"
     turndown "^6.0.0"
     turndown-plugin-gfm "^1.0.2"
@@ -12169,7 +12142,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@15.7.2, prop-types@^15.0.0, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.1, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.0.0, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -12378,14 +12351,6 @@ react-base16-styling@^0.6.0:
     lodash.flow "^3.3.0"
     pure-color "^1.2.0"
 
-react-contenteditable@^3.3.5:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.3.5.tgz#febff7a46570fdb2f5ff199e506c512e5924e22e"
-  integrity sha512-38A7hlRQfb2KQAQT0kIJC2YlQUU7jcyYM4eh1fj6kAYb3Hmk6hHlr0snelyxVSpPXjPdFllrnSsPkzUS5AtrEA==
-  dependencies:
-    fast-deep-equal "^2.0.1"
-    prop-types "^15.7.1"
-
 react-dev-utils@^7.0.0:
   version "7.0.5"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-7.0.5.tgz#cb95375d01ae71ca27b3c7616006ef7a77d14e8e"
@@ -12570,15 +12535,14 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-markdown@^4.0.6:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-4.3.1.tgz#39f0633b94a027445b86c9811142d05381300f2f"
-  integrity sha512-HQlWFTbDxTtNY6bjgp3C3uv1h2xcjCSi1zAEzfBW9OwJJvENSYiLXWNXN5hHLsoqai7RnZiiHzcnWdXk2Splzw==
+react-markdown@4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-4.0.6.tgz#927d44421735cd90b7634bb221e9d7d8656e01e9"
+  integrity sha512-E1d/q+OBk5eumId42oYqVrJRB/+whrZdk+YHqUBCCNeWxqeV+Qzt+yLTsft9+4HRDj89Od7eAbUPQBYq8ZwShQ==
   dependencies:
     html-to-react "^1.3.4"
     mdast-add-list-metadata "1.0.1"
-    prop-types "^15.7.2"
-    react-is "^16.8.6"
+    prop-types "^15.6.1"
     remark-parse "^5.0.0"
     unified "^6.1.5"
     unist-util-visit "^1.3.0"
@@ -13455,21 +13419,21 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-2.0.10.tgz#2971be6f5c528747253b981f3b4ebc30304ecf23"
-  integrity sha512-McrhgxFLGKHMPBzbSsFba146WHb8cpuBqcjau1AefWYCmknA9ozr27ZSYHLSWGK5bKN2cLu/O68lQiWQJuoPpQ==
+scripture-resources-rcl@2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-2.0.11.tgz#6c90e48c3e4230e18e83acb6c3c3c3ec459fd9b5"
+  integrity sha512-cHMZ2CUpFWf2mn0OKNZTdTvE1sFiJHF4hx/dr+NyyezedYYDrz5z4HNTBlBy1tIwNEz8U/xTxTnrASd+02u1Uw==
   dependencies:
-    deep-freeze "0.0.1"
-    gitea-react-toolkit "^1.3.12"
+    deep-freeze "^0.0.1"
+    gitea-react-toolkit "1.3.13"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
-    markdown-translatable "^1.2.6"
+    markdown-translatable "1.2.8"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
-    string-punctuation-tokenizer "^2.1.2"
-    use-deep-compare-effect "1.3.1"
+    string-punctuation-tokenizer "2.1.2"
+    use-deep-compare-effect "^1.3.1"
     usfm-js "^2.0.2"
 
 select-hose@^2.0.0:
@@ -14133,7 +14097,7 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-string-punctuation-tokenizer@^2.1.2:
+string-punctuation-tokenizer@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/string-punctuation-tokenizer/-/string-punctuation-tokenizer-2.1.2.tgz#db2b5707bbab6d20540ebf0fd49c18280d94d898"
   integrity sha512-jFVSLxWca5xIjaoi8vTSipXXK0Ng3+BdbfAtjCgqS4ZxHTGLYvKrGaARpATtBHIAOEMXhwMaBKLrypnyQ6cR6A==
@@ -15102,15 +15066,6 @@ url@^0.11.0, url@~0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
-
-use-deep-compare-effect@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.3.1.tgz#90bdbed97e1acb8423f7bb0bf24de58590d021af"
-  integrity sha512-ejL+Al+aeDyC9Sywx56ti4PtSwkf6BH27tEptMWF2cfO41/auG0nRRsArh6Vv5bUyBe3z7IyxmgQCK5nas70hg==
-  dependencies:
-    "@babel/runtime" "^7.7.2"
-    "@types/use-deep-compare-effect" "^1.2.0"
-    dequal "^1.0.0"
 
 use-deep-compare-effect@^1.3.1:
   version "1.4.0"
