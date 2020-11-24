@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
-import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
+import { MarkdownContextProvider, Translatable as MarkDownTranslatable } from 'markdown-translatable';
 
 import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
@@ -160,7 +160,9 @@ function Translatable() {
   return (
     <div ref={setWrapperElement} className={classes.root}>
       {filesHeader}
-      {translatableComponent}
+      <MarkdownContextProvider>
+        {translatableComponent}
+      </MarkdownContextProvider>
       {authenticationModal}
     </div>
   );
