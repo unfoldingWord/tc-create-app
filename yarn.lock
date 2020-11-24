@@ -9957,7 +9957,7 @@ markdown-translatable@1.0.4:
     turndown "^6.0.0"
     turndown-plugin-gfm "^1.0.2"
 
-markdown-translatable@^1.2.1:
+markdown-translatable@^1.2.1, markdown-translatable@^1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.6.tgz#1edc10cbc3614ed69399ce005f5f9718f9d3c9ed"
   integrity sha512-n0qMBih8c46Qchvgeme+P0MyIidt+NJSHYTerCpGcvABhg9O8i3QH+sUdUO4Iu/T4Pfe+5P7MkjpM5GBqll1yQ==
@@ -13455,16 +13455,16 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-2.0.8.tgz#b1bc5d380f1f0511dc6fca94b916a5482a971314"
-  integrity sha512-Uw/ID9afSAZg2091f+mBeFI6vkHXVbBEWs3JZdH2ogDjkXx88bHKbA7cvn1gOMT3OJaksuMM6I494uC4g7llew==
+scripture-resources-rcl@2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-2.0.10.tgz#2971be6f5c528747253b981f3b4ebc30304ecf23"
+  integrity sha512-McrhgxFLGKHMPBzbSsFba146WHb8cpuBqcjau1AefWYCmknA9ozr27ZSYHLSWGK5bKN2cLu/O68lQiWQJuoPpQ==
   dependencies:
     deep-freeze "0.0.1"
     gitea-react-toolkit "^1.3.12"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
-    markdown-translatable "^1.2.1"
+    markdown-translatable "^1.2.6"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
