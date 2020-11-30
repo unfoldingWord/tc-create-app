@@ -18,8 +18,9 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
+
 const delimiters = { row: '\n', cell: '\t' };
-const config = {
+const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
   columnsFilter: ['Chapter', 'SupportReference'],
   columnsShowDefault: [
@@ -28,7 +29,7 @@ const config = {
   ],
 };
 
-function TranslatableTSVWrapper() {
+function TranslatableTSVWrapper({ onSave }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
 
@@ -38,7 +39,7 @@ function TranslatableTSVWrapper() {
   } = useContext(AppContext);
 
   const { state: sourceFile } = useContext(FileContext);
-  const { state: targetFile, actions: targetFileActions } = useContext(
+  const { state: targetFile } = useContext(
     TargetFileContext
   );
 
@@ -66,15 +67,6 @@ function TranslatableTSVWrapper() {
     bookId,
     resourceLinks,
   });
-  const rowHeader = useCallback((rowData, actionsMenu) => (
-    <RowHeader
-      open={expandedScripture}
-      rowData={rowData}
-      actionsMenu={actionsMenu}
-      delimiters={delimiters}
-    />
-  ), [expandedScripture]);
-
 
   const generateRowId = useCallback((rowData) => {
     const [chapter] = rowData[2].split(delimiters.cell);
@@ -85,27 +77,42 @@ function TranslatableTSVWrapper() {
 
   const serverConfig = {
     server: SERVER_URL,
-    cache: { maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
+    cache: {
+      maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
     },
   };
 
+  const options = {
+    page: 0,
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50, 100],
+  };
+
+  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeader
+    open={expandedScripture}
+    rowData={rowData}
+    actionsMenu={actionsMenu}
+    delimiters={delimiters}
+  />), [expandedScripture]);
+
 
   const datatable = useMemo(() => {
-    config.rowHeader = rowHeader;
+    _config.rowHeader = rowHeader;
     return (
       <DataTable
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
-        onSave={targetFileActions.save}
+        onSave={onSave}
         delimiters={delimiters}
-        config={config}
+        config={_config}
         generateRowId={generateRowId}
+        options={options}
       />
     );
-  }, [rowHeader, sourceFile.content, targetFile.content, targetFileActions.save, generateRowId]);
-
+  }, [sourceFile.content, targetFile.content, onSave, generateRowId, options, rowHeader]);
   return (
     <ResourcesContextProvider
+      reference={{ bookId }}
       defaultResourceLinks={defaultResourceLinksWithBookId}
       resourceLinks={allResourceLinksWithBookId}
       onResourceLinks={onResourceLinks}
@@ -119,10 +126,10 @@ function TranslatableTSVWrapper() {
 }
 
 function TranslatableTSV({ datatable }) {
-  const { state:{ books } } = useContext(ResourcesContext);
+  const { state: { books } } = useContext(ResourcesContext);
   return books ? datatable :
     (<div style={{
-      width: '100%', display:'flex', justifyContent: 'center',
+      width: '100%', display: 'flex', justifyContent: 'center',
     }}
     ><CircularProgress /></div>);
 }
