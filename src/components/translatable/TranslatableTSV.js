@@ -19,6 +19,9 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
 
+import * as cv from 'uw-content-validation';
+import * as csv from '../../core/csvMaker';
+
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
@@ -42,7 +45,6 @@ function TranslatableTSVWrapper({ onSave }) {
   const { state: targetFile } = useContext(
     TargetFileContext
   );
-
   const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
 
   const onResourceLinks = useCallback(
@@ -82,6 +84,43 @@ function TranslatableTSVWrapper({ onSave }) {
     },
   };
 
+  const onValidate = useCallback(async (rows) => {
+    // sample name: en_tn_08-RUT.tsv
+    // NOTE! the content on-screen, in-memory does NOT include
+    // the headers. So the initial value of tsvRows will be
+    // the headers.
+    if ( targetFile && rows ) {
+      const _name  = targetFile.name.split('_');
+      const langId = _name[0];
+      const bookID = _name[2].split('-')[1].split('.')[0];
+      const rawResults = await cv.checkTN_TSVText(langId, bookID, 'dummy', rows, '');
+      const nl = rawResults.noticeList;
+      let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
+      let data = [];
+      data.push(hdrs);
+      Object.keys(nl).forEach ( key => {
+        const rowData = nl[key];
+        csv.addRow( data, [
+            String(rowData.priority),
+            String(rowData.C),
+            String(rowData.V),
+            String(rowData.lineNumber),
+            String(rowData.rowID),
+            String(rowData.fieldName || ""),
+            String(rowData.characterIndex || ""),
+            String(rowData.extract),
+            String(rowData.message),
+            String(rowData.location),
+        ]);
+      });
+
+      let ts = new Date().toISOString();
+      let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
+      csv.download(fn, csv.toCSV(data));
+  
+      console.log("validations:",rawResults);
+    }
+  },[targetFile]);
   const options = {
     page: 0,
     rowsPerPage: 10,
@@ -103,13 +142,14 @@ function TranslatableTSVWrapper({ onSave }) {
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
         onSave={onSave}
+        onValidate={onValidate}
         delimiters={delimiters}
         config={_config}
         generateRowId={generateRowId}
         options={options}
       />
     );
-  }, [sourceFile.content, targetFile.content, onSave, generateRowId, options, rowHeader]);
+  }, [sourceFile.content, targetFile.content, onSave, onValidate, generateRowId, options, rowHeader]);
   return (
     <ResourcesContextProvider
       reference={{ bookId }}
