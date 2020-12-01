@@ -79,7 +79,8 @@ function TranslatableTSVWrapper({ onSave }) {
 
   const serverConfig = {
     server: SERVER_URL,
-    cache: { maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
+    cache: {
+      maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
     },
   };
 
