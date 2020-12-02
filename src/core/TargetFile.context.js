@@ -40,44 +40,48 @@ function TargetFileContextProvider({
       onValidated(false);
       onCriticalErrors(['Validating...']);
     } else if (!validated) {
-      const link = state.html_url.replace('/src/', '/blame/');
-      let criticalNotices = [];
-      let tsvFile = state.content.trimEnd();
-      // Split into an array of rows
-      let rows = tsvFile.split('\n');
-      // Is the first row correct (must have the correct headers)
-      let tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
-      if (tsvHeader !== rows[0]) {
-        criticalNotices.push([
-          `${link}#L1`,
-          '1',
-          `Bad TSV Header, expecting "${tsvHeader.replaceAll('\t', ',')}"`]);
-      }
-
-      if (rows.length > 1) {
-        for (let i = 1; i < rows.length; i++) {
-          let line = i + 1;
-          let cols = rows[i].split('\t');
-          if (cols.length < 9) {
-            criticalNotices.push([
-              `${link}#L${line}`,
-              `${line}`,
-              `Not enough columns, expecting 9, found ${cols.length}`
-            ])
-          } else if (cols.length > 9) {
-            criticalNotices.push([
-              `${link}#L${line}`,
-              `${line}`,
-              `Too many columns, expecting 9, found ${cols.length}`
-            ])
+      if ( state.name.endsWith('.tsv') ) {
+        const link = state.html_url.replace('/src/', '/blame/');
+        let criticalNotices = [];
+        let tsvFile = state.content.trimEnd();
+        // Split into an array of rows
+        let rows = tsvFile.split('\n');
+        // Is the first row correct (must have the correct headers)
+        let tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
+        if (tsvHeader !== rows[0]) {
+          criticalNotices.push([
+            `${link}#L1`,
+            '1',
+            `Bad TSV Header, expecting "${tsvHeader.replaceAll('\t', ',')}"`]);
+        }
+  
+        if (rows.length > 1) {
+          for (let i = 1; i < rows.length; i++) {
+            let line = i + 1;
+            let cols = rows[i].split('\t');
+            if (cols.length < 9) {
+              criticalNotices.push([
+                `${link}#L${line}`,
+                `${line}`,
+                `Not enough columns, expecting 9, found ${cols.length}`
+              ])
+            } else if (cols.length > 9) {
+              criticalNotices.push([
+                `${link}#L${line}`,
+                `${line}`,
+                `Too many columns, expecting 9, found ${cols.length}`
+              ])
+            }
           }
         }
-      }
-
-      if (criticalNotices.length > 0) {
-        onCriticalErrors(criticalNotices);
+  
+        if (criticalNotices.length > 0) {
+          onCriticalErrors(criticalNotices);
+        } else {
+          onValidated(true);
+        }
       } else {
-        onValidated(true);
+        onValidated(true)
       }
     }
   }, [validated, onValidated, state, onCriticalErrors]);
