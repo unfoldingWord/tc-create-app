@@ -90,9 +90,10 @@ function Translatable() {
   }, [config, isAuthenticationModalVisible, classes.modal, authenticationActions]);
 
   const scrollToTop = useCallback(() => {
-    if (wrapperElement && wrapperElement) {
-      window.scrollTo(0, wrapperElement.offsetParent.offsetTop);
-    }
+    window.scrollTo(0, 0);
+    // if (wrapperElement && wrapperElement) {
+    //   window.scrollTo(0, wrapperElement.offsetParent.offsetTop);
+    // }
   }, [wrapperElement]);
 
   const translatableComponent = useMemo(() => {
