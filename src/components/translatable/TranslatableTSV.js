@@ -114,7 +114,7 @@ function TranslatableTSVWrapper({ onSave }) {
             String(rowData.rowID),
             String(rowData.fieldName || ""),
             String(rowData.characterIndex || ""),
-            String(rowData.extract),
+            String(rowData.extract || ""),
             String(rowData.message),
             String(rowData.location),
         ]);
