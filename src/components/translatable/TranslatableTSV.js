@@ -8,6 +8,7 @@ import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-
 import { FileContext } from 'gitea-react-toolkit';
 
 import { CircularProgress } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -35,6 +36,7 @@ const _config = {
 function TranslatableTSVWrapper({ onSave }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
+  const [open, setOpen] = React.useState(false);
 
   const {
     state: { resourceLinks, expandedScripture },
@@ -84,7 +86,11 @@ function TranslatableTSVWrapper({ onSave }) {
     },
   };
 
-  const onValidate = useCallback(async (rows) => {
+  const handleClose = useCallback( () => {
+    setOpen(false);
+  }, [setOpen]);
+
+  const _onValidate = useCallback(async (rows) => {
     // sample name: en_tn_08-RUT.tsv
     // NOTE! the content on-screen, in-memory does NOT include
     // the headers. So the initial value of tsvRows will be
@@ -108,19 +114,33 @@ function TranslatableTSVWrapper({ onSave }) {
             String(rowData.rowID),
             String(rowData.fieldName || ""),
             String(rowData.characterIndex || ""),
-            String(rowData.extract),
+            String(rowData.extract || ""),
             String(rowData.message),
             String(rowData.location),
         ]);
       });
+
+      if ( data.length < 2 ) {
+        alert("No Validation Errors Found");
+        setOpen(false);
+        return;
+      }
 
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
       csv.download(fn, csv.toCSV(data));
   
       console.log("validations:",rawResults);
+      //setOpen(false);
     }
+    setOpen(false);
   },[targetFile]);
+
+  const onValidate = useCallback( (rows) => {
+    setOpen(true);
+    setTimeout( () => _onValidate(rows), 1);
+  }, [_onValidate]);
+
   const options = {
     page: 0,
     rowsPerPage: 10,
@@ -151,6 +171,7 @@ function TranslatableTSVWrapper({ onSave }) {
     );
   }, [sourceFile.content, targetFile.content, onSave, onValidate, generateRowId, options, rowHeader]);
   return (
+    <>
     <ResourcesContextProvider
       reference={{ bookId }}
       defaultResourceLinks={defaultResourceLinksWithBookId}
@@ -161,7 +182,30 @@ function TranslatableTSVWrapper({ onSave }) {
       config={serverConfig}
     >
       <TranslatableTSV datatable={datatable} />
+      {open &&  <Dialog
+        disableBackdropClick
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Validation Running, Please Wait"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <div style={{ textAlign: 'center' }}>
+              <CircularProgress />{' '}
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    }
     </ResourcesContextProvider>
+    </>
   );
 }
 
