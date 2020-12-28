@@ -22,7 +22,7 @@
     "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
     "test:unit": "jest --coverage __tests__ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test": "start-test 3000 test:cov",
-    "create-coverage-badge": "bash scripts/create-badge-json.sh",
+    "create-coverage-badge": "node scripts/create-badge-json.js",
     "postinstall": "husky install",
     "increment-build": "bash scripts/increment-build.sh && git add -A"
   },
