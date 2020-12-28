@@ -24,7 +24,7 @@
     "test": "start-test 3000 test:cov",
     "create-coverage-badge": "bash scripts/create-badge-json.sh",
     "postinstall": "husky install",
-    "increment-build": "bash scripts/increment-build.sh"
+    "increment-build": "bash scripts/increment-build.sh && git add -A"
   },
   "dependencies": {
     "@material-ui/core": "^4.7.2",
