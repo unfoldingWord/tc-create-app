@@ -6044,6 +6044,14 @@ eslint-plugin-react@7.21.5, eslint-plugin-react@^7.19.0:
     resolve "^1.18.1"
     string.prototype.matchall "^4.0.2"
 
+eslint-plugin-test-selectors@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-test-selectors/-/eslint-plugin-test-selectors-1.2.8.tgz#c952c46846d22ef9afd6d988c9dfb9499634ca96"
+  integrity sha512-NSWTVaeTEGzukmGj3Mat/cvuFf2fezWoFSHa/uQ/G6G2AZQwtHXOzngXun4b18vXqsZMvpO2wTazJIOd9CdqGg==
+  dependencies:
+    jsx-ast-utils "^2.4.1"
+    requireindex "^1.2.0"
+
 eslint-rule-composer@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/eslint-rule-composer/-/eslint-rule-composer-0.3.0.tgz#79320c927b0c5c0d3d3d2b76c8b4a488f25bbaf9"
@@ -9362,7 +9370,7 @@ jss@10.5.0, jss@^10.0.0, jss@^10.0.3:
     is-in-browser "^1.1.3"
     tiny-warning "^1.0.2"
 
-jsx-ast-utils@^2.0.1:
+jsx-ast-utils@^2.0.1, jsx-ast-utils@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.4.1.tgz#1114a4c1209481db06c690c2b4f488cc665f657e"
   integrity sha512-z1xSldJ6imESSzOjd3NNkieVJKRlKYSOtMG8SFyCj2FIrvSaSuli/WjpBkEzCBoR9bYYYFgqJw61Xhu7Lcgk+w==

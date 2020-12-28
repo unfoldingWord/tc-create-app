@@ -24,9 +24,11 @@ import Workspace from './Workspace';
 import theme from './theme';
 
 import { AppContext, AppContextProvider } from './App.context';
+import { getCommitHash } from './utils';
 
 const { version } = require('../package.json');
 const title = `translationCore Create - v${version}`;
+const commitHash = getCommitHash();
 
 function AppComponent() {
   const { state, actions } = useContext(AppContext);
@@ -45,7 +47,7 @@ function AppComponent() {
     setFilepath,
   } = actions;
 
-  const drawerMenu = <DrawerMenu />;
+  const drawerMenu = <DrawerMenu commitHash={commitHash} />;
 
   const style = {
     app: { fontSize: `${fontScale / 100}em` },
