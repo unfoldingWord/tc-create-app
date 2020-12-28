@@ -42,6 +42,23 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ env.CYPRESS_RECORD_KEY }}
       - name: Run Unit Tests
         run: yarn test:unit;
+      - name: Create Badge For Coverage Results
+        if: github.event_name == 'push'
+        run: yarn create-coverage-badge;
+      - name: Commit Coverage Results
+        if: github.event_name == 'push'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ./coverage/shields.json -f
+          git checkout .
+          git diff-index --quiet HEAD || git commit -m "Add Coverage Results"
+      - name: Push changes
+        if: github.event_name == 'push'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.ACTIONS_TOKEN }}
+          branch: ${{ env.BRANCH }}
       - name: Archive test screenshots
         uses: actions/upload-artifact@v2.2.1
         with:
