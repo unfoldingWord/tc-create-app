@@ -34,6 +34,10 @@ export const useStateReducer = ({
     [state.organization]
   );
 
+  const setValidationPriority = useCallback( (value) => {
+    dispatch({ type: 'set_validation_priority', value });
+  }, []);
+
   const setFontScale = useCallback((value) => {
     dispatch({ type: 'set_font_scale', value });
   }, []);
@@ -171,6 +175,7 @@ export const useStateReducer = ({
     setTargetRepoFromSourceRepo,
     setFilepath,
     setOrganization,
+    setValidationPriority,
   };
   return [state, actions];
 };
