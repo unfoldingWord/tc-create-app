@@ -106,6 +106,7 @@ function TranslatableTSVWrapper({ onSave }) {
       data.push(hdrs);
       let inPriorityRange = false;
       Object.keys(nl).forEach ( key => {
+        inPriorityRange = false; // reset for each
         const rowData = nl[key];
         if ( validationPriority === 'med' && rowData.priority > 599 ) {
           inPriorityRange = true;
