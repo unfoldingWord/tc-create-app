@@ -36,7 +36,7 @@ function TargetFileContextProvider({
   }
 
   useEffect(() => {
-    if (state === undefined || state?.content === undefined) {
+    if (state === undefined || state.content === undefined) {
       onValidated(false);
       onCriticalErrors(['Validating...']);
     } else if (!validated) {
