@@ -37,8 +37,7 @@ function DrawerMenu() {
   const openLink = (link) => window.open(link, '_blank');
   const handleFeedback = () => openLink(appPackage.bugs.url);
   const handleValidationPriorityChange = (event, value) => {
-    console.log("handle value:", value)
-    value && setValidationPriority(value) && console.log("setting validation priority to:", value)
+    value && setValidationPriority(value)
   };
 
   return (

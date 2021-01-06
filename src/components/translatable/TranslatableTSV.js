@@ -141,7 +141,6 @@ function TranslatableTSVWrapper({ onSave }) {
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
       csv.download(fn, csv.toCSV(data));
   
-      console.log("validations:",rawResults);
       //setOpen(false);
     }
     setOpen(false);
