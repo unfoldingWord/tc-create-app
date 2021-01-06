@@ -97,9 +97,9 @@ function DrawerMenu() {
           <FormControl component="fieldset">
             <FormLabel component="legend">Set Validation Level</FormLabel>
             <RadioGroup aria-label="validationPriority" name="validationPriority" value={validationPriority} onChange={handleValidationPriorityChange}>
-              <FormControlLabel value="high" control={<Radio />} label="High" />
-              <FormControlLabel value="med" control={<Radio />} label="Medium and above" />
-              <FormControlLabel value="low" control={<Radio />} label="All" />
+              <FormControlLabel id="high" value="high" control={<Radio />} label="High" />
+              <FormControlLabel id="medium" value="med" control={<Radio />} label="Medium and above" />
+              <FormControlLabel id="low" value="low" control={<Radio />} label="All" />
             </RadioGroup>
           </FormControl>
         </div>
