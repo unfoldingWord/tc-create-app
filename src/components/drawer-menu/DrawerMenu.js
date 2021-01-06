@@ -11,7 +11,9 @@ import {
   Typography,
   Slider,
   Switch,
+  RadioGroup, Radio, FormControl, FormLabel, FormControlLabel,
 } from '@material-ui/core';
+
 import {
   FormatSize,
   Undo,
@@ -26,14 +28,19 @@ function DrawerMenu() {
   const classes = useStyles();
 
   const { state, actions } = useContext(AppContext);
-  const { fontScale, expandedScripture } = state;
-  const { setFontScale, setExpandedScripture } = actions;
+  const { fontScale, expandedScripture, validationPriority } = state;
+  const { setFontScale, setExpandedScripture, setValidationPriority } = actions;
 
   const handleFontScale = (event, value) => setFontScale(value);
   const handleExpandScripture = (event) => setExpandedScripture(event.target.checked);
   const handleResetFontScale = () => setFontScale(100);
   const openLink = (link) => window.open(link, '_blank');
   const handleFeedback = () => openLink(appPackage.bugs.url);
+  const handleValidationPriorityChange = (event, value) => {
+    console.log("handle value:", value)
+    value && setValidationPriority(value) && console.log("setting validation priority to:", value)
+  };
+
   return (
     <List>
       <ListItem>
@@ -84,6 +91,18 @@ function DrawerMenu() {
             name="default"
             inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
+        </div>
+      </ListItem>
+      <ListItem>
+        <div>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Set Validation Level</FormLabel>
+            <RadioGroup aria-label="validationPriority" name="validationPriority" value={validationPriority} onChange={handleValidationPriorityChange}>
+              <FormControlLabel value="high" control={<Radio />} label="High" />
+              <FormControlLabel value="med" control={<Radio />} label="Medium and above" />
+              <FormControlLabel value="low" control={<Radio />} label="All" />
+            </RadioGroup>
+          </FormControl>
         </div>
       </ListItem>
     </List>
