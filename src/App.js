@@ -27,8 +27,8 @@ import { AppContext, AppContextProvider } from './App.context';
 import { getCommitHash } from './utils';
 
 const { version } = require('../package.json');
+const commitHash = getCommitHash(); 
 const title = `translationCore Create - v${version}`;
-const commitHash = getCommitHash();
 
 function AppComponent() {
   const { state, actions } = useContext(AppContext);
@@ -84,6 +84,7 @@ function AppComponent() {
                   <Headroom style={style.headroom}>
                     <ApplicationBar
                       title={title}
+                      build={commitHash}
                       // buttons={buttons}
                       drawerMenu={drawerMenu}
                     />

@@ -22,7 +22,7 @@ import {
 import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
 
-function DrawerMenu({ commitHash }) {
+function DrawerMenu() {
   const classes = useStyles();
 
   const { state, actions } = useContext(AppContext);
@@ -85,12 +85,6 @@ function DrawerMenu({ commitHash }) {
             inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
         </div>
-      </ListItem>
-      <ListItem>
-        <Typography id="label" className={classes.typography}>
-          Application Version:&nbsp;
-        </Typography>
-        {commitHash}
       </ListItem>
     </List>
   );

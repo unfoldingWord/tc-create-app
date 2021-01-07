@@ -14,8 +14,9 @@
   "scripts": {
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build && mv styleguide build",
-    "start": "cross-env NODE_ENV=development REACT_APP_BUILD_NUMBER=$(cat public/build_number) rescripts start",
-    "build": "cross-env NODE_ENV=production REACT_APP_BUILD_NUMBER=$(cat public/build_number) rescripts build && yarn styleguide:build",
+    "startx": "cross-env-shell NODE_ENV=development REACT_APP_BUILD_NUMBER=$(cat public/build_number) rescripts start",
+    "start": "bash -c \"source ./scripts/set-env.sh && rescripts start\"",
+    "build": "bash -c \"source ./scripts/set-env.sh && rescripts build && yarn styleguide:build\"",
     "electron:build": "react-scripts build",
     "deploy": "git push",
     "cypress:run": "NODE_ENV=test cypress run",
