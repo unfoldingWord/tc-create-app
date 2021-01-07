@@ -24,3 +24,7 @@ tC Create allows users to translate from unfoldingWord’s English Translation N
 [translationCore Create: How to video](https://drive.google.com/file/d/12cpPTgEnQULFMhefLoPN9Skzm3Kcl9Nj/view?usp=sharing)
 
 tC Create is built using [React Component Libraries](https://forum.door43.org/t/component-libraries/396). These libraries ([listed here](https://forum.door43.org/t/component-list/468)) can be used for other applications and we hope that others will contribute libraries to this effort.
+
+## Developer Notes
+
+[Details on how the auto-increment build number works](https://git.door43.org/cecil.new/journals/src/branch/master/tc-create-app%23586.md)
