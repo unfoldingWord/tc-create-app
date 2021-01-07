@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.8.3",
-    "@rescripts/cli": "^0.0.13",
+    "@rescripts/cli": "^0.0.15",
     "@rescripts/rescript-env": "^0.0.12",
     "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.10",

@@ -1804,12 +1804,12 @@
   resolved "https://registry.yarnpkg.com/@react-dnd/shallowequal/-/shallowequal-2.0.0.tgz#a3031eb54129f2c66b2753f8404266ec7bf67f0a"
   integrity sha512-Pc/AFTdwZwEKJxFJvlxrSmGe/di+aAOBn60sremrpLo6VI/6cmiUYNNwlI5KNYttg7uypzA3ILPMPgxB2GYZEg==
 
-"@rescripts/cli@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@rescripts/cli/-/cli-0.0.13.tgz#b35331ada2dc5d9578a7a40a339684451acf295d"
-  integrity sha512-ik/HqNVcR/9Yb2nz3fvNBA+fKviAGxEmZc5ci2rbrNzcDC4vu/ZH1yY8eBHZ9opA7KFeU2O5MWhgMFYXmmN1Cg==
+"@rescripts/cli@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@rescripts/cli/-/cli-0.0.15.tgz#4ebd51bf506bed7eb97dc6309a3dc8b6851944ba"
+  integrity sha512-hfOdcfBLIJcUGwETviliTmGU50rfJz2vDUbzxknY6rb6oQm5V16tjnUwE6kNXSevp7K1zWL6uIaJzvIH5qHINA==
   dependencies:
-    "@rescripts/utilities" "^0.0.6"
+    "@rescripts/utilities" "^0.0.8"
     ramda "^0.26.0"
     react-dev-utils "^7.0.0"
 
@@ -1847,17 +1847,17 @@
     ramda "^0.26.0"
     tslint-loader "^3.5.4"
 
-"@rescripts/utilities@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@rescripts/utilities/-/utilities-0.0.6.tgz#23202bed3c7015cb24b7fba7f3fb0660d1713d65"
-  integrity sha512-Lmy6+b3HZ7gbN+kKaP6B752/KW1EbLlsAjxCB/9ztzzv3BKnIvJm1R5rMGg4ycNMSlrOOpCFVpuKry5EHqaNmw==
-  dependencies:
-    ramda "^0.26.0"
-
 "@rescripts/utilities@^0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@rescripts/utilities/-/utilities-0.0.7.tgz#fac07a981fcc9674c9b55cedb9da67f03dadda52"
   integrity sha512-kdk4qvNYXOH7mVJCP/URokp5J+1HCR+tT1Zgtp8X9hLywn6WoKlU/tQ2ECB/NPOHrZjp/DGXWeQBAchLXV8q2w==
+  dependencies:
+    ramda "^0.26.0"
+
+"@rescripts/utilities@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@rescripts/utilities/-/utilities-0.0.8.tgz#7f7c0269e1046fa5162328c813102da9b85ba823"
+  integrity sha512-4SA7rQpawKumDDWhUfDZ/Er8+Maup7d1nv3AcyVxqdUd6RRuR0x5W5npYjefnTaSUUDV3+okhPFTDWkiSOAWNg==
   dependencies:
     ramda "^0.26.0"
 
