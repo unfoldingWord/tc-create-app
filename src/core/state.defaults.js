@@ -19,6 +19,7 @@ const config = {
 };
 
 export default {
+  validationPriority: 'high',
   expandedScripture: true,
   fontScale: 100,
   config,
