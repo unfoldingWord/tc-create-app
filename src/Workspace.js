@@ -3,7 +3,8 @@ import { FileContext } from 'gitea-react-toolkit';
 import { ApplicationStepper, Translatable } from './components/';
 import { AppContext } from './App.context';
 import { TargetFileContextProvider } from './core/TargetFile.context';
-import { Paper, Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 function Workspace() {
   const [validated, setValidated] = useState(false);
@@ -25,10 +26,9 @@ function Workspace() {
             onCriticalErrors={setCriticalErrors}
           >
             {(validated && <Translatable />) || 
-              <Paper>
-                { criticalErrors.length === 1 ? 
-                  <Typography>{criticalErrors[0]}</Typography>
-                  :
+              <Alert severity="error" onClose={() => {}}>
+                <AlertTitle>Error</AlertTitle>
+                {
                   criticalErrors.map( (msg,idx) => {
                     return <Typography key={idx}>
                     On <Link href={msg[0]} target="_blank" rel="noopener">
@@ -37,7 +37,7 @@ function Workspace() {
                     &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
                   </Typography>
                 })}
-              </Paper>
+              </Alert>
             }
           </TargetFileContextProvider>
         );
