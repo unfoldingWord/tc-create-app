@@ -26,17 +26,24 @@ function Workspace() {
             onCriticalErrors={setCriticalErrors}
           >
             {(validated && <Translatable />) || 
-              <Alert severity="error" onClose={() => {}}>
+              <Alert severity="error" onClose={() => {
+                // not sure what to put here...
+              }}>
                 <AlertTitle>Error</AlertTitle>
                 {
                   criticalErrors.map( (msg,idx) => {
-                    return <Typography key={idx}>
-                    On <Link href={msg[0]} target="_blank" rel="noopener">
-                      line {msg[1]}
-                    </Link>
-                    &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
-                  </Typography>
+                    return (
+                      <>
+                      <Typography key={idx}>
+                        On <Link href={msg[0]} target="_blank" rel="noopener">
+                          line {msg[1]}
+                        </Link>
+                        &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
+                      </Typography>
+                      </>
+                    )
                 })}
+                <Typography>Please correct resource or close and select another</Typography>
               </Alert>
             }
           </TargetFileContextProvider>
