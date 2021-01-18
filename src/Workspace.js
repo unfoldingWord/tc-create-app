@@ -3,12 +3,18 @@ import { FileContext } from 'gitea-react-toolkit';
 import { ApplicationStepper, Translatable } from './components/';
 import { AppContext } from './App.context';
 import { TargetFileContextProvider } from './core/TargetFile.context';
-import { Paper, Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 function Workspace() {
   const [validated, setValidated] = useState(false);
-  const [criticalErrors, setCriticalErrors] = useState(['Validating']);
-  const { state: { sourceRepository, filepath } } = useContext(AppContext);
+  const [criticalErrors, setCriticalErrors] = useState([]);
+  const { 
+    state: { sourceRepository, filepath }, 
+    actions: { setSourceRepository} 
+  } = useContext(AppContext);
+  // note: in above I tried to use setFilepath for use in the Alert
+  // onClose() below, but did not work. However, setSourceRepository does
   const { state: sourceFile } = useContext(FileContext);
 
   const sourceRepoMemo = sourceRepository && JSON.stringify(sourceRepository);
@@ -24,27 +30,37 @@ function Workspace() {
             validated={validated} onValidated={setValidated} 
             onCriticalErrors={setCriticalErrors}
           >
-            {(validated && <Translatable />) || 
-              <Paper>
-                { criticalErrors.length === 1 ? 
-                  <Typography>{criticalErrors[0]}</Typography>
-                  :
-                  criticalErrors.map( (msg,idx) => {
-                    return <Typography key={idx}>
-                    On <Link href={msg[0]} target="_blank" rel="noopener">
-                      line {msg[1]}
-                    </Link>
-                    &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
-                  </Typography>
-                })}
-              </Paper>
+            {
+              (validated && <Translatable />) 
+              || 
+              (criticalErrors.length > 0 && 
+                <Alert severity="error" onClose={() => {
+                  setSourceRepository(undefined);
+                }}>
+                  <AlertTitle>Error</AlertTitle>
+                  {
+                    criticalErrors.map( (msg,idx) => {
+                      return (
+                        <>
+                        <Typography key={idx}>
+                          On <Link href={msg[0]} target="_blank" rel="noopener">
+                            line {msg[1]}
+                          </Link>
+                          &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
+                        </Typography>
+                        </>
+                      )
+                  })}
+                  <Typography>Please correct resource or close and select another</Typography>
+                </Alert>
+              )
             }
           </TargetFileContextProvider>
         );
       }
     }
     return _component;
-  }, [sourceRepoMemo, sourceFilepath, filepath, validated, criticalErrors]);
+  }, [sourceRepoMemo, sourceFilepath, filepath, validated, criticalErrors, setSourceRepository]);
 
   return component;
 }

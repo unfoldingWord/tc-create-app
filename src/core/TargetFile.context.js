@@ -38,7 +38,7 @@ function TargetFileContextProvider({
   useEffect(() => {
     if (state === undefined || state.content === undefined) {
       onValidated(false);
-      onCriticalErrors(['Validating...']);
+      //onCriticalErrors(['Validating...']);
     } else if (!validated) {
       if ( state.name.endsWith('.tsv') ) {
         const link = state.html_url.replace('/src/', '/blame/');
