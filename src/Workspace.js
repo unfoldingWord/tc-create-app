@@ -35,9 +35,10 @@ function Workspace() {
               || 
               (criticalErrors.length > 0 && 
                 <Alert severity="error" onClose={() => {
+                  setCriticalErrors([]);
                   setSourceRepository(undefined);
                 }}>
-                  <AlertTitle>Error</AlertTitle>
+                  <AlertTitle>This file cannot be opened by tC Create. Please contact your administrator to address the following error(s).</AlertTitle>
                   {
                     criticalErrors.map( (msg,idx) => {
                       return (
@@ -51,7 +52,6 @@ function Workspace() {
                         </>
                       )
                   })}
-                  <Typography>Please correct resource or close and select another</Typography>
                 </Alert>
               )
             }
