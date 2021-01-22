@@ -120,7 +120,6 @@ function Translatable() {
         }
       }
     );
-
     if (
       filepath &&
       sourceFile &&
@@ -136,6 +135,7 @@ function Translatable() {
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
+        console.log("matched on extension tsv");
         _translatable = <TranslatableTSV onSave={saveOnTranslation} />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;

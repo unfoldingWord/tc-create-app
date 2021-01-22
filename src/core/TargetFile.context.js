@@ -48,6 +48,18 @@ function TargetFileContextProvider({
         let rows = tsvFile.split('\n');
         // Is the first row correct (must have the correct headers)
         let tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
+        const tsvHeader7= "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tAnnotation";
+        const tsvFormat = rows[0].split('\t').length;
+        if ( tsvFormat === 7 ) {
+          tsvHeader = tsvHeader7;
+        } else if ( tsvFormat === 9 ) {
+          // good to go... must be either 7 or 9
+        } else {
+          criticalNotices.push([
+            `${link}#L1`,
+            '1',
+            `Bad TSV Header, must have 7 or 9 columns`]);
+        }
         if (tsvHeader !== rows[0]) {
           criticalNotices.push([
             `${link}#L1`,
@@ -59,17 +71,17 @@ function TargetFileContextProvider({
           for (let i = 1; i < rows.length; i++) {
             let line = i + 1;
             let cols = rows[i].split('\t');
-            if (cols.length < 9) {
+            if (cols.length < tsvFormat) {
               criticalNotices.push([
                 `${link}#L${line}`,
                 `${line}`,
-                `Not enough columns, expecting 9, found ${cols.length}`
+                `Not enough columns, expecting ${tsvFormat}, found ${cols.length}`
               ])
             } else if (cols.length > 9) {
               criticalNotices.push([
                 `${link}#L${line}`,
                 `${line}`,
-                `Too many columns, expecting 9, found ${cols.length}`
+                `Too many columns, expecting ${tsvFormat}, found ${cols.length}`
               ])
             }
           }
