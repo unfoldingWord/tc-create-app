@@ -18,6 +18,7 @@ import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
+import TranslatableTqTSV from './TranslatableTqTSV';
 
 function Translatable() {
   const classes = useStyles();
@@ -134,8 +135,10 @@ function Translatable() {
           onTranslation: saveOnTranslation,
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
+      } else if (sourceFile.filepath.match(/_tq\.tsv$/)) {
+        console.log("matched on _tq.tsv");
+        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
-        console.log("matched on extension tsv");
         _translatable = <TranslatableTSV onSave={saveOnTranslation} />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
