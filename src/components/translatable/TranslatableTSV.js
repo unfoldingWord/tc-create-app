@@ -47,16 +47,9 @@ function TranslatableTSVWrapper({ onSave }) {
   const { state: targetFile } = useContext(
     TargetFileContext
   );
-  
-  const regex = new RegExp(/^\d+-/);
-  let bookId;
-  if ( regex.test(sourceFile.filepath) ) {
-    bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
-  } else {
-    bookId = sourceFile.filepath.split('_')[0].toLowerCase();
-  }
-  console.log("bookId:", bookId);
 
+  const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
+  
   const onResourceLinks = useCallback(
     (_resourceLinks) => {
       // Remove bookId and remove defaults:
