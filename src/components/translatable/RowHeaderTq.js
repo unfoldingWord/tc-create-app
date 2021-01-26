@@ -12,7 +12,6 @@ function RowHeaderTq({
 }) {
   const classes = useStyles();
   const reference = rowData[0].split(delimiters.cell)[0]
-  console.log("RowHeaderTq() bookId, chapter, verse:",bookId,reference);
   let _component = (
     <div className={classes.defaultHeader}>
       <Typography variant='h6' className={classes.title}>

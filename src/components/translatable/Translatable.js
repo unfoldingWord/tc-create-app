@@ -136,7 +136,6 @@ function Translatable() {
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
       } else if (sourceFile.filepath.match(/_tq\.tsv$/)) {
-        console.log("matched on _tq.tsv");
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
         _translatable = <TranslatableTSV onSave={saveOnTranslation} />;

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
-import useEffect from 'use-deep-compare-effect';
+//import useEffect from 'use-deep-compare-effect';
+import {useEffect} from 'react';
 import { AppContext } from '../App.context';
 import * as cv from 'uw-content-validation';
 

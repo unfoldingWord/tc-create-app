@@ -46,7 +46,6 @@ function TranslatableTqTSVWrapper({ onSave }) {
   );
 
   const bookId = sourceFile.filepath.split('_')[0].toLowerCase();
-  console.log("bookId:", bookId);
 
   const onResourceLinks = useCallback(
     (_resourceLinks) => {
@@ -72,12 +71,10 @@ function TranslatableTqTSVWrapper({ onSave }) {
   });
 
   const generateRowId = useCallback((rowData) => {
-    console.log("generateRowId() rowData:",rowData);
     const reference = rowData[1].split(delimiters.cell)[0];
     const [chapter, verse] = reference.split(":");
     const uid = rowData[2].split(delimiters.cell)[1];
     let rowId = `header-${chapter}-${verse}-${uid}`;
-    console.log("generateRowId() rowId:",rowId);
     return rowId;
   }, []);
 
