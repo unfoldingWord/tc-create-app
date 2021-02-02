@@ -52,7 +52,7 @@ function TargetFileContextProvider({
           criticalNotices.push([
             `${link}#L1`,
             '1',
-            `Bad TSV Header, expecting "${tsvHeader.replaceAll('\t', ',')}"`]);
+            `Bad TSV Header, expecting "${tsvHeader.replaceAll('\t', ', ')}"`]);
         }
   
         if (rows.length > 1) {
