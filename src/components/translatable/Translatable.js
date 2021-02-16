@@ -21,7 +21,7 @@ import TranslatableTSV from './TranslatableTSV';
 
 function Translatable() {
   const classes = useStyles();
-  const [wrapperElement, setWrapperElement] = useState(null);
+  //const [wrapperElement, setWrapperElement] = useState(null);
 
   const { state: config } = useContext(AppContext);
 
@@ -90,10 +90,11 @@ function Translatable() {
   }, [config, isAuthenticationModalVisible, classes.modal, authenticationActions]);
 
   const scrollToTop = useCallback(() => {
-    if (wrapperElement && wrapperElement) {
-      window.scrollTo(0, wrapperElement.offsetParent.offsetTop);
-    }
-  }, [wrapperElement]);
+    window.scrollTo(0, 0);
+    // if (wrapperElement && wrapperElement) {
+    //   window.scrollTo(0, wrapperElement.offsetParent.offsetTop);
+    // }
+  }, []);
 
   const translatableComponent = useMemo(() => {
     let _translatable = (
@@ -158,7 +159,7 @@ function Translatable() {
   );
 
   return (
-    <div ref={setWrapperElement} className={classes.root}>
+    <div className={classes.root}>
       {filesHeader}
       <MarkdownContextProvider>
         {translatableComponent}
