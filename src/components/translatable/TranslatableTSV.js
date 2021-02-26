@@ -153,7 +153,7 @@ function TranslatableTSVWrapper({ onSave }) {
 
   const options = {
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 25,
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
