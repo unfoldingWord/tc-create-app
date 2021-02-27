@@ -5913,10 +5913,10 @@ eslint-plugin-import@^2.14.0:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jest@24.1.3:
-  version "24.1.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.1.3.tgz#fa3db864f06c5623ff43485ca6c0e8fc5fe8ba0c"
-  integrity sha512-dNGGjzuEzCE3d5EPZQ/QGtmlMotqnYWD/QpCZ1UuZlrMAdhG5rldh0N0haCvhGnUkSeuORS5VNROwF9Hrgn3Lg==
+eslint-plugin-jest@24.1.5:
+  version "24.1.5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.1.5.tgz#1e866a9f0deac587d0a3d5d7cefe99815a580de2"
+  integrity sha512-FIP3lwC8EzEG+rOs1y96cOJmMVpdFNreoDJv29B5vIupVssRi8zrSY3QadogT0K3h1Y8TMxJ6ZSAzYUmFCp2hg==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 
@@ -13926,10 +13926,10 @@ stack-utils@^1.0.1:
   dependencies:
     escape-string-regexp "^2.0.0"
 
-start-server-and-test@^1.11.5:
-  version "1.11.7"
-  resolved "https://registry.yarnpkg.com/start-server-and-test/-/start-server-and-test-1.11.7.tgz#3026bc6020e41edd4efad231bedf00a6a051f22a"
-  integrity sha512-91hA8mddcHSS3R7xRrVS9FT4qdRDvHlOEbI+mAA/sAW+31e78ptFmWWj+PJHFUKJrxtIkQ3ZeejPxCdesktULg==
+start-server-and-test@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/start-server-and-test/-/start-server-and-test-1.12.0.tgz#e836553c928a13026f79c740757d378b92bee8d6"
+  integrity sha512-y3M/PLUPkPBsgKoengMIMQeceT8uOnOc4bkdor/RSCK9Ih/j8z4WthSCrAboXLjgtJJWOporAiEQsnYox+THXg==
   dependencies:
     bluebird "3.7.2"
     check-more-types "2.24.0"
