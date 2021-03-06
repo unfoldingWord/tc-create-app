@@ -80,16 +80,16 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
               >
-                <header id='App-header'>
-                  <Headroom style={style.headroom}>
+                <Headroom pinStart={64}>
+                  <header id='App-header'>
                     <ApplicationBar
                       title={title}
                       build={commitHash}
                       // buttons={buttons}
                       drawerMenu={drawerMenu}
                     />
-                  </Headroom>
-                </header>
+                  </header>
+                </Headroom>
                 <div style={style.workspace}>
                   <Workspace />
                 </div>
