@@ -22,6 +22,7 @@ import {
 import Workspace from './Workspace';
 
 import theme from './theme';
+import { getTranslatableTsvMuiTheme } from './components/translatable/TranslatableTsvMuiTheme';
 
 import { AppContext, AppContextProvider } from './App.context';
 import { getCommitHash } from './utils';
@@ -51,29 +52,36 @@ function AppComponent() {
   
   const onHeadroomPin = () =>
   {
-    const el = document.querySelector("#translatableComponent div div div div[role='toolbar']");
+    // //alert(getTranslatableTsvMuiTheme.overrides.MuiToolbar.top);
+    // getTranslatableTsvMuiTheme.overrides.MuiToolbar.top = 64;
+    // //alert(getTranslatableTsvMuiTheme.overrides.MuiToolbar.top);
+    
+    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
     if (el)
     {
-      el.style.paddingTop = '100px';
+      el.style.top = '64px';
     }
   }
 
   const onHeadroomUnfix = () =>
   {
-    const el = document.querySelector("#translatableComponent div div div div[role='toolbar']");
+    //getTranslatableTsvMuiTheme.overrides.MuiToolbar.top = 0;
+
+    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
     if (el)
     {
-      el.style.paddingTop = '0px';
+      el.style.top = '0px';
     }
   }
 
   const onHeadroomUnpin = () =>
   {
-    const el = document.querySelector("#translatableComponent div div div div[role='toolbar']");
+    //getTranslatableTsvMuiTheme.overrides.MuiToolbar.top = 0;
+
+    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
     if (el)
     {
-      el.style.paddingTop = '0px';
-      //el.style.transform = 'translate(-100%)';
+      el.style.top = '0px';
     }
   }
 

@@ -6,8 +6,10 @@ import { CircularProgress } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 
 import { DataTable } from 'datatable-translatable';
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { getTranslatableTsvMuiTheme } from './TranslatableTsvMuiTheme';
 
+import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
 import { FileContext } from 'gitea-react-toolkit';
 
 import {
@@ -181,6 +183,9 @@ function TranslatableTSVWrapper({ onSave }) {
         />
     );
   }, [sourceFile.content, targetFile.content, onSave, onValidate, generateRowId, options, rowHeader]);
+
+
+
   return (
     <>
     <ResourcesContextProvider
@@ -192,7 +197,9 @@ function TranslatableTSVWrapper({ onSave }) {
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTSV datatable={datatable} />
+      <MuiThemeProvider theme={getTranslatableTsvMuiTheme}>
+        <TranslatableTSV datatable={datatable} />
+      </MuiThemeProvider>
       {open &&  <Dialog
         disableBackdropClick
         open={open}
