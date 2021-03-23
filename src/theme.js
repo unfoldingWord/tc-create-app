@@ -13,10 +13,6 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
-    MuiToolbar: {
-      root: {
-      },
-    },
   },
 });
 
