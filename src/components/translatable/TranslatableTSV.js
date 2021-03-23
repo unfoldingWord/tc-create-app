@@ -2,13 +2,14 @@ import React, {
   useState, useCallback, useContext, useMemo,
 } from 'react';
 
-import { DataTable } from 'datatable-translatable';
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
-
-import { FileContext } from 'gitea-react-toolkit';
-
 import { CircularProgress } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+
+import { DataTable } from 'datatable-translatable';
+
+import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import { FileContext } from 'gitea-react-toolkit';
+
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -180,6 +181,7 @@ function TranslatableTSVWrapper({ onSave }) {
       />
     );
   }, [sourceFile.content, targetFile.content, onSave, onValidate, generateRowId, options, rowHeader]);
+
   return (
     <>
     <ResourcesContextProvider
