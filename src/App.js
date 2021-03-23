@@ -22,7 +22,6 @@ import {
 import Workspace from './Workspace';
 
 import theme from './theme';
-import { getTranslatableTsvMuiTheme } from './components/translatable/TranslatableTsvMuiTheme';
 
 import { AppContext, AppContextProvider } from './App.context';
 import { getCommitHash } from './utils';
@@ -52,10 +51,6 @@ function AppComponent() {
   
   const onHeadroomPin = () =>
   {
-    // //alert(getTranslatableTsvMuiTheme.overrides.MuiToolbar.top);
-    // getTranslatableTsvMuiTheme.overrides.MuiToolbar.top = 64;
-    // //alert(getTranslatableTsvMuiTheme.overrides.MuiToolbar.top);
-    
     const el = document.querySelector("#translatableComponent div div[role='toolbar']");
     if (el)
     {
@@ -65,8 +60,6 @@ function AppComponent() {
 
   const onHeadroomUnfix = () =>
   {
-    //getTranslatableTsvMuiTheme.overrides.MuiToolbar.top = 0;
-
     const el = document.querySelector("#translatableComponent div div[role='toolbar']");
     if (el)
     {
@@ -76,8 +69,6 @@ function AppComponent() {
 
   const onHeadroomUnpin = () =>
   {
-    //getTranslatableTsvMuiTheme.overrides.MuiToolbar.top = 0;
-
     const el = document.querySelector("#translatableComponent div div[role='toolbar']");
     if (el)
     {
