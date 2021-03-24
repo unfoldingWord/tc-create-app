@@ -5060,14 +5060,14 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@0.11.5:
-  version "0.11.5"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.5.tgz#6319e02adfc07255303f4a9e35f8fbe97dd7d768"
-  integrity sha512-uj4mhoUEPgqD/y6W/J2aLoNmwti9xVDoK92K+Mey3vmxIJ0mLYL9Ms1BYjdmKs1I5JbQ4aBQtQj3X25TNI+VIw==
+datatable-translatable@0.11.6:
+  version "0.11.6"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.6.tgz#1cc33ed35f767a346969296f891fc4f56ef48c34"
+  integrity sha512-otEyZ/zh3KjwINCLFM1yzMMENROlPMghsQ8d0gUTUr++P6CupAvVYwD5fL7Lf+O0TGCPbUpbUKF1m4/rCl8uqg==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
-    markdown-translatable "1.2.12"
+    markdown-translatable "1.2.13"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -5099,13 +5099,6 @@ debug@4.1.1:
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
   dependencies:
     ms "^2.1.1"
-
-debug@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.2.0.tgz#7f150f93920e94c58f5574c2fd01a3110effe7f1"
-  integrity sha512-IX2ncY78vDTjZMFUdmsvIRFY2Cf4FnD0wRs+nQwJU8Lu99/tPFdb0VybiiMTPe3I6rQmwsqQqRBvxU+bZ/I8sg==
-  dependencies:
-    ms "2.1.2"
 
 debug@4.3.1:
   version "4.3.1"
@@ -10002,6 +9995,20 @@ markdown-translatable@1.2.12:
     turndown "^7.0.0"
     turndown-plugin-gfm "^1.0.2"
 
+markdown-translatable@1.2.13:
+  version "1.2.13"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.13.tgz#d4b30fdad0884f0eac1d7b9a50332765bda3f9e6"
+  integrity sha512-qbLdB1G0pDH30RrUVRxGmZ7waxQyOl3/+VUTFUC5HdhRdSVa+b3nXFqneh/yFKH0i4D9DSa8OWN4o+0MLV3iPQ==
+  dependencies:
+    deep-freeze "^0.0.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-headroom "^3.1.0"
+    react-markdown "4.0.6"
+    showdown "^1.9.1"
+    turndown "^7.0.0"
+    turndown-plugin-gfm "^1.0.2"
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -12530,7 +12537,7 @@ react-group@^3.0.2:
   dependencies:
     prop-types "^15.7.2"
 
-react-headroom@^3.0.0:
+react-headroom@^3.0.0, react-headroom@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-headroom/-/react-headroom-3.1.0.tgz#7b176a5439cf937cc20293a49582b11f363a0498"
   integrity sha512-zgisgzALxNOGqv+xoPSc4mU2mY/C6LK4NfoD2ZQK4qnL/j9Lm+EJ9z3d1PRh2pEcdll1T++q/FAHzrlu7p1E0Q==
@@ -13458,16 +13465,16 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.0.1.tgz#5f7d8097abc2162c2183e1b169fbe0470dbd8e59"
-  integrity sha512-SYhIv0Hk58Ldx1vN1edNpXMYDTdf91ZQnLH1anV7Bw0+fNDR7uyShv/1lkmDWuPdP8O+nQRyWmjOxwinOPbINA==
+scripture-resources-rcl@4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.1.2.tgz#c1709dda1fe9ec3c72a59a0764e1ed4659e20eef"
+  integrity sha512-lgGWje0Jyg3wkSHKlIH3ApMxh/r436RVD0gQXJR84e8tgHJCod8At5/gh1d9ln2JZ35qiQvPDlWMKvKdZujChQ==
   dependencies:
     deep-freeze "^0.0.1"
     gitea-react-toolkit "1.4.3"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
-    markdown-translatable "1.2.12"
+    markdown-translatable "1.2.13"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
