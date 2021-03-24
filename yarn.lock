@@ -5097,14 +5097,14 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-datatable-translatable@0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.2.tgz#d8281090fc4c07cabe67e216073c99e3e503d73c"
-  integrity sha512-GY188DuWsRkuTNrnzt16Wc4M86YgsVxBfdMN6w3cxi+u9sn2B/hsWFUadZp0vjhBXSJzNXEycYcRDyxdA24bWA==
+datatable-translatable@0.11.5:
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.5.tgz#6319e02adfc07255303f4a9e35f8fbe97dd7d768"
+  integrity sha512-uj4mhoUEPgqD/y6W/J2aLoNmwti9xVDoK92K+Mey3vmxIJ0mLYL9Ms1BYjdmKs1I5JbQ4aBQtQj3X25TNI+VIw==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
-    markdown-translatable "1.2.9"
+    markdown-translatable "1.2.12"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -7232,10 +7232,10 @@ gitea-react-toolkit@1.3.13:
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
 
-gitea-react-toolkit@1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.4.1.tgz#32ffe75f4efac2e2a27945b7e26beacd729c0e88"
-  integrity sha512-nzc5Fxvp17kh+sWWGE4wDze6Jaq1NnstgxYnBidEVsIBv3+IWAlVIKErdvwnBHcauKhe/Xw88IkGrb4pkfsbyA==
+gitea-react-toolkit@1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.4.3.tgz#a51b520bdefbb584e57c585ccdc5a4c4163e1e98"
+  integrity sha512-8CzWG7wmoiuRZ10pNIdLO7GOXO4CS/mXbTzXUyIVgXy/9JEnyzgKjgDi2aanv2aQcS5nE5jrkkEe5nIujCKPIw==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -7243,7 +7243,7 @@ gitea-react-toolkit@1.4.1:
     base-64 "0.1.0"
     jszip "^3.5.0"
     localforage "1.7.3"
-    markdown-translatable "1.2.9"
+    markdown-translatable "1.2.12"
     prop-types "15.7.2"
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
@@ -10073,6 +10073,19 @@ markdown-to-jsx@^6.11.4:
   dependencies:
     prop-types "^15.6.2"
     unquote "^1.1.0"
+
+markdown-translatable@1.2.12:
+  version "1.2.12"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.12.tgz#f4100e7d5306e939c2190edcf1868c0e316a36d0"
+  integrity sha512-HvS2kpEan1mWpUBEUq1xv0PfETg6dJBlgrUBaXOO4qO7B1lq+jb1Tm806pK0f0mQrmAB6c89+HB9XRsPXCWPyw==
+  dependencies:
+    deep-freeze "^0.0.1"
+    md5 "^2.2.1"
+    prop-types "^15.7.2"
+    react-markdown "4.0.6"
+    showdown "^1.9.1"
+    turndown "^7.0.0"
+    turndown-plugin-gfm "^1.0.2"
 
 markdown-translatable@1.2.8:
   version "1.2.8"

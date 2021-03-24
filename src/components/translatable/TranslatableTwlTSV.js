@@ -18,19 +18,20 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
-import RowHeaderTq from './RowHeaderTq';
+import RowHeaderTwl from './RowHeaderTwl';
 
 const delimiters = { row: '\n', cell: '\t' };
+// columns Reference	ID	Tags	OrigWords	Occurrence	TWLink
 const _config = {
   compositeKeyIndices: [0, 1],
-  columnsFilter: ['Reference', 'ID', 'Annotation'],
+  columnsFilter: ['Reference', 'ID', 'Tags', 'OrigWords', 'Occurrence','TWLink'],
   columnsShowDefault: [
-    'Annotation',
+    'Reference', 'ID', 'Tags', 'OrigWords', 'Occurrence','TWLink',
   ],
 }
 ;
 
-function TranslatableTqTSVWrapper({ onSave }) {
+function TranslatableTwlTSVWrapper({ onSave }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -44,8 +45,7 @@ function TranslatableTqTSVWrapper({ onSave }) {
   const { state: targetFile } = useContext(
     TargetFileContext
   );
-
-  // filename pattern tq_TIT.tsv
+  // filename pattern: twl_TIT.tsv
   const bookId = sourceFile.filepath
     .split('_')[1]
     .split('.')[0]
@@ -99,7 +99,7 @@ function TranslatableTqTSVWrapper({ onSave }) {
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderTq
+  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderTwl
       bookId={bookId}
       open={expandedScripture}
       rowData={rowData}
@@ -134,7 +134,7 @@ function TranslatableTqTSVWrapper({ onSave }) {
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTqTSV datatable={datatable} />
+      <TranslatableTwlTSV datatable={datatable} />
       {open &&  <Dialog
         disableBackdropClick
         open={open}
@@ -162,7 +162,7 @@ function TranslatableTqTSVWrapper({ onSave }) {
   );
 }
 
-function TranslatableTqTSV({ datatable }) {
+function TranslatableTwlTSV({ datatable }) {
   const { state: { books } } = useContext(ResourcesContext);
   return books ? datatable :
     (<div style={{
@@ -171,4 +171,4 @@ function TranslatableTqTSV({ datatable }) {
     ><CircularProgress /></div>);
 }
 
-export default TranslatableTqTSVWrapper;
+export default TranslatableTwlTSVWrapper;

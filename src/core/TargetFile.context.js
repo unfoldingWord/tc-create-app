@@ -41,7 +41,7 @@ function TargetFileContextProvider({
       onValidated(false);
       //onCriticalErrors(['Validating...']);
     } else if (!validated) {
-      if ( state.name.endsWith('.tsv') ) {
+      if ( state.name.match(/^tn_...\.tsv$/) ) {
         const link = state.html_url.replace('/src/', '/blame/');
         let criticalNotices = [];
         let tsvFile = state.content.trimEnd();
