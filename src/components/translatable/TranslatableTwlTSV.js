@@ -26,7 +26,7 @@ const _config = {
   compositeKeyIndices: [0, 1],
   columnsFilter: ['Reference', 'ID', 'Tags', 'OrigWords', 'Occurrence','TWLink'],
   columnsShowDefault: [
-    'Reference', 'ID', 'Tags', 'OrigWords', 'Occurrence','TWLink',
+    'Reference', 'OrigWords', 'Occurrence','TWLink',
   ],
 }
 ;

@@ -21,11 +21,12 @@ import { AppContext } from '../../App.context';
 import RowHeaderTq from './RowHeaderTq';
 
 const delimiters = { row: '\n', cell: '\t' };
+// columns Reference, ID, Tags, Quote, Occurrence, Question, Response
 const _config = {
   compositeKeyIndices: [0, 1],
-  columnsFilter: ['Reference', 'ID', 'Annotation'],
+  columnsFilter: ['Reference', 'ID', 'Question','Response'],
   columnsShowDefault: [
-    'Annotation',
+    'Reference','Questions','Response',
   ],
 }
 ;
