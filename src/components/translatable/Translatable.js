@@ -167,7 +167,9 @@ function Translatable() {
     <div className={classes.root}>
       {filesHeader}
       <MarkdownContextProvider>
+        <div id='translatableComponent'>
         {translatableComponent}
+        </div>
       </MarkdownContextProvider>
       {authenticationModal}
     </div>
