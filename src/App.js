@@ -48,6 +48,33 @@ function AppComponent() {
   } = actions;
 
   const drawerMenu = <DrawerMenu commitHash={commitHash} />;
+  
+  const onHeadroomPin = () =>
+  {
+    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
+    if (el)
+    {
+      el.style.top = '64px';
+    }
+  }
+
+  const onHeadroomUnfix = () =>
+  {
+    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
+    if (el)
+    {
+      el.style.top = '0px';
+    }
+  }
+
+  const onHeadroomUnpin = () =>
+  {
+    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
+    if (el)
+    {
+      el.style.top = '0px';
+    }
+  }
 
   const style = {
     app: { fontSize: `${fontScale / 100}em` },
@@ -80,17 +107,19 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
               >
-                <header id='App-header'>
-                  <Headroom style={style.headroom}>
+                <Headroom pinStart={64} style={style.headroom}
+                  onPin={()=>{onHeadroomPin();}} onUnfix={()=>{onHeadroomUnfix();}} onUnpin={()=>{onHeadroomUnpin();}}
+                >
+                  <header id='App-header'>
                     <ApplicationBar
                       title={title}
                       build={commitHash}
                       // buttons={buttons}
                       drawerMenu={drawerMenu}
                     />
-                  </Headroom>
-                </header>
-                <div style={style.workspace}>
+                  </header>
+                </Headroom>
+                <div id='Workspace-Container' style={style.workspace}>
                   <Workspace />
                 </div>
               </FileContextProvider>
