@@ -13,6 +13,7 @@ const config = {
     urls: [
       SERVER_URL + '/api/v1/repos/unfoldingword/en_ta',
       SERVER_URL + '/api/v1/repos/unfoldingword/en_tw',
+      SERVER_URL + '/api/v1/repos/unfoldingword/en_twl',
       SERVER_URL + '/api/v1/repos/unfoldingword/en_tn',
       SERVER_URL + '/api/v1/repos/unfoldingword/en_tq',
       SERVER_URL + '/api/v1/repos/unfoldingword/en_obs',
