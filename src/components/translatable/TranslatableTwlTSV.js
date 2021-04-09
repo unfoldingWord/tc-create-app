@@ -24,7 +24,7 @@ const delimiters = { row: '\n', cell: '\t' };
 // columns Reference	ID	Tags	OrigWords	Occurrence	TWLink
 const _config = {
   compositeKeyIndices: [0, 1],
-  columnsFilter: ['Reference', 'ID', 'Tags', 'OrigWords', 'Occurrence','TWLink'],
+  columnsFilter: ['OrigWords', 'Tags', 'TWLink'],
   columnsShowDefault: [
     'Reference', 'OrigWords', 'Occurrence','TWLink',
   ],
