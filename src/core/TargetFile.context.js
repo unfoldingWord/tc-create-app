@@ -41,10 +41,11 @@ function TargetFileContextProvider({
       onValidated(false);
       //onCriticalErrors(['Validating...']);
     } else if (!validated) {
-      if ( state.name.match(/^tn_...\.tsv$/) ) {
+      // work with both old and new TN TSV formats
+      if ( state.name.match(/^tn_...\.tsv$|tn_..-...\.tsv$/) ) {
         const link = state.html_url.replace('/src/', '/blame/');
         let criticalNotices = [];
-        let tsvFile = state.content.trimEnd();
+        let tsvFile = state.content;
         // Split into an array of rows
         let rows = tsvFile.split('\n');
         // Is the first row correct (must have the correct headers)
@@ -61,6 +62,10 @@ function TargetFileContextProvider({
             '1',
             `Bad TSV Header, must have 7 or 9 columns`]);
         }
+        // NOTE: there are cases where invisible characters are at the end 
+        // of the row. This line ensures that the header row only has the
+        // number of characters needed. Only then are they compared.
+        rows[0] = rows[0].slice(0,tsvHeader.length);
         if (tsvHeader !== rows[0]) {
           criticalNotices.push([
             `${link}#L1`,
@@ -71,6 +76,10 @@ function TargetFileContextProvider({
         if (rows.length > 1) {
           for (let i = 1; i < rows.length; i++) {
             let line = i + 1;
+            // ignore, skip empty rows
+            if ( rows[i] === undefined || rows[i] === '' ) {
+              continue;
+            }
             let cols = rows[i].split('\t');
             if (cols.length < tsvFormat) {
               criticalNotices.push([
