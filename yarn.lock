@@ -7179,6 +7179,22 @@ gitea-react-toolkit@1.4.3:
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
 
+gitea-react-toolkit@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.6.1.tgz#9c35e20d54b71d51100a7feafc7fffdf5dad1a69"
+  integrity sha512-qQW5hZx0zYdtG6CfSWiWt5JZuVV569/d+vWPSbcfp8QOqIbdCO1xWa3kzhuDDIHSuwjFev82ZveVTBY5rfA2dQ==
+  dependencies:
+    awesome-debounce-promise "2.1.0"
+    axios "0.19.0"
+    axios-cache-adapter "2.4.1"
+    base-64 "0.1.0"
+    jszip "^3.5.0"
+    localforage "1.7.3"
+    markdown-translatable "1.2.12"
+    prop-types "15.7.2"
+    use-deep-compare-effect "^1.3.1"
+    utf8 "3.0.0"
+
 github-slugger@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/github-slugger/-/github-slugger-1.3.0.tgz#9bd0a95c5efdfc46005e82a906ef8e2a059124c9"
@@ -13467,10 +13483,10 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@4.1.3:
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.1.3.tgz#d133b3d6b062297d8528a3e50e1d6f443ccd9e12"
-  integrity sha512-W6iB948GevIDKKB8Ab2lenZ1zButLXvvuhVzA29NC1Yg7Umj1MzcuRHCc/sjo3UuF+v86SPbIpMuxkicfM+wKA==
+scripture-resources-rcl@4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.1.4.tgz#a7760ea60384e810718b2f59020e10ee18bd57de"
+  integrity sha512-g6jHLbGEQ52t03pbfPFsF9eLN/WRMnuFICiWyp6KzRn8RC+evMurgBIYC4joHAy9M0Fvr1gHJS4yuUOzFJQQIA==
   dependencies:
     deep-freeze "^0.0.1"
     gitea-react-toolkit "1.4.3"
