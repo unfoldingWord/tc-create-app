@@ -4,7 +4,7 @@ import { useFile, FileContext } from 'gitea-react-toolkit';
 //import useEffect from 'use-deep-compare-effect';
 import {useEffect} from 'react';
 import { AppContext } from '../App.context';
-import * as cv from 'uw-content-validation';
+//import * as cv from 'uw-content-validation';
 
 const TargetFileContext = React.createContext();
 
@@ -30,11 +30,13 @@ function TargetFileContextProvider({
     defaultContent: (sourceFile && sourceFile.content),
   });
 
+  /*
   const validate = async (langId, bookID, content) => {
     return await cv.checkTN_TSVText(langId, bookID, 'dummy', content, '',
       { checkLinkedTAArticleFlag: false, checkLinkedTWArticleFlag: false }
     );
   }
+  */
 
   useEffect(() => {
     if (state === undefined || state.content === undefined) {
@@ -42,7 +44,7 @@ function TargetFileContextProvider({
       //onCriticalErrors(['Validating...']);
     } else if (!validated) {
       // work with both old and new TN TSV formats
-      if ( state.name.match(/^tn_...\.tsv$|tn_..-...\.tsv$/) ) {
+      if ( state.name.match(/^tn_...\.tsv$|tn_..-...\.tsv$|^twl_...\.tsv$/) ) {
         const link = state.html_url.replace('/src/', '/blame/');
         let criticalNotices = [];
         let tsvFile = state.content;
@@ -51,9 +53,12 @@ function TargetFileContextProvider({
         // Is the first row correct (must have the correct headers)
         let tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
         const tsvHeader7= "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tAnnotation";
+        const tsvHeader6= "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink";
         const tsvFormat = rows[0].split('\t').length;
         if ( tsvFormat === 7 ) {
           tsvHeader = tsvHeader7;
+        } else if ( tsvFormat === 6 ) {
+          tsvHeader = tsvHeader6;
         } else if ( tsvFormat === 9 ) {
           // good to go... must be either 7 or 9
         } else {
@@ -108,9 +113,10 @@ function TargetFileContextProvider({
     }
   }, [validated, onValidated, state, onCriticalErrors]);
 
+  // was: actions: { ...actions, validate }
   const context = {
     state: { ...state, validated }, // state true/false
-    actions: { ...actions, validate }, // add my action
+    actions: { ...actions }, 
     component,
     components,
     config,
