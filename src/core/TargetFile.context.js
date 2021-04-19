@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
-//import useEffect from 'use-deep-compare-effect';
 import {useEffect} from 'react';
 import { AppContext } from '../App.context';
-//import * as cv from 'uw-content-validation';
 
 const TargetFileContext = React.createContext();
 
@@ -30,13 +28,6 @@ function TargetFileContextProvider({
     defaultContent: (sourceFile && sourceFile.content),
   });
 
-  /*
-  const validate = async (langId, bookID, content) => {
-    return await cv.checkTN_TSVText(langId, bookID, 'dummy', content, '',
-      { checkLinkedTAArticleFlag: false, checkLinkedTWArticleFlag: false }
-    );
-  }
-  */
 
   useEffect(() => {
     if (state === undefined || state.content === undefined) {
@@ -113,7 +104,6 @@ function TargetFileContextProvider({
     }
   }, [validated, onValidated, state, onCriticalErrors]);
 
-  // was: actions: { ...actions, validate }
   const context = {
     state: { ...state, validated }, // state true/false
     actions: { ...actions }, 
