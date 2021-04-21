@@ -3,7 +3,7 @@ import appPackage from '../../package.json';
 export const SERVER_URL = process.env.REACT_APP_DOOR43_SERVER_URL;
 
 // removed for now (issue 684)
-// SERVER_URL + '/api/v1/repos/Door43-Catalog/en_obs-sq',
+// SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-sq',
 const config = {
   authentication: {
     server: SERVER_URL,
