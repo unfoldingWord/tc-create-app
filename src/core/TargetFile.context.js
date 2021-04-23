@@ -17,6 +17,8 @@ function TargetFileContextProvider({
 
   const { state: sourceFile } = useContext(FileContext);
 
+  const fake_onopen_validator = () => {console.log("FAKE!!")}
+
   const {
     state, actions, component, components, config,
   } = useFile({
@@ -26,6 +28,7 @@ function TargetFileContextProvider({
     filepath,
     onFilepath: setFilepath,
     defaultContent: (sourceFile && sourceFile.content),
+    onOpenValidation: fake_onopen_validator,
   });
 
 
