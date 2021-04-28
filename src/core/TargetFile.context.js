@@ -70,7 +70,6 @@ function TargetFileContextProvider({
         // NOTE: there are cases where invisible characters are at the end 
         // of the row. This line ensures that the header row only has the
         // number of characters needed. Only then are they compared.
-        rows[0] = rows[0].slice(0,tsvHeader.length);
         if (tsvHeader !== rows[0]) {
           criticalNotices.push([
             `${link}#L1`,
