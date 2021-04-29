@@ -78,7 +78,7 @@ function TargetFileContextProvider({
         }
   
         if (rows.length > 1) {
-          for (let i = 1; i < rows.length; i++) {
+          for (let i = 0; i < rows.length; i++) {
             let line = i + 1;
             // ignore, skip empty rows
             if ( rows[i] === undefined || rows[i] === '' ) {
