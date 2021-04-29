@@ -47,26 +47,34 @@ function TargetFileContextProvider({
         // Split into an array of rows
         let rows = tsvFile.split('\n');
         // Is the first row correct (must have the correct headers)
-        let tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
-        const tsvHeader7= "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tAnnotation";
-        const tsvHeader6= "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink";
-        const tsvFormat = rows[0].split('\t').length;
-        if ( tsvFormat === 7 ) {
-          tsvHeader = tsvHeader7;
-        } else if ( tsvFormat === 6 ) {
-          tsvHeader = tsvHeader6;
-        } else if ( tsvFormat === 9 ) {
-          // good to go... must be either 7 or 9
+        //const tsvFormat = rows[0].split('\t').length;
+        let tsvHeader;
+        let tsvFormat;
+        let badTsvHeaderMessage;
+        if ( state.name.match(/tn_..-...\.tsv$/)) {
+          // this is the legacy 9 column format tn tsv filename pattern
+          tsvFormat = 9;
+          tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
+          badTsvHeaderMessage = `Bad tN (legacy) TSV Header, must have 9 columns`;
+        } else if ( state.name.match(/^tn_...\.tsv$/) ) {
+          // this is the new 6 column tn tsv filename pattern
+          tsvFormat = 7;
+          tsvHeader = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tAnnotation";
+          badTsvHeaderMessage = `Bad tN TSV Header, must have 7 columns`;
+        } else if ( state.name.match(/^twl_...\.tsv$/) ) {
+          // this is the twl tsv filename pattern 
+          tsvFormat = 6;
+          tsvHeader = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink";
+          badTsvHeaderMessage = `Bad TWL TSV Header, must have 6 columns`;
         } else {
           criticalNotices.push([
             `${link}#L1`,
             '1',
-            `Bad TSV Header, must have 7 or 9 columns`]);
+            badTsvHeaderMessage]);
         }
         // NOTE: there are cases where invisible characters are at the end 
         // of the row. This line ensures that the header row only has the
         // number of characters needed. Only then are they compared.
-        rows[0] = rows[0].slice(0,tsvHeader.length);
         if (tsvHeader !== rows[0]) {
           criticalNotices.push([
             `${link}#L1`,
@@ -75,7 +83,7 @@ function TargetFileContextProvider({
         }
   
         if (rows.length > 1) {
-          for (let i = 1; i < rows.length; i++) {
+          for (let i = 0; i < rows.length; i++) {
             let line = i + 1;
             // ignore, skip empty rows
             if ( rows[i] === undefined || rows[i] === '' ) {
@@ -88,7 +96,7 @@ function TargetFileContextProvider({
                 `${line}`,
                 `Not enough columns, expecting ${tsvFormat}, found ${cols.length}`
               ])
-            } else if (cols.length > 9) {
+            } else if (cols.length > tsvFormat) {
               criticalNotices.push([
                 `${link}#L${line}`,
                 `${line}`,
@@ -104,6 +112,7 @@ function TargetFileContextProvider({
           onValidated(true);
         }
       } else {
+        console.log("pattern NOT matched for:", state.name);
         onValidated(true)
       }
     }
