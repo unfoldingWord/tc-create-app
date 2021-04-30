@@ -101,7 +101,7 @@ function TranslatableTSVWrapper({ onSave }) {
       const _name  = targetFile.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
-      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: true});
+      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: false});
       const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
