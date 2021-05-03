@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
-import {useEffect} from 'react';
 import { AppContext } from '../App.context';
-import { onOpenValidation } from './onOpenValidations';
 
 const TargetFileContext = React.createContext();
 
 function TargetFileContextProvider({
-  validated, onValidated, onCriticalErrors, children
+  onOpenValidation, children
 }) {
   const {
     state: {
@@ -17,10 +15,6 @@ function TargetFileContextProvider({
   } = useContext(AppContext);
 
   const { state: sourceFile } = useContext(FileContext);
-
-  //const onopen_validator = (filename, content, url) => {
-  //  console.log("onopen_validator()- filename, content, url:", filename, content, url);
-  //}
 
   const {
     state, actions, component, components, config,
@@ -34,35 +28,13 @@ function TargetFileContextProvider({
     onOpenValidation: onOpenValidation,
   });
 
-
-  useEffect(() => {
-    if (state === undefined || state.content === undefined) {
-      onValidated(false);
-      //onCriticalErrors(['Validating...']);
-    } else if (!validated) {
-      let criticalNotices = [];
-      criticalNotices = onOpenValidation(
-        state.name, 
-        state.content, 
-        state.html_url,
-      );
-  
-      if (criticalNotices.length > 0) {
-        onCriticalErrors(criticalNotices);
-      } else {
-        onValidated(true);
-      }
-    }
-  }, [validated, onValidated, state, onCriticalErrors]);
-
   const context = {
-    state: { ...state, validated }, // state true/false
+    state: { ...state }, 
     actions: { ...actions }, 
     component,
     components,
     config,
   };
-
 
   return (
     <TargetFileContext.Provider value={context}>

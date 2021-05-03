@@ -5,10 +5,13 @@ import { AppContext } from './App.context';
 import { TargetFileContextProvider } from './core/TargetFile.context';
 import { Typography, Link } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+import { onOpenValidation } from './core/onOpenValidations';
+
 
 function Workspace() {
-  const [validated, setValidated] = useState(false);
+  // this state manage on open validation 
   const [criticalErrors, setCriticalErrors] = useState([]);
+
   const { 
     state: { sourceRepository, filepath }, 
     actions: { setSourceRepository} 
@@ -24,6 +27,19 @@ function Workspace() {
     setSourceRepository(undefined);
   }, [setCriticalErrors, setSourceRepository]);
 
+  const _onOpenValidation = (filename,content,url) => {
+    console.log("Enter _onOpenValidation()");
+    const notices = onOpenValidation(filename, content, url);
+    if (notices.length > 0) {
+      console.log("... notices found");
+      setCriticalErrors(notices);
+    } else {
+      console.log("... no notices found");
+      setCriticalErrors([]);
+    }
+    return notices;
+}
+
   const component = useMemo(() => {
     let _component = <ApplicationStepper />;
 
@@ -31,16 +47,13 @@ function Workspace() {
       if (sourceFilepath === filepath) {
         _component = (
           <TargetFileContextProvider 
-            validated={validated} onValidated={setValidated} 
-            onCriticalErrors={setCriticalErrors}
+            onOpenValidation={_onOpenValidation}
           >
             {
-              (validated && <Translatable />) 
-              || 
               (criticalErrors.length > 0 && 
                 <Dialog
                   disableBackdropClick
-                  open={!validated}
+                  open={(criticalErrors.length > 0)}
                   onClose={handleClose}
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
@@ -71,14 +84,16 @@ function Workspace() {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              )
+              ) 
+              ||
+              <Translatable />
             }
           </TargetFileContextProvider>
         );
       }
     }
     return _component;
-  }, [sourceRepoMemo, sourceFilepath, filepath, validated, criticalErrors, handleClose]);
+  }, [sourceRepoMemo, sourceFilepath, filepath, criticalErrors, handleClose]);
 
   return component;
 }

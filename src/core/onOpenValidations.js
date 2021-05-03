@@ -68,9 +68,6 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns) => {
 }
 
 export const onOpenValidation = (filename, content, url) => {
-  console.log("Enter onOpenValidation() filename, content, url:",
-    filename, content, url,
-  );
   const link = url.replace('/src/', '/blame/');
   let criticalNotices = [];
 
