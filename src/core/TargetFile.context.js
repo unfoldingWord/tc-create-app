@@ -18,9 +18,9 @@ function TargetFileContextProvider({
 
   const { state: sourceFile } = useContext(FileContext);
 
-  const fake_onopen_validator = (fileContent) => {
-    console.log("fake_onopen_validator()- fileContent:", fileContent);
-  }
+  //const onopen_validator = (filename, content, url) => {
+  //  console.log("onopen_validator()- filename, content, url:", filename, content, url);
+  //}
 
   const {
     state, actions, component, components, config,
@@ -31,7 +31,7 @@ function TargetFileContextProvider({
     filepath,
     onFilepath: setFilepath,
     defaultContent: (sourceFile && sourceFile.content),
-    onOpenValidation: fake_onopen_validator,
+    onOpenValidation: onOpenValidation,
   });
 
 
@@ -41,11 +41,11 @@ function TargetFileContextProvider({
       //onCriticalErrors(['Validating...']);
     } else if (!validated) {
       let criticalNotices = [];
-      criticalNotices = onOpenValidation({
-        filename: state.name, 
-        content: state.content, 
-        url: state.html_url,
-      });
+      criticalNotices = onOpenValidation(
+        state.name, 
+        state.content, 
+        state.html_url,
+      );
   
       if (criticalNotices.length > 0) {
         onCriticalErrors(criticalNotices);

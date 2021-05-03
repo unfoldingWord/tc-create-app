@@ -67,7 +67,10 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns) => {
   return criticalNotices;
 }
 
-export const onOpenValidation = ({filename, content, url}) => {
+export const onOpenValidation = (filename, content, url) => {
+  console.log("Enter onOpenValidation() filename, content, url:",
+    filename, content, url,
+  );
   const link = url.replace('/src/', '/blame/');
   let criticalNotices = [];
 
@@ -78,5 +81,8 @@ export const onOpenValidation = ({filename, content, url}) => {
   } else if ( filename.match(/^twl_...\.tsv$/) ) {
     criticalNotices = onOpenValidationTwl(content, link);
   }
+  console.log("Exit onOpenValidation() criticalNoties:",
+    criticalNotices,
+  );
   return criticalNotices;
 }
