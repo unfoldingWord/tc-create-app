@@ -28,13 +28,10 @@ function Workspace() {
   }, [setCriticalErrors, setSourceRepository]);
 
   const _onOpenValidation = (filename,content,url) => {
-    console.log("Enter _onOpenValidation()");
     const notices = onOpenValidation(filename, content, url);
     if (notices.length > 0) {
-      console.log("... notices found");
       setCriticalErrors(notices);
     } else {
-      console.log("... no notices found");
       setCriticalErrors([]);
     }
     return notices;
@@ -59,7 +56,8 @@ function Workspace() {
                   aria-describedby="alert-dialog-description"
                 >
                   <DialogTitle id="alert-dialog-title">
-                  This file cannot be opened by tC Create. Please contact your administrator to address the following error(s).
+                  This file cannot be opened by tC Create as there are errors in the target file. 
+                  Please contact your administrator to address the following error(s)                  
                   </DialogTitle>
                   <DialogContent>
                     <DialogContentText id="alert-dialog-description">

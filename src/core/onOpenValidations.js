@@ -96,8 +96,5 @@ export const onOpenValidation = (filename, content, url) => {
   } else if ( filename.match(/^twl_...\.tsv$/) ) {
     criticalNotices = onOpenValidationTwl(content, link);
   }
-  console.log("Exit onOpenValidation() criticalNoties:",
-    criticalNotices,
-  );
   return criticalNotices;
 }

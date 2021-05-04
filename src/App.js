@@ -57,13 +57,10 @@ function AppComponent() {
   const drawerMenu = <DrawerMenu commitHash={commitHash} />;
   
   const _onOpenValidation = (filename,content,url) => {
-    console.log("Enter _onOpenValidation()");
     const notices = onOpenValidation(filename, content, url);
     if (notices.length > 0) {
-      console.log("... notices found");
       setCriticalErrors(notices);
     } else {
-      console.log("... no notices found");
       setCriticalErrors([]);
     }
     return notices;
@@ -143,7 +140,8 @@ function AppComponent() {
                     aria-describedby="alert-dialog-description"
                   >
                     <DialogTitle id="alert-dialog-title">
-                    This file cannot be opened by tC Create. Please contact your administrator to address the following error(s).
+                    This file cannot be opened by tC Create as there are errors in the Master file. 
+                    Please contact your administrator to address the following error(s)
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText id="alert-dialog-description">
@@ -152,7 +150,6 @@ function AppComponent() {
                           return (
                             <>
                             <Typography key={idx}>
-                              tC Create is unable to continue. The master data has the following error:
                               On <Link href={msg[0]} target="_blank" rel="noopener">
                                 line {msg[1]}
                               </Link>
