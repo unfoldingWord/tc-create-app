@@ -38,6 +38,8 @@ function TargetFileContextProvider({
       if ( state.name.match(/^tn_...\.tsv$|tn_..-...\.tsv$|^twl_...\.tsv$/) ) {
         const link = state.html_url.replace('/src/', '/blame/');
         let criticalNotices = [];
+        // remove any carriage returns
+        state.content = state.content.replaceAll('\r','');
         let tsvFile = state.content;
         // Split into an array of rows
         let rows = tsvFile.split('\n');
