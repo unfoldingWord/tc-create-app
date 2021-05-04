@@ -17,20 +17,25 @@
 const onOpenValidationTn9 = (content, url) => {
   const tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
   const numColumns = 9;
-  return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns);
+  const idcolumn = 3; //zero based
+  return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
 const onOpenValidationTn7 = (content, url) => {
   const tsvHeader = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tAnnotation";
   const numColumns = 7;
-  return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns);
+  const idcolumn = 1; //zero based
+  return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
 const onOpenValidationTwl = (content, url) => {
   const tsvHeader = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink";
   const numColumns = 6;
-  return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns);
+  const idcolumn = 1; //zero based
+  return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
-const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns) => {
+const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolumn) => {
   const rows = content.split('\n');
+  let idarray = [];
+  let idarrayline = [];
   let criticalNotices = [];
 
   if (tsvHeader !== rows[0]) {
@@ -48,6 +53,19 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns) => {
         continue;
       }
       let cols = rows[i].split('\t');
+      let location = idarray.indexOf(cols[idcolumn]);
+      if ( location === -1 ) {
+        idarray.push(cols[idcolumn]);
+        idarrayline.push(i);
+      } else {
+        criticalNotices.push([
+          `${link}#L${line}`,
+          `${line}`,
+          `Row ID ${cols[idcolumn]} is a duplicate of ID on row ${idarrayline[location]}`
+        ])
+      }
+
+      
       if (cols.length < numColumns) {
         criticalNotices.push([
           `${link}#L${line}`,
