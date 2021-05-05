@@ -33,7 +33,7 @@ const onOpenValidationTwl = (content, url) => {
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
 const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolumn) => {
-  const rows = content.split('\n');
+  const rows = content.replaceAll('\r','').split('\n');
   let idarray = [];
   let idarrayline = [];
   let criticalNotices = [];
