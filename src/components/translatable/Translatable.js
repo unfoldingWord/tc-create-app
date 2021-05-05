@@ -18,6 +18,8 @@ import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
+import TranslatableTqTSV from './TranslatableTqTSV';
+import TranslatableTwlTSV from './TranslatableTwlTSV';
 
 function Translatable() {
   const classes = useStyles();
@@ -120,7 +122,6 @@ function Translatable() {
         }
       }
     );
-
     if (
       filepath &&
       sourceFile &&
@@ -135,6 +136,10 @@ function Translatable() {
           onTranslation: saveOnTranslation,
         };
         _translatable = <MarkDownTranslatable {...translatableProps} />;
+      } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
+        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} />;
+      } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
+        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
         _translatable = <TranslatableTSV onSave={saveOnTranslation} />;
       } else {
