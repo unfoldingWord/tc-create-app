@@ -26,11 +26,18 @@ import theme from './theme';
 import { AppContext, AppContextProvider } from './App.context';
 import { getCommitHash } from './utils';
 
+import { Typography, Link } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+import { onOpenValidation } from './core/onOpenValidations';
+
 const { version } = require('../package.json');
 const commitHash = getCommitHash(); 
 const title = `translationCore Create - v${version}`;
 
 function AppComponent() {
+  // this state manage on open validation 
+  const [criticalErrors, setCriticalErrors] = useState([]);
+
   const { state, actions } = useContext(AppContext);
   const {
     authentication,
@@ -49,6 +56,21 @@ function AppComponent() {
 
   const drawerMenu = <DrawerMenu commitHash={commitHash} />;
   
+  const _onOpenValidation = (filename,content,url) => {
+    const notices = onOpenValidation(filename, content, url);
+    if (notices.length > 0) {
+      setCriticalErrors(notices);
+    } else {
+      setCriticalErrors([]);
+    }
+    return notices;
+  }
+  const handleClose = useCallback( () => {
+    setCriticalErrors([]);
+    setSourceRepository(undefined);
+  }, [setCriticalErrors, setSourceRepository]);
+
+
   const onHeadroomPin = () =>
   {
     const el = document.querySelector("#translatableComponent div div[role='toolbar']");
@@ -106,22 +128,68 @@ function AppComponent() {
                 repository={sourceRepository}
                 filepath={filepath}
                 onFilepath={setFilepath}
+                onOpenValidation={_onOpenValidation}
               >
-                <Headroom pinStart={64} style={style.headroom}
-                  onPin={()=>{onHeadroomPin();}} onUnfix={()=>{onHeadroomUnfix();}} onUnpin={()=>{onHeadroomUnpin();}}
-                >
-                  <header id='App-header'>
-                    <ApplicationBar
-                      title={title}
-                      build={commitHash}
-                      // buttons={buttons}
-                      drawerMenu={drawerMenu}
-                    />
-                  </header>
-                </Headroom>
-                <div id='Workspace-Container' style={style.workspace}>
-                  <Workspace />
-                </div>
+              {
+                (criticalErrors.length > 0 && 
+                  <Dialog
+                    disableBackdropClick
+                    open={(criticalErrors.length > 0)}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogTitle id="alert-dialog-title">
+                    This file cannot be opened by tC Create as there are errors in the Master file. 
+                    Please contact your administrator to address the following error(s)
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                      {
+                        criticalErrors.map( (msg,idx) => {
+                          return (
+                            <>
+                            <Typography key={idx}>
+                              On <Link href={msg[0]} target="_blank" rel="noopener">
+                                line {msg[1]}
+                              </Link>
+                              &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
+                            </Typography>
+                            </>
+                          )
+                      })}
+                        <br/>
+                        <Typography key="footer" >Please take a screenshot and contact your administrator.</Typography>
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} color="primary">
+                        Close
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                ) 
+                ||
+                (
+                  <>
+                  <Headroom pinStart={64} style={style.headroom}
+                    onPin={()=>{onHeadroomPin();}} onUnfix={()=>{onHeadroomUnfix();}} onUnpin={()=>{onHeadroomUnpin();}}
+                  >
+                    <header id='App-header'>
+                      <ApplicationBar
+                        title={title}
+                        build={commitHash}
+                        // buttons={buttons}
+                        drawerMenu={drawerMenu}
+                      />
+                    </header>
+                  </Headroom>
+                  <div id='Workspace-Container' style={style.workspace}>
+                    <Workspace />
+                  </div>
+                  </>
+                )
+              }
               </FileContextProvider>
             </RepositoryContextProvider>
           </OrganizationContextProvider>
