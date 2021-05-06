@@ -35,7 +35,7 @@ function Workspace() {
       setCriticalErrors([]);
     }
     return notices;
-}
+  }
 
   const component = useMemo(() => {
     let _component = <ApplicationStepper />;
