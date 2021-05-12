@@ -44,7 +44,7 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
       `${link}#L1`,
       '1',
       `Bad TSV Header, expecting:"${tsvHeader.replaceAll('\t', ', ')}"`+
-      `, found:"${rows[0].replaceAll('\t',', ')}"`
+      `, found:"${rows[0].replaceAll('\t',', ').slice(0,tsvHeader.length)+"..."}"`
     ]);
   }
 
@@ -101,7 +101,7 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
         criticalNotices.push([
           `${link}#L${line}`,
           `${line}`,
-          `Row ID ${cols[idcolumn]} is a duplicate of ID on row ${idarrayline[location]}`
+          `Row ID ${cols[idcolumn]} is a duplicate of ID on row ${idarrayline[location+1]}`
         ])
       }
 
