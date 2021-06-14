@@ -37,3 +37,27 @@ export const loadAuthentication = async () => {
 export const saveAuthentication = async (authentication) => {
   saveState('authentication', authentication);
 };
+
+export const saveCacheTargetFile = async (targetFile, content) => {
+  let response;
+  const key = 'cacheTargetFile';
+
+  const cachedContent = {
+    sha: targetFile.sha,
+    content: content
+  };
+
+  if (content === null || content === undefined) {
+    response = await stateStore.removeItem(key);
+  } else {
+    response = await stateStore.setItem(key, cachedContent);
+  }
+  return response;
+};
+
+export const loadCacheTargetFile = async () => {
+  console.log('loadCacheTargetFile');
+  console.log(await loadState('cacheTargetFile'));
+
+  return await loadState('cacheTargetFile');
+};

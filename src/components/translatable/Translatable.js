@@ -20,7 +20,7 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
-import { loadState, saveState } from '../../core/persistence';
+import { saveCacheTargetFile } from '../../core/persistence';
 
 function Translatable() {
   const classes = useStyles();
@@ -128,11 +128,13 @@ function Translatable() {
       }
     );
 
-    const autoSaveOnTranslation = (
+    const autoSaveOnEdit = (
       async (content) => {
         console.log("tC Create / autosave");
+        console.log(content);
+        console.log(targetFile);
 
-        saveState('content', content);
+        saveCacheTargetFile(targetFile, content);
       }
     );
 
@@ -149,13 +151,13 @@ function Translatable() {
           translation: targetFile.content,
           onTranslation: saveOnTranslation,
         };
-        _translatable = <MarkDownTranslatable {...translatableProps} onEdit={autoSaveOnTranslation} />;
+        _translatable = <MarkDownTranslatable {...translatableProps} onEdit={autoSaveOnEdit} />;
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
-        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnTranslation} />;
+        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
-        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnTranslation} />;
+        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
-        _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnTranslation} />;
+        _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
@@ -172,7 +174,7 @@ function Translatable() {
   console.log("targetRepository");
   console.log(targetRepository);
 
-  const filesHeader = targetFile && (
+  const filesHeader = targetFile && targetRepository && (
     <FilesHeader
       sourceRepository={sourceRepository}
       targetRepository={targetRepository}
