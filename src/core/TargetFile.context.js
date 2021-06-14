@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
 import { AppContext } from '../App.context';
+import { loadState } from '../core/persistence';
 
 const TargetFileContext = React.createContext();
 
@@ -16,6 +17,13 @@ function TargetFileContextProvider({
 
   const { state: sourceFile } = useContext(FileContext);
 
+  const targetFileCachedContent = loadState('content');
+  console.log("cachedContent");
+  console.log({c: targetFileCachedContent});
+  
+  console.log("defaultContent");
+  console.log({c: (sourceFile && sourceFile.content)});
+
   const {
     state, actions, component, components, config,
   } = useFile({
@@ -24,6 +32,7 @@ function TargetFileContextProvider({
     repository: targetRepository,
     filepath,
     onFilepath: setFilepath,
+    loadDefaultCachedContent: ()=> loadState('content'),
     defaultContent: (sourceFile && sourceFile.content),
     onOpenValidation: onOpenValidation,
   });

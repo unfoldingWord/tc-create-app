@@ -20,6 +20,7 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
+import { loadState, saveState } from '../../core/persistence';
 
 function Translatable() {
   const classes = useStyles();
@@ -109,6 +110,10 @@ function Translatable() {
       async (content) => {
         setSavingTargetFileContent(content);
 
+        // DEBUG
+        console.log("targetFile");
+        console.log(targetFile);
+
         try {
           await targetFileActions.save(content);
         } catch (error) {
@@ -122,6 +127,15 @@ function Translatable() {
         }
       }
     );
+
+    const autoSaveOnTranslation = (
+      async (content) => {
+        console.log("tC Create / autosave");
+
+        saveState('content', content);
+      }
+    );
+
     if (
       filepath &&
       sourceFile &&
@@ -135,13 +149,13 @@ function Translatable() {
           translation: targetFile.content,
           onTranslation: saveOnTranslation,
         };
-        _translatable = <MarkDownTranslatable {...translatableProps} />;
+        _translatable = <MarkDownTranslatable {...translatableProps} onEdit={autoSaveOnTranslation} />;
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
-        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} />;
+        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnTranslation} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
-        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} />;
+        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnTranslation} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
-        _translatable = <TranslatableTSV onSave={saveOnTranslation} />;
+        _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnTranslation} />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
@@ -152,6 +166,11 @@ function Translatable() {
   useEffect(() => {
     scrollToTop();
   }, [filepath, scrollToTop]);
+
+  console.log("targetFile");
+  console.log(targetFile);
+  console.log("targetRepository");
+  console.log(targetRepository);
 
   const filesHeader = targetFile && (
     <FilesHeader
