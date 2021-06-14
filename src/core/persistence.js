@@ -80,6 +80,16 @@ export const saveFileCache = async (file, content) => {
 };
 
 export const loadFileCache = async (html_url) => {
+    console.log('cache loadFileCache');
+    console.log(await loadState('cacheTargetFile'));
+
   const cachedFile = await loadValue(cacheStore, html_url);
   return cachedFile;
-};
+}
+
+// export const loadCacheTargetFile = async () => {
+//   console.log('loadCacheTargetFile');
+//   console.log(await loadState('cacheTargetFile'));
+
+//   return await loadState('cacheTargetFile');
+// };

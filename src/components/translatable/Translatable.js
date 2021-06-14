@@ -29,6 +29,8 @@ import TranslatableObsSnTSV from './TranslatableObsSnTSV';
 import TranslatableSqTSV from './TranslatableSqTSV';
 import TranslatableObsSqTSV from './TranslatableObsSqTSV';
 
+import { saveFileCache } from '../../core/persistence';
+
 function Translatable() {
   const classes = useStyles();
   //const [wrapperElement, setWrapperElement] = useState(null);
@@ -127,7 +129,11 @@ function Translatable() {
 
     const autoSaveOnEdit = (
       async (content) => {
-        targetFileActions.saveCache(content);
+        console.log("tC Create / autosave");
+        console.log(content);
+        console.log(targetFile);
+
+        saveFileCache(targetFile, content);
       }
     );
 
@@ -199,6 +205,11 @@ function Translatable() {
   useEffect(() => {
     scrollToTop();
   }, [filepath, scrollToTop]);
+
+  console.log("targetFile");
+  console.log(targetFile);
+  console.log("targetRepository");
+  console.log(targetRepository);
 
   const filesHeader = targetFile && targetRepository && (
     <FilesHeader
