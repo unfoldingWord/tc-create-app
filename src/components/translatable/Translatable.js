@@ -20,7 +20,6 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
-import { saveCacheTargetFile } from '../../core/persistence';
 
 function Translatable() {
   const classes = useStyles();
@@ -130,11 +129,8 @@ function Translatable() {
 
     const autoSaveOnEdit = (
       async (content) => {
-        console.log("tC Create / autosave");
-        console.log(content);
-        console.log(targetFile);
-
-        saveCacheTargetFile(targetFile, content);
+        console.log("tC Create / autosave", targetFile, content);
+        targetFileActions.saveCache(content);
       }
     );
 
