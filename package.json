@@ -1,7 +1,7 @@
 {
   "name": "tc-create-app",
   "homepage": "https://create.translationcore.com/",
-  "version": "1.2.1-rc.2",
+  "version": "1.2.3-demo.1",
   "license": "MIT",
   "private": false,
   "bugs": {
