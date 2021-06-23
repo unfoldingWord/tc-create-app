@@ -5,6 +5,8 @@ import {
   Chip,
   Tooltip,
 } from '@material-ui/core';
+import Path from 'path';
+
 import {
   Publish,
   GetApp,
@@ -13,6 +15,7 @@ import { License } from 'scripture-resources-rcl';
 
 import { getLanguage } from '../languages/helpers';
 import { localString } from '../../core/localStrings';
+import { SERVER_URL } from '../../core/state.defaults';
 
 function FilesHeader({
   sourceRepository,
@@ -62,19 +65,28 @@ function FilesHeader({
 
   const sourceChip = useMemo(() => {
     const { full_name } = sourceRepository;
-    const label = `${sourceLanguage.languageName} - ${full_name}/${sourceBranch}`;
-    const onClick = () => openLink(sourceFile.html_url);
+    let label = `${sourceLanguage.languageName} - ${full_name}/${sourceBranch}`;
+    let openDcsLink = sourceFile.html_url;
+    let licenseLink= sourceRepository.html_url + '/src/branch/' + sourceBranch + '/LICENSE.md';
+
+    // test for translator role and override lable, dcs link and compare link
+    if ( full_name !== targetRepository.full_name ) {
+      // https://qa.door43.org/unfoldingWord/en_tn/src/tag/v47/en_tn_66-JUD.tsv
+      const prodTag = sourceRepository.catalog.prod.branch_or_tag_name;
+      label = `${sourceLanguage.languageName} - ${full_name}/${prodTag}`;
+      openDcsLink = Path.join(SERVER_URL,'unfoldingword',sourceRepository.name,'src','tag', prodTag, sourceFile.path);
+      licenseLink = Path.join(SERVER_URL,'unfoldingword',sourceRepository.name,'src','tag', prodTag, 'LICENSE.md')
+    }
+    const onClick = () => openLink(openDcsLink);
     const onDelete = () => sourceCompareLink && openLink(sourceCompareLink);
     const style = { background: '#fff9' };
     const deleteIcon = <GetApp />;
     const iconTooltip='OpenSourceText';
     const deleteIconTooltip = 'CompareSource';
-    const licenseLink= sourceRepository.html_url +
-      '/src/branch/' + sourceBranch + '/LICENSE.md';
     return chip({
       label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
     });
-  }, [sourceRepository, sourceFile.html_url, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
+  }, [sourceRepository, targetRepository, sourceFile, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
 
   const targetChip = useMemo(() => {
     const { full_name } = targetRepository;

@@ -16,6 +16,32 @@ function TargetFileContextProvider({
 
   const { state: sourceFile } = useContext(FileContext);
 
+  const appContext = useContext(AppContext);
+  const sourceContext = useContext(FileContext);
+
+  /* Some useful debugging logs left here for the future.
+  console.log("--TargetFileContextProvider--");
+  console.log("app context:", appContext);
+  console.log("source file context:", sourceContext);
+  console.log("target repository:",targetRepository);
+  console.log("filepath:", filepath);
+  */
+
+  let _defaultContent;
+  if ( appContext.state.sourceRepository.id === appContext.state.targetRepository.id ) {
+    // this is the editor role; they need latest content from master
+    // to be on the source side and as the default content 
+    // if a new file is being edited.
+    _defaultContent = sourceFile && sourceFile.content;
+  } else {
+    // this is the translator role; they require the source side content
+    // to be from the published catalog. For now this is latest prod content.
+    // it also needs to be the default content.
+    _defaultContent = sourceContext.state.publishedContent;
+    // also replease the source content
+    sourceFile.content = _defaultContent;
+  }
+
   const {
     state, actions, component, components, config,
   } = useFile({
@@ -24,7 +50,7 @@ function TargetFileContextProvider({
     repository: targetRepository,
     filepath,
     onFilepath: setFilepath,
-    defaultContent: (sourceFile && sourceFile.content),
+    defaultContent: _defaultContent,
     onOpenValidation: onOpenValidation,
   });
 
