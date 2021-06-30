@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
 import { AppContext } from '../App.context';
@@ -14,7 +14,7 @@ function TargetFileContextProvider({
     } = {},
   } = useContext(AppContext);
 
-  const { state: sourceFile } = useContext(FileContext);
+  const { state: sourceFile, actions: sourceFileActions, stateValues: sourceStateValues } = useContext(FileContext);
 
   const appContext = useContext(AppContext);
   const sourceContext = useContext(FileContext);
@@ -28,7 +28,7 @@ function TargetFileContextProvider({
   */
 
   let _defaultContent;
-  if ( appContext.state.sourceRepository.id === appContext.state.targetRepository.id ) {
+  if ( appContext?.state?.sourceRepository?.id === appContext?.state?.targetRepository?.id ) {
     // this is the editor role; they need latest content from master
     // to be on the source side and as the default content 
     // if a new file is being edited.
@@ -37,13 +37,13 @@ function TargetFileContextProvider({
     // this is the translator role; they require the source side content
     // to be from the published catalog. For now this is latest prod content.
     // it also needs to be the default content.
-    _defaultContent = sourceContext.state.publishedContent;
+    _defaultContent = sourceContext?.state?.publishedContent;
     // also replease the source content
     sourceFile.content = _defaultContent;
   }
 
   const {
-    state, actions, component, components, config,
+    state, stateValues, actions, component, components, config,
   } = useFile({
     config: (authentication && authentication.config),
     authentication,
@@ -54,8 +54,22 @@ function TargetFileContextProvider({
     onOpenValidation: onOpenValidation,
   });
 
+  useMemo(() => {
+    if (sourceStateValues?.isChanged != stateValues?.isChanged) {
+      actions.setIsChanged(sourceStateValues?.isChanged);
+    }
+  }, [sourceStateValues?.isChanged]);
+  
+  useMemo(() => {
+    if (sourceStateValues?.isChanged != stateValues?.isChanged) {
+      sourceFileActions.setIsChanged(stateValues?.isChanged);
+    }
+  }, [stateValues?.isChanged]);
+
   const context = {
     state: { ...state }, 
+    stateValues,
+    sourceStateValues,
     actions: { ...actions }, 
     component,
     components,
