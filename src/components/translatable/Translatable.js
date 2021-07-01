@@ -11,9 +11,12 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
-import { MarkdownContextProvider, Translatable as MarkDownTranslatable } from 'markdown-translatable';
+import { useBeforeunload } from 'react-beforeunload';
 
+import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
+import { MarkdownContext, Translatable as MarkDownTranslatable } from 'markdown-translatable';
+
+import { localString } from '../../core/localStrings';
 import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import { TargetFileContext } from '../../core/TargetFile.context';
@@ -44,9 +47,18 @@ function Translatable() {
 
   const { state: sourceFile } = useContext(FileContext);
 
-  const { state: targetFile, actions: targetFileActions } = useContext(
+  const { state: targetFile, sourceStateValues: targetFileState, actions: targetFileActions } = useContext(
     TargetFileContext
   );
+ 
+  useBeforeunload(useCallback((event) => {
+    console.log("targetFileState?.isChanged", targetFileState?.isChanged);
+    if (targetFileState?.isChanged) {
+      event.preventDefault();
+      event.returnValue = localString('CompareTarget');
+      return localString('CompareTarget');
+    }
+  }), [targetFileState]);
 
   useEffect(() => {
     // This does not work in the saveRetry() function.
@@ -166,11 +178,9 @@ function Translatable() {
   return (
     <div className={classes.root}>
       {filesHeader}
-      <MarkdownContextProvider>
-        <div id='translatableComponent'>
+      <div id='translatableComponent'>
         {translatableComponent}
-        </div>
-      </MarkdownContextProvider>
+      </div>
       {authenticationModal}
     </div>
   );
