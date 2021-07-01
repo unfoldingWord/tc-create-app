@@ -27,7 +27,7 @@
     "increment-build": "bash scripts/increment-build.sh && git add -A"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.35",
     "@material-ui/styles": "^4.11.3",
