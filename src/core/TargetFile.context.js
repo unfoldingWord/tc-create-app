@@ -55,16 +55,16 @@ function TargetFileContextProvider({
   });
 
   useMemo(() => {
-    if (sourceStateValues?.isChanged != stateValues?.isChanged) {
+    if (sourceStateValues?.isChanged !== stateValues?.isChanged) {
       actions.setIsChanged(sourceStateValues?.isChanged);
     }
-  }, [sourceStateValues?.isChanged]);
+  }, [sourceStateValues, stateValues, actions]);
   
   useMemo(() => {
-    if (sourceStateValues?.isChanged != stateValues?.isChanged) {
+    if (sourceStateValues?.isChanged !== stateValues?.isChanged) {
       sourceFileActions.setIsChanged(stateValues?.isChanged);
     }
-  }, [stateValues?.isChanged]);
+  }, [sourceStateValues, stateValues, sourceFileActions]);
 
   const context = {
     state: { ...state }, 

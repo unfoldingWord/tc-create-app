@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useBeforeunload } from 'react-beforeunload';
 
 import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
-import { MarkdownContext, Translatable as MarkDownTranslatable } from 'markdown-translatable';
+import { Translatable as MarkDownTranslatable } from 'markdown-translatable';
 
 import { localString } from '../../core/localStrings';
 import { FilesHeader } from '../files-header';
@@ -51,14 +51,14 @@ function Translatable() {
     TargetFileContext
   );
  
-  useBeforeunload(useCallback((event) => {
+  useBeforeunload((event) => {
     console.log("targetFileState?.isChanged", targetFileState?.isChanged);
     if (targetFileState?.isChanged) {
       event.preventDefault();
       event.returnValue = localString('CompareTarget');
       return localString('CompareTarget');
     }
-  }), [targetFileState]);
+  });
 
   useEffect(() => {
     // This does not work in the saveRetry() function.
