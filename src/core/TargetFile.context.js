@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
 import { AppContext } from '../App.context';
@@ -54,17 +54,19 @@ function TargetFileContextProvider({
     onOpenValidation: onOpenValidation,
   });
 
-  useMemo(() => {
+  useEffect(() => {
     if (sourceStateValues?.isChanged !== stateValues?.isChanged) {
       actions.setIsChanged(sourceStateValues?.isChanged);
     }
-  }, [sourceStateValues, stateValues, actions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sourceStateValues.isChanged]);
   
-  useMemo(() => {
+  useEffect(() => {
     if (sourceStateValues?.isChanged !== stateValues?.isChanged) {
       sourceFileActions.setIsChanged(stateValues?.isChanged);
     }
-  }, [sourceStateValues, stateValues, sourceFileActions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stateValues.isChanged]);
 
   const context = {
     state: { ...state }, 

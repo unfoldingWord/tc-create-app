@@ -52,7 +52,6 @@ function Translatable() {
   );
  
   useBeforeunload((event) => {
-    console.log("targetFileState?.isChanged", targetFileState?.isChanged);
     if (targetFileState?.isChanged) {
       event.preventDefault();
       event.returnValue = localString('CompareTarget');
