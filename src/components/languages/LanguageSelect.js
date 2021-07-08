@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
 import { NoSsr } from '@material-ui/core';
 
-import { gatewayLanguages, getLanguage } from './helpers';
+import { AppContext } from '../../App.context';
+import { getLanguage } from './helpers';
 import * as components from './Components';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,14 +42,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LanguageSelect({ language, onLanguage }) {
+  const appContext = useContext(AppContext);
   const classes = useStyles();
 
   const handleChange = (object) => {
     const languageId = object.value;
-    const _language = getLanguage({ languageId });
+    const _language = getLanguage({ languageId, languagesJSON: appContext.state.languages });
     onLanguage(_language);
   };
 
+  const getOrgLanguages = () => {
+    console.log("appContext:", appContext)
+    return appContext.state.organization.repo_languages
+  }
+
+  const orgOptions = getOrgLanguages().map( (langId) => {
+      const formattedLanguage = getLanguage({languageId: langId, languagesJSON: appContext.state.languages});
+      const value = formattedLanguage.languageId;
+      const name = `${formattedLanguage.languageId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
+      const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
+      const label = `${name} ${gatewayLabel}`;
+      return { value, label };
+    }
+  );
+
+  /*
   const options = gatewayLanguages.map(
     ({
       languageId, languageName, localized, region, gateway,
@@ -60,11 +78,11 @@ function LanguageSelect({ language, onLanguage }) {
       return { value, label };
     }
   );
-
+  */
   let value;
 
   if (language) {
-    value = options.filter((object) => object.value === language.languageId)[0];
+    value = orgOptions.filter((object) => object.value === language.languageId)[0];
   }
 
   return (
@@ -73,7 +91,7 @@ function LanguageSelect({ language, onLanguage }) {
         <Select
           className="language-select-dropdown"
           classes={classes}
-          options={options}
+          options={orgOptions}
           components={components}
           value={value}
           onChange={handleChange}

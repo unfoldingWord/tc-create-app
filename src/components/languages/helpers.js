@@ -1,30 +1,45 @@
-import languagesJSON from './languages.json';
+//import languagesJSON from './languages.json';
 
-export const getLanguage = ({ languageId }) => {
+export const getLanguage = ({ languageId, languagesJSON }) => {
   let _language;
   const language = languagesJSON.filter(object => object.lc === languageId)[0];
   _language = formatLanguage({ language });
   return _language;
 };
 
-export const getLanguageName = ({ languageId }) => {
-  const language = getLanguage({ languageId });
+export const getLanguageName = ({ languageId, languagesJSON }) => {
+  const language = getLanguage({ languageId, languagesJSON });
   const languageName = language ? language.ln : null;
   return languageName;
 };
 
-export const getLanguages = () => {
+/*
+export async function getLanguagesDynamically() {
+  fetch('https://td.unfoldingword.org/exports/langnames.json')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    //languagesJSON = data;
+  });
+}
+*/
+
+/*
+export const getLanguages = ({ languagesJSON }) => {
   const _languages = languagesJSON
     .map(language => formatLanguage({ language }));
   return _languages;
 };
+*/
 
+/*
 export const getGatewayLanguages = () => {
   const _languages = languagesJSON
     .filter(language => language.gw)
     .map(language => formatLanguage({ language }));
   return _languages;
 }
+*/
 
 export const formatLanguage = ({ language }) => {
   let _language = {};
@@ -45,5 +60,5 @@ export const formatLanguage = ({ language }) => {
   return _language;
 };
 
-export const languages = getLanguages();
-export const gatewayLanguages = getGatewayLanguages();
+//export const languages = getLanguages();
+//export const gatewayLanguages = getGatewayLanguages();

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { loadState } from './core/persistence';
 import { useStateReducer } from './core/useStateReducer';
@@ -22,6 +22,8 @@ export function AppContextProvider({
     organization: __organization,
     resourceLinks: __resourceLinks,
   });
+
+  const [languages, setLanguages] = useState("");
 
   const {
     authentication, language, sourceRepository, organization,
@@ -50,8 +52,21 @@ export function AppContextProvider({
     organization,
   ]);
 
+  useEffect( () => {
+    async function getLanguages() {
+      const langs = (await fetch('https://td.unfoldingword.org/exports/langnames.json'))
+      const _langs = await langs.json()
+      setLanguages(_langs);
+    }
+
+    if (languages === "") {
+      getLanguages();
+    }
+  }, [languages]
+  );
+
   const value = {
-    state,
+    state: {...state, languages},
     actions,
   };
 
