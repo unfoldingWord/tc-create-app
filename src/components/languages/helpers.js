@@ -14,25 +14,12 @@ export const getLanguageName = ({ languageId, languagesJSON }) => {
 };
 
 /*
-export async function getLanguagesDynamically() {
-  fetch('https://td.unfoldingword.org/exports/langnames.json')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    //languagesJSON = data;
-  });
-}
-*/
-
-/*
 export const getLanguages = ({ languagesJSON }) => {
   const _languages = languagesJSON
     .map(language => formatLanguage({ language }));
   return _languages;
 };
-*/
 
-/*
 export const getGatewayLanguages = () => {
   const _languages = languagesJSON
     .filter(language => language.gw)
