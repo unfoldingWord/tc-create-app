@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
@@ -13,6 +13,7 @@ import {
 } from '@material-ui/icons';
 import { License } from 'scripture-resources-rcl';
 
+import { AppContext } from '../../App.context';
 import { getLanguage } from '../languages/helpers';
 import { localString } from '../../core/localStrings';
 import { SERVER_URL } from '../../core/state.defaults';
@@ -24,6 +25,8 @@ function FilesHeader({
   targetFile,
   language,
 }) {
+  const appContext = useContext(AppContext);
+
   const classes = useStyles({ header: { cursor: 'pointer' } });
 
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
@@ -46,7 +49,10 @@ function FilesHeader({
   const targetBranch = targetRepository.branch || targetRepository.default_branch;
 
   let sourceCompareLink, targetCompareLink;
-  const sourceLanguage = getLanguage({ languageId: sourceRepository.name.split('_')[0] });
+  const sourceLanguage = getLanguage({ 
+    languageId: sourceRepository.name.split('_')[0],
+    languagesJSON: appContext.state.languages,
+  });
   const sourceOwner = sourceRepository.owner.username;
   const targetOwner = targetRepository.owner.username;
 
