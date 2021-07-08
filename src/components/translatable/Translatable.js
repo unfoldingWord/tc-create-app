@@ -153,7 +153,7 @@ function Translatable() {
     scrollToTop();
   }, [filepath, scrollToTop]);
 
-  const filesHeader = targetFile && (
+  const filesHeader = targetFile && targetRepository && (
     <FilesHeader
       sourceRepository={sourceRepository}
       targetRepository={targetRepository}
