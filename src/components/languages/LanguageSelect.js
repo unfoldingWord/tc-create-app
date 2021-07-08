@@ -52,7 +52,6 @@ function LanguageSelect({ language, onLanguage }) {
   };
 
   const getOrgLanguages = () => {
-    console.log("appContext:", appContext)
     return appContext.state.organization.repo_languages
   }
 
