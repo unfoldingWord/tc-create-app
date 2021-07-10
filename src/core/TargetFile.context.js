@@ -6,7 +6,9 @@ import { AppContext } from '../App.context';
 const TargetFileContext = React.createContext();
 
 function TargetFileContextProvider({
-  onOpenValidation, children
+  onOpenValidation, 
+  onConfirmClose, 
+  children
 }) {
   const {
     state: {
@@ -52,6 +54,7 @@ function TargetFileContextProvider({
     onFilepath: setFilepath,
     defaultContent: _defaultContent,
     onOpenValidation: onOpenValidation,
+    onConfirmClose: onConfirmClose
   });
 
   useEffect(() => {
@@ -67,6 +70,13 @@ function TargetFileContextProvider({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateValues.isChanged]);
+  
+  useEffect(() => {
+    if (sourceFileActions && onConfirmClose) {
+      sourceFileActions.setOnConfirmClose(onConfirmClose);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onConfirmClose, sourceFileActions]);
 
   const context = {
     state: { ...state }, 
