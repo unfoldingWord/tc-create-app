@@ -6,7 +6,6 @@ import { TargetFileContextProvider } from './core/TargetFile.context';
 import { Typography, Link } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 import { onOpenValidation } from './core/onOpenValidations';
-import { localString } from './core/localStrings';
 
 
 function Workspace() {
@@ -38,11 +37,6 @@ function Workspace() {
     return notices;
   };
 
-  const _onConfirmClose = () => {
-    const doClose = window.confirm(localString('ConfirmCloseWindow'));
-    return doClose;
-  };
-
   const component = useMemo(() => {
     let _component = <ApplicationStepper />;
 
@@ -51,7 +45,6 @@ function Workspace() {
         _component = (
           <TargetFileContextProvider 
             onOpenValidation={_onOpenValidation}
-            onConfirmClose={_onConfirmClose}
           >
             {
               (criticalErrors.length > 0 && 

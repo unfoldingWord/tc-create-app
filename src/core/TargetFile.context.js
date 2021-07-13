@@ -56,27 +56,15 @@ function TargetFileContextProvider({
     onOpenValidation: onOpenValidation,
     onConfirmClose: onConfirmClose
   });
-
-  useEffect(() => {
-    if (sourceStateValues?.isChanged !== stateValues?.isChanged) {
-      actions.setIsChanged(sourceStateValues?.isChanged);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sourceStateValues.isChanged]);
   
+  // Push "isChanged" from target --> to source.
   useEffect(() => {
-    if (sourceStateValues?.isChanged !== stateValues?.isChanged) {
-      sourceFileActions.setIsChanged(stateValues?.isChanged);
+    if (sourceStateValues && stateValues
+        && sourceStateValues.isChanged !== stateValues.isChanged) {
+      sourceFileActions.setIsChanged(stateValues.isChanged);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateValues.isChanged]);
-  
-  useEffect(() => {
-    if (sourceFileActions && onConfirmClose) {
-      sourceFileActions.setOnConfirmClose(onConfirmClose);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onConfirmClose, sourceFileActions]);
 
   const context = {
     state: { ...state }, 

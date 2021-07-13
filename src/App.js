@@ -25,6 +25,7 @@ import theme from './theme';
 
 import { AppContext, AppContextProvider } from './App.context';
 import { getCommitHash } from './utils';
+import { localString } from './core/localStrings';
 
 import { Typography, Link } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
@@ -70,6 +71,10 @@ function AppComponent() {
     setSourceRepository(undefined);
   }, [setCriticalErrors, setSourceRepository]);
 
+  const _onConfirmClose = useCallback(() => {
+    const doClose = window.confirm(localString('ConfirmCloseWindow'));
+    return doClose;
+  }, []);
 
   const onHeadroomPin = () =>
   {
@@ -129,6 +134,7 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
                 onOpenValidation={_onOpenValidation}
+                onConfirmClose={_onConfirmClose}
               >
               {
                 (criticalErrors.length > 0 && 
