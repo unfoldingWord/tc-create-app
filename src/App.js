@@ -26,10 +26,11 @@ import theme from './theme';
 import { AppContext, AppContextProvider } from './App.context';
 import { getCommitHash } from './utils';
 import { localString } from './core/localStrings';
+import { onOpenValidation } from './core/onOpenValidations';
 
 import { Typography, Link } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
-import { onOpenValidation } from './core/onOpenValidations';
+import { useBeforeunload } from 'react-beforeunload';
 
 const { version } = require('../package.json');
 const commitHash = getCommitHash(); 
@@ -47,6 +48,7 @@ function AppComponent() {
     fontScale,
     config,
     organization,
+    contentIsDirty,
   } = state;
   const {
     setAuthentication,
@@ -66,15 +68,28 @@ function AppComponent() {
     }
     return notices;
   }
+
   const handleClose = useCallback( () => {
     setCriticalErrors([]);
     setSourceRepository(undefined);
   }, [setCriticalErrors, setSourceRepository]);
 
   const _onConfirmClose = useCallback(() => {
-    const doClose = window.confirm(localString('ConfirmCloseWindow'));
-    return doClose;
-  }, []);
+    if (contentIsDirty) {
+      const doClose = window.confirm(localString('ConfirmCloseWindow'));
+      return doClose;
+    } else {
+      return true;
+    }
+  }, [contentIsDirty]);
+ 
+  useBeforeunload((event) => {
+    if (contentIsDirty) {
+      event.preventDefault();
+      event.returnValue = localString('ConfirmCloseWindow');
+      return localString('ConfirmCloseWindow');
+    }
+  });
 
   const onHeadroomPin = () =>
   {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
 import { AppContext } from '../App.context';
@@ -7,7 +7,6 @@ const TargetFileContext = React.createContext();
 
 function TargetFileContextProvider({
   onOpenValidation, 
-  onConfirmClose, 
   children
 }) {
   const {
@@ -16,7 +15,7 @@ function TargetFileContextProvider({
     } = {},
   } = useContext(AppContext);
 
-  const { state: sourceFile, actions: sourceFileActions, stateValues: sourceStateValues } = useContext(FileContext);
+  const { state: sourceFile, stateValues: sourceStateValues } = useContext(FileContext) || {};
 
   const appContext = useContext(AppContext);
   const sourceContext = useContext(FileContext);
@@ -54,17 +53,8 @@ function TargetFileContextProvider({
     onFilepath: setFilepath,
     defaultContent: _defaultContent,
     onOpenValidation: onOpenValidation,
-    onConfirmClose: onConfirmClose
+    onConfirmClose: null,
   });
-  
-  // Push "isChanged" from target --> to source.
-  useEffect(() => {
-    if (sourceStateValues && stateValues
-        && sourceStateValues.isChanged !== stateValues.isChanged) {
-      sourceFileActions.setIsChanged(stateValues.isChanged);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateValues.isChanged]);
 
   const context = {
     state: { ...state }, 

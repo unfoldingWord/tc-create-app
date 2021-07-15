@@ -19,7 +19,7 @@ function Workspace() {
   // note: in above I tried to use setFilepath for use in the Alert
   // onClose() below, but did not work. However, setSourceRepository does
   const { state: sourceFile } = useContext(FileContext);
-
+  
   const sourceRepoMemo = sourceRepository && JSON.stringify(sourceRepository);
   const sourceFilepath = sourceFile && sourceFile.filepath;
   const handleClose = useCallback( () => {
