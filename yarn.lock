@@ -15363,10 +15363,10 @@ uw-content-validation@2.1.1:
     usfm-js "^2.1.0"
     yaml "^1.10.0"
 
-uw-languages-rcl@0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/uw-languages-rcl/-/uw-languages-rcl-0.2.5.tgz#b31ac6faffa29660d2c1f5baa3b606c4fce7480b"
-  integrity sha512-cpsDBZJidHsuDPEAV9mLtb3+JVDdIrRyMigoCWpwDgBX8b4hHpAQAGGq3e6Kb481tq79BH/gZLCqSC3jhWUO+g==
+uw-languages-rcl@0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/uw-languages-rcl/-/uw-languages-rcl-0.2.6.tgz#b655858a3289c6b689da7865c6faf5ac1337ff31"
+  integrity sha512-Lsxqw2ylczlshFNQ5y+IGv6CZTSCAMXtHXt2kWBR0U99Veuawxewk1KPZENm4No/6i1pn1jdPTu9Ry2VBTmCOA==
   dependencies:
     react "^16.14.0"
     react-dom "^16.12.0"
