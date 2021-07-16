@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, 
+  //useState uw-languages-rcl
+} from 'react';
 
 // import { loadState } from './core/persistence';
 import { useStateReducer } from './core/useStateReducer';
+import useLanguages from 'uw-languages-rcl';
 
 export const AppContext = React.createContext();
 
@@ -22,8 +25,9 @@ export function AppContextProvider({
     organization: __organization,
     resourceLinks: __resourceLinks,
   });
-
-  const [languages, setLanguages] = useState("");
+  // uw-languages-rcl
+  //const [languages, setLanguages] = useState("");
+  const { state: languages } = useLanguages();
 
   const {
     authentication, language, sourceRepository, organization,
@@ -52,6 +56,7 @@ export function AppContextProvider({
     organization,
   ]);
 
+  /* uw-languages-rcl
   useEffect( () => {
     async function getLanguages() {
       const langs = (await fetch('https://td.unfoldingword.org/exports/langnames.json'))
@@ -64,6 +69,7 @@ export function AppContextProvider({
     }
   }, [languages]
   );
+  */
 
   const value = {
     state: {...state, languages},
