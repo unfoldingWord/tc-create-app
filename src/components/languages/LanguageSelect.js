@@ -57,11 +57,11 @@ function LanguageSelect({ language, onLanguage }) {
 
   const orgOptions = getOrgLanguages().map( (langId) => {
       const formattedLanguage = getLanguage({languageId: langId, languagesJSON: appContext.state.languages});
-      const value = formattedLanguage.languageId;
-      const name = `${formattedLanguage.languageId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
+      //const value = formattedLanguage.languageId;
+      const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
       const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
       const label = `${name} ${gatewayLabel}`;
-      return { value, label };
+      return { langId, label };
     }
   );
 
