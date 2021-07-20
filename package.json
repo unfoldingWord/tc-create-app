@@ -27,7 +27,7 @@
     "increment-build": "bash scripts/increment-build.sh && git add -A"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.35",
     "@material-ui/styles": "^4.11.3",
@@ -46,7 +46,7 @@
     "scripture-resources-rcl": "4.1.6",
     "use-deep-compare-effect": "^1.3.1",
     "usfm-js": "^2.1.0",
-    "uw-content-validation": "2.1.1"
+    "uw-content-validation": "2.1.5"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.9.2",
