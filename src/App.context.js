@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, 
+  //useState //uw-languages-rcl
+} from 'react';
 
 // import { loadState } from './core/persistence';
 import { useStateReducer } from './core/useStateReducer';
+import { useLanguages } from 'uw-languages-rcl';
 
 export const AppContext = React.createContext();
 
@@ -24,6 +27,8 @@ export function AppContextProvider({
     resourceLinks: __resourceLinks,
     contentIsDirty: __contentIsDirty,
   });
+  // uw-languages-rcl
+  const { state: languages } = useLanguages();
 
   const {
     authentication, language, sourceRepository, organization,
@@ -53,7 +58,7 @@ export function AppContextProvider({
   ]);
 
   const value = {
-    state,
+    state: {...state, languages},
     actions,
   };
 
