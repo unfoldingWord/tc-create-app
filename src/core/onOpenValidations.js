@@ -38,9 +38,10 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
   let idarray = [];
   let idarrayline = [];
   let criticalNotices = [];
+  const incomingTsvHeader = header.join('\t');
 
   // is the content correct?
-  if (tsvHeader !== header.join('\t')) {
+  if (tsvHeader !== incomingTsvHeader) {
     criticalNotices.push([
       `${link}#L1`,
       '1',
@@ -50,12 +51,12 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
   }
 
   // if content not correct, where is the first difference?
-  if (tsvHeader !== header.join('\t')) {
+  if (tsvHeader !== incomingTsvHeader) {
     let firstdiff = -1;
-    let maxlength = Math.max(tsvHeader.length, header.join('\t').length);
+    let maxlength = Math.max(tsvHeader.length, incomingTsvHeader.length);
     for ( let i=0; i < maxlength; i++ ) {
       //console.log("s vs t:", tsvHeader[i], rows[0][i]);
-      if ( tsvHeader.charCodeAt(i) !== header.join('\t').charCodeAt(i) ) {
+      if ( tsvHeader.charCodeAt(i) !== incomingTsvHeader.charCodeAt(i) ) {
         firstdiff = i;
         break;
       }
@@ -63,7 +64,7 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
     if ( firstdiff !== -1 ) {
       let ch1 = tsvHeader.charCodeAt(firstdiff).toString(16);
       if ( tsvHeader.length < firstdiff ) ch1 = 'undefined';
-      let ch2 = header.join('\t').charCodeAt(firstdiff).toString(16);
+      let ch2 = incomingTsvHeader.charCodeAt(firstdiff).toString(16);
       if ( ch2.length === 1 ) ch2='0'+ch2;
       if ( ch1.length === 1 ) ch1='0'+ch1;
       ch2 = 'x'+ch2.toUpperCase();
@@ -72,32 +73,25 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
         `${link}#L1`,
         '1',
         `Headers different at character ${firstdiff+1}: `+
-        `${tsvHeader.charAt(firstdiff)} (${ch1}) vs ${header.join('\t').charAt(firstdiff)} (${ch2})`
+        `${tsvHeader.charAt(firstdiff)} (${ch1}) vs ${incomingTsvHeader.charAt(firstdiff)} (${ch2})`
       ]);
     }
   }
   
   // does it have the correct length?
-  if (tsvHeader.length !== header.join('\t').length) {
+  if (tsvHeader.length !== incomingTsvHeader.length) {
     criticalNotices.push([
       `${link}#L1`,
       '1',
-      `TSV Header has incorrect length, should be ${tsvHeader.length}; found ${header.join('\t').length}`
+      `TSV Header has incorrect length, should be ${tsvHeader.length}; found ${incomingTsvHeader.length}`
     ]);
   }
 
   if (data.length > 1) {
     for (let i = 0; i < data.length; i++) {
       let line = i + 1;
-      /*
-      // ignore, skip empty rows
-      if ( rows[i] === undefined || rows[i] === '' ) {
-        continue;
-      }
-      */
-      //let cols = rows[i].split('\t');
       let cols = data[i];
-      // looking for duplicate ids
+      // look for duplicate ids
       let location = idarray.indexOf(cols[idcolumn]);
       if ( location === -1 ) {
         idarray.push(cols[idcolumn]);
