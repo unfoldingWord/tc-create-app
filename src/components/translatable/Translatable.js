@@ -19,6 +19,7 @@ import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
+import TranslatableTnTSV from './TranslatableTnTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
 
@@ -133,6 +134,8 @@ function Translatable() {
           onContentIsDirty: setContentIsDirty,
         };
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
+      } else if (sourceFile.filepath.match(/^tn_...\.tsv$/)) {
+        _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {

@@ -4,6 +4,8 @@ export const SERVER_URL = process.env.REACT_APP_DOOR43_SERVER_URL;
 
 // removed for now (issue 684)
 // SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-sq',
+// Used to fake 7col unfoldingWord tN resource:
+// SERVER_URL + '/api/v1/repos/test_tn_7col_format/en_tn',
 const config = {
   authentication: {
     server: SERVER_URL,

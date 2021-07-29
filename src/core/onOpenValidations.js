@@ -22,7 +22,7 @@ const onOpenValidationTn9 = (content, url) => {
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
 const onOpenValidationTn7 = (content, url) => {
-  const tsvHeader = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tAnnotation";
+  const tsvHeader = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tNote";
   const numColumns = 7;
   const idcolumn = 1; //zero based
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
