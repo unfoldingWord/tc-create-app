@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BRANCH="fix-cn-898-rm-add-row-dialog-text"
+BRANCH="feature-cn-788-impl-tsv-parser"
 CURDIR=`pwd`
 DIRNAME=`dirname $CURDIR`
 PROJDIR=`basename $DIRNAME`

@@ -4,6 +4,7 @@ import React, {
 
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import * as parser from 'uw-tsv-parser';
 
 import { FileContext } from 'gitea-react-toolkit';
 
@@ -107,6 +108,7 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
       delimiters={delimiters}
   />), [expandedScripture, bookId]);  
 
+  //const _parser = {tsvStringToTable: parser.tsvStringToTable, tableToTsvString: parser.tableToTsvString};
 
   const datatable = useMemo(() => {
     _config.rowHeader = rowHeader;
@@ -120,10 +122,11 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
         config={_config}
         generateRowId={generateRowId}
         options={options}
+        parser={parser}
       />
     );
   }, [sourceFile.content, targetFile.content, onSave, onContentIsDirty, generateRowId, options, rowHeader]);
-  
+
   return (
     <>
     <ResourcesContextProvider
