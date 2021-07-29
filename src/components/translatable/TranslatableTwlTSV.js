@@ -108,8 +108,6 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
       delimiters={delimiters}
   />), [expandedScripture, bookId]);  
 
-  //const _parser = {tsvStringToTable: parser.tsvStringToTable, tableToTsvString: parser.tableToTsvString};
-
   const datatable = useMemo(() => {
     _config.rowHeader = rowHeader;
     return (

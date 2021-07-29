@@ -6,6 +6,7 @@ import { CircularProgress } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 
 import { DataTable } from 'datatable-translatable';
+import * as parser from 'uw-tsv-parser';
 
 import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
 import { FileContext } from 'gitea-react-toolkit';
@@ -180,6 +181,7 @@ function TranslatableTSVWrapper({ onSave, onContentIsDirty }) {
         config={_config}
         generateRowId={generateRowId}
         options={options}
+        parser={parser}
       />
     );
   }, [sourceFile.content, targetFile.content, onSave, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
