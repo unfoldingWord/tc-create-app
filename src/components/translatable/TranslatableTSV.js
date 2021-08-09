@@ -34,7 +34,7 @@ const _config = {
   ],
 };
 
-function TranslatableTSVWrapper({ onSave, onEdit }) {
+function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -176,13 +176,14 @@ function TranslatableTSVWrapper({ onSave, onEdit }) {
         onSave={onSave}
         onEdit={onEdit}
         onValidate={onValidate}
+        onContentIsDirty={onContentIsDirty}
         delimiters={delimiters}
         config={_config}
         generateRowId={generateRowId}
         options={options}
       />
     );
-  }, [sourceFile, targetFile, onSave, onEdit, onValidate, generateRowId, options, rowHeader]);
+  }, [sourceFile, targetFile, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader, ]);
 
   return (
     <>
