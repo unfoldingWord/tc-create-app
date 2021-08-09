@@ -2,15 +2,15 @@
 
 BRANCH="feature-cn-788-impl-tsv-parser"
 CURDIR=`pwd`
-DIRNAME=`dirname $CURDIR`
-PROJDIR=`basename $DIRNAME`
+PROJDIR=`basename $CURDIR`
 
 if [ "$PROJDIR" != "tc-create-app" ]
 then
-  echo "Script must be run from ./tc-create-app/scripts"
+  echo "Script must be run from ./tc-create-app"
+  echo "found $PROJDIR"
   exit
 fi
-cd ..
+
 echo Assumptions:
 echo All project folders are at same level
 echo All branch names for each project folder are the same 
