@@ -15,7 +15,7 @@ function TargetFileContextProvider({
     } = {},
   } = useContext(AppContext);
 
-  const { state: sourceFile, stateValues: sourceStateValues } = useContext(FileContext) || {};
+  const { state: sourceFile, stateValues: sourceStateValues, actions: sourceFileActions } = useContext(FileContext) || {};
 
   const appContext = useContext(AppContext);
   const sourceContext = useContext(FileContext);
