@@ -22,6 +22,7 @@ cd ../datatable-translatable
 git switch master
 git pull 
 git switch $BRANCH
+yalc remove --all
 git pull
 yarn install
 yalc publish
