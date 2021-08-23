@@ -19,9 +19,9 @@ echo _________________________________
 echo Working on datatable-translatable
 echo
 cd ../datatable-translatable
-git switch master
+git checkout master
 git pull 
-git switch $BRANCH
+git checkout $BRANCH
 yalc remove --all
 git pull
 yarn install
@@ -34,7 +34,7 @@ echo
 cd ../tc-create-app
 echo First, remove any existing yalc links
 yalc remove --all
-git switch develop
+git checkout develop
 git pull 
 
 yalc link datatable-translatable

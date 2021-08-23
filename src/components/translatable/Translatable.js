@@ -105,7 +105,7 @@ function Translatable() {
     const saveOnTranslation = (
       async (content) => {
         setSavingTargetFileContent(content);
-
+debugger
         try {
           await targetFileActions.save(content);
         } catch (error) {
