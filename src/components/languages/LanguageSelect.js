@@ -52,15 +52,22 @@ function LanguageSelect({ language, onLanguage }) {
   };
 
   const getOrgLanguages = () => {
-    return appContext.state.organization.repo_languages
+    return appContext.state.organization.repo_languages || ['']
   }
 
   const orgOptions = getOrgLanguages().map( (langId) => {
       const formattedLanguage = getLanguage({languageId: langId, languagesJSON: appContext.state.languages});
       //const value = formattedLanguage.languageId;
-      const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
-      const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
-      const label = `${name} ${gatewayLabel}`;
+      // test whether formattedLanguage has any properties.
+      // if it doesn't, then that means that the org has no languages for resources
+      let label;
+      if ( formattedLanguage.languageName ){
+        const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
+        const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
+        label = `${name} ${gatewayLabel}`;
+      } else {
+        label = 'No Languages Found';
+      }
       return { langId, label };
     }
   );
