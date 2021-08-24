@@ -49,7 +49,7 @@
     "usfm-js": "^2.1.0",
     "uw-content-validation": "2.1.5",
     "uw-languages-rcl": "1.0.0",
-    "uw-tsv-parser": "^1.0.0-alpha.1"
+    "uw-tsv-parser": "^1.0.0-alpha.2"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.9.2",
