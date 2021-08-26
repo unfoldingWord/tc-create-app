@@ -16,7 +16,7 @@ const config = {
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_ta',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_tw',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_twl',
-      SERVER_URL + '/api/v1/repos/unfoldingword/en_tn',
+      SERVER_URL + '/api/v1/repos/test_tn_7col_format/en_tn',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_tq',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-tq',
