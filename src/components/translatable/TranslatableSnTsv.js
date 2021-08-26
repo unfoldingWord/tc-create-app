@@ -20,7 +20,7 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
-import RowHeaderTn from './RowHeaderTn';
+import RowHeaderSn from './RowHeaderSn';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
@@ -39,7 +39,7 @@ const _config = {
 
 
 
-function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
+function TranslatableSnTSVWrapper({ onSave, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -113,7 +113,7 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
       const _name  = targetFile.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
-      // const rawResults = await checkNotesTSV7Table(languageCode, repoCode, bookID, filename, tableText, givenLocation, checkingOptions);
+      // checkNotesTSV7Table with repo code "TN2"
       const rawResults = await cv.checkNotesTSV7Table(langId, 'TN2', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: false});
       const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
@@ -172,7 +172,7 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderTn
+  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderSn
     bookId={bookId}
     open={expandedScripture}
     rowData={rowData}
@@ -210,7 +210,7 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTnTSV datatable={datatable} />
+      <TranslatableSnTSV datatable={datatable} />
       {open &&  <Dialog
         disableBackdropClick
         open={open}
@@ -238,7 +238,7 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
   );
 }
 
-function TranslatableTnTSV({ datatable }) {
+function TranslatableSnTSV({ datatable }) {
   const { state: { books } } = useContext(ResourcesContext);
   return books ? datatable :
     (<div style={{
@@ -247,4 +247,4 @@ function TranslatableTnTSV({ datatable }) {
     ><CircularProgress /></div>);
 }
 
-export default TranslatableTnTSVWrapper;
+export default TranslatableSnTSVWrapper;
