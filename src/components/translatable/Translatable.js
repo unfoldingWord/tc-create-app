@@ -140,10 +140,8 @@ function Translatable() {
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
-        console.log("matched on SQ")
         _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
-        console.log("matched on SN")
         _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
         _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
