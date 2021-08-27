@@ -22,6 +22,8 @@ import TranslatableTSV from './TranslatableTSV';
 import TranslatableTnTSV from './TranslatableTnTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
+import TranslatableSnTSV from './TranslatableTwlTSV';
+import TranslatableSqTSV from './TranslatableTwlTSV';
 
 function Translatable() {
   const classes = useStyles();
