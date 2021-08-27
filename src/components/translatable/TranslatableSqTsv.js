@@ -43,7 +43,7 @@ function TranslatableSqTSVWrapper({ onSave, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
-
+  
   const {
     state: { resourceLinks, expandedScripture, validationPriority },
     actions: { setResourceLinks },

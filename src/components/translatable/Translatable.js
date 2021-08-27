@@ -22,8 +22,8 @@ import TranslatableTSV from './TranslatableTSV';
 import TranslatableTnTSV from './TranslatableTnTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
-import TranslatableSnTSV from './TranslatableTwlTSV';
-import TranslatableSqTSV from './TranslatableTwlTSV';
+import TranslatableSnTSV from './TranslatableSnTSV';
+import TranslatableSqTSV from './TranslatableSqTSV';
 
 function Translatable() {
   const classes = useStyles();
@@ -140,8 +140,10 @@ function Translatable() {
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
+        console.log("matched on SQ")
         _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
+        console.log("matched on SN")
         _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
         _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
