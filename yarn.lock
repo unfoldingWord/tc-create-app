@@ -16348,10 +16348,10 @@ uw-languages-rcl@1.0.0:
     regenerator-runtime "^0.13.7"
     use-deep-compare-effect "^1.3.1"
 
-uw-tsv-parser@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/uw-tsv-parser/-/uw-tsv-parser-1.0.0.tgz#d85dca246803b0ecef2320bef06a060ceda23ac8"
-  integrity sha512-1EkwPwBmOhXObkkGn8zaW1ANGba1E0U0qzVxHgPtYeU7NSTh3JUDIVnKwu43XzwF8UuPcLyF7MqA5iBLMVGJOA==
+uw-tsv-parser@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/uw-tsv-parser/-/uw-tsv-parser-1.0.1.tgz#c59d6934bd442e4f99fbf76e464bd6b0a350ce08"
+  integrity sha512-2RtjLKpXtXDAUVNA79Ny5PpHv0ZCTrqR5hHbGngUWQJNWkIFv+RHobfKFmIZ8NXsP6bPY/dkdN3axRw3P6JbjA==
 
 v8-compile-cache@^2.0.3, v8-compile-cache@^2.1.1:
   version "2.3.0"
