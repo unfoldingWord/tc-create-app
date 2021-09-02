@@ -29,14 +29,14 @@ function RowHeaderSn({
   const occurrence = rowData[5].split(delimiters.cell)[1];
   const reference = {
     bookId: book.toLowerCase(),
-    chapter: chapter,
-    verse: verse,
+    chapter: parseInt(chapter),
+    verse: parseInt(verse),
   };
 
   let _component = (
     <div className={classes.defaultHeader}>
       <Typography variant='h6' className={classes.title}>
-        {`${bookId.toUpperCase()} ${reference}`}
+        {`${bookId.toUpperCase()} ${chapter}:${verse}`}
       </Typography>
       {actionsMenu}
     </div>);
