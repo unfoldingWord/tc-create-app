@@ -89,7 +89,7 @@ function FilesHeader({
     const style = { background: '#fff9' };
     const deleteIcon = (org_name === "translate_test") ? <GetApp style={{color:'#d3d3e6'}} /> : <GetApp />; 
     const iconTooltip='OpenSourceText';
-    const deleteIconTooltip = (org_name === "translate_test") ? "Can't CompareSource" : 'CompareSource';
+    const deleteIconTooltip = (org_name === "translate_test") ? "Cannot compare source branch in translation mode." : 'CompareSource';
     return chip({
       label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
     });
