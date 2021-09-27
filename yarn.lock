@@ -5442,14 +5442,14 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@0.11.11:
-  version "0.11.11"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.11.tgz#54a0c200e6bb8570fa52decf8ec71fec6cab7e86"
-  integrity sha512-QfLQh//qHvRhZkbcGn2MEaPBFWRsTGwNZdSnO8aK7tw/M0ttQFU8mIyhAWcCfdyyypy56Vh7KYxBOXHwOwARDw==
+datatable-translatable@0.11.13.rc-4:
+  version "0.11.1-3.rc-4"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.1-3.rc-4.tgz#f29bc2b912ceaed11f8387d11db4376e85027f9b"
+  integrity sha512-XzmS4XkI6a3C4n+1HJhW10kL1eohHjHlohzzyw5USFbhaH9MgkrHM+aYq/yw9eQFUBExaOJBZThpCxygrMXW9A==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
-    markdown-translatable "1.3.1"
+    markdown-translatable "1.3.1-rc.1"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -7557,10 +7557,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.6.4.tgz#43ef60643c4015ed106d3dbe009cfb11c08a15eb"
-  integrity sha512-xSL//jpDh7A/Uqxat2bVMT+4fNp2oGi9N6kSpN57YML1l134rgIKJ26/Rhiamk8Sg3ni2fwTw2FMxADg4YibFQ==
+gitea-react-toolkit@1.11.1-rc.1:
+  version "1.11.1-rc.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.11.1-rc.1.tgz#05f34898cb4a20d569742b43da2a92d817d1a97e"
+  integrity sha512-y4tsFuUe2veQgIGpvAlnj/0aNGY9EXDWp+51tIWnhSONC3nS7qpBYMwHJk4BI+vnjrnAr9ObT1gxtLnQIbt1uQ==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -7568,23 +7568,7 @@ gitea-react-toolkit@1.6.4:
     base-64 "0.1.0"
     jszip "^3.5.0"
     localforage "1.7.3"
-    markdown-translatable "1.2.16"
-    prop-types "15.7.2"
-    use-deep-compare-effect "^1.3.1"
-    utf8 "3.0.0"
-
-gitea-react-toolkit@1.9.3:
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.9.3.tgz#0f1467087fbb814aa68f6f6bc695407c76cd3966"
-  integrity sha512-JubGD8xmLFTSa4unszKIohVxq/6N04mISkA7XekyuPhH1Bm3GBBScETO5zUyZD2x7YeOnUyqCo4lBNKS/6HD9Q==
-  dependencies:
-    awesome-debounce-promise "2.1.0"
-    axios "0.19.0"
-    axios-cache-adapter "2.4.1"
-    base-64 "0.1.0"
-    jszip "^3.5.0"
-    localforage "1.7.3"
-    markdown-translatable "1.3.1"
+    markdown-translatable "1.3.1-rc.1"
     prop-types "15.7.2"
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
@@ -10602,24 +10586,10 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-markdown-translatable@1.2.16:
-  version "1.2.16"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.2.16.tgz#048624bb4762370db30030c4d0265b721c54f7e8"
-  integrity sha512-miTzfgoCCFwodkNN9EuUlGg2HoKZbJlYt1BqbqsfpT2jbXbu7jMPVB4d+Jj7wh3wyNSJzON4GqV4X90ke6Gt1w==
-  dependencies:
-    deep-freeze "^0.0.1"
-    md5 "^2.2.1"
-    prop-types "^15.7.2"
-    react-headroom "^3.1.0"
-    react-markdown "4.0.6"
-    showdown "^1.9.1"
-    turndown "^7.0.0"
-    turndown-plugin-gfm "^1.0.2"
-
-markdown-translatable@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.3.1.tgz#29393f8650be38885c7991f2e2e661bbe9d000ae"
-  integrity sha512-oZieaVOCjxZISyGDvcpb3XsJsnPvKd4xCULFQawQ/L395EwGHFERG6gCH65b3w3HjkLEWhdPknWf1BLK6Mu6Tg==
+markdown-translatable@1.3.1-rc.1:
+  version "1.3.1-rc.1"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-1.3.1-rc.1.tgz#498a264d544f87511465ae06dd454565be1daabb"
+  integrity sha512-Cn6GFYHZTAQOBy+XCtweOzDVMmshTjIgd2z9oex9DlNWVqlHO54yEvXduFg4YOl4qgTxkdeH+i3Z3VA+01d71w==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
@@ -14468,16 +14438,16 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@4.1.6:
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.1.6.tgz#3b173c84994055c4d042ae6e39e3827179cc98c6"
-  integrity sha512-VISwN0+DYKA9E4eaQmFeXeP9IcpHmRK/Db6kU2P4Xdiosta8ZBjsTroRHJoWUEggCNpouYJlIoP9Yn7vMx6I1w==
+scripture-resources-rcl@4.1.9-rc.1:
+  version "4.1.9-rc.1"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.1.9-rc.1.tgz#ef9cd5c8ec8dd8d6af67fd9175410e8260153703"
+  integrity sha512-UTUQKWgfBS76CBsfClmpbgYU48CCufizxcpSpeI3A7eRKJUM31qSB+losGUQRICD2gFq6JuMB/Jrodr1bCGrLw==
   dependencies:
     deep-freeze "^0.0.1"
-    gitea-react-toolkit "1.6.4"
+    gitea-react-toolkit "1.11.1-rc.1"
     js-yaml-parser "^1.0.0"
     lodash "^4.17.15"
-    markdown-translatable "1.2.16"
+    markdown-translatable "1.3.1-rc.1"
     nyc "^15.0.0-beta.3"
     prop-types "^15.7.2"
     react-waypoint "^9.0.2"
