@@ -95,13 +95,26 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   const _onValidate = useCallback(async (rows) => {
     // sample name: en_tn_08-RUT.tsv
     // NOTE! the content on-screen, in-memory does NOT include
-    // the headers. So the initial value of tsvRows will be
-    // the headers.
+    // the headers. This must be added
+    const header = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
     if ( targetFile && rows ) {
+      // first - create a string from the rows 2D array (table)
+      let tableString = header;
+      for (let i=0; i < rows.length; i++) {
+        for (let j=0; j < rows[i].length; j++) {
+          tableString += rows[i][j];
+          if ( j < (rows[i].length - 1) ) {
+            tableString += delimiters.cell;
+          }
+        }
+        tableString += delimiters.row;
+      }
+
+      // second collect parameters needed by cv package
       const _name  = targetFile.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
-      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: false});
+      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', tableString, '', {suppressNoticeDisablingFlag: false});
       const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
