@@ -2,15 +2,14 @@
 
 BRANCH="feature-cn-897-add-row-below-deleted-rows"
 CURDIR=`pwd`
-DIRNAME=`dirname $CURDIR`
-PROJDIR=`basename $DIRNAME`
+PROJDIR=`basename $CURDIR`
 
 if [ "$PROJDIR" != "tc-create-app" ]
 then
-  echo "Script must be run from ./tc-create-app/scripts"
+  echo "Script must be run from ./tc-create-app"
   exit
 fi
-cd ..
+
 echo Assumptions:
 echo All project folders are at same level
 echo All branch names for each project folder are the same 
@@ -23,6 +22,7 @@ git switch master
 git pull 
 git switch $BRANCH
 git pull
+yalc remove --all
 yarn install
 yalc publish
 

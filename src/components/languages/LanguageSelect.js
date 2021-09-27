@@ -52,15 +52,20 @@ function LanguageSelect({ language, onLanguage }) {
   };
 
   const getOrgLanguages = () => {
-    return appContext.state.organization.repo_languages
+    return appContext.state.organization.repo_languages || ['']
   }
 
   const orgOptions = getOrgLanguages().map( (langId) => {
       const formattedLanguage = getLanguage({languageId: langId, languagesJSON: appContext.state.languages});
       //const value = formattedLanguage.languageId;
-      const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
-      const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
-      const label = `${name} ${gatewayLabel}`;
+      // test whether formattedLanguage has any properties.
+      // if it doesn't, then that means that the org has no languages for resources
+      let label;
+      if ( formattedLanguage.languageName ){
+        const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
+        const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
+        label = `${name} ${gatewayLabel}`;
+      }
       return { langId, label };
     }
   );
@@ -86,18 +91,27 @@ function LanguageSelect({ language, onLanguage }) {
 
   return (
     <div className={classes.root}>
-      <NoSsr>
-        <Select
-          className="language-select-dropdown"
-          classes={classes}
-          options={orgOptions}
-          components={components}
-          value={value}
-          onChange={handleChange}
-          placeholder="Select Language"
-        />
-        <div className={classes.divider} />
-      </NoSsr>
+      {
+        orgOptions[0].label === undefined ? 
+        (
+          <div><p>No Languages Found</p></div>
+        )
+        :
+        (
+          <NoSsr>
+            <Select
+              className="language-select-dropdown"
+              classes={classes}
+              options={orgOptions}
+              components={components}
+              value={value}
+              onChange={handleChange}
+              placeholder="Select Language"
+          />
+            <div className={classes.divider} />
+          </NoSsr>
+        )
+      }
     </div>
   );
 }
