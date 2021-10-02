@@ -2,10 +2,12 @@
   Commmon code to run Content Validation process.
 */
 import * as csv from './csvMaker';
+import * as tsvParser from 'uw-tsv-parser';
 
 export async function contentValidate(rows, header, cvFunction, langId, bookID, resourceCode, validationPriority) {
   console.log("bookID", bookID);
   // first - create a string from the rows 2D array (table)
+  /*
   let tableString = header;
   for (let i=0; i < rows.length; i++) {
 	for (let j=0; j < rows[i].length; j++) {
@@ -16,13 +18,13 @@ export async function contentValidate(rows, header, cvFunction, langId, bookID, 
 	}
 	tableString += '\n';
   }
-
-  // second collect parameters needed by cv package
-  /*
-  const _name  = targetFile.name.split('_');
-  const langId = _name[0];
-  const bookID = _name[2].split('-')[1].split('.')[0];
   */
+  let tableString = header;
+  const tsvObject = tsvParser.tableToTsvString(rows);
+  tableString += tsvObject.data;
+  console.log("table for cv:", tableString);
+
+  // second run the cv API
   const rawResults = await cvFunction(langId, resourceCode, bookID.toUpperCase(), 'dummy', tableString, '', {suppressNoticeDisablingFlag: false});
   console.log("rawResults:", rawResults);
   const nl = rawResults.noticeList;
@@ -33,6 +35,7 @@ export async function contentValidate(rows, header, cvFunction, langId, bookID, 
   Object.keys(nl).forEach ( key => {
     inPriorityRange = false; // reset for each
     const rowData = nl[key];
+    console.log("rowData:", rowData)
     if ( validationPriority === 'med' && rowData.priority > 599 ) {
       inPriorityRange = true;
     } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
@@ -49,7 +52,7 @@ export async function contentValidate(rows, header, cvFunction, langId, bookID, 
         String(rowData.rowID),
         String(rowData.fieldName || ""),
         String(rowData.characterIndex || ""),
-        String(rowData.extract || ""),
+        String(rowData.excerpt || ""),
         String(rowData.message),
         String(rowData.location),
       ])
