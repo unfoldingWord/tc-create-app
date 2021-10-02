@@ -23,6 +23,7 @@ import RowHeader from './RowHeader';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
+import { contentValidate } from '../../core/contentValidate';
 
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
@@ -50,6 +51,7 @@ function TranslatableTSVWrapper({ onSave, onContentIsDirty }) {
   );
 
   const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
+  const langId = targetFile.name.split('_')[0];
   
   const onResourceLinks = useCallback(
     (_resourceLinks) => {
@@ -93,73 +95,25 @@ function TranslatableTSVWrapper({ onSave, onContentIsDirty }) {
   }, [setOpen]);
 
   const _onValidate = useCallback(async (rows) => {
-    // sample name: en_tn_08-RUT.tsv
     // NOTE! the content on-screen, in-memory does NOT include
-    // the headers. This must be added
+    // the headers. This must be added.
+    let data = [];
     const header = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
     if ( targetFile && rows ) {
-      // first - create a string from the rows 2D array (table)
-      let tableString = header;
-      for (let i=0; i < rows.length; i++) {
-        for (let j=0; j < rows[i].length; j++) {
-          tableString += rows[i][j];
-          if ( j < (rows[i].length - 1) ) {
-            tableString += delimiters.cell;
-          }
-        }
-        tableString += delimiters.row;
-      }
-
-      // second collect parameters needed by cv package
-      const _name  = targetFile.name.split('_');
-      const langId = _name[0];
-      const bookID = _name[2].split('-')[1].split('.')[0];
-      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', tableString, '', {suppressNoticeDisablingFlag: false});
-      const nl = rawResults.noticeList;
-      let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
-      let data = [];
-      data.push(hdrs);
-      let inPriorityRange = false;
-      Object.keys(nl).forEach ( key => {
-        inPriorityRange = false; // reset for each
-        const rowData = nl[key];
-        if ( validationPriority === 'med' && rowData.priority > 599 ) {
-          inPriorityRange = true;
-        } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
-          inPriorityRange = true;
-        } else if ( validationPriority === 'low' ) {
-          inPriorityRange = true;
-        }
-        if ( inPriorityRange ) {
-          csv.addRow( data, [
-              String(rowData.priority),
-              String(rowData.C),
-              String(rowData.V),
-              String(rowData.lineNumber),
-              String(rowData.rowID),
-              String(rowData.fieldName || ""),
-              String(rowData.characterIndex || ""),
-              String(rowData.extract || ""),
-              String(rowData.message),
-              String(rowData.location),
-          ])
-        }
-      });
-
+      data = await contentValidate(rows, header, cv.checkTN_TSV9Table, langId, bookId, 'TN', validationPriority);
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
         return;
       }
-
+    
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
-      csv.download(fn, csv.toCSV(data));
-  
-      //setOpen(false);
+      csv.download(fn, csv.toCSV(data));    
     }
+
     setOpen(false);
-  },[targetFile, validationPriority]);
+  },[targetFile, validationPriority, langId, bookId]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);

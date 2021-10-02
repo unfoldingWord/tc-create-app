@@ -21,6 +21,10 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import { AppContext } from '../../App.context';
 import RowHeaderTwl from './RowHeaderTwl';
 
+import * as cv from 'uw-content-validation';
+import * as csv from '../../core/csvMaker';
+import { contentValidate } from '../../core/contentValidate';
+
 const delimiters = { row: '\n', cell: '\t' };
 // columns Reference	ID	Tags	OrigWords	Occurrence	TWLink
 const _config = {
@@ -38,9 +42,10 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
   const [open, setOpen] = React.useState(false);
 
   const {
-    state: { resourceLinks, expandedScripture },
+    state: { resourceLinks, expandedScripture, validationPriority, targetRepository },
     actions: { setResourceLinks },
   } = useContext(AppContext);
+  const langId = targetRepository.language;
 
   const { state: sourceFile } = useContext(FileContext);
   const { state: targetFile } = useContext(
@@ -94,6 +99,33 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
     setOpen(false);
   }, [setOpen]);
 
+  const _onValidate = useCallback(async (rows) => {
+    // NOTE! the content on-screen, in-memory does NOT include
+    // the headers. This must be added.
+    let data = [];
+    const header = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink\n";
+    if ( targetFile && rows ) {
+      data = await contentValidate(rows, header, cv.checkTWL_TSV6Table, langId, bookId, 'TWL', validationPriority);
+      if ( data.length < 2 ) {
+        alert("No Validation Errors Found");
+        setOpen(false);
+        return;
+      }
+    
+      let ts = new Date().toISOString();
+      let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
+      csv.download(fn, csv.toCSV(data));    
+    }
+
+    setOpen(false);
+  },[targetFile, validationPriority, langId, bookId]);
+
+
+  const onValidate = useCallback( (rows) => {
+    setOpen(true);
+    setTimeout( () => _onValidate(rows), 1);
+  }, [_onValidate]);
+
   const options = {
     page: 0,
     rowsPerPage: 25,
@@ -115,6 +147,7 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
         onSave={onSave}
+        onValidate={onValidate}
         onContentIsDirty={onContentIsDirty}
         delimiters={delimiters}
         config={_config}
@@ -123,7 +156,7 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
         parser={parser}
       />
     );
-  }, [sourceFile.content, targetFile.content, onSave, onContentIsDirty, generateRowId, options, rowHeader]);
+  }, [sourceFile.content, targetFile.content, onSave, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
 
   return (
     <>
