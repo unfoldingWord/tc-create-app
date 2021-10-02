@@ -24,6 +24,7 @@ import RowHeaderSq from './RowHeaderSq';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
+import { contentValidate } from '../../core/contentValidate';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -45,9 +46,10 @@ function TranslatableSqTSVWrapper({ onSave, onContentIsDirty }) {
   const [open, setOpen] = React.useState(false);
   
   const {
-    state: { resourceLinks, expandedScripture, validationPriority },
+    state: { resourceLinks, expandedScripture, validationPriority, targetRepository },
     actions: { setResourceLinks },
   } = useContext(AppContext);
+  const langId = targetRepository.language;
 
   const { state: sourceFile } = useContext(FileContext);
   const { state: targetFile } = useContext(
@@ -105,61 +107,25 @@ function TranslatableSqTSVWrapper({ onSave, onContentIsDirty }) {
   }, [setOpen]);
 
   const _onValidate = useCallback(async (rows) => {
-    // sample name: en_tn_08-RUT.tsv
     // NOTE! the content on-screen, in-memory does NOT include
-    // the headers. So the initial value of tsvRows will be
-    // the headers.
+    // the headers. This must be added.
+    let data = [];
+    const header = "Reference\tID\tTags\tQuote\tOccurrence\tQuestion\tResponse\n";
     if ( targetFile && rows ) {
-      const _name  = targetFile.name.split('_');
-      const langId = _name[0];
-      const bookID = _name[2].split('-')[1].split('.')[0];
-      // const rawResults = await checkQuestionsTSV7Table(languageCode, repoCode, bookID, filename, tableText, givenLocation, checkingOptions);
-      const rawResults = await cv.checkQuestionsTSV7Table(langId, 'TQ2', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: false});
-      const nl = rawResults.noticeList;
-      let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
-      let data = [];
-      data.push(hdrs);
-      let inPriorityRange = false;
-      Object.keys(nl).forEach ( key => {
-        inPriorityRange = false; // reset for each
-        const rowData = nl[key];
-        if ( validationPriority === 'med' && rowData.priority > 599 ) {
-          inPriorityRange = true;
-        } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
-          inPriorityRange = true;
-        } else if ( validationPriority === 'low' ) {
-          inPriorityRange = true;
-        }
-        if ( inPriorityRange ) {
-          csv.addRow( data, [
-              String(rowData.priority),
-              String(rowData.C),
-              String(rowData.V),
-              String(rowData.lineNumber),
-              String(rowData.rowID),
-              String(rowData.fieldName || ""),
-              String(rowData.characterIndex || ""),
-              String(rowData.extract || ""),
-              String(rowData.message),
-              String(rowData.location),
-          ])
-        }
-      });
-
+      data = await contentValidate(rows, header, cv.checkQuestionsTSV7Table, langId, bookId, 'TQ2', validationPriority);
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
         return;
       }
-
+    
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
-      csv.download(fn, csv.toCSV(data));
-  
-      //setOpen(false);
+      csv.download(fn, csv.toCSV(data));    
     }
+
     setOpen(false);
-  },[targetFile, validationPriority]);
+  },[targetFile, validationPriority, langId, bookId]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);

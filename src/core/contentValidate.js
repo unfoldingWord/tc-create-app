@@ -5,28 +5,13 @@ import * as csv from './csvMaker';
 import * as tsvParser from 'uw-tsv-parser';
 
 export async function contentValidate(rows, header, cvFunction, langId, bookID, resourceCode, validationPriority) {
-  console.log("bookID", bookID);
   // first - create a string from the rows 2D array (table)
-  /*
-  let tableString = header;
-  for (let i=0; i < rows.length; i++) {
-	for (let j=0; j < rows[i].length; j++) {
-	  tableString += rows[i][j];
-	  if ( j < (rows[i].length - 1) ) {
-		tableString += '\t';
-	  }
-	}
-	tableString += '\n';
-  }
-  */
   let tableString = header;
   const tsvObject = tsvParser.tableToTsvString(rows);
   tableString += tsvObject.data;
-  console.log("table for cv:", tableString);
 
   // second run the cv API
   const rawResults = await cvFunction(langId, resourceCode, bookID.toUpperCase(), 'dummy', tableString, '', {suppressNoticeDisablingFlag: false});
-  console.log("rawResults:", rawResults);
   const nl = rawResults.noticeList;
   let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
   let data = [];
@@ -35,7 +20,6 @@ export async function contentValidate(rows, header, cvFunction, langId, bookID, 
   Object.keys(nl).forEach ( key => {
     inPriorityRange = false; // reset for each
     const rowData = nl[key];
-    console.log("rowData:", rowData)
     if ( validationPriority === 'med' && rowData.priority > 599 ) {
       inPriorityRange = true;
     } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
