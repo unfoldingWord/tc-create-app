@@ -15,7 +15,7 @@ function TargetFileContextProvider({
     } = {},
   } = useContext(AppContext);
 
-  const { state: sourceFile, stateValues: sourceStateValues } = useContext(FileContext) || {};
+  const { state: sourceFile, stateValues: sourceStateValues, actions: sourceFileActions } = useContext(FileContext) || {};
 
   const appContext = useContext(AppContext);
   const sourceContext = useContext(FileContext);
@@ -53,6 +53,10 @@ function TargetFileContextProvider({
     onFilepath: setFilepath,
     defaultContent: _defaultContent,
     onOpenValidation: onOpenValidation,
+    // Pass cache actions from the app's FileContext (happens to be SOURCE).
+    // Sharing actions allows the app to use onCacheChange events.
+    onLoadCache: sourceFileActions.onLoadCache,
+    onSaveCache: sourceFileActions.onSaveCache,
     onConfirmClose: null,
   });
 

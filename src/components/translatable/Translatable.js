@@ -31,7 +31,7 @@ function Translatable() {
 
   const { state: {config, language, sourceRepository, targetRepository, filepath}, actions: {setContentIsDirty} } = useContext(AppContext);
 
-  const { actions: {authenticationActions} } = useContext(AuthenticationContext);
+  const { actions: authenticationActions } = useContext(AuthenticationContext);
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
   const [doSaveRetry, setDoSaveRetry] = useState(false);
@@ -120,6 +120,13 @@ function Translatable() {
         }
       }
     );
+
+    const autoSaveOnEdit = (
+      async (content) => {
+        targetFileActions.saveCache(content);
+      }
+    );
+
     if (
       filepath &&
       sourceFile &&
@@ -144,9 +151,9 @@ function Translatable() {
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
         _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
-        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
-        _translatable = <TranslatableTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
