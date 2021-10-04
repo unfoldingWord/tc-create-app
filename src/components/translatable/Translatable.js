@@ -19,8 +19,11 @@ import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
+import TranslatableTnTSV from './TranslatableTnTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
+import TranslatableSnTSV from './TranslatableSnTSV';
+import TranslatableSqTSV from './TranslatableSqTSV';
 
 function Translatable() {
   const classes = useStyles();
@@ -104,11 +107,6 @@ function Translatable() {
     const saveOnTranslation = (
       async (content) => {
         setSavingTargetFileContent(content);
-
-        // DEBUG
-        console.log("targetFile");
-        console.log(targetFile);
-
         try {
           await targetFileActions.save(content);
         } catch (error) {
@@ -125,7 +123,6 @@ function Translatable() {
 
     const autoSaveOnEdit = (
       async (content) => {
-        console.log("tC Create / autosave", targetFile, content);
         targetFileActions.saveCache(content);
       }
     );
@@ -144,9 +141,15 @@ function Translatable() {
           onTranslation: saveOnTranslation,
           onContentIsDirty: setContentIsDirty,
         };
-        _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} onEdit={autoSaveOnEdit} /></MarkdownContextProvider>;
+        _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
+      } else if (sourceFile.filepath.match(/^tn_...\.tsv$/)) {
+        _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
-        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
+        _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
+        _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
         _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
@@ -161,11 +164,6 @@ function Translatable() {
   useEffect(() => {
     scrollToTop();
   }, [filepath, scrollToTop]);
-
-  console.log("targetFile");
-  console.log(targetFile);
-  console.log("targetRepository");
-  console.log(targetRepository);
 
   const filesHeader = targetFile && targetRepository && (
     <FilesHeader

@@ -60,8 +60,6 @@ const cacheStore = localforage.createInstance({
 });
 
 export const saveFileCache = async (file, content) => {
-  console.log("tcc saveFileCache", file, content);
-
   let response;
   const key = file.html_url;
 
@@ -74,7 +72,6 @@ export const saveFileCache = async (file, content) => {
   };
 
   if (content === null || content === undefined) {
-    console.log("tcc saveFileCache // REMOVING", file, content);
     response = await cacheStore.removeItem(key);
   } else {
     response = await cacheStore.setItem(key, cachedContent);
@@ -84,6 +81,5 @@ export const saveFileCache = async (file, content) => {
 
 export const loadFileCache = async (html_url) => {
   const cachedFile = await loadValue(cacheStore, html_url);
-  console.log("tc create loadCacheTargetFile", html_url, cachedFile);
   return cachedFile;
 };

@@ -22,6 +22,5 @@ yalc remove --all
 git switch develop
 git pull 
 git switch $BRANCH
-git pull
 yarn install
 yarn start
