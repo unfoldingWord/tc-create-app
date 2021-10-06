@@ -45,8 +45,8 @@ function FilesHeader({
       style={style}
     />
   ), [classes.header]);
-  const sourceBranch = sourceRepository?.branch || sourceRepository?.default_branch;
-  const targetBranch = targetRepository?.branch || targetRepository?.default_branch;
+  const sourceBranch = sourceRepository?.branch || sourceRepository?.default_branch; 
+  const targetBranch = targetRepository?.branch || targetRepository?.default_branch; 
 
   let sourceCompareLink, targetCompareLink;
   const sourceLanguage = getLanguage({ 
@@ -54,8 +54,8 @@ function FilesHeader({
     languagesJSON: appContext.state.languages,
   });
   
-  // const sourceOwner = sourceRepository.owner.username;
-  // const targetOwner = targetRepository.owner.username;
+  const sourceOwner = sourceRepository.owner.username;
+  const targetOwner = targetRepository.owner.username;
 
   if (sourceLanguage.languageName === language.languageName) {
     if (sourceRepository.full_name === targetRepository.full_name) {
@@ -70,7 +70,6 @@ function FilesHeader({
     targetCompareLink = `${targetRepository.html_url}/compare/master...${targetBranch}`;
   }
   const sourceChip = useMemo(() => {
-    const org_name = targetRepository.owner.login;
     const { full_name } = sourceRepository;
     let label = `${sourceLanguage.languageName} - ${full_name}/${sourceBranch}`;
     let openDcsLink = sourceFile.html_url;
@@ -85,11 +84,11 @@ function FilesHeader({
       licenseLink = SERVER_URL + "/" + Path.join('unfoldingword',sourceRepository.name,'src','tag', prodTag, 'LICENSE.md')
     }
     const onClick = () => openLink(openDcsLink);
-    const onDelete = () => ((org_name === "translate_test") ? false : sourceCompareLink && openLink(sourceCompareLink));
+    const onDelete = () => ((targetOwner !== sourceOwner) ? false : sourceCompareLink && openLink(sourceCompareLink));
     const style = { background: '#fff9' };
-    const deleteIcon = (org_name === "translate_test") ? <GetApp style={{color:'#d3d3e6'}} /> : <GetApp />; 
+    const deleteIcon = (targetOwner !== sourceOwner) ? <GetApp style={{color:'#d3d3e6'}} /> : <GetApp />; 
     const iconTooltip='OpenSourceText';
-    const deleteIconTooltip = (org_name === "translate_test") ? "Cannot compare source branch in translation mode." : 'CompareSource';
+    const deleteIconTooltip = (targetOwner !== sourceOwner) ? "Cannot compare source branch in translation mode." : 'CompareSource';
     return chip({
       label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
     });
