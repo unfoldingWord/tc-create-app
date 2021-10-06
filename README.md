@@ -19,6 +19,38 @@ tC Create allows users to translate from unfoldingWord’s English Translation N
 - Directly reads and writes to the Door43 Content Service
 - Branched workflow protects the master files from unauthorized changes
 
+## Running Local Cypress Tests
+
+### On Mac
+#### First Time Setup
+- make sure cypress is fully installed:
+```
+yarn
+yarn run cypress install
+```
+- create test config file `cypress.env.json` in root folder with the following contents (substitute your username in password):
+```
+{
+  "TEST_USERNAME": "<user>",
+  "TEST_PASSWORD": "<password>"
+}
+```
+- you will need to be part of unfoldingWord organization for the test to complete
+
+#### Running tests
+- in first terminal run:
+```
+yarn start
+```
+- then in second terminal, to run interactively do:
+```
+yarn run cypress open
+```
+- or to run headless, run in second terminal:
+```
+`yarn cypress:run`
+```
+
 ## Learn More:
 
 [translationCore Create: How to video](https://drive.google.com/file/d/12cpPTgEnQULFMhefLoPN9Skzm3Kcl9Nj/view?usp=sharing)
