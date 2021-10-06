@@ -21,8 +21,7 @@ tC Create allows users to translate from unfoldingWord’s English Translation N
 
 ## Running Local Cypress Tests
 
-### On Mac
-#### First Time Setup
+### First Time Setup
 - make sure cypress is fully installed:
 ```
 yarn
@@ -37,7 +36,7 @@ yarn run cypress install
 ```
 - you will need to be part of unfoldingWord organization for the test to complete
 
-#### Running tests
+### Running tests
 - in first terminal run:
 ```
 yarn start
