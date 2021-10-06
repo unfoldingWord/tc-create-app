@@ -37,7 +37,7 @@ yarn run cypress install
 - you will need to be part of unfoldingWord organization for the test to complete
 
 ### Running tests
-- in first terminal run:
+- in first terminal run (in Windows, run this in `git Bash` as it needs bash):
 ```
 yarn start
 ```
