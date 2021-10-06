@@ -33,4 +33,5 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 
+# IDEs
 /.idea/
