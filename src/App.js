@@ -72,8 +72,6 @@ function AppComponent() {
   }
   
   const _onLoadCache = async ({authentication, repository, branch, html_url}) => {
-    console.log("tcc // _onLoadCache", html_url);
-
     if (html_url)
     {
       return await loadFileCache(html_url);
@@ -81,9 +79,6 @@ function AppComponent() {
   }
   
   const _onSaveCache = ({authentication, repository, branch, file, content}) => {
-    console.log("tcc // _onSaveCache");
-    console.log(file);
-
     if (file) {
       saveFileCache(file, content);
     }

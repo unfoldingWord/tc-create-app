@@ -2,14 +2,15 @@ import React, {
   useState, useCallback, useContext, useMemo,
 } from 'react';
 
-import { DataTable } from 'datatable-translatable';
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
-import * as parser from 'uw-tsv-parser';
-
-import { FileContext } from 'gitea-react-toolkit';
-
 import { CircularProgress } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+
+import { DataTable } from 'datatable-translatable';
+import * as parser from 'uw-tsv-parser';
+
+import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import { FileContext } from 'gitea-react-toolkit';
+
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -19,44 +20,48 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
-import RowHeaderTwl from './RowHeaderTwl';
+import RowHeaderTn from './RowHeaderTn';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
-import { contentValidate } from '../../core/contentValidate';
 
 const delimiters = { row: '\n', cell: '\t' };
-// columns Reference	ID	Tags	OrigWords	Occurrence	TWLink
+
+// columns Reference	ID	Tags	SupportReference	Quote	Occurrence	Note
 const _config = {
   compositeKeyIndices: [0, 1],
-  columnsFilter: ['OrigWords', 'Tags', 'TWLink'],
+  columnsFilter: ['Reference', 'ID', 'Tags', 'Quote', 'Occurrence'],
   columnsShowDefault: [
-    'Reference', 'OrigWords', 'Occurrence','TWLink',
+    'Reference','SupportReference','Note',
   ],
 }
 ;
 
-function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
+
+
+function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
 
   const {
-    state: { resourceLinks, expandedScripture, validationPriority, targetRepository },
+    state: { resourceLinks, expandedScripture, validationPriority },
     actions: { setResourceLinks },
   } = useContext(AppContext);
-  const langId = targetRepository.language;
 
   const { state: sourceFile } = useContext(FileContext);
   const { state: targetFile } = useContext(
     TargetFileContext
   );
-  // filename pattern: twl_TIT.tsv
-  const bookId = sourceFile.filepath
-    .split('_')[1]
-    .split('.')[0]
-    .toLowerCase();
 
+  //const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
+  // filename pattern tn_TIT.tsv
+  const bookId = sourceFile.filepath
+  .split('_')[1]
+  .split('.')[0]
+  .toLowerCase();
+
+  
   const onResourceLinks = useCallback(
     (_resourceLinks) => {
       // Remove bookId and remove defaults:
@@ -100,26 +105,61 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
   }, [setOpen]);
 
   const _onValidate = useCallback(async (rows) => {
+    // sample name: en_tn_08-RUT.tsv
     // NOTE! the content on-screen, in-memory does NOT include
-    // the headers. This must be added.
-    let data = [];
-    const header = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink\n";
+    // the headers. So the initial value of tsvRows will be
+    // the headers.
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkTWL_TSV6Table, langId, bookId, 'TWL', validationPriority);
+      const _name  = targetFile.name.split('_');
+      const langId = _name[0];
+      const bookID = _name[2].split('-')[1].split('.')[0];
+      // const rawResults = await checkNotesTSV7Table(languageCode, repoCode, bookID, filename, tableText, givenLocation, checkingOptions);
+      const rawResults = await cv.checkNotesTSV7Table(langId, 'TN2', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: false});
+      const nl = rawResults.noticeList;
+      let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
+      let data = [];
+      data.push(hdrs);
+      let inPriorityRange = false;
+      Object.keys(nl).forEach ( key => {
+        inPriorityRange = false; // reset for each
+        const rowData = nl[key];
+        if ( validationPriority === 'med' && rowData.priority > 599 ) {
+          inPriorityRange = true;
+        } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
+          inPriorityRange = true;
+        } else if ( validationPriority === 'low' ) {
+          inPriorityRange = true;
+        }
+        if ( inPriorityRange ) {
+          csv.addRow( data, [
+              String(rowData.priority),
+              String(rowData.C),
+              String(rowData.V),
+              String(rowData.lineNumber),
+              String(rowData.rowID),
+              String(rowData.fieldName || ""),
+              String(rowData.characterIndex || ""),
+              String(rowData.extract || ""),
+              String(rowData.message),
+              String(rowData.location),
+          ])
+        }
+      });
+
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
         return;
       }
-    
+
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
-      csv.download(fn, csv.toCSV(data));    
+      csv.download(fn, csv.toCSV(data));
+  
+      //setOpen(false);
     }
-
     setOpen(false);
-  },[targetFile, validationPriority, langId, bookId]);
-
+  },[targetFile, validationPriority]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);
@@ -132,13 +172,14 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderTwl
-      bookId={bookId}
-      open={expandedScripture}
-      rowData={rowData}
-      actionsMenu={actionsMenu}
-      delimiters={delimiters}
-  />), [expandedScripture, bookId]);  
+  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderTn
+    bookId={bookId}
+    open={expandedScripture}
+    rowData={rowData}
+    actionsMenu={actionsMenu}
+    delimiters={delimiters}
+  />), [expandedScripture, bookId]);
+
 
   const datatable = useMemo(() => {
     _config.rowHeader = rowHeader;
@@ -169,7 +210,7 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTwlTSV datatable={datatable} />
+      <TranslatableTnTSV datatable={datatable} />
       {open &&  <Dialog
         disableBackdropClick
         open={open}
@@ -197,7 +238,7 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
   );
 }
 
-function TranslatableTwlTSV({ datatable }) {
+function TranslatableTnTSV({ datatable }) {
   const { state: { books } } = useContext(ResourcesContext);
   return books ? datatable :
     (<div style={{
@@ -206,4 +247,4 @@ function TranslatableTwlTSV({ datatable }) {
     ><CircularProgress /></div>);
 }
 
-export default TranslatableTwlTSVWrapper;
+export default TranslatableTnTSVWrapper;
