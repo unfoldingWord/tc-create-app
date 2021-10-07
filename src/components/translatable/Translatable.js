@@ -23,6 +23,7 @@ import TranslatableTnTSV from './TranslatableTnTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
 import TranslatableSnTSV from './TranslatableSnTSV';
+import TranslatableObsSnTSV from './TranslatableObsSnTSV';
 import TranslatableSqTSV from './TranslatableSqTSV';
 
 function Translatable() {
@@ -148,6 +149,10 @@ function Translatable() {
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
         _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      } else if (sourceFile.filepath.match(/^sn_OBS.tsv$/)) {
+        // this specific OBS test must come before the more general test
+        console.log("Match on sn_OBS.tsv")
+        _translatable = <TranslatableObsSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
         _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
