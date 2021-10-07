@@ -92,7 +92,7 @@ function FilesHeader({
     return chip({
       label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
     });
-  }, [sourceRepository, targetRepository, sourceFile, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
+  }, [sourceRepository, targetRepository, sourceFile, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName, sourceOwner, targetOwner ]);
 
   const targetChip = useMemo(() => {
     const { full_name } = targetRepository;
