@@ -25,6 +25,7 @@ import TranslatableTwlTSV from './TranslatableTwlTSV';
 import TranslatableSnTSV from './TranslatableSnTSV';
 import TranslatableObsSnTSV from './TranslatableObsSnTSV';
 import TranslatableSqTSV from './TranslatableSqTSV';
+import TranslatableObsSqTSV from './TranslatableObsSqTSV';
 
 function Translatable() {
   const classes = useStyles();
@@ -145,20 +146,32 @@ function Translatable() {
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
       } else if (sourceFile.filepath.match(/^tn_...\.tsv$/)) {
         _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
+      } else if (sourceFile.filepath.match(/^sq_OBS.tsv$/)) {
+        // this specific OBS test must come before the more general test
+        console.log("Match on sq_OBS.tsv")
+        _translatable = <TranslatableObsSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
         _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/^sn_OBS.tsv$/)) {
         // this specific OBS test must come before the more general test
         console.log("Match on sn_OBS.tsv")
         _translatable = <TranslatableObsSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
         _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
         _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
         _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
+      
       } else {
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
