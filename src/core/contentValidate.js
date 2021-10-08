@@ -4,14 +4,18 @@
 import * as csv from './csvMaker';
 import * as tsvParser from 'uw-tsv-parser';
 
-export async function contentValidate(rows, header, cvFunction, langId, bookID, resourceCode, validationPriority) {
+export async function contentValidate(rows, header, cvFunction, langId, bookID, 
+  resourceCode, validationPriority, checkingOptions) {
   // first - create a string from the rows 2D array (table)
   let tableString = header;
   const tsvObject = tsvParser.tableToTsvString(rows);
   tableString += tsvObject.data;
 
   // second run the cv API
-  const rawResults = await cvFunction(langId, resourceCode, bookID.toUpperCase(), 'dummy', tableString, '', {suppressNoticeDisablingFlag: false});
+  const rawResults = await cvFunction(langId, resourceCode, bookID.toUpperCase(), 
+    'dummy', tableString, '', 
+    {suppressNoticeDisablingFlag: false, ...checkingOptions}
+  );
   const nl = rawResults.noticeList;
   let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
   let data = [];
