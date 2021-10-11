@@ -100,7 +100,14 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     let data = [];
     const header = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkTN_TSV9Table, langId, bookId, 'TN', validationPriority);
+      data = await contentValidate(rows, header, cv.checkTN_TSV9Table, langId, 
+        bookId, 'TN', validationPriority,
+        {suppressNoticeDisablingFlag: false,
+          disableLinkedTAArticlesCheckFlag: true,
+          disableLinkedTWArticlesCheckFlag: true,
+          disableLexiconLinkFetchingFlag: true,
+        }
+      );
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);

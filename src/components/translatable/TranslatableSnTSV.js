@@ -112,7 +112,9 @@ function TranslatableSnTSVWrapper({ onSave, onContentIsDirty }) {
     let data = [];
     const header = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tNote\n";
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkNotesTSV7Table, langId, bookId, 'TN2', validationPriority);
+      data = await contentValidate(rows, header, cv.checkNotesTSV7Table, langId, 
+        bookId, 'TN2', validationPriority, {}
+      );
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
