@@ -22,6 +22,7 @@ import TranslatableTSV from './TranslatableTSV';
 import TranslatableTnTSV from './TranslatableTnTSV';
 import TranslatableObsTnTSV from './TranslatableObsTnTSV';
 import TranslatableTqTSV from './TranslatableTqTSV';
+import TranslatableObsTqTSV from './TranslatableObsTqTSV';
 import TranslatableTwlTSV from './TranslatableTwlTSV';
 import TranslatableSnTSV from './TranslatableSnTSV';
 import TranslatableObsSnTSV from './TranslatableObsSnTSV';
@@ -144,38 +145,51 @@ function Translatable() {
           onTranslation: saveOnTranslation,
           onContentIsDirty: setContentIsDirty,
         };
+        console.log("Markdown file selected");
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
+      
       } else if (sourceFile.filepath.match(/^tn_OBS\.tsv$/)) {
+        console.log("tn_OBS file selected");
         _translatable = <TranslatableObsTnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/^tn_...\.tsv$/)) {
+        console.log("tn_... file selected");
         _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       
+      } else if (sourceFile.filepath.match(/^tq_OBS\.tsv$/)) {
+        console.log("tq_OBS file selected");
+        _translatable = <TranslatableObsTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+      
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
+        console.log("tq_... file selected");
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sq_OBS.tsv$/)) {
-        // this specific OBS test must come before the more general test
-        console.log("Match on sq_OBS.tsv")
+        console.log("sq_OBS file selected");
         _translatable = <TranslatableObsSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
+        console.log("sq_... file selected");
         _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sn_OBS.tsv$/)) {
-        // this specific OBS test must come before the more general test
-        console.log("Match on sn_OBS.tsv")
+        console.log("sn_OBS file selected");
         _translatable = <TranslatableObsSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
+        console.log("sn_... file selected");
         _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
+        console.log("twl_... file selected")
         _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
+        console.log("tn 9 col file selected")
         _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else {
+        console.log("Unsupported file selected")
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
     }
