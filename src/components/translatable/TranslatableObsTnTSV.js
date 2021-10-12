@@ -8,7 +8,9 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 import { DataTable } from 'datatable-translatable';
 import * as parser from 'uw-tsv-parser';
 
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import { ResourcesContextProvider, 
+  //ResourcesContext 
+} from 'scripture-resources-rcl';
 import { FileContext } from 'gitea-react-toolkit';
 
 import {
@@ -206,12 +208,15 @@ function TranslatableObsTnTSVWrapper({ onSave, onContentIsDirty }) {
 }
 
 function TranslatableObsTnTSV({ datatable }) {
-  const { state: { books } } = useContext(ResourcesContext);
+  //const { state: { books } } = useContext(ResourcesContext);
+  return datatable;
+  /*
   return books ? datatable :
     (<div style={{
       width: '100%', display: 'flex', justifyContent: 'center',
     }}
     ><CircularProgress /></div>);
+    */
 }
 
 export default TranslatableObsTnTSVWrapper;

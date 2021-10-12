@@ -3,7 +3,9 @@ import React, {
 } from 'react';
 
 import { DataTable } from 'datatable-translatable';
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import { ResourcesContextProvider, 
+  //ResourcesContext 
+} from 'scripture-resources-rcl';
 
 import { FileContext } from 'gitea-react-toolkit';
 
@@ -37,7 +39,6 @@ const _config = {
 ;
 
 function TranslatableObsTqTSVWrapper({ onSave, onContentIsDirty }) {
-  console.log("TranslatableObsTqTSVWrapper() enter")
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -163,7 +164,7 @@ function TranslatableObsTqTSVWrapper({ onSave, onContentIsDirty }) {
       />
     );
   }, [sourceFile.content, targetFile.content, onSave, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
-  console.log("TranslatableObsTqTSVWrapper() return")
+
   return (
     <>
     <ResourcesContextProvider
@@ -204,9 +205,6 @@ function TranslatableObsTqTSVWrapper({ onSave, onContentIsDirty }) {
 }
 
 function TranslatableObsTqTSV({ datatable }) {
-  const { state: { books } } = useContext(ResourcesContext);
-  const { state } = useContext(ResourcesContext);
-  console.log("TranslatableObsTqTSV() state:", state);
   /*
   return books ? datatable :
     (<div style={{
