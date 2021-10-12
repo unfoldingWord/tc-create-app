@@ -105,7 +105,14 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
     let data = [];
     const header = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink\n";
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkTWL_TSV6Table, langId, bookId, 'TWL', validationPriority);
+      data = await contentValidate(rows, header, cv.checkTWL_TSV6Table, langId, 
+        bookId, 'TWL', validationPriority, 
+        {suppressNoticeDisablingFlag: false,
+          disableLinkedTAArticlesCheckFlag: true,
+          disableLinkedTWArticlesCheckFlag: true,
+          disableLexiconLinkFetchingFlag: true,
+        }
+      );
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);

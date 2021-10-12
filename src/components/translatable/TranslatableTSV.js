@@ -23,7 +23,6 @@ import RowHeader from './RowHeader';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
-import { contentValidate } from '../../core/contentValidate';
 
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
@@ -35,7 +34,7 @@ const _config = {
   ],
 };
 
-function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
+function TranslatableTSVWrapper({ onSave }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -51,7 +50,6 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   );
 
   const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
-  const langId = targetFile.name.split('_')[0];
   
   const onResourceLinks = useCallback(
     (_resourceLinks) => {
@@ -95,25 +93,60 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   }, [setOpen]);
 
   const _onValidate = useCallback(async (rows) => {
+    // sample name: en_tn_08-RUT.tsv
     // NOTE! the content on-screen, in-memory does NOT include
-    // the headers. This must be added.
-    let data = [];
-    const header = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
+    // the headers. So the initial value of tsvRows will be
+    // the headers.
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkTN_TSV9Table, langId, bookId, 'TN', validationPriority);
+      const _name  = targetFile.name.split('_');
+      const langId = _name[0];
+      const bookID = _name[2].split('-')[1].split('.')[0];
+      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: false});
+      const nl = rawResults.noticeList;
+      let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
+      let data = [];
+      data.push(hdrs);
+      let inPriorityRange = false;
+      Object.keys(nl).forEach ( key => {
+        inPriorityRange = false; // reset for each
+        const rowData = nl[key];
+        if ( validationPriority === 'med' && rowData.priority > 599 ) {
+          inPriorityRange = true;
+        } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
+          inPriorityRange = true;
+        } else if ( validationPriority === 'low' ) {
+          inPriorityRange = true;
+        }
+        if ( inPriorityRange ) {
+          csv.addRow( data, [
+              String(rowData.priority),
+              String(rowData.C),
+              String(rowData.V),
+              String(rowData.lineNumber),
+              String(rowData.rowID),
+              String(rowData.fieldName || ""),
+              String(rowData.characterIndex || ""),
+              String(rowData.extract || ""),
+              String(rowData.message),
+              String(rowData.location),
+          ])
+        }
+      });
+
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
         return;
       }
-    
+
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
-      csv.download(fn, csv.toCSV(data));    
+      csv.download(fn, csv.toCSV(data));
+  
+      //setOpen(false);
     }
-
     setOpen(false);
-  },[targetFile, validationPriority, langId, bookId]);
+  },[targetFile, validationPriority]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);
@@ -138,19 +171,17 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     _config.rowHeader = rowHeader;
     return (
       <DataTable
-        sourceFile={sourceFile && sourceFile.content}
-        targetFile={targetFile && targetFile.content}
+        sourceFile={sourceFile.content}
+        targetFile={targetFile.content}
         onSave={onSave}
-        onEdit={onEdit}
         onValidate={onValidate}
-        onContentIsDirty={onContentIsDirty}
         delimiters={delimiters}
         config={_config}
         generateRowId={generateRowId}
         options={options}
       />
     );
-  }, [sourceFile, targetFile, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader, ]);
+  }, [sourceFile.content, targetFile.content, onSave, onValidate, generateRowId, options, rowHeader]);
 
   return (
     <>

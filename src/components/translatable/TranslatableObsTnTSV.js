@@ -8,7 +8,9 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 import { DataTable } from 'datatable-translatable';
 import * as parser from 'uw-tsv-parser';
 
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import { ResourcesContextProvider, 
+  //ResourcesContext 
+} from 'scripture-resources-rcl';
 import { FileContext } from 'gitea-react-toolkit';
 
 import {
@@ -20,7 +22,7 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
-import RowHeaderTn from './RowHeaderTn';
+import RowHeaderObsTn from './RowHeaderObsTn';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
@@ -40,7 +42,7 @@ const _config = {
 
 
 
-function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
+function TranslatableObsTnTSVWrapper({ onSave, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -112,14 +114,7 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
     let data = [];
     const header = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tNote\n";
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkNotesTSV7Table, langId, 
-        bookId, 'TN2', validationPriority,         bookId, 'TWL', validationPriority, 
-        {suppressNoticeDisablingFlag: false,
-          disableLinkedTAArticlesCheckFlag: true,
-          disableLinkedTWArticlesCheckFlag: true,
-          disableLexiconLinkFetchingFlag: true,
-        }
-      );
+      data = await contentValidate(rows, header, cv.checkNotesTSV7Table, langId, bookId, 'TN2', validationPriority);
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
@@ -139,13 +134,14 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
     setTimeout( () => _onValidate(rows), 1);
   }, [_onValidate]);
 
+
   const options = {
     page: 0,
     rowsPerPage: 25,
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderTn
+  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderObsTn
     bookId={bookId}
     open={expandedScripture}
     rowData={rowData}
@@ -183,7 +179,7 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTnTSV datatable={datatable} />
+      <TranslatableObsTnTSV datatable={datatable} />
       {open &&  <Dialog
         disableBackdropClick
         open={open}
@@ -211,13 +207,16 @@ function TranslatableTnTSVWrapper({ onSave, onContentIsDirty }) {
   );
 }
 
-function TranslatableTnTSV({ datatable }) {
-  const { state: { books } } = useContext(ResourcesContext);
+function TranslatableObsTnTSV({ datatable }) {
+  //const { state: { books } } = useContext(ResourcesContext);
+  return datatable;
+  /*
   return books ? datatable :
     (<div style={{
       width: '100%', display: 'flex', justifyContent: 'center',
     }}
     ><CircularProgress /></div>);
+    */
 }
 
-export default TranslatableTnTSVWrapper;
+export default TranslatableObsTnTSVWrapper;
