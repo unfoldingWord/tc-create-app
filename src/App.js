@@ -123,6 +123,9 @@ function AppComponent() {
     headroom: { zIndex: '200' },
     workspace: { margin: `${theme.spacing(2)}px` },
   };
+
+  debugger;
+
   return (
     <div className='App' style={style.app}>
       <MuiThemeProvider theme={theme}>
@@ -147,6 +150,7 @@ function AppComponent() {
                 authentication={authentication}
                 repository={sourceRepository}
                 filepath={filepath}
+                url={(organization?.username !== sourceRepository?.owner?.username)?'':null}
                 onFilepath={setFilepath}
                 onOpenValidation={_onOpenValidation}
                 onConfirmClose={_onConfirmClose}
