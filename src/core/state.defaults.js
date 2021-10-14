@@ -24,6 +24,7 @@ const config = {
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-tq',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-tn',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-sn',
+      SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-sq',
     ],
   },
 };
