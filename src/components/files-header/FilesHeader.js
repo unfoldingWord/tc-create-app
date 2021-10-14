@@ -39,20 +39,21 @@ function FilesHeader({
       icon={<License rights='View License' licenseLink={licenseLink} /> }
       label={<Tooltip title={localString(iconTooltip)} arrow><span>{label}</span></Tooltip>}
       onDelete={onDelete}
-      deleteIcon={<Tooltip title={localString(deleteIconTooltip)} arrow>{deleteIcon}</Tooltip>}
+      deleteIcon={<Tooltip title={deleteIconTooltip} arrow>{deleteIcon}</Tooltip>}
       variant="outlined"
       className={classes.header}
       style={style}
     />
   ), [classes.header]);
-  const sourceBranch = sourceRepository?.branch || sourceRepository?.default_branch;
-  const targetBranch = targetRepository?.branch || targetRepository?.default_branch;
+  const sourceBranch = sourceRepository?.branch || sourceRepository?.default_branch; 
+  const targetBranch = targetRepository?.branch || targetRepository?.default_branch; 
 
   let sourceCompareLink, targetCompareLink;
   const sourceLanguage = getLanguage({ 
     languageId: sourceRepository.name.split('_')[0],
     languagesJSON: appContext.state.languages,
   });
+  
   const sourceOwner = sourceRepository.owner.username;
   const targetOwner = targetRepository.owner.username;
 
@@ -61,14 +62,13 @@ function FilesHeader({
       sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceBranch}`;
       targetCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetBranch}`;
     } else {
-      sourceCompareLink = `${sourceRepository.html_url}/compare/${sourceBranch}...${targetOwner}:${targetBranch}`;
-      targetCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...${sourceOwner}:${sourceBranch}`;
+      sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...master`;
+      targetCompareLink = `${targetRepository.html_url}/compare/master...${targetBranch}`;
     }
   } else {
     sourceCompareLink = `${targetRepository.html_url}/compare/${targetBranch}...master`;
     targetCompareLink = `${targetRepository.html_url}/compare/master...${targetBranch}`;
   }
-
   const sourceChip = useMemo(() => {
     const { full_name } = sourceRepository;
     let label = `${sourceLanguage.languageName} - ${full_name}/${sourceBranch}`;
@@ -84,15 +84,15 @@ function FilesHeader({
       licenseLink = SERVER_URL + "/" + Path.join('unfoldingword',sourceRepository.name,'src','tag', prodTag, 'LICENSE.md')
     }
     const onClick = () => openLink(openDcsLink);
-    const onDelete = () => sourceCompareLink && openLink(sourceCompareLink);
+    const onDelete = () => ((targetOwner !== sourceOwner) ? false : sourceCompareLink && openLink(sourceCompareLink));
     const style = { background: '#fff9' };
-    const deleteIcon = <GetApp />;
+    const deleteIcon = (targetOwner !== sourceOwner) ? <GetApp style={{color:'#d3d3e6'}} /> : <GetApp />; 
     const iconTooltip='OpenSourceText';
-    const deleteIconTooltip = 'CompareSource';
+    const deleteIconTooltip = (targetOwner !== sourceOwner) ? "Cannot compare source branch in translation mode." : 'CompareSource';
     return chip({
       label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
     });
-  }, [sourceRepository, targetRepository, sourceFile, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName]);
+  }, [sourceRepository, targetRepository, sourceFile, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName, sourceOwner, targetOwner ]);
 
   const targetChip = useMemo(() => {
     const { full_name } = targetRepository;
