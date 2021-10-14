@@ -167,6 +167,7 @@ function AppComponent() {
                 onLoadCache={_onLoadCache}
                 onSaveCache={_onSaveCache}
                 onConfirmClose={_onConfirmClose}
+                releaseFlag={organization?.username !== 'unfoldingWord' ? true:false}
               >
               {
                 (criticalErrors.length > 0 && 
