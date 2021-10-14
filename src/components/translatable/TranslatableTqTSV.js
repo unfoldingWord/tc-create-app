@@ -29,9 +29,9 @@ const delimiters = { row: '\n', cell: '\t' };
 // columns Reference, ID, Tags, Quote, Occurrence, Question, Response
 const _config = {
   compositeKeyIndices: [0, 1],
-  columnsFilter: ['Reference', 'ID', 'Question','Response'],
+  columnsFilter: ['Reference', 'ID','Tags', 'Quote', 'Occurrence', 'Question','Response'],
   columnsShowDefault: [
-    'Reference', 'Tags', 'Quote', 'Occurrence','Response',
+    'Reference', 'Question', 'Response',
   ],
 }
 ;
