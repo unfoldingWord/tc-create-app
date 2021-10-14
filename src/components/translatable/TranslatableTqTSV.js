@@ -31,7 +31,7 @@ const _config = {
   compositeKeyIndices: [0, 1],
   columnsFilter: ['Reference', 'ID', 'Question','Response'],
   columnsShowDefault: [
-    'Reference','Questions','Response',
+    'Reference', 'Tags', 'Quote', 'Occurrence','Response',
   ],
 }
 ;
@@ -132,7 +132,7 @@ function TranslatableTqTSVWrapper({ onSave, onContentIsDirty }) {
 
   const options = {
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 25,
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
