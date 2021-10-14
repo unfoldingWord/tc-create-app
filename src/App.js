@@ -150,6 +150,7 @@ function AppComponent() {
                 onFilepath={setFilepath}
                 onOpenValidation={_onOpenValidation}
                 onConfirmClose={_onConfirmClose}
+                releaseFlag={organization?.username !== 'unfoldingWord' ? true:false}
               >
               {
                 (criticalErrors.length > 0 && 
