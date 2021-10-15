@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
 import { NoSsr } from '@material-ui/core';
 
-import { gatewayLanguages, getLanguage } from './helpers';
+import { AppContext } from '../../App.context';
+import { getLanguage } from './helpers';
 import * as components from './Components';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,14 +42,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LanguageSelect({ language, onLanguage }) {
+  const appContext = useContext(AppContext);
   const classes = useStyles();
 
   const handleChange = (object) => {
-    const languageId = object.value;
-    const _language = getLanguage({ languageId });
+    const languageId = object.langId;
+    const _language = getLanguage({ languageId, languagesJSON: appContext.state.languages });
     onLanguage(_language);
   };
 
+  const getOrgLanguages = () => {
+    return appContext.state.organization.repo_languages || ['']
+  }
+
+  const orgOptions = getOrgLanguages().map( (langId) => {
+      const formattedLanguage = getLanguage({languageId: langId, languagesJSON: appContext.state.languages});
+      //const value = formattedLanguage.languageId;
+      // test whether formattedLanguage has any properties.
+      // if it doesn't, then that means that the org has no languages for resources
+      let label;
+      if ( formattedLanguage.languageName ){
+        const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
+        const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
+        label = `${name} ${gatewayLabel}`;
+      }
+      return { langId, label };
+    }
+  );
+
+  /*
   const options = gatewayLanguages.map(
     ({
       languageId, languageName, localized, region, gateway,
@@ -60,27 +82,36 @@ function LanguageSelect({ language, onLanguage }) {
       return { value, label };
     }
   );
-
+  */
   let value;
 
   if (language) {
-    value = options.filter((object) => object.value === language.languageId)[0];
+    value = orgOptions.filter((object) => object.value === language.languageId)[0];
   }
 
   return (
     <div className={classes.root}>
-      <NoSsr>
-        <Select
-          className="language-select-dropdown"
-          classes={classes}
-          options={options}
-          components={components}
-          value={value}
-          onChange={handleChange}
-          placeholder="Select Language"
-        />
-        <div className={classes.divider} />
-      </NoSsr>
+      {
+        orgOptions[0].label === undefined ? 
+        (
+          <div><p>No Languages Found</p></div>
+        )
+        :
+        (
+          <NoSsr>
+            <Select
+              className="language-select-dropdown"
+              classes={classes}
+              options={orgOptions}
+              components={components}
+              value={value}
+              onChange={handleChange}
+              placeholder="Select Language"
+          />
+            <div className={classes.divider} />
+          </NoSsr>
+        )
+      }
     </div>
   );
 }
