@@ -13,7 +13,6 @@
   2. does each row have the correct number of columns?
   3. are there any duplicate row IDs?
 */
-import * as tsvparser from 'uw-tsv-parser';
 
 const onOpenValidationTn9 = (content, url) => {
   const tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
@@ -22,7 +21,7 @@ const onOpenValidationTn9 = (content, url) => {
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
 const onOpenValidationTn7 = (content, url) => {
-  const tsvHeader = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tNote";
+  const tsvHeader = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tAnnotation";
   const numColumns = 7;
   const idcolumn = 1; //zero based
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
@@ -34,29 +33,28 @@ const onOpenValidationTwl = (content, url) => {
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
 const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolumn) => {
-  const {data, header} = tsvparser.tsvStringToTable(content);
+  const rows = content.replaceAll('\r','').split('\n');
   let idarray = [];
   let idarrayline = [];
   let criticalNotices = [];
-  const incomingTsvHeader = header.join('\t');
 
   // is the content correct?
-  if (tsvHeader !== incomingTsvHeader) {
+  if (tsvHeader !== rows[0]) {
     criticalNotices.push([
       `${link}#L1`,
       '1',
       `Bad TSV Header, expecting:"${tsvHeader.replaceAll('\t', ', ')}"`+
-      `, found:"${header.join(', ').slice(0,tsvHeader.length)+"..."}"`
+      `, found:"${rows[0].replaceAll('\t',', ').slice(0,tsvHeader.length)+"..."}"`
     ]);
   }
 
   // if content not correct, where is the first difference?
-  if (tsvHeader !== incomingTsvHeader) {
+  if (tsvHeader !== rows[0]) {
     let firstdiff = -1;
-    let maxlength = Math.max(tsvHeader.length, incomingTsvHeader.length);
+    let maxlength = Math.max(tsvHeader.length, rows[0].length);
     for ( let i=0; i < maxlength; i++ ) {
       //console.log("s vs t:", tsvHeader[i], rows[0][i]);
-      if ( tsvHeader.charCodeAt(i) !== incomingTsvHeader.charCodeAt(i) ) {
+      if ( tsvHeader.charCodeAt(i) !== rows[0].charCodeAt(i) ) {
         firstdiff = i;
         break;
       }
@@ -64,7 +62,7 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
     if ( firstdiff !== -1 ) {
       let ch1 = tsvHeader.charCodeAt(firstdiff).toString(16);
       if ( tsvHeader.length < firstdiff ) ch1 = 'undefined';
-      let ch2 = incomingTsvHeader.charCodeAt(firstdiff).toString(16);
+      let ch2 = rows[0].charCodeAt(firstdiff).toString(16);
       if ( ch2.length === 1 ) ch2='0'+ch2;
       if ( ch1.length === 1 ) ch1='0'+ch1;
       ch2 = 'x'+ch2.toUpperCase();
@@ -73,25 +71,28 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
         `${link}#L1`,
         '1',
         `Headers different at character ${firstdiff+1}: `+
-        `${tsvHeader.charAt(firstdiff)} (${ch1}) vs ${incomingTsvHeader.charAt(firstdiff)} (${ch2})`
+        `${tsvHeader.charAt(firstdiff)} (${ch1}) vs ${rows[0].charAt(firstdiff)} (${ch2})`
       ]);
     }
   }
   
   // does it have the correct length?
-  if (tsvHeader.length !== incomingTsvHeader.length) {
+  if (tsvHeader.length !== rows[0].length) {
     criticalNotices.push([
       `${link}#L1`,
       '1',
-      `TSV Header has incorrect length, should be ${tsvHeader.length}; found ${incomingTsvHeader.length}`
+      `TSV Header has incorrect length, should be ${tsvHeader.length}; found ${rows[0].length}`
     ]);
   }
 
-  if (data.length > 1) {
-    for (let i = 0; i < data.length; i++) {
+  if (rows.length > 1) {
+    for (let i = 0; i < rows.length; i++) {
       let line = i + 1;
-      let cols = data[i];
-      // look for duplicate ids
+      // ignore, skip empty rows
+      if ( rows[i] === undefined || rows[i] === '' ) {
+        continue;
+      }
+      let cols = rows[i].split('\t');
       let location = idarray.indexOf(cols[idcolumn]);
       if ( location === -1 ) {
         idarray.push(cols[idcolumn]);
