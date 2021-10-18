@@ -45,6 +45,7 @@ function FilesHeader({
       style={style}
     />
   ), [classes.header]);
+
   const sourceBranch = sourceRepository?.branch || sourceRepository?.default_branch; 
   const targetBranch = targetRepository?.branch || targetRepository?.default_branch; 
 
