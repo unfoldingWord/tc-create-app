@@ -24,9 +24,9 @@ const delimiters = { row: '\n', cell: '\t' };
 // columns Reference, ID, Tags, Quote, Occurrence, Question, Response
 const _config = {
   compositeKeyIndices: [0, 1],
-  columnsFilter: ['Reference', 'ID', 'Question','Response'],
+  columnsFilter: ['Reference', 'ID','Tags', 'Quote', 'Occurrence', 'Question','Response'],
   columnsShowDefault: [
-    'Reference','Questions','Response',
+    'Reference', 'Question', 'Response',
   ],
 }
 ;
@@ -96,7 +96,7 @@ function TranslatableTqTSVWrapper({ onSave, onContentIsDirty }) {
 
   const options = {
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 25,
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
