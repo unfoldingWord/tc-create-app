@@ -45,15 +45,15 @@ yarn run cypress install
 - you will need to be part of unfoldingWord organization for the test to complete
 
 #### Running tests
-- in first terminal run (in Windows, run this in `git Bash` as it needs bash):
+- in first terminal, start the app by (in Windows, run this in `git Bash` as it needs bash):
 ```
 yarn start
 ```
-- then in second terminal, to run interactively do:
+- then in second terminal, to run cypress interactively do:
 ```
 yarn run cypress open
 ```
-- or to run headless, run in second terminal:
+- or to run headless: in second terminal, run cypress by:
 ```
 `yarn cypress:run`
 ```
