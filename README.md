@@ -19,9 +19,17 @@ tC Create allows users to translate from unfoldingWord’s English Translation N
 - Directly reads and writes to the Door43 Content Service
 - Branched workflow protects the master files from unauthorized changes
 
-## Running Local Cypress Tests
+## Learn More:
 
-### First Time Setup
+[translationCore Create: How to video](https://drive.google.com/file/d/12cpPTgEnQULFMhefLoPN9Skzm3Kcl9Nj/view?usp=sharing)
+
+tC Create is built using [React Component Libraries](https://forum.door43.org/t/component-libraries/396). These libraries ([listed here](https://forum.door43.org/t/component-list/468)) can be used for other applications and we hope that others will contribute libraries to this effort.
+
+## Developer Notes
+
+### Running Local Cypress Tests
+
+#### First Time Setup
 - make sure cypress is fully installed:
 ```
 yarn
@@ -36,7 +44,7 @@ yarn run cypress install
 ```
 - you will need to be part of unfoldingWord organization for the test to complete
 
-### Running tests
+#### Running tests
 - in first terminal run (in Windows, run this in `git Bash` as it needs bash):
 ```
 yarn start
@@ -49,13 +57,5 @@ yarn run cypress open
 ```
 `yarn cypress:run`
 ```
-
-## Learn More:
-
-[translationCore Create: How to video](https://drive.google.com/file/d/12cpPTgEnQULFMhefLoPN9Skzm3Kcl9Nj/view?usp=sharing)
-
-tC Create is built using [React Component Libraries](https://forum.door43.org/t/component-libraries/396). These libraries ([listed here](https://forum.door43.org/t/component-list/468)) can be used for other applications and we hope that others will contribute libraries to this effort.
-
-## Developer Notes
 
 [Details on how the auto-increment build number works](https://git.door43.org/cecil.new/journals/src/branch/master/tc-create-app%23586.md)
