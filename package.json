@@ -21,6 +21,7 @@
     "cypress:run": "NODE_ENV=test cypress run",
     "test:cov": "yarn cypress:run && nyc report --reporter=json-summary --reporter=text-summary",
     "test:unit": "jest --coverage __tests__ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test:update-snapshots": "jest -u",
     "test": "start-test 3000 test:cov",
     "create-coverage-badge": "bash scripts/create-badge-json.sh",
     "postinstall": "husky install",
