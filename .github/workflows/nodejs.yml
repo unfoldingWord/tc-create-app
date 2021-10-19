@@ -28,8 +28,6 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cypress verification step, before tests to prevent timeouts
-        run: npx cypress verify
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
@@ -39,7 +37,7 @@ jobs:
           group: "Integration tests"
           start: yarn start
           wait-on: "http://localhost:3000"
-          wait-on-timeout: 360
+          wait-on-timeout: 720
         env:
           CYPRESS_RECORD_KEY: ${{ env.CYPRESS_RECORD_KEY }}
       - name: Run Unit Tests
