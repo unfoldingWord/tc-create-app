@@ -27,7 +27,7 @@ import * as csv from '../../core/csvMaker';
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
-  columnsFilter: ['Chapter', 'SupportReference'],
+  columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
   columnsShowDefault: [
     'SupportReference',
     'OccurrenceNote',
