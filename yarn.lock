@@ -5559,6 +5559,7 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-url "^7.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 datatable-translatable@0.11.13.rc-4:
   version "0.11.1-3.rc-4"
   resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.1-3.rc-4.tgz#f29bc2b912ceaed11f8387d11db4376e85027f9b"
@@ -5569,6 +5570,12 @@ datatable-translatable@0.11.12:
   resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.12.tgz#7a85c62931d03b089cb3e72e1cdb5b4f3a5d2dab"
   integrity sha512-WgrW3fDOok9DDlgXCmtel74SBh/Fc1Q+b4nQDSVEMs3LwLjpty16aCJUiBTff0s/a9ZVqE9wuVmpFlABuMz4Zg==
 >>>>>>> 3600dab (bump GRT to RC)
+=======
+datatable-translatable@0.11.13:
+  version "0.11.13"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.13.tgz#6792a7f17dc7a799fe2028d5f0d7a1cc16beea47"
+  integrity sha512-m8ZuGzAaT5sd5x0rn5+dPezkgHxWmw6AdO8aEhS746eRBU3z0uMhFmpp/Ve2cX1HAPrRtHI9rPwnXWYwFGyAqQ==
+>>>>>>> a2d7b5b (HOTFIX: Bump datatable-translatable)
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
