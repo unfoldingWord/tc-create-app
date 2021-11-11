@@ -5442,10 +5442,37 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+datatable-translatable@0.11.13.rc-4:
+  version "0.11.1-3.rc-4"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.1-3.rc-4.tgz#f29bc2b912ceaed11f8387d11db4376e85027f9b"
+  integrity sha512-XzmS4XkI6a3C4n+1HJhW10kL1eohHjHlohzzyw5USFbhaH9MgkrHM+aYq/yw9eQFUBExaOJBZThpCxygrMXW9A==
+=======
+datatable-translatable@0.11.12:
+  version "0.11.12"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.12.tgz#7a85c62931d03b089cb3e72e1cdb5b4f3a5d2dab"
+  integrity sha512-WgrW3fDOok9DDlgXCmtel74SBh/Fc1Q+b4nQDSVEMs3LwLjpty16aCJUiBTff0s/a9ZVqE9wuVmpFlABuMz4Zg==
+>>>>>>> 3600dab (bump GRT to RC)
+=======
+datatable-translatable@0.11.13:
+  version "0.11.13"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.13.tgz#6792a7f17dc7a799fe2028d5f0d7a1cc16beea47"
+  integrity sha512-m8ZuGzAaT5sd5x0rn5+dPezkgHxWmw6AdO8aEhS746eRBU3z0uMhFmpp/Ve2cX1HAPrRtHI9rPwnXWYwFGyAqQ==
+>>>>>>> a2d7b5b (HOTFIX: Bump datatable-translatable)
+=======
+>>>>>>> feature-cn-all-tsv-1111-1409
 datatable-translatable@0.11.14:
   version "0.11.14"
   resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-0.11.14.tgz#885e726fbb60d5a79305fb7ec8fdfe983f21d21f"
   integrity sha512-zg6V6WTAVXPt43LYeMA0JN1HPVPM0NuagTfZPwIfRjIZzz6fo7fyGnDJ1ysMFigOTISHWsZbswWpo6ksFF3EsA==
+<<<<<<< HEAD
+=======
+>>>>>>> 7399f7a (v1.4.0-rc.2)
+>>>>>>> feature-cn-all-tsv-1111-1409
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
@@ -7557,10 +7584,29 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+gitea-react-toolkit@1.11.1-rc.1:
+  version "1.11.1-rc.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.11.1-rc.1.tgz#05f34898cb4a20d569742b43da2a92d817d1a97e"
+  integrity sha512-y4tsFuUe2veQgIGpvAlnj/0aNGY9EXDWp+51tIWnhSONC3nS7qpBYMwHJk4BI+vnjrnAr9ObT1gxtLnQIbt1uQ==
+=======
+gitea-react-toolkit@1.11.1-rc.2:
+  version "1.11.1-rc.2"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.11.1-rc.2.tgz#62ab8a8041da800fbadd3206a0354747c74294ca"
+  integrity sha512-V1pOal/k/VFBIioKQt+fX8UI9YSirhko+494Flr5SC9MxHW8VCfNMUIG2LdyuUW0A09HeIuTcaJBY3nGmxQXVQ==
+>>>>>>> 3600dab (bump GRT to RC)
+=======
+>>>>>>> feature-cn-all-tsv-1111-1409
 gitea-react-toolkit@1.11.1:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.11.1.tgz#d5d3c37b4b8b8d90ae43e122eeb8a51ae6aa9d10"
   integrity sha512-nCMwEr8a2Fy+q56tNOYPdSjWqyrBNdmMIueXhv9U/yj2PNJNPFMr3aMxp00ggZMLNkB0FZakUkduAHIUsf8wMg==
+<<<<<<< HEAD
+=======
+>>>>>>> c94c7eb (1.4 Bump dependencies)
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -7568,11 +7614,46 @@ gitea-react-toolkit@1.11.1:
     base-64 "0.1.0"
     jszip "^3.5.0"
     localforage "1.7.3"
+<<<<<<< HEAD
+    markdown-translatable "1.3.1-rc.1"
+<<<<<<< HEAD
+=======
+=======
     markdown-translatable "2.0.0"
+>>>>>>> c94c7eb (1.4 Bump dependencies)
     prop-types "15.7.2"
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
 
+<<<<<<< HEAD
+gitea-react-toolkit@1.11.1-rc.1:
+  version "1.11.1-rc.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-1.11.1-rc.1.tgz#05f34898cb4a20d569742b43da2a92d817d1a97e"
+  integrity sha512-y4tsFuUe2veQgIGpvAlnj/0aNGY9EXDWp+51tIWnhSONC3nS7qpBYMwHJk4BI+vnjrnAr9ObT1gxtLnQIbt1uQ==
+>>>>>>> feature-cn-all-tsv-1111-1409
+  dependencies:
+    awesome-debounce-promise "2.1.0"
+    axios "0.19.0"
+    axios-cache-adapter "2.4.1"
+    base-64 "0.1.0"
+    jszip "^3.5.0"
+    localforage "1.7.3"
+<<<<<<< HEAD
+    markdown-translatable "2.0.0"
+=======
+<<<<<<< HEAD
+    markdown-translatable "1.2.16"
+>>>>>>> 3600dab (bump GRT to RC)
+=======
+    markdown-translatable "1.3.1-rc.1"
+>>>>>>> c94c7eb (1.4 Bump dependencies)
+>>>>>>> feature-cn-all-tsv-1111-1409
+    prop-types "15.7.2"
+    use-deep-compare-effect "^1.3.1"
+    utf8 "3.0.0"
+
+=======
+>>>>>>> 7399f7a (v1.4.0-rc.2)
 github-slugger@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/github-slugger/-/github-slugger-1.3.0.tgz#9bd0a95c5efdfc46005e82a906ef8e2a059124c9"
@@ -14466,10 +14547,30 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+scripture-resources-rcl@4.1.9-rc.1:
+  version "4.1.9-rc.1"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.1.9-rc.1.tgz#ef9cd5c8ec8dd8d6af67fd9175410e8260153703"
+  integrity sha512-UTUQKWgfBS76CBsfClmpbgYU48CCufizxcpSpeI3A7eRKJUM31qSB+losGUQRICD2gFq6JuMB/Jrodr1bCGrLw==
+=======
+scripture-resources-rcl@5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.2.1.tgz#456124b272d79101ea9caf07019626f4c820db02"
+  integrity sha512-WJT3RlBaJmdy7OuwBB4zBMOcEsDCmerkNziaPWQrtQowB0dh6+iKN+iRJc3+fA/G82qFZ6pIRdc+lqPKVUdAnw==
+>>>>>>> c94c7eb (1.4 Bump dependencies)
+=======
+>>>>>>> feature-cn-all-tsv-1111-1409
 scripture-resources-rcl@4.1.9:
   version "4.1.9"
   resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-4.1.9.tgz#100d1ae017e8ead780c0242b2a6ad64f1e950670"
   integrity sha512-quTIqR7ox68jMrReE0tmjNS8cOJTxHOKcpPbxQxMoh8Bf2WIzU1YnX3pfBC6IpAiUqjGj75btmlhkjZgiLe2vQ==
+<<<<<<< HEAD
+=======
+>>>>>>> 7399f7a (v1.4.0-rc.2)
+>>>>>>> feature-cn-all-tsv-1111-1409
   dependencies:
     deep-freeze "^0.0.1"
     gitea-react-toolkit "1.11.1"
