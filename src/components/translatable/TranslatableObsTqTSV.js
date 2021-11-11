@@ -3,8 +3,9 @@ import React, {
 } from 'react';
 
 import { DataTable } from 'datatable-translatable';
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
-import * as parser from 'uw-tsv-parser';
+import { ResourcesContextProvider, 
+  //ResourcesContext 
+} from 'scripture-resources-rcl';
 
 import { FileContext } from 'gitea-react-toolkit';
 
@@ -19,24 +20,25 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
-import RowHeaderTwl from './RowHeaderTwl';
+import RowHeaderObsTq from './RowHeaderObsTq';
 
+import * as parser from 'uw-tsv-parser';
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
 import { contentValidate } from '../../core/contentValidate';
 
 const delimiters = { row: '\n', cell: '\t' };
-// columns Reference	ID	Tags	OrigWords	Occurrence	TWLink
+// columns Reference, ID, Tags, Quote, Occurrence, Question, Response
 const _config = {
   compositeKeyIndices: [0, 1],
-  columnsFilter: ['OrigWords', 'Tags', 'TWLink'],
+  columnsFilter: ['Reference', 'ID', 'Question','Response'],
   columnsShowDefault: [
-    'Reference', 'OrigWords', 'Occurrence','TWLink',
+    'Reference','Questions','Response',
   ],
 }
 ;
 
-function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
+function TranslatableObsTqTSVWrapper({ onSave, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -51,7 +53,8 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
   const { state: targetFile } = useContext(
     TargetFileContext
   );
-  // filename pattern: twl_TIT.tsv
+
+  // filename pattern tq_TIT.tsv
   const bookId = sourceFile.filepath
     .split('_')[1]
     .split('.')[0]
@@ -103,15 +106,11 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
     // NOTE! the content on-screen, in-memory does NOT include
     // the headers. This must be added.
     let data = [];
-    const header = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink\n";
+    const header = "Reference\tID\tTags\tQuote\tOccurrence\tQuestion\tResponse\n";
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkTWL_TSV6Table, langId, 
-        bookId, 'TWL', validationPriority, 
-        {suppressNoticeDisablingFlag: false,
-          disableLinkedTAArticlesCheckFlag: true,
-          disableLinkedTWArticlesCheckFlag: true,
-          disableLexiconLinkFetchingFlag: true,
-        }
+      data = await contentValidate(rows, header, cv.checkQuestionsTSV7Table, langId, 
+        bookId, 'TQ2', validationPriority, 
+        { }
       );
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
@@ -135,17 +134,18 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
 
   const options = {
     page: 0,
-    rowsPerPage: 25,
+    rowsPerPage: 10,
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderTwl
+  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeaderObsTq
       bookId={bookId}
       open={expandedScripture}
       rowData={rowData}
       actionsMenu={actionsMenu}
       delimiters={delimiters}
   />), [expandedScripture, bookId]);  
+
 
   const datatable = useMemo(() => {
     _config.rowHeader = rowHeader;
@@ -176,7 +176,7 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTwlTSV datatable={datatable} />
+      <TranslatableObsTqTSV datatable={datatable} />
       {open &&  <Dialog
         disableBackdropClick
         open={open}
@@ -204,13 +204,15 @@ function TranslatableTwlTSVWrapper({ onSave, onContentIsDirty }) {
   );
 }
 
-function TranslatableTwlTSV({ datatable }) {
-  const { state: { books } } = useContext(ResourcesContext);
+function TranslatableObsTqTSV({ datatable }) {
+  /*
   return books ? datatable :
     (<div style={{
       width: '100%', display: 'flex', justifyContent: 'center',
     }}
     ><CircularProgress /></div>);
+  */
+  return datatable;
 }
 
-export default TranslatableTwlTSVWrapper;
+export default TranslatableObsTqTSVWrapper;

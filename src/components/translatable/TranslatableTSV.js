@@ -27,14 +27,14 @@ import * as csv from '../../core/csvMaker';
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
-  columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
+  columnsFilter: ['Chapter', 'SupportReference'],
   columnsShowDefault: [
     'SupportReference',
     'OccurrenceNote',
   ],
 };
 
-function TranslatableTSVWrapper({ onSave, onContentIsDirty }) {
+function TranslatableTSVWrapper({ onSave }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -101,19 +101,7 @@ function TranslatableTSVWrapper({ onSave, onContentIsDirty }) {
       const _name  = targetFile.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
-      let rowsString = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
-      for (let i=0; i < rows.length; i++) {
-        let rowString = "";
-        for (let j=0; j < rows[i].length; j++) {
-          rowString += rows[i][j];
-          if ( j < (rows[i].length-1) ) {
-            rowString += '\t';
-          }
-        }
-        rowsString += rowString;
-        rowsString += '\n';
-      }
-      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});
+      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rows, '', {suppressNoticeDisablingFlag: false});
       const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
@@ -187,14 +175,13 @@ function TranslatableTSVWrapper({ onSave, onContentIsDirty }) {
         targetFile={targetFile.content}
         onSave={onSave}
         onValidate={onValidate}
-        onContentIsDirty={onContentIsDirty}
         delimiters={delimiters}
         config={_config}
         generateRowId={generateRowId}
         options={options}
       />
     );
-  }, [sourceFile.content, targetFile.content, onSave, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
+  }, [sourceFile.content, targetFile.content, onSave, onValidate, generateRowId, options, rowHeader]);
 
   return (
     <>
