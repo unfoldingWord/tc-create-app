@@ -16,3 +16,7 @@ code {
 #translatableComponent a {
   pointer-events: none;
 }
+
+h1, h2, h3, h6 {
+  margin: 0.2%;
+}
