@@ -12,7 +12,7 @@ env:
   CYPRESS_CACHE_FOLDER: ${{ secrets.CYPRESS_CACHE_FOLDER }}
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.4.2]
@@ -28,8 +28,6 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Yarn setup
-        run: yarn
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
