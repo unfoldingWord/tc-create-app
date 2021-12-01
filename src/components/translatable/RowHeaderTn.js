@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
 
-function RowHeaderTq({
+function RowHeaderTn({
   bookId,
   rowData,
   actionsMenu,
@@ -44,4 +44,4 @@ const propsAreEqual = (prevProps, nextProps) => (
   isEqual(prevProps.open, nextProps.open)
 );
 
-export default React.memo(RowHeaderTq, propsAreEqual);
+export default React.memo(RowHeaderTn, propsAreEqual);
