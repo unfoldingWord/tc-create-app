@@ -12,6 +12,9 @@ import {
 } from 'gitea-react-toolkit';
 
 import { DrawerMenu } from './components/';
+// import { confirmAlert } from 'react-confirm-alert'; // Import
+// import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 
 import {
   loadState,
@@ -41,6 +44,9 @@ const title = `translationCore Create - v${version}`;
 function AppComponent() {
   // this state manage on open validation 
   const [criticalErrors, setCriticalErrors] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [dialogMessage, setDialogMessage ] = useState(false);
+  const [dialogValues, setDialogValues ] = useState()
 
   const { state, actions } = useContext(AppContext);
   const {
@@ -89,14 +95,69 @@ function AppComponent() {
     setSourceRepository(undefined);
   }, [setCriticalErrors, setSourceRepository]);
 
-  const _onConfirmClose = useCallback(() => {
+  // useEffect(() => {
+  //   console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKK",dialogMessage);
+  // }, [dialogMessage]);
+  
+  const closeDialog = () => {
+    setOpen(false);
+  }
+
+  const handleOk = async () => {
+    setOpen(false);
+    setDialogMessage({dialogMessage:true});
+    console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKK",dialogMessage);
+  } 
+  
+  const _onConfirmClose = () => {
+    setOpen(true);
     if (contentIsDirty) {
-      const doClose = window.confirm(localString('ConfirmCloseWindow'));
+      if(dialogMessage){
+      let doClose = true;
       return doClose;
-    } else {
-      return true;
-    }
-  }, [contentIsDirty]);
+      }else {
+        let doClose = false;
+      return doClose;
+      }
+    // const doClose = true;
+    // return doClose;
+    // setDialogMessage
+  }else {
+    return true;
+  }};
+
+  // const _onConfirmClose = useCallback(() => {
+  //   if (contentIsDirty) {
+  //     // setOpen(true);
+  //     const doClose = window.confirm(localString('ConfirmCloseWindow'));
+  //     return doClose;
+  //   } else {
+  //     return true;
+  //   }
+  // }, [contentIsDirty]);
+
+  // const _onConfirmClose = () => {
+  //   if (contentIsDirty) {
+  //     const doClose = confirmAlert({
+  //       title: 'Confirm to submit',
+  //       message: 'Are you sure to do this.',
+  //       buttons: [
+  //         {
+  //           label: 'Yes',
+  //           onClick: () => alert('Click Yes')
+  //         },
+  //         {
+  //           label: 'No',
+  //           onClick: () => alert('Click No')
+  //         }
+  //       ]
+  //     });
+  //     // const doClose = window.confirm(localString('ConfirmCloseWindow'));
+  //     return doClose;
+  //   } else {
+  //     return true;
+  //   }
+  // };
  
   useBeforeunload((event) => {
     if (contentIsDirty) {
@@ -210,6 +271,34 @@ function AppComponent() {
                 ||
                 (
                   <>
+                   <div>
+                  <Dialog
+                    open={open}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    onClose = {closeDialog}
+
+                    >
+                      <DialogTitle id="alert-dialog-title">{"localhost:3000 says -"}</DialogTitle>
+                      <DialogContent >
+                        <DialogContentText id="alert-dialog-description" >
+                        {localString('ConfirmCloseWindow')}
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                      <Button onClick={handleOk} color="primary">
+                          OK
+                        </Button>
+                        <Button onClick={closeDialog} color="primary" autoFocus>
+                          close
+                        </Button>
+                      </DialogActions>
+                  </Dialog>
+                </div>
+                )
+                ||
+                (
+                  <>
                   <Headroom pinStart={64} style={style.headroom}
                     onPin={()=>{onHeadroomPin();}} onUnfix={()=>{onHeadroomUnfix();}} onUnpin={()=>{onHeadroomUnpin();}}
                   >
@@ -225,6 +314,7 @@ function AppComponent() {
                   <div id='Workspace-Container' style={style.workspace}>
                     <Workspace />
                   </div>
+                  </>
                   </>
                 )
               }
