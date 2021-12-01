@@ -33,7 +33,7 @@ const _config = {
   compositeKeyIndices: [0, 1],
   columnsFilter: ['Reference', 'ID', 'Question','Response'],
   columnsShowDefault: [
-    'Reference','Questions','Response',
+    'Question','Response',
   ],
 }
 ;
