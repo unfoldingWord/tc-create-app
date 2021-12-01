@@ -11,6 +11,11 @@ export const loadState = async (key) => {
   return value;
 };
 
+export const loadValue = async (store, key) => {
+  let value = await store.getItem(key);
+  return value;
+};
+
 export const saveState = async (key, value) => {
   let response;
 
@@ -18,6 +23,17 @@ export const saveState = async (key, value) => {
     response = await stateStore.removeItem(key);
   } else {
     response = await stateStore.setItem(key, value);
+  }
+  return response;
+};
+
+export const saveKeyValue = async (store, key, value) => {
+  let response;
+
+  if (value === null || value === undefined) {
+    response = await store.removeItem(key);
+  } else {
+    response = await store.setItem(key, value);
   }
   return response;
 };
@@ -36,4 +52,34 @@ export const loadAuthentication = async () => {
 
 export const saveAuthentication = async (authentication) => {
   saveState('authentication', authentication);
+};
+
+const cacheStore = localforage.createInstance({
+  driver: [localforage.INDEXEDDB],
+  name: `${appPackage.name}-cache-store`,
+});
+
+export const saveFileCache = async (file, content) => {
+  let response;
+  const key = file.html_url;
+
+  const cachedContent = {
+    html_url: file.html_url,
+    filepath: file.filepath,
+    sha: file.sha,
+    timestamp: new Date(),
+    content: content
+  };
+
+  if (content === null || content === undefined) {
+    response = await cacheStore.removeItem(key);
+  } else {
+    response = await cacheStore.setItem(key, cachedContent);
+  }
+  return response;
+};
+
+export const loadFileCache = async (html_url) => {
+  const cachedFile = await loadValue(cacheStore, html_url);
+  return cachedFile;
 };
