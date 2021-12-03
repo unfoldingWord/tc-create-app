@@ -38,14 +38,19 @@ Object {
     },
     "repository": Object {
       "urls": Array [
-        "undefined/api/v1/repos/unfoldingword/en_ta",
-        "undefined/api/v1/repos/unfoldingword/en_tw",
-        "undefined/api/v1/repos/unfoldingword/en_tn",
-        "undefined/api/v1/repos/unfoldingword/en_obs",
-        "undefined/api/v1/repos/unfoldingword/en_obs-tn",
+        "undefined/api/v1/repos/unfoldingWord/en_ta",
+        "undefined/api/v1/repos/unfoldingWord/en_tw",
+        "undefined/api/v1/repos/unfoldingWord/en_twl",
+        "undefined/api/v1/repos/unfoldingWord/en_tn",
+        "undefined/api/v1/repos/unfoldingWord/en_tq",
+        "undefined/api/v1/repos/unfoldingWord/en_obs",
+        "undefined/api/v1/repos/unfoldingWord/en_obs-tq",
+        "undefined/api/v1/repos/unfoldingWord/en_obs-tn",
+        "undefined/api/v1/repos/unfoldingWord/en_obs-sn",
       ],
     },
   },
+  "contentIsDirty": undefined,
   "expandedScripture": true,
   "filepath": null,
   "fontScale": 100,
@@ -191,6 +196,7 @@ Object {
     "watchers_count": 10,
     "website": "https://www.unfoldingword.org/utn/",
   },
+  "validationPriority": "high",
 }
 `;
 
@@ -198,6 +204,7 @@ exports[`useStateReducer should use default state and match snapshots of objects
 Object {
   "setAuthentication": [Function],
   "setConfig": [Function],
+  "setContentIsDirty": [Function],
   "setExpandedScripture": [Function],
   "setFilepath": [Function],
   "setFontScale": [Function],
@@ -207,5 +214,6 @@ Object {
   "setSourceRepository": [Function],
   "setTargetRepoFromSourceRepo": [Function],
   "setTargetRepository": [Function],
+  "setValidationPriority": [Function],
 }
 `;

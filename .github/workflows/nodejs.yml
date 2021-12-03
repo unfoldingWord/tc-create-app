@@ -12,10 +12,10 @@ env:
   CYPRESS_CACHE_FOLDER: ${{ secrets.CYPRESS_CACHE_FOLDER }}
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.15.1]
+        node-version: [16.4.2]
     steps:
       - name: Extract Branch Name
         run: |
@@ -37,9 +37,15 @@ jobs:
           group: "Integration tests"
           start: yarn start
           wait-on: "http://localhost:3000"
-          wait-on-timeout: 360
+          wait-on-timeout: 720
         env:
           CYPRESS_RECORD_KEY: ${{ env.CYPRESS_RECORD_KEY }}
+      - name: Save Cypress Videos
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Cypress Videos
+          path: ./cypress/videos/
       - name: Run Unit Tests
         run: yarn test:unit;
       - name: Create Badge For Coverage Results
