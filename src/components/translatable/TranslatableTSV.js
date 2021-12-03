@@ -27,14 +27,14 @@ import * as csv from '../../core/csvMaker';
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
-  columnsFilter: ['Chapter', 'SupportReference'],
+  columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
   columnsShowDefault: [
     'SupportReference',
     'OccurrenceNote',
   ],
 };
 
-function TranslatableTSVWrapper({ onSave }) {
+function TranslatableTSVWrapper({ onSave, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -113,7 +113,8 @@ function TranslatableTSVWrapper({ onSave }) {
         rowsString += rowString;
         rowsString += '\n';
       }
-      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});      const nl = rawResults.noticeList;
+      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});      
+      const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
       data.push(hdrs);
@@ -186,13 +187,14 @@ function TranslatableTSVWrapper({ onSave }) {
         targetFile={targetFile.content}
         onSave={onSave}
         onValidate={onValidate}
+        onContentIsDirty={onContentIsDirty}
         delimiters={delimiters}
         config={_config}
         generateRowId={generateRowId}
         options={options}
       />
     );
-  }, [sourceFile.content, targetFile.content, onSave, onValidate, generateRowId, options, rowHeader]);
+  }, [sourceFile.content, targetFile.content, onSave, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
 
   return (
     <>
