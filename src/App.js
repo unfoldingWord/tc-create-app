@@ -20,6 +20,8 @@ import {
 } from './core/persistence';
 
 import Workspace from './Workspace';
+import ConfirmDialog from './components/ConfirmDialog';
+import useBeforeunload2 from './hooks/useBeforeUnload';
 
 import theme from './theme';
 
@@ -68,6 +70,8 @@ function AppComponent() {
     }
     return notices;
   }
+  
+  useBeforeunload2({handleClickOpen, contentIsDirty,})
 
   const handleClose = useCallback( () => {
     setCriticalErrors([]);
@@ -149,7 +153,7 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
                 onOpenValidation={_onOpenValidation}
-                onConfirmClose={_onConfirmClose}
+                onConfirmClose={handleClickOpen}
                 releaseFlag={organization?.username !== 'unfoldingWord' ? true:false}
               >
               {
@@ -216,6 +220,7 @@ function AppComponent() {
             </RepositoryContextProvider>
           </OrganizationContextProvider>
         </AuthenticationContextProvider>
+        <ConfirmDialog handleClickOpen={handleClickOpen} handleCloseDialog={handleCloseDialog} open={open} handleCancelClick={} handleOkClick={}/>
       </MuiThemeProvider>
     </div>
   );
