@@ -11,6 +11,10 @@ import {
   OrganizationContextProvider,
 } from 'gitea-react-toolkit';
 
+import {
+  Typography, Link, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,
+} from '@material-ui/core';
+import { useBeforeunload } from 'react-beforeunload';
 import { DrawerMenu } from './components/';
 
 import {
@@ -21,25 +25,23 @@ import {
 
 import Workspace from './Workspace';
 import ConfirmDialog from './components/ConfirmDialog';
-import useBeforeunload2 from './hooks/useBeforeUnload';
 
 import theme from './theme';
 
 import { AppContext, AppContextProvider } from './App.context';
+import ConfirmContextProvider from './context/ConfirmContextProvider';
 import { getCommitHash } from './utils';
 import { localString } from './core/localStrings';
 import { onOpenValidation } from './core/onOpenValidations';
+import useConfirm from './hooks/useConfirm';
 
-import { Typography, Link } from '@material-ui/core';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
-import { useBeforeunload } from 'react-beforeunload';
 
 const { version } = require('../package.json');
-const commitHash = getCommitHash(); 
+const commitHash = getCommitHash();
 const title = `translationCore Create - v${version}`;
 
 function AppComponent() {
-  // this state manage on open validation 
+  // this state manage on open validation
   const [criticalErrors, setCriticalErrors] = useState([]);
 
   const { state, actions } = useContext(AppContext);
@@ -60,33 +62,25 @@ function AppComponent() {
   } = actions;
 
   const drawerMenu = <DrawerMenu commitHash={commitHash} />;
-  
+
   const _onOpenValidation = (filename,content,url) => {
     const notices = onOpenValidation(filename, content, url);
+
     if (notices.length > 0) {
       setCriticalErrors(notices);
     } else {
       setCriticalErrors([]);
     }
     return notices;
-  }
-  
-  useBeforeunload2({handleClickOpen, contentIsDirty,})
+  };
 
   const handleClose = useCallback( () => {
     setCriticalErrors([]);
     setSourceRepository(undefined);
   }, [setCriticalErrors, setSourceRepository]);
 
-  const _onConfirmClose = useCallback(() => {
-    if (contentIsDirty) {
-      const doClose = window.confirm(localString('ConfirmCloseWindow'));
-      return doClose;
-    } else {
-      return true;
-    }
-  }, [contentIsDirty]);
- 
+  const { isConfirmed } = useConfirm({ contentIsDirty });
+
   useBeforeunload((event) => {
     if (contentIsDirty) {
       event.preventDefault();
@@ -95,32 +89,29 @@ function AppComponent() {
     }
   });
 
-  const onHeadroomPin = () =>
-  {
-    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
-    if (el)
-    {
+  const onHeadroomPin = () => {
+    const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
+
+    if (el) {
       el.style.top = '64px';
     }
-  }
+  };
 
-  const onHeadroomUnfix = () =>
-  {
-    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
-    if (el)
-    {
+  const onHeadroomUnfix = () => {
+    const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
+
+    if (el) {
       el.style.top = '0px';
     }
-  }
+  };
 
-  const onHeadroomUnpin = () =>
-  {
-    const el = document.querySelector("#translatableComponent div div[role='toolbar']");
-    if (el)
-    {
+  const onHeadroomUnpin = () => {
+    const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
+
+    if (el) {
       el.style.top = '0px';
     }
-  }
+  };
 
   const style = {
     app: { fontSize: `${fontScale / 100}em` },
@@ -153,11 +144,11 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
                 onOpenValidation={_onOpenValidation}
-                onConfirmClose={handleClickOpen}
+                onConfirmClose={() => isConfirmed(localString('ConfirmCloseWindow'))}
                 releaseFlag={organization?.username !== 'unfoldingWord' ? true:false}
               >
-              {
-                (criticalErrors.length > 0 && 
+                {
+                  (criticalErrors.length > 0 &&
                   <Dialog
                     disableBackdropClick
                     open={(criticalErrors.length > 0)}
@@ -166,14 +157,13 @@ function AppComponent() {
                     aria-describedby="alert-dialog-description"
                   >
                     <DialogTitle id="alert-dialog-title">
-                    This file cannot be opened by tC Create as there are errors in the Master file. 
+                    This file cannot be opened by tC Create as there are errors in the Master file.
                     Please contact your administrator to address the following error(s)
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText id="alert-dialog-description">
-                      {
-                        criticalErrors.map( (msg,idx) => {
-                          return (
+                        {
+                          criticalErrors.map( (msg,idx) => (
                             <>
                             <Typography key={idx}>
                               On <Link href={msg[0]} target="_blank" rel="noopener">
@@ -182,24 +172,29 @@ function AppComponent() {
                               &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
                             </Typography>
                             </>
-                          )
-                      })}
-                        <br/>
+                          ))}
+                        <br />
                         <Typography key="footer" >Please take a screenshot and contact your administrator.</Typography>
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                      <Button onClick={handleClose} color="primary">
+                      <Button data-test-id="h5wiHB7uHFsQeEy-l5eWL" onClick={handleClose} color="primary">
                         Close
                       </Button>
                     </DialogActions>
                   </Dialog>
-                ) 
+                  )
                 ||
                 (
                   <>
                   <Headroom pinStart={64} style={style.headroom}
-                    onPin={()=>{onHeadroomPin();}} onUnfix={()=>{onHeadroomUnfix();}} onUnpin={()=>{onHeadroomUnpin();}}
+                    onPin={()=>{
+                      onHeadroomPin();
+                    }} onUnfix={()=>{
+                      onHeadroomUnfix();
+                    }} onUnpin={()=>{
+                      onHeadroomUnpin();
+                    }}
                   >
                     <header id='App-header'>
                       <ApplicationBar
@@ -215,12 +210,12 @@ function AppComponent() {
                   </div>
                   </>
                 )
-              }
+                }
               </FileContextProvider>
             </RepositoryContextProvider>
           </OrganizationContextProvider>
         </AuthenticationContextProvider>
-        <ConfirmDialog handleClickOpen={handleClickOpen} handleCloseDialog={handleCloseDialog} open={open} handleCancelClick={} handleOkClick={}/>
+        <ConfirmDialog contentIsDirty={contentIsDirty} />
       </MuiThemeProvider>
     </div>
   );
@@ -261,7 +256,9 @@ function App(props) {
     <></>
   ) : (
     <AppContextProvider {..._props}>
-      <AppComponent {...props} />
+      <ConfirmContextProvider>
+        <AppComponent {...props} />
+      </ConfirmContextProvider>
     </AppContextProvider>
   );
 }
