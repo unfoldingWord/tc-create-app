@@ -1,6 +1,4 @@
-import React, {
-//  useState, useEffect,
-} from 'react';
+import React from 'react';
 import isEqual from 'lodash.isequal';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -12,53 +10,17 @@ function RowHeaderObsTn({
   rowData,
   actionsMenu,
   delimiters,
-  open,
 }) {
   const classes = useStyles();
-  //const _quote = rowData[3].split(delimiters.cell)[1];
-  //const [quote, setQuote] = useState(_quote);
-
-  // useEffect(() => {
-  //   setQuote(_quote);
-  // }, [_quote]);
-
-  //const book = bookId;
-  const chapter = rowData[0].split(delimiters.cell)[1].split(':')[0];
-  const verse = rowData[0].split(delimiters.cell)[1].split(':')[1];
-  let versePart = ""
-  if ( !verse ) { versePart = '' }
-  else { versePart = ":" + verse }
-  // const occurrence = rowData[4].split(delimiters.cell)[1];
-  // const reference = {
-  //   bookId: book.toLowerCase(),
-  //   chapter: parseInt(chapter) ? parseInt(chapter) : chapter,
-  //   verse: parseInt(verse) ? parseInt(verse) : verse,
-  // };
-  const reference = `${chapter}${versePart}`
+  const reference = rowData[0].split(delimiters.cell)[0]
   let _component = (
     <div className={classes.defaultHeader}>
       <Typography variant='h6' className={classes.title}>
         {`${bookId.toUpperCase()} ${reference}`}
       </Typography>
       {actionsMenu}
-    </div>);
-
-  // if (reference && reference.bookId && reference.chapter && reference.verse) {
-  //   _component = (
-  //     <div className={classes.quoteHeader}>
-  //       <QuoteSelector
-  //         reference={reference}
-  //         quote={quote}
-  //         onQuote={setQuote}
-  //         occurrence={occurrence}
-  //         height='250px'
-  //         buttons={actionsMenu}
-  //         open={open}
-  //       />
-  //     </div>
-  //   );
-  // }
-  return _component;
+    </div>
+  );  return _component;
 };
 
 const useStyles = makeStyles(theme => ({
