@@ -1,11 +1,12 @@
 import React, {
-  useState, useEffect,
+//  useState, useEffect,
 } from 'react';
 import isEqual from 'lodash.isequal';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
-import QuoteSelector from './QuoteSelector';
+// OBS is not scripture, so no quotes available in the parallel scripture pane
+//import QuoteSelector from './QuoteSelector';
 
 // columns: Reference	ID	Tags	Quote	Occurrence	Question	Response.
 function RowHeaderObsSq({
@@ -16,46 +17,49 @@ function RowHeaderObsSq({
   open,
 }) {
   const classes = useStyles();
-  const _quote = rowData[3].split(delimiters.cell)[1];
-  const [quote, setQuote] = useState(_quote);
+  //const _quote = rowData[3].split(delimiters.cell)[1];
+  //const [quote, setQuote] = useState(_quote);
 
-  useEffect(() => {
-    setQuote(_quote);
-  }, [_quote]);
+  // useEffect(() => {
+  //   setQuote(_quote);
+  // }, [_quote]);
 
-  const book = bookId;
+  //const book = bookId;
   const chapter = rowData[0].split(delimiters.cell)[1].split(':')[0];
   const verse = rowData[0].split(delimiters.cell)[1].split(':')[1];
-  const occurrence = rowData[4].split(delimiters.cell)[1];
-  const reference = {
-    bookId: book.toLowerCase(),
-    chapter: parseInt(chapter),
-    verse: parseInt(verse),
-  };
-
+  let versePart = ""
+  if ( !verse ) { versePart = '' }
+  else { versePart = ":" + verse }
+  // const occurrence = rowData[4].split(delimiters.cell)[1];
+  // const reference = {
+  //   bookId: book.toLowerCase(),
+  //   chapter: parseInt(chapter) ? parseInt(chapter) : chapter,
+  //   verse: parseInt(verse) ? parseInt(verse) : verse,
+  // };
+  const reference = `${chapter}${versePart}`
   let _component = (
     <div className={classes.defaultHeader}>
       <Typography variant='h6' className={classes.title}>
-        {`${bookId.toUpperCase()} ${chapter}:${verse}`}
+        {`${bookId.toUpperCase()} ${reference}`}
       </Typography>
       {actionsMenu}
     </div>);
 
-  if (reference && reference.bookId && reference.chapter && reference.verse) {
-    _component = (
-      <div className={classes.quoteHeader}>
-        <QuoteSelector
-          reference={reference}
-          quote={quote}
-          onQuote={setQuote}
-          occurrence={occurrence}
-          height='250px'
-          buttons={actionsMenu}
-          open={open}
-        />
-      </div>
-    );
-  }
+  // if (reference && reference.bookId && reference.chapter && reference.verse) {
+  //   _component = (
+  //     <div className={classes.quoteHeader}>
+  //       <QuoteSelector
+  //         reference={reference}
+  //         quote={quote}
+  //         onQuote={setQuote}
+  //         occurrence={occurrence}
+  //         height='250px'
+  //         buttons={actionsMenu}
+  //         open={open}
+  //       />
+  //     </div>
+  //   );
+  // }
   return _component;
 };
 
