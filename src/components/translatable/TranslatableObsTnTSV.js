@@ -35,7 +35,7 @@ const _config = {
   compositeKeyIndices: [0, 1],
   columnsFilter: ['Reference', 'ID', 'Tags', 'Quote', 'Occurrence'],
   columnsShowDefault: [
-    'Reference','SupportReference','Note',
+    'Note',
   ],
 }
 ;
