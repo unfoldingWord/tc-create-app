@@ -158,7 +158,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
       //setOpen(false);
     }
     setOpen(false);
-  },[targetFile, validationPriority, bookId]);
+  },[targetFile, validationPriority]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);
@@ -183,8 +183,8 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     _config.rowHeader = rowHeader;
     return (
       <DataTable
-        sourceFile={sourceFile && sourceFile.content}
-        targetFile={targetFile && targetFile.content}
+        sourceFile={sourceFile?.content}
+        targetFile={targetFile?.content}
         onSave={onSave}
         onEdit={onEdit}
         onValidate={onValidate}
@@ -195,7 +195,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
         options={options}
       />
     );
-  }, [sourceFile?.content, targetFile?.content, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
+  }, [sourceFile.content, targetFile.content, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
 
   return (
     <>

@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useFile, FileContext } from 'gitea-react-toolkit';
 import { AppContext } from '../App.context';
-import { loadFileCache } from '../core/persistence';
 
 const TargetFileContext = React.createContext();
 
@@ -46,12 +45,12 @@ function TargetFileContextProvider({
     sourceFile.content = _defaultContent;
   }
 
-  const targetFileCachedContentFile = loadFileCache();
-  console.log("cachedContent");
-  console.log(targetFileCachedContentFile);
+  // const targetFileCachedContentFile = loadFileCache();
+  // console.log("cachedContent");
+  // console.log(targetFileCachedContentFile);
   
-  console.log("defaultContent");
-  console.log(sourceFile);
+  // console.log("defaultContent");
+  // console.log(sourceFile);
 
   const {
     state, stateValues, actions, component, components, config,
@@ -61,8 +60,7 @@ function TargetFileContextProvider({
     repository: targetRepository,
     filepath,
     onFilepath: setFilepath,
-    loadDefaultCachedContentFile: ()=> loadFileCache(),
-    defaultContent: (sourceFile && sourceFile.content),
+    defaultContent: _defaultContent,
     onOpenValidation: onOpenValidation,
     // Pass cache actions from the app's FileContext (happens to be SOURCE).
     // Sharing actions allows the app to use onCacheChange events.
