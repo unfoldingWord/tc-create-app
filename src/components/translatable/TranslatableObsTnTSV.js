@@ -42,7 +42,7 @@ const _config = {
 
 
 
-function TranslatableObsTnTSVWrapper({ onSave, onContentIsDirty }) {
+function TranslatableObsTnTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -157,6 +157,7 @@ function TranslatableObsTnTSVWrapper({ onSave, onContentIsDirty }) {
         sourceFile={sourceFile.content}
         targetFile={targetFile.content}
         onSave={onSave}
+        onEdit={onEdit}
         onValidate={onValidate}
         onContentIsDirty={onContentIsDirty}
         delimiters={delimiters}
@@ -166,7 +167,7 @@ function TranslatableObsTnTSVWrapper({ onSave, onContentIsDirty }) {
         parser={parser}
       />
     );
-  }, [sourceFile.content, targetFile.content, onSave, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
+  }, [sourceFile.content, targetFile.content, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
 
   return (
     <>
