@@ -72,6 +72,7 @@ export const saveFileCache = async (file, content) => {
   };
 
   if (content === null || content === undefined) {
+    //console.log("tcc / persistence // removing!!", file, content);
     response = await cacheStore.removeItem(key);
   } else {
     response = await cacheStore.setItem(key, cachedContent);
@@ -80,6 +81,16 @@ export const saveFileCache = async (file, content) => {
 };
 
 export const loadFileCache = async (html_url) => {
+  //console.log('cache loadFileCache');
+  //console.log(await loadState('cacheTargetFile'));
+
   const cachedFile = await loadValue(cacheStore, html_url);
   return cachedFile;
-};
+}
+
+// export const loadCacheTargetFile = async () => {
+//   console.log('loadCacheTargetFile');
+//   console.log(await loadState('cacheTargetFile'));
+
+//   return await loadState('cacheTargetFile');
+// };

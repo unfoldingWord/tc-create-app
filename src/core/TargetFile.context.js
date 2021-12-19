@@ -45,6 +45,13 @@ function TargetFileContextProvider({
     sourceFile.content = _defaultContent;
   }
 
+  // const targetFileCachedContentFile = loadFileCache();
+  // console.log("cachedContent");
+  // console.log(targetFileCachedContentFile);
+  
+  // console.log("defaultContent");
+  // console.log(sourceFile);
+
   const {
     state, stateValues, actions, component, components, config,
   } = useFile({

@@ -127,6 +127,7 @@ function Translatable() {
 
     const autoSaveOnEdit = (
       async (content) => {
+        //console.log("tC Create / autosave", targetFile, content);
         targetFileActions.saveCache(content);
       }
     );
@@ -150,35 +151,35 @@ function Translatable() {
       
       } else if (sourceFile.filepath.match(/^tn_OBS\.tsv$/)) {
         console.log("tn_OBS file selected");
-        _translatable = <TranslatableObsTnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableObsTnTSV onSave={saveOnTranslation}onEdit={autoSaveOnEdit}  onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^tn_...\.tsv$/)) {
         console.log("tn_... file selected");
-        _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^tq_OBS\.tsv$/)) {
         console.log("tq_OBS file selected");
-        _translatable = <TranslatableObsTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableObsTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
         console.log("tq_... file selected");
-        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sq_OBS.tsv$/)) {
         console.log("sq_OBS file selected");
-        _translatable = <TranslatableObsSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableObsSqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
         console.log("sq_... file selected");
-        _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sn_OBS.tsv$/)) {
         console.log("sn_OBS file selected");
-        _translatable = <TranslatableObsSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableObsSnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
         console.log("sn_... file selected");
-        _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
         console.log("twl_... file selected")
@@ -199,6 +200,11 @@ function Translatable() {
   useEffect(() => {
     scrollToTop();
   }, [filepath, scrollToTop]);
+
+  //console.log("targetFile");
+  //console.log(targetFile);
+  //console.log("targetRepository");
+  //console.log(targetRepository);
 
   const filesHeader = targetFile && targetRepository && (
     <FilesHeader
