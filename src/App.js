@@ -21,6 +21,8 @@ import {
   loadState,
   loadAuthentication,
   saveAuthentication,
+  loadFileCache,
+  saveFileCache
 } from './core/persistence';
 
 import Workspace from './Workspace';
@@ -72,6 +74,23 @@ function AppComponent() {
       setCriticalErrors([]);
     }
     return notices;
+  };
+
+  const _onLoadCache = async ({authentication, repository, branch, html_url}) => {
+    //console.log("tcc // _onLoadCache", html_url);
+
+    if (html_url)
+    {
+      return await loadFileCache(html_url);
+    }
+  }
+  
+  const _onSaveCache = ({authentication, repository, branch, file, content}) => {
+    //console.log("tcc // _onSaveCache", file, content);
+
+    if (file) {
+      saveFileCache(file, content);
+    }
   };
 
   const handleClose = useCallback( () => {
@@ -144,6 +163,8 @@ function AppComponent() {
                 filepath={filepath}
                 onFilepath={setFilepath}
                 onOpenValidation={_onOpenValidation}
+                onLoadCache={_onLoadCache}
+                onSaveCache={_onSaveCache}
                 onConfirmClose={() => isConfirmed(localString('ConfirmCloseWindow'))}
                 releaseFlag={organization?.username !== 'unfoldingWord' ? true:false}
               >
