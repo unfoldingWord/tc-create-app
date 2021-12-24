@@ -88,8 +88,8 @@ function AppComponent() {
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
-        console.log("tcc // file", file, html_url);
-        console.log("tcc // cached file", _cachedFile);
+        // console.log("tcc // file", file, html_url);
+        // console.log("tcc // cached file", _cachedFile);
 
         if (_cachedFile?.sha && file?.sha && _cachedFile?.sha !== file?.sha) {
           // Allow app to provide CACHED ("offline" content);
@@ -98,7 +98,7 @@ function AppComponent() {
           // (NOTE: STALE cache would mean THIS user edited the same file in another browser.)
         
           const cacheWarningMessage = 
-            "Autosaved file: \n" + //_cachedFile.filepath + ".\n" +
+            "AutoSaved file: \n" + //_cachedFile.filepath + ".\n" +
             "Edited: " + _cachedFile.timestamp?.toLocaleString() + "\n" +
             "Checksum: " + _cachedFile.sha + "\n\n" +
             "Server file (newer): \n" + //file.name + ".\n" +
@@ -284,20 +284,20 @@ function AppComponent() {
         >
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Your file was auto-saved, but the file was later edited by another process...
+              Your file was autosaved, but the file was later edited by another process...
               <p><pre>{cacheWarningMessage}</pre></p>
               Do you want to keep or discard this file?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button data-test-id="ShV9tWcn2YMF7Gau" color="primary" onClick={handleCloseCachedFile}>
-                Discard My Autosaved File
+                Discard My AutoSaved File
             </Button>
             <Button data-test-id="5LJPR3YqqPx5Ezkj" onClick={()=>{
               // Reset dialog:
               setCacheWarningMessage(null);
             }} color="primary" autoFocus>
-                Keep My Autosaved File
+                Keep My AutoSaved File
             </Button>
           </DialogActions>
         </Dialog>
