@@ -16535,10 +16535,10 @@ uuid@^3.0.1, uuid@^3.3.2, uuid@^3.3.3, uuid@^3.4.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uw-content-validation@2.2.5:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/uw-content-validation/-/uw-content-validation-2.2.5.tgz#761c7b595089fca1833dc2e2e5d0918296e18664"
-  integrity sha512-mifYh6DNOzqKJePcEU+AwaTjex5qmhi6gghO1f4bMlCHo+uubRDjl0DdIVVUZrTHci9GHHg6CvTjbNzV9+Vntg==
+uw-content-validation@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/uw-content-validation/-/uw-content-validation-3.1.0.tgz#422bc85ad5038fb45d77cd74ede7bf504af1019a"
+  integrity sha512-pDRK+t6jU36GN1Zgc1uqst26SPQG80iX66hm9+zGEslxPdEV2So62EVZnAsOM0CF2SXVO/uVX+ouqiwJ89SKvA==
   dependencies:
     "@date-io/core" "^2.10.6"
     ajv "^6.12.6"
