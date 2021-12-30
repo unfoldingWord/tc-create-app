@@ -22,7 +22,8 @@ import {
   loadAuthentication,
   saveAuthentication,
   loadFileCache,
-  saveFileCache
+  saveFileCache,
+  removeFileCache
 } from './core/persistence';
 
 import Workspace from './Workspace';
@@ -45,6 +46,9 @@ const title = `translationCore Create - v${version}`;
 function AppComponent() {
   // this state manage on open validation
   const [criticalErrors, setCriticalErrors] = useState([]);
+  // State for autosave
+  const [cacheFileKey, setCacheFileKey] = useState("");
+  const [cacheWarningMessage, setCacheWarningMessage] = useState();
 
   const { state, actions } = useContext(AppContext);
   const {
@@ -76,12 +80,36 @@ function AppComponent() {
     return notices;
   };
 
-  const _onLoadCache = async ({authentication, repository, branch, html_url}) => {
+  const _onLoadCache = async ({authentication, repository, branch, html_url, file}) => {
     //console.log("tcc // _onLoadCache", html_url);
 
     if (html_url)
     {
-      return await loadFileCache(html_url);
+      let _cachedFile = await loadFileCache(html_url);
+
+      if (_cachedFile && file) {
+        // console.log("tcc // file", file, html_url);
+        // console.log("tcc // cached file", _cachedFile);
+
+        if (_cachedFile?.sha && file?.sha && _cachedFile?.sha !== file?.sha) {
+          // Allow app to provide CACHED ("offline" content);
+          // Might be different BRANCH (different user) or different FILE.
+          // Might be STALE (sha has changed on DCS).
+          // (NOTE: STALE cache would mean THIS user edited the same file in another browser.)
+        
+          const cacheWarningMessage = 
+            "AutoSaved file: \n" + //_cachedFile.filepath + ".\n" +
+            "Edited: " + _cachedFile.timestamp?.toLocaleString() + "\n" +
+            "Checksum: " + _cachedFile.sha + "\n\n" +
+            "Server file (newer): \n" + //file.name + ".\n" +
+            "Checksum: " + file.sha + "\n\n";
+
+          setCacheFileKey(html_url);
+          setCacheWarningMessage(cacheWarningMessage);
+        }
+      }
+
+      return _cachedFile;
     }
   }
   
@@ -97,6 +125,16 @@ function AppComponent() {
     setCriticalErrors([]);
     setSourceRepository(undefined);
   }, [setCriticalErrors, setSourceRepository]);
+
+  const handleCloseCachedFile = useCallback( () => {
+    // CLEAR cache:
+    removeFileCache(cacheFileKey);
+    // Reset dialog:
+    setCacheWarningMessage(null);
+    // Close current file:
+    handleClose();
+  }, [cacheFileKey, setCacheWarningMessage, handleClose]);
+
 
   const { isConfirmed } = useConfirm({ contentIsDirty });
 
@@ -236,7 +274,33 @@ function AppComponent() {
             </RepositoryContextProvider>
           </OrganizationContextProvider>
         </AuthenticationContextProvider>
-        <ConfirmDialog contentIsDirty={contentIsDirty} />
+        <ConfirmDialog contentIsDirty={contentIsDirty || cacheWarningMessage} />
+        
+        <Dialog
+          open={cacheWarningMessage != null}
+          onClose={()=>setCacheWarningMessage(null)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Your file was autosaved, but the file was later edited by another process...
+              <p><pre>{cacheWarningMessage}</pre></p>
+              Do you want to keep or discard this file?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button data-test-id="ShV9tWcn2YMF7Gau" color="primary" onClick={handleCloseCachedFile}>
+                Discard My AutoSaved File
+            </Button>
+            <Button data-test-id="5LJPR3YqqPx5Ezkj" onClick={()=>{
+              // Reset dialog:
+              setCacheWarningMessage(null);
+            }} color="primary" autoFocus>
+                Keep My AutoSaved File
+            </Button>
+          </DialogActions>
+        </Dialog>
       </MuiThemeProvider>
     </div>
   );
