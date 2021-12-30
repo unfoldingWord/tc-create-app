@@ -26,7 +26,7 @@ import RowHeaderObsSn from './RowHeaderObsSn';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
-import { contentValidate } from '../../core/contentValidate';
+import { contentValidateTSV } from '../../core/contentValidate';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -47,7 +47,7 @@ function TranslatableObsSnTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   const [open, setOpen] = React.useState(false);
 
   const {
-    state: { resourceLinks, expandedScripture, validationPriority, targetRepository },
+    state: { resourceLinks, expandedScripture, validationPriority, targetRepository, organization },
     actions: { setResourceLinks },
   } = useContext(AppContext);
   const langId = targetRepository.language;
@@ -110,23 +110,31 @@ function TranslatableObsSnTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   const _onValidate = useCallback(async (rows) => {
     // NOTE! the content on-screen, in-memory does NOT include
     // the headers. This must be added.
+    // export async function checkSN_TSV7Table(username, languageCode, bookID, filename, tableText, checkingOptions) 
+
     let data = [];
     const header = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tNote\n";
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkNotesTSV7Table, langId, bookId, 'TN2', validationPriority);
+      //data = await contentValidate(rows, header, cv.checkNotesTSV7Table, langId, bookId, 'TN2', validationPriority);
+    
+      data = await contentValidateTSV(rows, header, organization.username, 
+        langId, bookId.toUpperCase(), targetFile.name, cv.checkSN_TSV7Table,
+        {},
+        validationPriority,
+      );
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
         return;
       }
-    
+
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
       csv.download(fn, csv.toCSV(data));    
     }
 
     setOpen(false);
-  },[targetFile, validationPriority, langId, bookId]);
+  },[targetFile, validationPriority, langId, bookId, organization.username]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);

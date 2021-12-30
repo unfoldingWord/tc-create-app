@@ -40,7 +40,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   const [open, setOpen] = React.useState(false);
 
   const {
-    state: { resourceLinks, expandedScripture, validationPriority },
+    state: { resourceLinks, expandedScripture, validationPriority, organization },
     actions: { setResourceLinks },
   } = useContext(AppContext);
 
@@ -113,7 +113,8 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
         rowsString += rowString;
         rowsString += '\n';
       }
-      const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});      
+      // const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});      
+      const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookID, targetFile.name, rowsString,  {suppressNoticeDisablingFlag: false})
       const nl = rawResults.noticeList;
       let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
@@ -158,7 +159,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
       //setOpen(false);
     }
     setOpen(false);
-  },[targetFile, validationPriority]);
+  },[targetFile, validationPriority, organization.username]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);

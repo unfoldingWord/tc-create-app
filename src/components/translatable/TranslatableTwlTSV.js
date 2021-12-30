@@ -23,7 +23,7 @@ import RowHeaderTwl from './RowHeaderTwl';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
-import { contentValidate } from '../../core/contentValidate';
+import { contentValidateTSV } from '../../core/contentValidate';
 
 const delimiters = { row: '\n', cell: '\t' };
 // columns Reference	ID	Tags	OrigWords	Occurrence	TWLink
@@ -42,7 +42,7 @@ function TranslatableTwlTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   const [open, setOpen] = React.useState(false);
 
   const {
-    state: { resourceLinks, expandedScripture, validationPriority, targetRepository },
+    state: { resourceLinks, expandedScripture, validationPriority, targetRepository, organization },
     actions: { setResourceLinks },
   } = useContext(AppContext);
   const langId = targetRepository.language;
@@ -102,17 +102,30 @@ function TranslatableTwlTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   const _onValidate = useCallback(async (rows) => {
     // NOTE! the content on-screen, in-memory does NOT include
     // the headers. This must be added.
+    // export async function checkTWL_TSV6Table(username, languageCode, bookID, filename, tableText, checkingOptions) {
+
     let data = [];
     const header = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink\n";
     if ( targetFile && rows ) {
-      data = await contentValidate(rows, header, cv.checkTWL_TSV6Table, langId, 
-        bookId, 'TWL', validationPriority, 
-        {suppressNoticeDisablingFlag: false,
+      // data = await contentValidate(rows, header, cv.checkTWL_TSV6Table, langId, 
+      //   bookId, 'TWL', validationPriority, 
+      //   {suppressNoticeDisablingFlag: false,
+      //     disableLinkedTAArticlesCheckFlag: true,
+      //     disableLinkedTWArticlesCheckFlag: true,
+      //     disableLexiconLinkFetchingFlag: true,
+      //   }
+      // );
+      
+      data = await contentValidateTSV(rows, header, organization.username, 
+        langId, bookId, targetFile.name, cv.checkTWL_TSV6Table,
+        {
           disableLinkedTAArticlesCheckFlag: true,
           disableLinkedTWArticlesCheckFlag: true,
           disableLexiconLinkFetchingFlag: true,
-        }
+        }, validationPriority
       );
+
+      
       if ( data.length < 2 ) {
         alert("No Validation Errors Found");
         setOpen(false);
@@ -125,7 +138,7 @@ function TranslatableTwlTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     }
 
     setOpen(false);
-  },[targetFile, validationPriority, langId, bookId]);
+  },[targetFile, validationPriority, langId, bookId, organization.username]);
 
 
   const onValidate = useCallback( (rows) => {
