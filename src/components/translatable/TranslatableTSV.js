@@ -2,14 +2,23 @@ import React, {
   useState, useCallback, useContext, useMemo,
 } from 'react';
 
-import { CircularProgress } from '@material-ui/core';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+import {
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from '@material-ui/core';
 
 import { DataTable } from 'datatable-translatable';
 
 import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
 import { FileContext } from 'gitea-react-toolkit';
 
+import * as cv from 'uw-content-validation';
+import * as csv from '../../core/csvMaker';
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -21,8 +30,6 @@ import { TargetFileContext } from '../../core/TargetFile.context';
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
 
-import * as cv from 'uw-content-validation';
-import * as csv from '../../core/csvMaker';
 
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
@@ -40,7 +47,12 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   const [open, setOpen] = React.useState(false);
 
   const {
-    state: { resourceLinks, expandedScripture, validationPriority, organization },
+    state: {
+      resourceLinks,
+      expandedScripture,
+      validationPriority,
+      organization,
+    },
     actions: { setResourceLinks },
   } = useContext(AppContext);
 
@@ -50,7 +62,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   );
 
   const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
-  
+
   const onResourceLinks = useCallback(
     (_resourceLinks) => {
       // Remove bookId and remove defaults:
@@ -98,56 +110,63 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     // the headers. So the initial value of tsvRows will be
     // the headers.
     if ( targetFile && rows ) {
-      const _name  = targetFile.name.split('_');
+      const _name = targetFile.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
-      let rowsString = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n";
+      let rowsString = 'Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n';
+
       for (let i=0; i < rows.length; i++) {
-        let rowString = "";
+        let rowString = '';
+
         for (let j=0; j < rows[i].length; j++) {
           rowString += rows[i][j];
+
           if ( j < (rows[i].length-1) ) {
             rowString += '\t';
-          }
-        }
+          };
+        };
         rowsString += rowString;
         rowsString += '\n';
       }
-      // const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});      
+      // const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});
+
       const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookID, targetFile.name, rowsString,  {suppressNoticeDisablingFlag: false})
       const nl = rawResults.noticeList;
-      let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
+      let hdrs = ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
       data.push(hdrs);
       let inPriorityRange = false;
+
       Object.keys(nl).forEach ( key => {
         inPriorityRange = false; // reset for each
         const rowData = nl[key];
+
         if ( validationPriority === 'med' && rowData.priority > 599 ) {
           inPriorityRange = true;
         } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
           inPriorityRange = true;
         } else if ( validationPriority === 'low' ) {
           inPriorityRange = true;
-        }
+        };
+
         if ( inPriorityRange ) {
           csv.addRow( data, [
-              String(rowData.priority),
-              String(rowData.C),
-              String(rowData.V),
-              String(rowData.lineNumber),
-              String(rowData.rowID),
-              String(rowData.fieldName || ""),
-              String(rowData.characterIndex || ""),
-              String(rowData.extract || ""),
-              String(rowData.message),
-              String(rowData.location),
-          ])
+            String(rowData.priority),
+            String(rowData.C),
+            String(rowData.V),
+            String(rowData.lineNumber),
+            String(rowData.rowID),
+            String(rowData.fieldName || ''),
+            String(rowData.characterIndex || ''),
+            String(rowData.extract || ''),
+            String(rowData.message),
+            String(rowData.location),
+          ]);
         }
       });
 
       if ( data.length < 2 ) {
-        alert("No Validation Errors Found");
+        alert('No Validation Errors Found');
         setOpen(false);
         return;
       }
@@ -155,7 +174,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
       csv.download(fn, csv.toCSV(data));
-  
+
       //setOpen(false);
     }
     setOpen(false);
@@ -210,28 +229,29 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
       config={serverConfig}
     >
       <TranslatableTSV datatable={datatable} />
-      {open &&  <Dialog
-        disableBackdropClick
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Validation Running, Please Wait"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <div style={{ textAlign: 'center' }}>
-              <CircularProgress />{' '}
-            </div>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    }
+      {
+        open && <Dialog
+          disableBackdropClick
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{'Validation Running, Please Wait'}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <div style={{ textAlign: 'center' }}>
+                <CircularProgress />{' '}
+              </div>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      }
     </ResourcesContextProvider>
     </>
   );
@@ -244,6 +264,6 @@ function TranslatableTSV({ datatable }) {
       width: '100%', display: 'flex', justifyContent: 'center',
     }}
     ><CircularProgress /></div>);
-}
+};
 
 export default TranslatableTSVWrapper;

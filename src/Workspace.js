@@ -1,25 +1,37 @@
-import React, { useContext, useMemo, useState, useCallback } from 'react';
+import React, {
+  useContext,
+  useState,
+  useCallback,
+} from 'react';
 import { FileContext } from 'gitea-react-toolkit';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+  Typography,
+  Link,
+} from '@material-ui/core';
+import { useDeepCompareMemo } from 'use-deep-compare';
 import { ApplicationStepper, Translatable } from './components/';
 import { AppContext } from './App.context';
 import { TargetFileContextProvider } from './core/TargetFile.context';
-import { Typography, Link } from '@material-ui/core';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 import { onOpenValidation } from './core/onOpenValidations';
 
-
 function Workspace() {
-  // this state manage on open validation 
+  // this state manage on open validation
   const [criticalErrors, setCriticalErrors] = useState([]);
 
-  const { 
-    state: { sourceRepository, filepath }, 
-    actions: { setSourceRepository} 
+  const {
+    state: { sourceRepository, filepath },
+    actions: { setSourceRepository},
   } = useContext(AppContext);
   // note: in above I tried to use setFilepath for use in the Alert
   // onClose() below, but did not work. However, setSourceRepository does
   const { state: sourceFile } = useContext(FileContext);
-  
+
   const sourceRepoMemo = sourceRepository && JSON.stringify(sourceRepository);
   const sourceFilepath = sourceFile && sourceFile.filepath;
   const handleClose = useCallback( () => {
@@ -29,6 +41,7 @@ function Workspace() {
 
   const _onOpenValidation = (filename,content,url) => {
     const notices = onOpenValidation(filename, content, url);
+
     if (notices.length > 0) {
       setCriticalErrors(notices);
     } else {
@@ -37,17 +50,17 @@ function Workspace() {
     return notices;
   };
 
-  const component = useMemo(() => {
+  const component = useDeepCompareMemo(() => {
     let _component = <ApplicationStepper />;
 
     if (sourceRepoMemo && sourceFilepath && filepath) {
       if (sourceFilepath === filepath) {
         _component = (
-          <TargetFileContextProvider 
+          <TargetFileContextProvider
             onOpenValidation={_onOpenValidation}
           >
             {
-              (criticalErrors.length > 0 && 
+              (criticalErrors.length > 0 &&
                 <Dialog
                   disableBackdropClick
                   open={(criticalErrors.length > 0)}
@@ -61,9 +74,8 @@ function Workspace() {
                   </DialogTitle>
                   <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                    {
-                      criticalErrors.map( (msg,idx) => {
-                        return (
+                      {
+                        criticalErrors.map( (msg,idx) => (
                           <>
                           <Typography key={idx}>
                             On <Link href={msg[0]} target="_blank" rel="noopener">
@@ -72,8 +84,8 @@ function Workspace() {
                             &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
                           </Typography>
                           </>
-                        )
-                    })}
+                        ))
+                      }
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
@@ -82,7 +94,7 @@ function Workspace() {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              ) 
+              )
               ||
               <Translatable />
             }
@@ -94,6 +106,6 @@ function Workspace() {
   }, [sourceRepoMemo, sourceFilepath, filepath, criticalErrors, handleClose]);
 
   return component;
-}
+};
 
 export default Workspace;

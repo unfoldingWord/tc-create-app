@@ -10,6 +10,7 @@ const config = {
   authentication: {
     server: SERVER_URL,
     tokenid: appPackage.name,
+    verbose: true,
   },
   repository: {
     urls: [

@@ -23,7 +23,7 @@ import {
   saveAuthentication,
   loadFileCache,
   saveFileCache,
-  removeFileCache
+  removeFileCache,
 } from './core/persistence';
 
 import Workspace from './Workspace';
@@ -38,7 +38,6 @@ import { localString } from './core/localStrings';
 import { onOpenValidation } from './core/onOpenValidations';
 import useConfirm from './hooks/useConfirm';
 
-
 const { version } = require('../package.json');
 const commitHash = getCommitHash();
 const title = `translationCore Create - v${version}`;
@@ -47,7 +46,7 @@ function AppComponent() {
   // this state manage on open validation
   const [criticalErrors, setCriticalErrors] = useState([]);
   // State for autosave
-  const [cacheFileKey, setCacheFileKey] = useState("");
+  const [cacheFileKey, setCacheFileKey] = useState('');
   const [cacheWarningMessage, setCacheWarningMessage] = useState();
 
   const { state, actions } = useContext(AppContext);
@@ -80,11 +79,16 @@ function AppComponent() {
     return notices;
   };
 
-  const _onLoadCache = async ({authentication, repository, branch, html_url, file}) => {
+  const _onLoadCache = useCallback( async ({
+    authentication,
+    repository,
+    branch,
+    html_url,
+    file,
+  }) => {
     //console.log("tcc // _onLoadCache", html_url);
 
-    if (html_url)
-    {
+    if (html_url) {
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
@@ -96,23 +100,23 @@ function AppComponent() {
           // Might be different BRANCH (different user) or different FILE.
           // Might be STALE (sha has changed on DCS).
           // (NOTE: STALE cache would mean THIS user edited the same file in another browser.)
-        
-          const cacheWarningMessage = 
-            "AutoSaved file: \n" + //_cachedFile.filepath + ".\n" +
-            "Edited: " + _cachedFile.timestamp?.toLocaleString() + "\n" +
-            "Checksum: " + _cachedFile.sha + "\n\n" +
-            "Server file (newer): \n" + //file.name + ".\n" +
-            "Checksum: " + file.sha + "\n\n";
+
+          const cacheWarningMessage =
+            'AutoSaved file: \n' + //_cachedFile.filepath + ".\n" +
+            'Edited: ' + _cachedFile.timestamp?.toLocaleString() + '\n' +
+            'Checksum: ' + _cachedFile.sha + '\n\n' +
+            'Server file (newer): \n' + //file.name + ".\n" +
+            'Checksum: ' + file.sha + '\n\n';
 
           setCacheFileKey(html_url);
           setCacheWarningMessage(cacheWarningMessage);
         }
-      }
+      };
 
       return _cachedFile;
     }
-  }
-  
+  }, []);
+
   const _onSaveCache = ({authentication, repository, branch, file, content}) => {
     //console.log("tcc // _onSaveCache", file, content);
 

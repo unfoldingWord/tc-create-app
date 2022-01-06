@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useDeepCompareEffect } from 'use-deep-compare';
 import { useFile, FileContext } from 'gitea-react-toolkit';
 import { AppContext } from '../App.context';
 
 const TargetFileContext = React.createContext();
 
 function TargetFileContextProvider({
-  onOpenValidation, 
-  children
+  onOpenValidation,
+  children,
 }) {
   const {
     state: {
@@ -15,10 +16,13 @@ function TargetFileContextProvider({
     } = {},
   } = useContext(AppContext);
 
-  const { state: sourceFile, stateValues: sourceStateValues, actions: sourceFileActions } = useContext(FileContext) || {};
+  const {
+    state: sourceFile,
+    stateValues: sourceStateValues,
+    actions: sourceFileActions,
+  } = useContext(FileContext) || {};
 
   const appContext = useContext(AppContext);
-  const sourceContext = useContext(FileContext);
 
   /* Some useful debugging logs left here for the future.
   console.log("--TargetFileContextProvider--");
@@ -29,6 +33,7 @@ function TargetFileContextProvider({
   */
 
   let _defaultContent;
+
   if ( appContext?.state?.sourceRepository?.id === appContext?.state?.targetRepository?.id ) {
     // this is the editor role; they need latest content from master
     // to be on the source side and as the default content 
@@ -40,7 +45,7 @@ function TargetFileContextProvider({
     // to be from the published catalog. For now this is latest prod content.
     // it also needs to be the default content.
     //console.log("TargetFile.context() translator mode detected.")
-    _defaultContent = sourceContext?.state?.publishedContent;
+    _defaultContent = sourceFile?.publishedContent;
     // also replease the source content
     sourceFile.content = _defaultContent;
   }
@@ -48,7 +53,7 @@ function TargetFileContextProvider({
   // const targetFileCachedContentFile = loadFileCache();
   // console.log("cachedContent");
   // console.log(targetFileCachedContentFile);
-  
+
   // console.log("defaultContent");
   // console.log(sourceFile);
 
@@ -69,11 +74,15 @@ function TargetFileContextProvider({
     onConfirmClose: null,
   });
 
+  useDeepCompareEffect(() => {
+    console.log('\n>>>\nThis should only print once per file change!\n<<<\n');
+  }, [state]);
+
   const context = {
-    state: { ...state }, 
+    state: { ...state },
     stateValues,
     sourceStateValues,
-    actions: { ...actions }, 
+    actions: { ...actions },
     component,
     components,
     config,

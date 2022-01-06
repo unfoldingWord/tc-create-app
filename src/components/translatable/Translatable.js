@@ -1,5 +1,4 @@
 import React, {
-  useMemo,
   useEffect,
   useCallback,
   useState,
@@ -11,6 +10,7 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 
 import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable, MarkdownContextProvider } from 'markdown-translatable';
@@ -33,7 +33,16 @@ function Translatable() {
   const classes = useStyles();
   //const [wrapperElement, setWrapperElement] = useState(null);
 
-  const { state: {config, language, sourceRepository, targetRepository, filepath}, actions: {setContentIsDirty} } = useContext(AppContext);
+  const {
+    state: {
+      config,
+      language,
+      sourceRepository,
+      targetRepository,
+      filepath,
+    },
+    actions: { setContentIsDirty },
+  } = useContext(AppContext);
 
   const { actions: authenticationActions } = useContext(AuthenticationContext);
 
@@ -47,11 +56,9 @@ function Translatable() {
 
   const { state: sourceFile } = useContext(FileContext);
 
-  const { state: targetFile, actions: targetFileActions } = useContext(
-    TargetFileContext
-  );
+  const { state: targetFile, actions: targetFileActions } = useContext(TargetFileContext);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     // This does not work in the saveRetry() function.
     if (doSaveRetry) {
       setDoSaveRetry(false);
@@ -61,15 +68,15 @@ function Translatable() {
           // Saved successfully.
           closeAuthenticationModal();
         },
-          () => {
-            // Error saving:
-            closeAuthenticationModal();
-            alert("Error saving file! File could not be saved.");
-          });
+        () => {
+          // Error saving:
+          closeAuthenticationModal();
+          alert('Error saving file! File could not be saved.');
+        });
     }
   }, [doSaveRetry, targetFileActions, savingTargetFileContent]);
 
-  const authenticationModal = useMemo(() => {
+  const authenticationModal = useDeepCompareMemo(() => {
     const saveRetry = ({ username, password, remember }) => {
       authenticationActions.onLoginFormSubmitLogin({ username, password, remember })
         .then(() => {
@@ -101,7 +108,7 @@ function Translatable() {
     // }
   }, []);
 
-  const translatableComponent = useMemo(() => {
+  const translatableComponent = useDeepCompareMemo(() => {
     let _translatable = (
       <div style={{ textAlign: 'center' }}>
         <CircularProgress />{' '}
@@ -111,6 +118,7 @@ function Translatable() {
     const saveOnTranslation = (
       async (content) => {
         setSavingTargetFileContent(content);
+
         try {
           await targetFileActions.save(content);
         } catch (error) {
@@ -119,7 +127,7 @@ function Translatable() {
           if (friendlyError.isRecoverable) {
             openAuthenticationModal();
           } else {
-            alert("Error saving file! File could not be saved.");
+            alert('Error saving file! File could not be saved.');
           }
         }
       }
@@ -128,7 +136,7 @@ function Translatable() {
     const autoSaveOnEdit = (
       async (content) => {
         //console.log("tC Create / autosave", targetFile, content);
-        targetFileActions.saveCache(content);
+        await targetFileActions.saveCache(content);
       }
     );
 
@@ -146,54 +154,43 @@ function Translatable() {
           onTranslation: saveOnTranslation,
           onContentIsDirty: setContentIsDirty,
         };
-        console.log("Markdown file selected");
+        console.log('Markdown file selected');
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
-      
       } else if (sourceFile.filepath.match(/^tn_OBS\.tsv$/)) {
-        console.log("tn_OBS file selected");
+        console.log('tn_OBS file selected');
         _translatable = <TranslatableObsTnTSV onSave={saveOnTranslation}onEdit={autoSaveOnEdit}  onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^tn_...\.tsv$/)) {
-        console.log("tn_... file selected");
+        console.log('tn_... file selected');
         _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^tq_OBS\.tsv$/)) {
-        console.log("tq_OBS file selected");
+        console.log('tq_OBS file selected');
         _translatable = <TranslatableObsTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
-        console.log("tq_... file selected");
+        console.log('tq_... file selected');
         _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^sq_OBS.tsv$/)) {
-        console.log("sq_OBS file selected");
+        console.log('sq_OBS file selected');
         _translatable = <TranslatableObsSqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
-        console.log("sq_... file selected");
+        console.log('sq_... file selected');
         _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^sn_OBS.tsv$/)) {
-        console.log("sn_OBS file selected");
+        console.log('sn_OBS file selected');
         _translatable = <TranslatableObsSnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
-        console.log("sn_... file selected");
+        console.log('sn_... file selected');
         _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
-        console.log("twl_... file selected")
+        console.log('twl_... file selected');
         _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else if (sourceFile.filepath.match(/\.tsv$/)) {
-        console.log("tn 9 col file selected")
+        console.log('tn 9 col file selected');
         _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      
       } else {
-        console.log("Unsupported file selected")
+        console.log('Unsupported file selected');
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
       }
-    }
+    };
     return _translatable;
   }, [filepath, sourceFile, targetFile, targetFileActions, setContentIsDirty]);
 
@@ -237,7 +234,7 @@ const useStyles = makeStyles((theme) => (
       right: '10%',
       maxHeight: '80%',
       overflow: 'scroll',
-    }
+    },
   }));
 
 export default Translatable;
