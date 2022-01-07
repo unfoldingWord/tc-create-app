@@ -29,15 +29,16 @@ function RowHeader({
   useDeepCompareEffect(() => {
     const quote = rowData[5].split(delimiters.cell)[1];
     const occurrence = rowData[6].split(delimiters.cell)[1];
-    const book = rowData[0].split(delimiters.cell)[1];
+    const bookId = rowData[0].split(delimiters.cell)[1];
     const chapter = rowData[1].split(delimiters.cell)[1];
     const verse = rowData[2].split(delimiters.cell)[1];
-    const reference = {
-      bookId: book.toLowerCase(),
-      chapter: parseInt(chapter),
-      verse: parseInt(verse),
+    const _state = {
+      quote,
+      occurrence,
+      bookId,
+      chapter,
+      verse,
     };
-    const _state = { quote, occurrence, reference };
     setState(_state);
   }, [rowData]);
 
@@ -48,7 +49,13 @@ function RowHeader({
   const scriptureHeader = useDeepCompareMemo(() => {
     let _component;
 
-    if (state.reference?.bookId && state.reference?.chapter && state.reference?.verse) {
+    const reference = {
+      bookId: state.bookId.toLowerCase(),
+      chapter: parseInt(state.chapter),
+      verse: parseInt(state.verse),
+    };
+
+    if (reference.bookId && reference.chapter && reference.verse) {
       _component = (
         <div className={classes.quoteHeader}>
           <QuoteSelector
@@ -69,7 +76,7 @@ function RowHeader({
   const defaultHeader = useDeepCompareMemo(() => (
     <div className={classes.defaultHeader}>
       <Typography variant='h6' className={classes.title}>
-        {`${state.reference?.book} ${state.reference?.chapter}:${state.reference?.verse}`}
+        {`${state.bookId} ${state.chapter}:${state.verse}`}
       </Typography>
       {actionsMenu}
     </div>

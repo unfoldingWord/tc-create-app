@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareEffect } from 'use-deep-compare';
 import { useFile, FileContext } from 'gitea-react-toolkit';
 import { AppContext } from '../App.context';
 
@@ -99,6 +98,8 @@ TargetFileContextProvider.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  /** Not sure what this does but needs documented */
+  onOpenValidation: PropTypes.func,
 };
 
 export {
