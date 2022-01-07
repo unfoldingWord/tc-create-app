@@ -77,11 +77,14 @@ function Translatable() {
   }, [doSaveRetry, targetFileActions, savingTargetFileContent]);
 
   const authenticationModal = useDeepCompareMemo(() => {
-    const saveRetry = ({ username, password, remember }) => {
-      authenticationActions.onLoginFormSubmitLogin({ username, password, remember })
-        .then(() => {
-          setDoSaveRetry(true);
-        });
+    const saveRetry = ({
+      username, password, remember,
+    }) => {
+      authenticationActions.onLoginFormSubmitLogin({
+        username, password, remember,
+      }).then(() => {
+        setDoSaveRetry(true);
+      });
     };
 
     return (
@@ -133,12 +136,10 @@ function Translatable() {
       }
     );
 
-    const autoSaveOnEdit = (
-      async (content) => {
-        //console.log("tC Create / autosave", targetFile, content);
-        await targetFileActions.saveCache(content);
-      }
-    );
+    const autoSaveOnEdit = async (content) => {
+      //console.log("tC Create / autosave", targetFile, content);
+      await targetFileActions.saveCache(content);
+    };
 
     if (
       filepath &&

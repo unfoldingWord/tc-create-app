@@ -1,10 +1,10 @@
-import React, {
-  useState, useEffect,
-} from 'react';
-import isEqual from 'lodash.isequal';
-import { makeStyles } from '@material-ui/core/styles';
-
+import React, { useState, useEffect } from 'react';
 import { Typography } from '@material-ui/core';
+import isEqual from 'lodash.isequal';
+
+import { makeStyles } from '@material-ui/core/styles';
+import { useDeepCompareMemo } from 'use-deep-compare';
+
 import QuoteSelector from './QuoteSelector';
 
 function RowHeader({
@@ -31,30 +31,34 @@ function RowHeader({
     verse: parseInt(verse),
   };
 
-  let _component = (
-    <div className={classes.defaultHeader}>
-      <Typography variant='h6' className={classes.title}>
-        {`${book} ${chapter}:${verse}`}
-      </Typography>
-      {actionsMenu}
-    </div>);
+  const component = useDeepCompareMemo(() => {
+    let _component = (
+      <div className={classes.defaultHeader}>
+        <Typography variant='h6' className={classes.title}>
+          {`${book} ${chapter}:${verse}`}
+        </Typography>
+        {actionsMenu}
+      </div>);
+  
+    if (reference && reference.bookId && reference.chapter && reference.verse) {
+      _component = (
+        <div className={classes.quoteHeader}>
+          <QuoteSelector
+            reference={reference}
+            quote={quote}
+            onQuote={setQuote}
+            occurrence={occurrence}
+            height='250px'
+            buttons={actionsMenu}
+            open={open}
+          />
+        </div>
+      );
+    };
+    return _component;
+  }, [classes, book, chapter, verse, actionsMenu, reference, quote, setQuote, occurrence, open]);
 
-  if (reference && reference.bookId && reference.chapter && reference.verse) {
-    _component = (
-      <div className={classes.quoteHeader}>
-        <QuoteSelector
-          reference={reference}
-          quote={quote}
-          onQuote={setQuote}
-          occurrence={occurrence}
-          height='250px'
-          buttons={actionsMenu}
-          open={open}
-        />
-      </div>
-    );
-  }
-  return _component;
+  return component;
 };
 
 const useStyles = makeStyles(theme => ({

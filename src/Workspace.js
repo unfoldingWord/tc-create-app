@@ -39,7 +39,7 @@ function Workspace() {
     setSourceRepository(undefined);
   }, [setCriticalErrors, setSourceRepository]);
 
-  const _onOpenValidation = (filename,content,url) => {
+  const _onOpenValidation = useCallback((filename,content,url) => {
     const notices = onOpenValidation(filename, content, url);
 
     if (notices.length > 0) {
@@ -48,7 +48,7 @@ function Workspace() {
       setCriticalErrors([]);
     }
     return notices;
-  };
+  }, []);
 
   const component = useDeepCompareMemo(() => {
     let _component = <ApplicationStepper />;

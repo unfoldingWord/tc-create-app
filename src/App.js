@@ -117,13 +117,12 @@ function AppComponent() {
     }
   }, []);
 
-  const _onSaveCache = ({authentication, repository, branch, file, content}) => {
+  const _onSaveCache = useCallback(({authentication, repository, branch, file, content}) => {
     //console.log("tcc // _onSaveCache", file, content);
-
     if (file) {
       saveFileCache(file, content);
     }
-  };
+  }, []);
 
   const handleClose = useCallback( () => {
     setCriticalErrors([]);
@@ -308,7 +307,7 @@ function AppComponent() {
       </MuiThemeProvider>
     </div>
   );
-}
+};
 
 function App(props) {
   const [resumedState, setResumedState] = useState();

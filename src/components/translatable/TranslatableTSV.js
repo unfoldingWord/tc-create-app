@@ -1,6 +1,5 @@
-import React, {
-  useState, useCallback, useContext, useMemo,
-} from 'react';
+import React, { useState, useCallback, useContext } from 'react';
+import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
 import {
   CircularProgress,
@@ -104,7 +103,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     setOpen(false);
   }, [setOpen]);
 
-  const _onValidate = useCallback(async (rows) => {
+  const _onValidate = useDeepCompareCallback(async (rows) => {
     // sample name: en_tn_08-RUT.tsv
     // NOTE! the content on-screen, in-memory does NOT include
     // the headers. So the initial value of tsvRows will be
@@ -191,15 +190,15 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useCallback((rowData, actionsMenu) => (<RowHeader
+  const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => (<RowHeader
     open={expandedScripture}
     rowData={rowData}
     actionsMenu={actionsMenu}
     delimiters={delimiters}
-  />), [expandedScripture]);
+  />), [expandedScripture, delimiters]);
 
 
-  const datatable = useMemo(() => {
+  const datatable = useDeepCompareMemo(() => {
     _config.rowHeader = rowHeader;
     return (
       <DataTable

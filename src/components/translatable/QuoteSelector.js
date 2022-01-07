@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ParallelScripture }
-  from 'scripture-resources-rcl';
+import { ParallelScripture } from 'scripture-resources-rcl';
 import { getMuiTheme } from './muiTheme';
 
 function QuoteSelector({
@@ -23,7 +22,10 @@ function QuoteSelector({
       occurrence={occurrence}
       height='250px'
       buttons={buttons}
-    />), [buttons, occurrence, onQuote, open, quote, reference]);
+    />
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ), [quote, occurrence]);
+
   return (
     <MuiThemeProvider theme={getMuiTheme}>
       {component}
