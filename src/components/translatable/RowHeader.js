@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import isEqual from 'lodash.isequal';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useDeepCompareMemo } from 'use-deep-compare';
+import {
+  useDeepCompareCallback,
+  useDeepCompareEffect,
+  useDeepCompareMemo,
+} from 'use-deep-compare';
 
 import QuoteSelector from './QuoteSelector';
 
@@ -14,40 +18,44 @@ function RowHeader({
   open,
 }) {
   const classes = useStyles();
-  const _quote = rowData[5].split(delimiters.cell)[1];
-  const [quote, setQuote] = useState(_quote);
 
-  useEffect(() => {
-    setQuote(_quote);
-  }, [_quote]);
-
-  const book = rowData[0].split(delimiters.cell)[1];
-  const chapter = rowData[1].split(delimiters.cell)[1];
-  const verse = rowData[2].split(delimiters.cell)[1];
-  const occurrence = rowData[6].split(delimiters.cell)[1];
-  const reference = {
-    bookId: book.toLowerCase(),
-    chapter: parseInt(chapter),
-    verse: parseInt(verse),
+  const defaultState = {
+    quote: undefined,
+    occurrence: undefined,
+    reference: undefined,
   };
+  const [state, setState] = useState(defaultState);
 
-  const component = useDeepCompareMemo(() => {
-    let _component = (
-      <div className={classes.defaultHeader}>
-        <Typography variant='h6' className={classes.title}>
-          {`${book} ${chapter}:${verse}`}
-        </Typography>
-        {actionsMenu}
-      </div>);
-  
-    if (reference && reference.bookId && reference.chapter && reference.verse) {
+  useDeepCompareEffect(() => {
+    const quote = rowData[5].split(delimiters.cell)[1];
+    const occurrence = rowData[6].split(delimiters.cell)[1];
+    const book = rowData[0].split(delimiters.cell)[1];
+    const chapter = rowData[1].split(delimiters.cell)[1];
+    const verse = rowData[2].split(delimiters.cell)[1];
+    const reference = {
+      bookId: book.toLowerCase(),
+      chapter: parseInt(chapter),
+      verse: parseInt(verse),
+    };
+    const _state = { quote, occurrence, reference };
+    setState(_state);
+  }, [rowData]);
+
+  const onQuote = useDeepCompareCallback((quote) => {
+    setState({ ...state, quote });
+  }, [state]);
+
+  const scriptureHeader = useDeepCompareMemo(() => {
+    let _component;
+
+    if (state.reference?.bookId && state.reference?.chapter && state.reference?.verse) {
       _component = (
         <div className={classes.quoteHeader}>
           <QuoteSelector
-            reference={reference}
-            quote={quote}
-            onQuote={setQuote}
-            occurrence={occurrence}
+            reference={state.reference}
+            quote={state.quote}
+            onQuote={onQuote}
+            occurrence={state.occurrence}
             height='250px'
             buttons={actionsMenu}
             open={open}
@@ -56,9 +64,18 @@ function RowHeader({
       );
     };
     return _component;
-  }, [classes, book, chapter, verse, actionsMenu, reference, quote, setQuote, occurrence, open]);
+  }, [state, actionsMenu]);
 
-  return component;
+  const defaultHeader = useDeepCompareMemo(() => (
+    <div className={classes.defaultHeader}>
+      <Typography variant='h6' className={classes.title}>
+        {`${state.reference?.book} ${state.reference?.chapter}:${state.reference?.verse}`}
+      </Typography>
+      {actionsMenu}
+    </div>
+  ), [classes, state.reference]);
+
+  return scriptureHeader || defaultHeader;
 };
 
 const useStyles = makeStyles(theme => ({

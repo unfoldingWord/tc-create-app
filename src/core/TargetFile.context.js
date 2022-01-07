@@ -74,10 +74,6 @@ function TargetFileContextProvider({
     onConfirmClose: null,
   });
 
-  useDeepCompareEffect(() => {
-    console.log('\n>>>\nThis should only print once per file change!\n<<<\n');
-  }, [state]);
-
   const context = {
     state: { ...state },
     stateValues,
