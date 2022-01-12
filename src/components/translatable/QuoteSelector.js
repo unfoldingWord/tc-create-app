@@ -8,7 +8,7 @@ function QuoteSelector({
   quote,
   onQuote,
   occurrence: _occurrence,
-  reference,
+  reference={},
   buttons,
   open,
 }) {

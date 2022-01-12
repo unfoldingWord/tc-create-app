@@ -50,7 +50,7 @@ function RowHeader({
     let _component;
 
     const reference = {
-      bookId: state.bookId.toLowerCase(),
+      bookId: state.bookId?.toLowerCase(),
       chapter: parseInt(state.chapter),
       verse: parseInt(state.verse),
     };
