@@ -119,7 +119,7 @@ function Translatable() {
           if (friendlyError.isRecoverable) {
             openAuthenticationModal();
           } else {
-            alert("Error saving file! File could not be saved.");
+            alert("There was a network error. The changes were not uploaded to your user branch on Door43 but your changes have been saved locally. Please check your connection and try again");
           }
         }
       }
