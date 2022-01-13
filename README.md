@@ -27,4 +27,35 @@ tC Create is built using [React Component Libraries](https://forum.door43.org/t/
 
 ## Developer Notes
 
+### Running Local Cypress Tests
+
+#### First Time Setup
+- make sure cypress is fully installed:
+```
+yarn
+yarn run cypress install
+```
+- create test config file `cypress.env.json` in root folder with the following contents (substitute your username in password):
+```
+{
+  "TEST_USERNAME": "<user>",
+  "TEST_PASSWORD": "<password>"
+}
+```
+- you will need to be part of unfoldingWord organization for the test to complete
+
+#### Running tests
+- in first terminal, start the app by (in Windows, run this in `git Bash` as it needs bash):
+```
+yarn start
+```
+- then in second terminal, to run cypress interactively do:
+```
+yarn run cypress open
+```
+- or to run headless: in second terminal, run cypress by:
+```
+`yarn cypress:run`
+```
+
 [Details on how the auto-increment build number works](https://git.door43.org/cecil.new/journals/src/branch/master/tc-create-app%23586.md)
