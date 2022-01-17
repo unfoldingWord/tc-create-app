@@ -55,11 +55,11 @@ function RowHeader({
       verse: parseInt(state.verse),
     };
 
-    if (reference.bookId && reference.chapter && reference.verse) {
+    if (reference.chapter > 0 && reference.verse > 0) {
       _component = (
         <div className={classes.quoteHeader}>
           <QuoteSelector
-            reference={state.reference}
+            reference={reference}
             quote={state.quote}
             onQuote={onQuote}
             occurrence={state.occurrence}
@@ -80,7 +80,7 @@ function RowHeader({
       </Typography>
       {actionsMenu}
     </div>
-  ), [classes, state.reference]);
+  ), [classes, state]);
 
   return scriptureHeader || defaultHeader;
 };
