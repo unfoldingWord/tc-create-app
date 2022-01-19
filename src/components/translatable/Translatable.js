@@ -51,6 +51,8 @@ function Translatable() {
     TargetFileContext
   );
 
+  console.log("TCC  // TRANSLATABLE", targetFileActions )
+
   useEffect(() => {
     // This does not work in the saveRetry() function.
     if (doSaveRetry) {
@@ -61,14 +63,14 @@ function Translatable() {
           // Saved successfully.
           closeAuthenticationModal();
         },
-          () => {
-            // Error saving:
-            closeAuthenticationModal();
-            alert("Error saving file! File could not be saved.");
-          });
-    }
-  }, [doSaveRetry, targetFileActions, savingTargetFileContent]);
-
+        () => {
+          // Error saving:
+          closeAuthenticationModal();
+          alert("Error saving file! File could not be saved.");
+        });
+      }
+    }, [doSaveRetry, targetFileActions, savingTargetFileContent]);
+    
   const authenticationModal = useMemo(() => {
     const saveRetry = ({ username, password, remember }) => {
       authenticationActions.onLoginFormSubmitLogin({ username, password, remember })

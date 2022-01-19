@@ -6,9 +6,10 @@ import { TargetFileContextProvider } from './core/TargetFile.context';
 import { Typography, Link } from '@material-ui/core';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 import { onOpenValidation } from './core/onOpenValidations';
+import ConfirmDialog from './components/ConfirmDialog';
 
 
-function Workspace() {
+function Workspace({contentIsDirty, cacheWarningMessage}) {
   // this state manage on open validation 
   const [criticalErrors, setCriticalErrors] = useState([]);
 
@@ -86,6 +87,7 @@ function Workspace() {
               ||
               <Translatable />
             }
+            <ConfirmDialog contentIsDirty={contentIsDirty || cacheWarningMessage}/>
           </TargetFileContextProvider>
         );
       }

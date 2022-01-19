@@ -27,7 +27,7 @@ import {
 } from './core/persistence';
 
 import Workspace from './Workspace';
-import ConfirmDialog from './components/ConfirmDialog';
+// import ConfirmDialog from './components/ConfirmDialog';
 
 import theme from './theme';
 
@@ -113,88 +113,86 @@ function AppComponent() {
     }
   }
   
-  const _onSaveCache = ({authentication, repository, branch, file, content}) => {
-    //console.log("tcc // _onSaveCache", file, content);
-
+  const _onSaveCache = async ({authentication, repository, branch, file, content}) => {
     if (file) {
-      saveFileCache(file, content);
-    }
-  };
-
-  const handleClose = useCallback( () => {
-    setCriticalErrors([]);
-    setSourceRepository(undefined);
-  }, [setCriticalErrors, setSourceRepository]);
-
-  const handleCloseCachedFile = useCallback( () => {
-    // CLEAR cache:
-    removeFileCache(cacheFileKey);
-    // Reset dialog:
-    setCacheWarningMessage(null);
-    // Close current file:
-    handleClose();
-  }, [cacheFileKey, setCacheWarningMessage, handleClose]);
-
-
-  const { isConfirmed } = useConfirm({ contentIsDirty });
-
-  useBeforeunload((event) => {
-    if (contentIsDirty) {
-      event.preventDefault();
-      event.returnValue = localString('ConfirmCloseWindow');
-      return localString('ConfirmCloseWindow');
-    }
-  });
-
-  const onHeadroomPin = () => {
-    const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
-
-    if (el) {
-      el.style.top = '64px';
-    }
-  };
-
-  const onHeadroomUnfix = () => {
-    const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
-
-    if (el) {
-      el.style.top = '0px';
-    }
-  };
-
-  const onHeadroomUnpin = () => {
-    const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
-
-    if (el) {
-      el.style.top = '0px';
-    }
-  };
-
-  const style = {
-    app: { fontSize: `${fontScale / 100}em` },
-    headroom: { zIndex: '200' },
-    workspace: { margin: `${theme.spacing(2)}px` },
-  };
-  return (
-    <div className='App' style={style.app}>
+        saveFileCache(file, content);
+      }
+    };
+    
+    const handleClose = useCallback( () => {
+      setCriticalErrors([]);
+      setSourceRepository(undefined);
+    }, [setCriticalErrors, setSourceRepository]);
+    
+    const handleCloseCachedFile = useCallback( () => {
+      // CLEAR cache:
+      removeFileCache(cacheFileKey);
+      // Reset dialog:
+      setCacheWarningMessage(null);
+      // Close current file:
+      handleClose();
+    }, [cacheFileKey, setCacheWarningMessage, handleClose]);
+    
+    
+    const { isConfirmed } = useConfirm({ contentIsDirty });
+    
+    useBeforeunload((event) => {
+      if (contentIsDirty) {
+        event.preventDefault();
+        event.returnValue = localString('ConfirmCloseWindow');
+        return localString('ConfirmCloseWindow');
+      }
+    });
+    
+    const onHeadroomPin = () => {
+      const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
+      
+      if (el) {
+        el.style.top = '64px';
+      }
+    };
+    
+    const onHeadroomUnfix = () => {
+      const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
+      
+      if (el) {
+        el.style.top = '0px';
+      }
+    };
+    
+    const onHeadroomUnpin = () => {
+      const el = document.querySelector('#translatableComponent div div[role=\'toolbar\']');
+      
+      if (el) {
+        el.style.top = '0px';
+      }
+    };
+    
+    const style = {
+      app: { fontSize: `${fontScale / 100}em` },
+      headroom: { zIndex: '200' },
+      workspace: { margin: `${theme.spacing(2)}px` },
+    };
+    return (
+      <div className='App' style={style.app}>
       <MuiThemeProvider theme={theme}>
         <AuthenticationContextProvider
           authentication={authentication}
           onAuthentication={setAuthentication}
           config={config.authentication}
           saveAuthentication={saveAuthentication}
-        >
+          >
           <OrganizationContextProvider
             authentication={authentication}
             organization={organization}
             onOrganization={setOrganization}
-          >
+            >
             <RepositoryContextProvider
               authentication={authentication}
               repository={sourceRepository}
               onRepository={setSourceRepository}
               urls={config.repository.urls}
-            >
+              >
               <FileContextProvider
                 authentication={authentication}
                 repository={sourceRepository}
@@ -265,7 +263,7 @@ function AppComponent() {
                     </header>
                   </Headroom>
                   <div id='Workspace-Container' style={style.workspace}>
-                    <Workspace />
+                    <Workspace contentIsDirty={contentIsDirty} cacheWarningMessage={cacheWarningMessage}/>
                   </div>
                   </>
                 )
@@ -274,7 +272,7 @@ function AppComponent() {
             </RepositoryContextProvider>
           </OrganizationContextProvider>
         </AuthenticationContextProvider>
-        <ConfirmDialog contentIsDirty={contentIsDirty || cacheWarningMessage} />
+        {/* <ConfirmDialog contentIsDirty={contentIsDirty || cacheWarningMessage} /> */}
         
         <Dialog
           open={cacheWarningMessage != null}

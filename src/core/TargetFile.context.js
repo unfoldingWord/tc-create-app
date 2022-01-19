@@ -52,6 +52,14 @@ function TargetFileContextProvider({
   // console.log("defaultContent");
   // console.log(sourceFile);
 
+  const onSaveDialoge = ({authentication, repository, branch, file, content}) => {
+    console.log("tcc // _onSaveCache--------------------------", file, content);
+
+    // if (file) {
+    //   saveFileCache(file, content);
+    // }
+  };
+
   const {
     state, stateValues, actions, component, components, config,
   } = useFile({
@@ -60,6 +68,7 @@ function TargetFileContextProvider({
     repository: targetRepository,
     filepath,
     onFilepath: setFilepath,
+    onSaveDialoge: onSaveDialoge,
     defaultContent: _defaultContent,
     onOpenValidation: onOpenValidation,
     // Pass cache actions from the app's FileContext (happens to be SOURCE).
@@ -78,7 +87,7 @@ function TargetFileContextProvider({
     components,
     config,
   };
-  //console.log("TargetFile.context() context is:", context);
+  console.log("TargetFile.context() context is:", context);
 
 
   return (
