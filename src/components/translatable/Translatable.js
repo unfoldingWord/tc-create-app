@@ -118,23 +118,21 @@ function Translatable() {
       </div>
     );
 
-    const saveOnTranslation = (
-      async (content) => {
-        setSavingTargetFileContent(content);
+    const saveOnTranslation = ( async (content) => {
+      setSavingTargetFileContent(content);
 
-        try {
-          await targetFileActions.save(content);
-        } catch (error) {
-          const friendlyError = parseError({ error });
+      try {
+        await targetFileActions.save(content);
+      } catch (error) {
+        const friendlyError = parseError({ error });
 
-          if (friendlyError.isRecoverable) {
-            openAuthenticationModal();
-          } else {
-            alert('Error saving file! File could not be saved.');
-          }
+        if (friendlyError.isRecoverable) {
+          openAuthenticationModal();
+        } else {
+          alert('Error saving file! File could not be saved.');
         }
       }
-    );
+    });
 
     const autoSaveOnEdit = async (content) => {
       //console.log("tC Create / autosave", targetFile, content);
@@ -143,8 +141,8 @@ function Translatable() {
 
     if (
       filepath &&
-      sourceFile &&
-      targetFile &&
+      sourceFile?.content &&
+      targetFile?.content &&
       filepath === sourceFile.filepath &&
       filepath === targetFile.filepath
     ) {
