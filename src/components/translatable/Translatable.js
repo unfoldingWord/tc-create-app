@@ -12,22 +12,12 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 
-import { FileContext, AuthenticationContext, LoginForm, parseError } from 'gitea-react-toolkit';
+import { LoginForm, parseError } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable, MarkdownContextProvider } from 'markdown-translatable';
 
 import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
-import { TargetFileContext } from '../../core/TargetFile.context';
 import TranslatableTSV from './TranslatableTSV';
-import TranslatableTnTSV from './TranslatableTnTSV';
-import TranslatableObsTnTSV from './TranslatableObsTnTSV';
-import TranslatableTqTSV from './TranslatableTqTSV';
-import TranslatableObsTqTSV from './TranslatableObsTqTSV';
-import TranslatableTwlTSV from './TranslatableTwlTSV';
-import TranslatableSnTSV from './TranslatableSnTSV';
-import TranslatableObsSnTSV from './TranslatableObsSnTSV';
-import TranslatableSqTSV from './TranslatableSqTSV';
-import TranslatableObsSqTSV from './TranslatableObsSqTSV';
 
 function Translatable() {
   const classes = useStyles();
@@ -36,15 +26,14 @@ function Translatable() {
   const {
     state: {
       config,
-      language,
-      sourceRepository,
       targetRepository,
       filepath,
     },
     actions: { setContentIsDirty },
+    auth,
+    sourceFile,
+    targetFile,
   } = useContext(AppContext);
-
-  const { actions: authenticationActions } = useContext(AuthenticationContext);
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
   const [doSaveRetry, setDoSaveRetry] = useState(false);
@@ -53,34 +42,28 @@ function Translatable() {
   const closeAuthenticationModal = () => setAuthenticationModalVisible(false);
   const openAuthenticationModal = () => setAuthenticationModalVisible(true);
 
-
-  const { state: sourceFile } = useContext(FileContext);
-
-  const { state: targetFile, actions: targetFileActions } = useContext(TargetFileContext);
-
   useDeepCompareEffect(() => {
     // This does not work in the saveRetry() function.
     if (doSaveRetry) {
       setDoSaveRetry(false);
 
-      targetFileActions.save(savingTargetFileContent)
-        .then(() => {
-          // Saved successfully.
-          closeAuthenticationModal();
-        },
-        () => {
-          // Error saving:
-          closeAuthenticationModal();
-          alert('Error saving file! File could not be saved.');
-        });
+      targetFile.actions.save(savingTargetFileContent).then(() => {
+        // Saved successfully.
+        closeAuthenticationModal();
+      },
+      () => {
+        // Error saving:
+        closeAuthenticationModal();
+        alert('Error saving file! File could not be saved.');
+      });
     }
-  }, [doSaveRetry, targetFileActions, savingTargetFileContent]);
+  }, [doSaveRetry, targetFile.actions, savingTargetFileContent]);
 
   const authenticationModal = useDeepCompareMemo(() => {
     const saveRetry = ({
       username, password, remember,
     }) => {
-      authenticationActions.onLoginFormSubmitLogin({
+      auth.actions.onLoginFormSubmitLogin({
         username, password, remember,
       }).then(() => {
         setDoSaveRetry(true);
@@ -102,13 +85,10 @@ function Translatable() {
         </Modal>
       )
     );
-  }, [config, isAuthenticationModalVisible, classes.modal, authenticationActions]);
+  }, [config, isAuthenticationModalVisible, classes.modal, auth.actions]);
 
   const scrollToTop = useCallback(() => {
     window.scrollTo(0, 0);
-    // if (wrapperElement && wrapperElement) {
-    //   window.scrollTo(0, wrapperElement.offsetParent.offsetTop);
-    // }
   }, []);
 
   const translatableComponent = useDeepCompareMemo(() => {
@@ -122,7 +102,7 @@ function Translatable() {
       setSavingTargetFileContent(content);
 
       try {
-        await targetFileActions.save(content);
+        await targetFile.actions.save(content);
       } catch (error) {
         const friendlyError = parseError({ error });
 
@@ -136,53 +116,26 @@ function Translatable() {
 
     const autoSaveOnEdit = async (content) => {
       //console.log("tC Create / autosave", targetFile, content);
-      await targetFileActions.saveCache(content);
+      await targetFile.actions.saveCache(content);
     };
 
     if (
       filepath &&
-      sourceFile?.content &&
-      targetFile?.content &&
-      filepath === sourceFile.filepath &&
-      filepath === targetFile.filepath
+      sourceFile?.state?.content &&
+      targetFile?.state?.content &&
+      filepath === sourceFile?.state?.filepath &&
+      filepath === targetFile?.state?.filepath
     ) {
-      if (sourceFile.filepath.match(/\.md$/)) {
+      if (filepath.match(/\.md$/)) {
         let translatableProps = {
-          original: sourceFile.content,
-          translation: targetFile.content,
+          original: sourceFile?.state?.content,
+          translation: targetFile?.state?.content,
           onTranslation: saveOnTranslation,
           onContentIsDirty: setContentIsDirty,
         };
         console.log('Markdown file selected');
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
-      } else if (sourceFile.filepath.match(/^tn_OBS\.tsv$/)) {
-        console.log('tn_OBS file selected');
-        _translatable = <TranslatableObsTnTSV onSave={saveOnTranslation}onEdit={autoSaveOnEdit}  onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^tn_...\.tsv$/)) {
-        console.log('tn_... file selected');
-        _translatable = <TranslatableTnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^tq_OBS\.tsv$/)) {
-        console.log('tq_OBS file selected');
-        _translatable = <TranslatableObsTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^tq_...\.tsv$/)) {
-        console.log('tq_... file selected');
-        _translatable = <TranslatableTqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^sq_OBS.tsv$/)) {
-        console.log('sq_OBS file selected');
-        _translatable = <TranslatableObsSqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^sq_...\.tsv$/)) {
-        console.log('sq_... file selected');
-        _translatable = <TranslatableSqTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^sn_OBS.tsv$/)) {
-        console.log('sn_OBS file selected');
-        _translatable = <TranslatableObsSnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^sn_...\.tsv$/)) {
-        console.log('sn_... file selected');
-        _translatable = <TranslatableSnTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/^twl_...\.tsv$/)) {
-        console.log('twl_... file selected');
-        _translatable = <TranslatableTwlTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
-      } else if (sourceFile.filepath.match(/\.tsv$/)) {
+      } else if (filepath.match(/\.tsv$/)) {
         console.log('tn 9 col file selected');
         _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       } else {
@@ -191,7 +144,7 @@ function Translatable() {
       }
     };
     return _translatable;
-  }, [filepath, sourceFile, targetFile, targetFileActions, setContentIsDirty]);
+  }, [filepath, sourceFile, targetFile, setContentIsDirty]);
 
   useEffect(() => {
     scrollToTop();
@@ -202,15 +155,7 @@ function Translatable() {
   //console.log("targetRepository");
   //console.log(targetRepository);
 
-  const filesHeader = targetFile && targetRepository && (
-    <FilesHeader
-      sourceRepository={sourceRepository}
-      targetRepository={targetRepository}
-      sourceFile={sourceFile}
-      targetFile={targetFile}
-      language={language}
-    />
-  );
+  const filesHeader = targetRepository && targetFile && <FilesHeader />;
 
   return (
     <div className={classes.root}>

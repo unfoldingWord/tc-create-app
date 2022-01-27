@@ -11,10 +11,6 @@ import {
   Paper,
   Divider,
 } from '@material-ui/core';
-import {
-  AuthenticationContext, RepositoryContext,
-  FileContext, OrganizationContext,
-} from 'gitea-react-toolkit';
 
 import { LanguageSelect } from '../languages';
 import { AppContext } from '../../App.context';
@@ -23,12 +19,19 @@ import { getActiveStep } from './helpers';
 function ApplicationStepper() {
   const classes = useStyles();
 
-  const { state: { language }, actions: { setLanguage } } = useContext(AppContext);
+  const {
+    state: { language },
+    actions: { setLanguage },
+    auth,
+    org,
+    sourceRepo,
+    sourceFile,
+  } = useContext(AppContext);
 
-  const { state: authentication, component: authenticationComponent } = useContext(AuthenticationContext);
-  const { state: organization, components:{ list: organizationComponent } } = useContext(OrganizationContext);
-  const { state: sourceRepository, components: { browse: repositoryComponent } } = useContext(RepositoryContext);
-  const { state: sourceFile, component: fileComponent } = useContext(FileContext);
+  const { state: authentication, component: authenticationComponent } = auth;
+  const { state: organization, components:{ list: organizationComponent } } = org;
+  const { state: sourceRepository, components: { browse: repositoryComponent } } = sourceRepo;
+  const { state: sourceFileState, component: fileComponent } = sourceFile;
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = useState({
@@ -36,7 +39,7 @@ function ApplicationStepper() {
     1: !!organization,
     2: !!sourceRepository,
     3: !!language,
-    4: !!sourceFile,
+    4: !!sourceFileState,
   });
 
   useEffect(() => {
@@ -45,9 +48,9 @@ function ApplicationStepper() {
       1: !!organization,
       2: !!sourceRepository,
       3: !!language,
-      4: !!sourceFile,
+      4: !!sourceFileState,
     });
-  }, [authentication, language, sourceRepository, sourceFile, organization]);
+  }, [authentication, language, sourceRepository, sourceFileState, organization]);
 
   useEffect(() => {
     const newActiveStep = getActiveStep(completed);

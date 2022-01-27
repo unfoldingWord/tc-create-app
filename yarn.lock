@@ -7760,10 +7760,10 @@ gitea-react-toolkit@1.11.1:
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
 
-gitea-react-toolkit@2.0.2-rc.13:
-  version "2.0.2-rc.13"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.0.2-rc.13.tgz#b8ef261d83ddbaa027df655dcc34c925e4907164"
-  integrity sha512-ikEzVDzAGJSUcqwqgzifCKqsFLz0y9eQoxCJ8aMggK2oEQHIW2EVTBlbNzEjCrWUyWjQ+Es7pgvTkPboR94Y5Q==
+gitea-react-toolkit@2.1.0-rc.3:
+  version "2.1.0-rc.3"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.1.0-rc.3.tgz#e9caa378dab0c3b85fccff9c3d23baf78f7312cb"
+  integrity sha512-3J4FPaJT4PWfAd2sWMWCpqbYbZEeuLOIOt1gnjPVm3+UyOvZnlqm9r4ZwtI55v3t7R8TGFnD7I/4oGRsBh3J4A==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"

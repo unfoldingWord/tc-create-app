@@ -1,4 +1,8 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useContext,
+} from 'react';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
 import {
@@ -14,7 +18,6 @@ import {
 import { DataTable } from 'datatable-translatable';
 
 import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
-import { FileContext } from 'gitea-react-toolkit';
 
 import * as cv from 'uw-content-validation';
 import * as csv from '../../core/csvMaker';
@@ -24,7 +27,6 @@ import {
   generateAllResourceLinks,
 } from '../../core/resourceLinks';
 import { SERVER_URL } from '../../core/state.defaults';
-import { TargetFileContext } from '../../core/TargetFile.context';
 
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
@@ -53,27 +55,21 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
       organization,
     },
     actions: { setResourceLinks },
+    sourceFile,
+    targetFile,
   } = useContext(AppContext);
 
-  const { state: sourceFile } = useContext(FileContext);
-  const { state: targetFile } = useContext(
-    TargetFileContext
-  );
+  const bookId = sourceFile.state.filepath.split(/\d+-|\./)[1].toLowerCase();
 
-  const bookId = sourceFile.filepath.split(/\d+-|\./)[1].toLowerCase();
-
-  const onResourceLinks = useCallback(
-    (_resourceLinks) => {
-      // Remove bookId and remove defaults:
-      const persistedResourceLinks = stripDefaultsFromResourceLinks({
-        resourceLinks: _resourceLinks,
-        bookId,
-      });
-      // Persist to App context:
-      setResourceLinks(persistedResourceLinks);
-    },
-    [bookId, setResourceLinks]
-  );
+  const onResourceLinks = useCallback((_resourceLinks) => {
+    // Remove bookId and remove defaults:
+    const persistedResourceLinks = stripDefaultsFromResourceLinks({
+      resourceLinks: _resourceLinks,
+      bookId,
+    });
+    // Persist to App context:
+    setResourceLinks(persistedResourceLinks);
+  }, [bookId, setResourceLinks]);
 
   // Build bookId and add defaults:
   const defaultResourceLinksWithBookId = generateAllResourceLinks({
@@ -108,8 +104,8 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     // NOTE! the content on-screen, in-memory does NOT include
     // the headers. So the initial value of tsvRows will be
     // the headers.
-    if ( targetFile && rows ) {
-      const _name = targetFile.name.split('_');
+    if ( targetFile.state && rows ) {
+      const _name = targetFile.state.name.split('_');
       const langId = _name[0];
       const bookID = _name[2].split('-')[1].split('.')[0];
       let rowsString = 'Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n';
@@ -129,7 +125,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
       }
       // const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});
 
-      const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookID, targetFile.name, rowsString,  {suppressNoticeDisablingFlag: false})
+      const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookID, targetFile.state.name, rowsString,  {suppressNoticeDisablingFlag: false})
       const nl = rawResults.noticeList;
       let hdrs = ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
@@ -171,13 +167,13 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
       }
 
       let ts = new Date().toISOString();
-      let fn = 'Validation-' + targetFile.name + '-' + ts + '.csv';
+      let fn = 'Validation-' + targetFile.state.name + '-' + ts + '.csv';
       csv.download(fn, csv.toCSV(data));
 
       //setOpen(false);
     }
     setOpen(false);
-  },[targetFile, validationPriority, organization.username]);
+  },[targetFile.state, validationPriority, organization.username]);
 
   const onValidate = useCallback( (rows) => {
     setOpen(true);
@@ -202,8 +198,8 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
     _config.rowHeader = rowHeader;
     return (
       <DataTable
-        sourceFile={sourceFile?.content}
-        targetFile={targetFile?.content}
+        sourceFile={sourceFile.state.content}
+        targetFile={targetFile.state.content}
         onSave={onSave}
         onEdit={onEdit}
         onValidate={onValidate}
@@ -214,7 +210,7 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
         options={options}
       />
     );
-  }, [sourceFile.content, targetFile.content, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
+  }, [sourceFile.state.content, targetFile.state.content, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
 
   return (
     <>
