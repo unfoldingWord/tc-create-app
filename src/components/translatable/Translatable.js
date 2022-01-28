@@ -120,10 +120,10 @@ function Translatable() {
 
     if (
       filepath &&
-      sourceFile?.state?.content &&
-      targetFile?.state?.content &&
-      filepath === sourceFile?.state?.filepath &&
-      filepath === targetFile?.state?.filepath
+      sourceFile.state?.content &&
+      targetFile.state?.content &&
+      filepath === sourceFile.state?.filepath &&
+      filepath === targetFile.state?.filepath
     ) {
       if (filepath.match(/\.md$/)) {
         let translatableProps = {
@@ -143,7 +143,7 @@ function Translatable() {
       }
     };
     return _translatable;
-  }, [filepath, sourceFile, targetFile, setContentIsDirty]);
+  }, [filepath, sourceFile.state, targetFile.state, setContentIsDirty]);
 
   useEffect(() => {
     scrollToTop();

@@ -70,7 +70,6 @@ export function AppContextProvider({
     setAuthentication: onAuthentication,
     setOrganization: onOrganization,
     setSourceRepository,
-    setTargetRepository,
     setTargetRepoFromSourceRepo,
     setFilepath,
     setCriticalValidationErrors,
