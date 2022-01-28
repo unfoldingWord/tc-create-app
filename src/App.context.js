@@ -104,7 +104,8 @@ export function AppContextProvider({
   const targetRepo = useRepository({
     authentication,
     repository: targetRepository,
-    onRepository: setTargetRepository,
+    onRepository: () => {},
+    branch: targetRepository?.branch,
     urls: _config.repository.urls,
     config,
   });
@@ -164,25 +165,25 @@ export function AppContextProvider({
   };
 
   const sourceFile = useFile({
+    config,
     authentication,
     repository: sourceRepository,
     filepath,
     onFilepath: setFilepath,
-    onOpenValidation: _onOpenValidation,
-    onLoadCache: _onLoadCache,
-    onSaveCache: _onSaveCache,
+    // onOpenValidation: _onOpenValidation,
+    // onLoadCache: _onLoadCache,
+    // onSaveCache: _onSaveCache,
     onConfirmClose,
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
-    config,
   });
 
-  let _defaultContent;
+  let defaultContent;
 
   if ( sourceRepository?.id === targetRepository?.id ) {
-    _defaultContent = sourceFile?.content;
+    defaultContent = sourceFile?.state?.content;
   } else {
-    _defaultContent = sourceFile?.publishedContent;
-    sourceFile.content = _defaultContent;
+    defaultContent = sourceFile?.state?.publishedContent;
+    // sourceFile.state.content = defaultContent; // TODO: NEVER SET STATE LIKE THIS
   };
 
   const targetFile = useFile({
@@ -191,16 +192,11 @@ export function AppContextProvider({
     repository: targetRepository,
     filepath,
     onFilepath: setFilepath,
-    defaultContent: _defaultContent,
-    onOpenValidation: onOpenValidation,
-    // Pass cache actions from the app's FileContext (happens to be SOURCE).
-    // Sharing actions allows the app to use onCacheChange events.
-    onLoadCache: sourceFile.actions.onLoadCache,
-    onSaveCache: sourceFile.actions.onSaveCache,
-    onConfirmClose: null,
+    defaultContent: defaultContent,
+    onOpenValidation: _onOpenValidation,
+    onLoadCache: _onLoadCache,
+    onSaveCache: _onSaveCache,
   });
-
-  debugger
 
   useDeepCompareEffect(() => {
     if (authentication && sourceRepository && organization) {
