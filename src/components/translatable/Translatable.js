@@ -46,7 +46,6 @@ function Translatable() {
     // This does not work in the saveRetry() function.
     if (doSaveRetry) {
       setDoSaveRetry(false);
-
       targetFile.actions.save(savingTargetFileContent).then(() => {
         // Saved successfully.
         closeAuthenticationModal();

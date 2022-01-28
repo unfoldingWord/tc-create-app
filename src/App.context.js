@@ -109,7 +109,7 @@ export function AppContextProvider({
     config,
   });
 
-  const _onOpenValidation = (filename,content,url) => {
+  const _onOpenValidation = (filename, content, url) => {
     const notices = onOpenValidation(filename, content, url);
 
     if (notices.length > 0) {
@@ -172,10 +172,9 @@ export function AppContextProvider({
     onLoadCache: _onLoadCache,
     onSaveCache: _onSaveCache,
     onConfirmClose,
-    releaseFlag: organization?.username !== 'unfoldingWord' ? true:false,
+    releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
     config,
   });
-
 
   let _defaultContent;
 
@@ -187,7 +186,7 @@ export function AppContextProvider({
   };
 
   const targetFile = useFile({
-    config: (authentication && authentication.config),
+    config,
     authentication,
     repository: targetRepository,
     filepath,
@@ -200,6 +199,8 @@ export function AppContextProvider({
     onSaveCache: sourceFile.actions.onSaveCache,
     onConfirmClose: null,
   });
+
+  debugger
 
   useDeepCompareEffect(() => {
     if (authentication && sourceRepository && organization) {

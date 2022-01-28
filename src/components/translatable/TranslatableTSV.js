@@ -31,7 +31,6 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { AppContext } from '../../App.context';
 import RowHeader from './RowHeader';
 
-
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
   compositeKeyIndices: [0, 1, 2, 3],
@@ -129,7 +128,7 @@ function TranslatableTSVWrapper({
       }
       // const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});
 
-      const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookID, targetFile.state.name, rowsString,  {suppressNoticeDisablingFlag: false})
+      const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookID, targetFile.state.name, rowsString, { suppressNoticeDisablingFlag: false });
       const nl = rawResults.noticeList;
       let hdrs = ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
       let data = [];
@@ -168,14 +167,12 @@ function TranslatableTSVWrapper({
         alert('No Validation Errors Found');
         setOpen(false);
         return;
-      }
+      };
 
       let ts = new Date().toISOString();
       let fn = 'Validation-' + targetFile.state.name + '-' + ts + '.csv';
       csv.download(fn, csv.toCSV(data));
-
-      //setOpen(false);
-    }
+    };
     setOpen(false);
   },[targetFile.state, validationPriority, organization.username]);
 
@@ -190,13 +187,14 @@ function TranslatableTSVWrapper({
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => (<RowHeader
-    open={expandedScripture}
-    rowData={rowData}
-    actionsMenu={actionsMenu}
-    delimiters={delimiters}
-  />), [expandedScripture, delimiters]);
-
+  const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => (
+    <RowHeader
+      open={expandedScripture}
+      rowData={rowData}
+      actionsMenu={actionsMenu}
+      delimiters={delimiters}
+    />
+  ), [expandedScripture, delimiters]);
 
   const datatable = useDeepCompareMemo(() => {
     _config.rowHeader = rowHeader;

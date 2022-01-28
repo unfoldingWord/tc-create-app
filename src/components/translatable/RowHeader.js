@@ -89,6 +89,7 @@ export default function RowHeader({
             buttons={actionsMenu}
             open={open}
           />
+          <Waypoint onLeave={onLeave} />
         </div>
       );
     };
@@ -100,6 +101,7 @@ export default function RowHeader({
       <Typography variant='h6' style={styles.title}>
         {`${state.bookId} ${state.chapter}:${state.verse}`}
       </Typography>
+      <Waypoint onLeave={onLeave} />
       {actionsMenu}
     </div>
   ), [styles, state]);
@@ -109,7 +111,9 @@ export default function RowHeader({
       <Skeleton height={150} width='100%' />
       <Waypoint onEnter={onVisibility} onLeave={onLeave} />
     </>
-  )
+  );
 
-  return viewed ? (scriptureHeader || defaultHeader) : skeleton;
+  const component = viewed ? (scriptureHeader || defaultHeader) : skeleton;
+
+  return component;
 };
