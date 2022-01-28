@@ -42,7 +42,11 @@ const _config = {
   ],
 };
 
-function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
+function TranslatableTSVWrapper({
+  onSave,
+  onEdit,
+  onContentIsDirty,
+}) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -213,7 +217,6 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
   }, [sourceFile.state.content, targetFile.state.content, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
 
   return (
-    <>
     <ResourcesContextProvider
       reference={{ bookId }}
       defaultResourceLinks={defaultResourceLinksWithBookId}
@@ -248,7 +251,6 @@ function TranslatableTSVWrapper({ onSave, onEdit, onContentIsDirty }) {
         </Dialog>
       }
     </ResourcesContextProvider>
-    </>
   );
 }
 

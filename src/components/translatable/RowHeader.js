@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Typography } from '@material-ui/core';
-import isEqual from 'lodash.isequal';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -11,7 +10,7 @@ import {
 
 import QuoteSelector from './QuoteSelector';
 
-function RowHeader({
+export default function RowHeader({
   rowData,
   actionsMenu,
   delimiters,
@@ -99,11 +98,3 @@ const useStyles = makeStyles(theme => ({
     paddingTop: '11px',
   },
 }));
-
-const propsAreEqual = (prevProps, nextProps) => (
-  isEqual(prevProps.rowData, nextProps.rowData) &&
-  isEqual(prevProps.delimiters, nextProps.delimiters) &&
-  isEqual(prevProps.open, nextProps.open)
-);
-
-export default React.memo(RowHeader, propsAreEqual);
