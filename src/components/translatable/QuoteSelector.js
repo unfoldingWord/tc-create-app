@@ -28,7 +28,7 @@ function QuoteSelector({
     const skeleton = (
       <>
         <Waypoint onEnter={onVisibility} />
-        <Skeleton height={200} width='100%' />
+        <Skeleton height={150} width='100%' />
       </>
     );
 
