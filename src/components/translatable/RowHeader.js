@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import { Waypoint } from 'react-waypoint';
+import { Skeleton } from '@material-ui/lab';
 
-import { makeStyles } from '@material-ui/core/styles';
 import {
   useDeepCompareCallback,
   useDeepCompareEffect,
@@ -11,19 +11,34 @@ import {
 
 import QuoteSelector from './QuoteSelector';
 
+const styles = {
+  defaultHeader: {
+    width: '100%',
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+  },
+  quoteHeader: { width: '100%' },
+  title: {
+    lineHeight: '1.0',
+    paddingTop: '11px',
+  },
+};
+
 export default function RowHeader({
   rowData,
   actionsMenu,
   delimiters,
   open,
 }) {
-  const classes = useStyles();
   const [viewed, setViewed] = useState(false);
 
   const onVisibility = (isVisible) => {
-    if (isVisible) {
-      setViewed(true);
-    };
+    setViewed(isVisible);
+  };
+
+  const onLeave = () => {
+    setViewed(false);
   };
 
   const defaultState = {
@@ -64,7 +79,7 @@ export default function RowHeader({
 
     if (viewed && reference.chapter > 0 && reference.verse > 0) {
       _component = (
-        <div className={classes.quoteHeader}>
+        <div style={styles.quoteHeader}>
           <QuoteSelector
             reference={reference}
             quote={state.quote}
@@ -78,32 +93,23 @@ export default function RowHeader({
       );
     };
     return _component;
-  }, [viewed, state, actionsMenu]);
+  }, [viewed, state, actionsMenu, styles]);
 
   const defaultHeader = useDeepCompareMemo(() => (
-    <div className={classes.defaultHeader}>
-      <Typography variant='h6' className={classes.title}>
+    <div style={styles.defaultHeader}>
+      <Typography variant='h6' style={styles.title}>
         {`${state.bookId} ${state.chapter}:${state.verse}`}
       </Typography>
-      <Waypoint onEnter={onVisibility} />
       {actionsMenu}
     </div>
-  ), [classes, state]);
+  ), [styles, state]);
 
-  return scriptureHeader || defaultHeader;
+  const skeleton = (
+    <>
+      <Skeleton height={150} width='100%' />
+      <Waypoint onEnter={onVisibility} onLeave={onLeave} />
+    </>
+  )
+
+  return viewed ? (scriptureHeader || defaultHeader) : skeleton;
 };
-
-const useStyles = makeStyles(theme => ({
-  defaultHeader: {
-    width: '100%',
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'space-between',
-  },
-  quoteHeader: { width: '100%' },
-  title: {
-    lineHeight: '1.0',
-    fontWeight: 'bold',
-    paddingTop: '11px',
-  },
-}));
