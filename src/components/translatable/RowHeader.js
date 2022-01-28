@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Typography } from '@material-ui/core';
+import { Waypoint } from 'react-waypoint';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -17,6 +18,13 @@ export default function RowHeader({
   open,
 }) {
   const classes = useStyles();
+  const [viewed, setViewed] = useState(false);
+
+  const onVisibility = (isVisible) => {
+    if (isVisible) {
+      setViewed(true);
+    };
+  };
 
   const defaultState = {
     quote: undefined,
@@ -54,7 +62,7 @@ export default function RowHeader({
       verse: parseInt(state.verse),
     };
 
-    if (reference.chapter > 0 && reference.verse > 0) {
+    if (viewed && reference.chapter > 0 && reference.verse > 0) {
       _component = (
         <div className={classes.quoteHeader}>
           <QuoteSelector
@@ -70,13 +78,14 @@ export default function RowHeader({
       );
     };
     return _component;
-  }, [state, actionsMenu]);
+  }, [viewed, state, actionsMenu]);
 
   const defaultHeader = useDeepCompareMemo(() => (
     <div className={classes.defaultHeader}>
       <Typography variant='h6' className={classes.title}>
         {`${state.bookId} ${state.chapter}:${state.verse}`}
       </Typography>
+      <Waypoint onEnter={onVisibility} />
       {actionsMenu}
     </div>
   ), [classes, state]);

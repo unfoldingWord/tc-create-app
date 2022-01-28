@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ParallelScripture } from 'scripture-resources-rcl';
 import { useDeepCompareMemo } from 'use-deep-compare';
-import { Skeleton } from '@material-ui/lab';
-import { Waypoint } from 'react-waypoint';
 import { getMuiTheme } from './muiTheme';
 
-function QuoteSelector({
+export default function QuoteSelector({
   quote,
   onQuote,
   occurrence: _occurrence,
@@ -14,25 +12,11 @@ function QuoteSelector({
   buttons,
   open,
 }) {
-  const [viewed, setViewed] = useState();
   const __occurrence = (_occurrence === '\\-1') ? -1 : _occurrence;
   const occurrence = Number(__occurrence);
 
-  const onVisibility = (isVisible) => {
-    if (isVisible) {
-      setViewed(true);
-    };
-  };
-
   const component = useDeepCompareMemo(() => {
-    const skeleton = (
-      <>
-        <Waypoint onEnter={onVisibility} />
-        <Skeleton height={150} width='100%' />
-      </>
-    );
-
-    return !viewed ? skeleton : (
+    return (
       <ParallelScripture
         open={open}
         reference={reference}
@@ -42,8 +26,8 @@ function QuoteSelector({
         height='250px'
         buttons={buttons}
       />
-    )
-  }, [viewed, quote, occurrence, reference, open, buttons, onQuote]);
+    );
+  }, [quote, occurrence, reference, open, buttons, onQuote]);
 
   return (
     <MuiThemeProvider theme={getMuiTheme}>
@@ -51,5 +35,3 @@ function QuoteSelector({
     </MuiThemeProvider>
   );
 };
-
-export default React.memo(QuoteSelector);
