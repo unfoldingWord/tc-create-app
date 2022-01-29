@@ -9,7 +9,7 @@ import {
   useDeepCompareMemo,
 } from 'use-deep-compare';
 
-import QuoteSelector from './QuoteSelector';
+import ScriptureHeader from './ScriptureHeader';
 
 const styles = {
   defaultHeader: {
@@ -80,7 +80,7 @@ export default function RowHeader({
     if (viewed && reference.chapter > 0 && reference.verse > 0) {
       _component = (
         <div style={styles.quoteHeader}>
-          <QuoteSelector
+          <ScriptureHeader
             reference={reference}
             quote={state.quote}
             onQuote={onQuote}

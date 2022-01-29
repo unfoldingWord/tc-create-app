@@ -21,7 +21,6 @@ import TranslatableTSV from './TranslatableTSV';
 
 function Translatable() {
   const classes = useStyles();
-  //const [wrapperElement, setWrapperElement] = useState(null);
 
   const {
     state: {
@@ -143,16 +142,11 @@ function Translatable() {
       }
     };
     return _translatable;
-  }, [filepath, sourceFile.state, targetFile.state, setContentIsDirty]);
+  }, [filepath, sourceFile.state.filepath, targetFile.state.filepath, sourceFile.state.content, targetFile.state.content, setContentIsDirty]);
 
   useEffect(() => {
     scrollToTop();
   }, [filepath, scrollToTop]);
-
-  //console.log("targetFile");
-  //console.log(targetFile);
-  //console.log("targetRepository");
-  //console.log(targetRepository);
 
   const filesHeader = targetRepository && targetFile && <FilesHeader />;
 

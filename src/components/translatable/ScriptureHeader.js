@@ -4,7 +4,7 @@ import { ParallelScripture } from 'scripture-resources-rcl';
 import { useDeepCompareMemo } from 'use-deep-compare';
 import { getMuiTheme } from './muiTheme';
 
-export default function QuoteSelector({
+export default function ScriptureHeader({
   quote,
   onQuote,
   occurrence: _occurrence,

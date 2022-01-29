@@ -41,6 +41,13 @@ const _config = {
   ],
 };
 
+const serverConfig = {
+  server: SERVER_URL,
+  cache: {
+    maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
+  },
+};
+
 function TranslatableTSVWrapper({
   onSave,
   onEdit,
@@ -75,14 +82,8 @@ function TranslatableTSVWrapper({
   }, [bookId, setResourceLinks]);
 
   // Build bookId and add defaults:
-  const defaultResourceLinksWithBookId = generateAllResourceLinks({
-    bookId,
-    defaultResourceLinks,
-  });
-  const allResourceLinksWithBookId = generateAllResourceLinks({
-    bookId,
-    resourceLinks,
-  });
+  const defaultResourceLinksWithBookId = generateAllResourceLinks({ bookId, defaultResourceLinks });
+  const allResourceLinksWithBookId = generateAllResourceLinks({ bookId, resourceLinks });
 
   const generateRowId = useCallback((rowData) => {
     const [chapter] = rowData[2].split(delimiters.cell);
@@ -90,13 +91,6 @@ function TranslatableTSVWrapper({
     const [uid] = rowData[4].split(delimiters.cell);
     return `header-${chapter}-${verse}-${uid}`;
   }, []);
-
-  const serverConfig = {
-    server: SERVER_URL,
-    cache: {
-      maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
-    },
-  };
 
   const handleClose = useCallback( () => {
     setOpen(false);
