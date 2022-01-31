@@ -31,8 +31,8 @@ export default function CriticalValidationErrorsDialog() {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-      This file cannot be opened by tC Create as there are errors in the target file. 
-      Please contact your administrator to address the following error(s)                  
+      This file cannot be opened by tC Create as there are errors in the target file.
+      Please contact your administrator to address the following error(s)
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">

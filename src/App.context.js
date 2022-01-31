@@ -1,7 +1,5 @@
-import React, {
-  useState,
-  useCallback,
-} from 'react';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useDeepCompareEffect } from 'use-deep-compare';
 
 import {
@@ -14,12 +12,10 @@ import { useLanguages } from 'uw-languages-rcl';
 import { useStateReducer } from './core/useStateReducer';
 
 import {
-  // loadState,
   loadAuthentication,
   saveAuthentication,
   loadFileCache,
   saveFileCache,
-  // removeFileCache,
 } from './core/persistence';
 
 import { onOpenValidation } from './core/onOpenValidations';
@@ -38,10 +34,6 @@ export function AppContextProvider({
   contentIsDirty: _contentIsDirty,
   children,
 }) {
-  // State for autosave
-  const [cacheFileKey, setCacheFileKey] = useState('');
-  const [cacheWarningMessage, setCacheWarningMessage] = useState();
-
   const [state, actions] = useStateReducer({
     authentication: _authentication,
     language: _language,
@@ -64,6 +56,8 @@ export function AppContextProvider({
     config: _config,
     criticalValidationErrors,
     contentIsDirty,
+    cacheFileKey,
+    cacheWarningMessage,
   } = state;
 
   const {
@@ -73,6 +67,8 @@ export function AppContextProvider({
     setTargetRepoFromSourceRepo,
     setFilepath,
     setCriticalValidationErrors,
+    setCacheFileKey,
+    setCacheWarningMessage,
   } = actions;
 
   const auth = useAuthentication({
@@ -143,12 +139,12 @@ export function AppContextProvider({
 
           setCacheFileKey(html_url);
           setCacheWarningMessage(cacheWarningMessage);
-        }
+        };
       };
 
       return _cachedFile;
     }
-  }, []);
+  }, [setCacheFileKey, setCacheWarningMessage]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
     //console.log("tcc // _onSaveCache", file, content);
@@ -235,4 +231,15 @@ export function AppContextProvider({
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-}
+};
+
+AppContextProvider.propTypes = {
+  authentication: PropTypes.object,
+  language: PropTypes.object,
+  sourceRepository: PropTypes.object,
+  filepath: PropTypes.string,
+  organization: PropTypes.object,
+  resourceLinks: PropTypes.array,
+  contentIsDirty: PropTypes.bool,
+  children: PropTypes.element,
+};

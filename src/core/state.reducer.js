@@ -44,6 +44,12 @@ export const stateReducer = (state, action) => {
   case 'set_critical_validation_errors':
     _state['criticalValidationErrors'] = value;
     break;
+  case 'set_cache_file_key':
+    _state['cacheFileKey'] = value;
+    break;
+  case 'set_cache_warning_message':
+    _state['cacheWarningMessage'] = value;
+    break;
   default:
     throw new Error(`Unsupported action type: ${action.type}`);
   }

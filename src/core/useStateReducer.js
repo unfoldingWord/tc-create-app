@@ -157,8 +157,22 @@ export const useStateReducer = ({
     if (value !== state.criticalValidationErrors) {
       dispatch({ type: 'set_critical_validation_errors', value });
       saveState('criticalValidationErrors', value);
-    }
+    };
   }, [state.criticalValidationErrors]);
+
+  const setCacheFileKey = useCallback((value) => {
+    if (value !== state.cacheFileKey) {
+      dispatch({ type: 'set_cache_file_key', value });
+      saveState('cacheFileKey', value);
+    };
+  }, [state.cacheFileKey]);
+
+  const setCacheWarningMessage = useCallback((value) => {
+    if (value !== state.cacheWarningMessage) {
+      dispatch({ type: 'set_cache_warning_message', value });
+      saveState('cacheWarningMessage', value);
+    };
+  }, [state.cacheWarningMessage]);
 
   const actions = {
     setAuthentication,
@@ -175,6 +189,8 @@ export const useStateReducer = ({
     setOrganization,
     setValidationPriority,
     setCriticalValidationErrors,
+    setCacheFileKey,
+    setCacheWarningMessage,
   };
   return [state, actions];
 };

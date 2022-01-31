@@ -15,6 +15,12 @@ function Workspace() {
   const component = useDeepCompareMemo(() => {
     let _component = <ApplicationStepper />;
 
+    const progressComponent = (
+      <div style={{ textAlign: 'center' }}>
+        <CircularProgress />{' '}
+      </div>
+    );
+
     if (sourceFile?.state?.filepath && targetFile?.state?.filepath && targetFile?.state?.content && filepath) {
       if (targetFile.state.filepath === filepath) {
         if (criticalValidationErrors.length > 0) {
@@ -23,13 +29,11 @@ function Workspace() {
         } else {
           _component = <Translatable />;
         };
+      } else {
+        _component = progressComponent;
       };
     } else if (filepath) {
-      _component = (
-        <div style={{ textAlign: 'center' }}>
-          <CircularProgress />{' '}
-        </div>
-      );
+      _component = progressComponent;
     };
     return _component;
   }, [sourceFile, targetFile, filepath, criticalValidationErrors]);
