@@ -248,11 +248,14 @@ function TranslatableTSVWrapper({
 
 function TranslatableTSV({ datatable }) {
   const { state: { books } } = useContext(ResourcesContext);
-  return books ? datatable :
-    (<div style={{
+  return books ? datatable : (
+    <div style={{
       width: '100%', display: 'flex', justifyContent: 'center',
     }}
-    ><CircularProgress /></div>);
+    >
+      <CircularProgress />
+    </div>
+  );
 };
 
 export default TranslatableTSVWrapper;
