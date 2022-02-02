@@ -75,14 +75,15 @@ describe('checking all resources are loaded with content', function () {
       cy.contains('Introduction to Titus');
       cy.get('[id="deleteIcon_en_sn"]').click();
       });
-    // it('Select en_obs File', function () {
-    //     /** Select file */
-    //   cy.get('[data-test=repository-item]').click();
-    //   cy.contains('content/').click();
-    //   cy.contains('01.md').click();
-    //   cy.contains('1. The Creation');
-    //   cy.get('[id="deleteIcon_en_obs"]').click();
-    //   });
+    it('Select en_obs File', function () {
+        /** Select file */
+      cy.get('#Workspace-Container > div.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded > div > div:nth-child(2) > div > ul > div:nth-child(8) > div.MuiButtonBase-root.MuiListItem-root.MuiListItem-gutters.MuiListItem-button.MuiListItem-alignItemsFlexStart.MuiListItem-secondaryAction > div.MuiListItemText-root.MuiListItemText-multiline > span').click();
+      cy.contains('content/').click();
+      cy.contains('01.md').click();
+      cy.contains('1. The Creation');
+      cy.get('[id="deleteIcon_en_obs"]').click();
+      });
+    
     it('Select en_obs-tq File', function () {
         /** Select file */
       cy.contains('Open Bible Stories Translation Questions').click();
