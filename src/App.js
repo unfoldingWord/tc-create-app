@@ -10,7 +10,7 @@ import ConfirmContextProvider from './context/ConfirmContextProvider';
 import { AppContextProvider } from './App.context';
 import Layout from './Layout';
 
-export default function App(props) {
+export default function App() {
   const [resumedState, setResumedState] = useState();
 
   const resumeState = useCallback(async () => {
@@ -39,14 +39,14 @@ export default function App(props) {
     resumeState();
   }, [resumeState]);
 
-  const _props = { ...props, ...resumedState };
+  const props = { ...resumedState };
 
   return !resumedState ? (
     <></>
   ) : (
     <ConfirmContextProvider>
-      <AppContextProvider {..._props}>
-        <Layout {...props} />
+      <AppContextProvider {...props}>
+        <Layout />
       </AppContextProvider>
     </ConfirmContextProvider>
   );
