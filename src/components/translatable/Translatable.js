@@ -1,89 +1,41 @@
 import React, {
   useEffect,
   useCallback,
-  useState,
   useContext,
 } from 'react';
-import {
-  Modal,
-  Paper,
-  CircularProgress,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
+import { useDeepCompareMemo } from 'use-deep-compare';
+import { CircularProgress } from '@material-ui/core';
 
-import { LoginForm, parseError } from 'gitea-react-toolkit';
 import { Translatable as MarkDownTranslatable, MarkdownContextProvider } from 'markdown-translatable';
 
 import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
+import useRetrySave from '../../hooks/useRetrySave';
+import AuthenticationDialog from '../dialogs/AuthenticationDialog';
 import TranslatableTSV from './TranslatableTSV';
 
 function Translatable() {
-  const classes = useStyles();
-
   const {
     state: {
-      config,
       targetRepository,
       filepath,
     },
     actions: { setContentIsDirty },
-    auth,
     sourceFile,
     targetFile,
   } = useContext(AppContext);
 
-  const [savingTargetFileContent, setSavingTargetFileContent] = useState();
-  const [doSaveRetry, setDoSaveRetry] = useState(false);
+  const {
+    state: { showAuthenticationDialog },
+    actions: {
+      autoSaveOnEdit,
+      saveOnTranslation,
+      openAuthenticationDialog,
+      closeAuthenticationDialog,
+      saveRetry,
+    },
+  } = useRetrySave();
 
-  const [isAuthenticationModalVisible, setAuthenticationModalVisible] = useState(false);
-  const closeAuthenticationModal = () => setAuthenticationModalVisible(false);
-  const openAuthenticationModal = () => setAuthenticationModalVisible(true);
-
-  useDeepCompareEffect(() => {
-    // This does not work in the saveRetry() function.
-    if (doSaveRetry) {
-      setDoSaveRetry(false);
-      targetFile.actions.save(savingTargetFileContent).then(() => {
-        // Saved successfully.
-        closeAuthenticationModal();
-      },
-      () => {
-        // Error saving:
-        closeAuthenticationModal();
-        alert('Error saving file! File could not be saved.');
-      });
-    }
-  }, [doSaveRetry, targetFile.actions, savingTargetFileContent]);
-
-  const authenticationModal = useDeepCompareMemo(() => {
-    const saveRetry = ({
-      username, password, remember,
-    }) => {
-      auth.actions.onLoginFormSubmitLogin({
-        username, password, remember,
-      }).then(() => {
-        setDoSaveRetry(true);
-      });
-    };
-
-    return (
-      (!isAuthenticationModalVisible) ? <></> : (
-        <Modal open={true} onClose={closeAuthenticationModal}>
-          <Paper className={classes.modal}>
-            <LoginForm
-              config={config}
-              authentication={null/** Override to simulate logged out. */}
-              actionText={'Login to try again...'}
-              errorText={'Error! File was not saved.  Connection to the server was lost.'}
-              onSubmit={saveRetry}
-            />
-          </Paper>
-        </Modal>
-      )
-    );
-  }, [config, isAuthenticationModalVisible, classes.modal, auth.actions]);
 
   const scrollToTop = useCallback(() => {
     window.scrollTo(0, 0);
@@ -95,27 +47,6 @@ function Translatable() {
         <CircularProgress />{' '}
       </div>
     );
-
-    const saveOnTranslation = ( async (content) => {
-      setSavingTargetFileContent(content);
-
-      try {
-        await targetFile.actions.save(content);
-      } catch (error) {
-        const friendlyError = parseError({ error });
-
-        if (friendlyError.isRecoverable) {
-          openAuthenticationModal();
-        } else {
-          alert('Error saving file! File could not be saved.');
-        }
-      }
-    });
-
-    const autoSaveOnEdit = async (content) => {
-      //console.log("tC Create / autosave", targetFile, content);
-      await targetFile.actions.saveCache(content);
-    };
 
     if (
       filepath &&
@@ -142,7 +73,16 @@ function Translatable() {
       }
     };
     return _translatable;
-  }, [filepath, sourceFile.state.filepath, targetFile.state.filepath, sourceFile.state.content, targetFile.state.content, setContentIsDirty]);
+  }, [
+    filepath,
+    sourceFile.state.filepath,
+    sourceFile.state.content,
+    targetFile.state.filepath,
+    targetFile.state.content,
+    setContentIsDirty,
+    saveOnTranslation,
+    autoSaveOnEdit,
+  ]);
 
   useEffect(() => {
     scrollToTop();
@@ -151,27 +91,19 @@ function Translatable() {
   const filesHeader = targetRepository && targetFile && <FilesHeader />;
 
   return (
-    <div className={classes.root}>
+    <div id='translatable'>
       {filesHeader}
       <div id='translatableComponent'>
         {translatableComponent}
       </div>
-      {authenticationModal}
+      <AuthenticationDialog
+        show={showAuthenticationDialog}
+        open={openAuthenticationDialog}
+        close={closeAuthenticationDialog}
+        saveRetry={saveRetry}
+      />
     </div>
   );
-}
-
-const useStyles = makeStyles((theme) => (
-  {
-    root: {},
-    modal: {
-      position: 'absolute',
-      top: '10%',
-      left: '10%',
-      right: '10%',
-      maxHeight: '80%',
-      overflow: 'scroll',
-    },
-  }));
+};
 
 export default Translatable;

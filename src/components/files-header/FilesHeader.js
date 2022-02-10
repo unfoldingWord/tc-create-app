@@ -11,7 +11,7 @@ import {
   Publish,
   GetApp,
 } from '@material-ui/icons';
-import { useDeepCompareMemo } from 'use-deep-compare';
+import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 import { License } from 'scripture-resources-rcl';
 
 import { AppContext } from '../../App.context';
@@ -20,6 +20,8 @@ import { localString } from '../../core/localStrings';
 import { SERVER_URL } from '../../core/state.defaults';
 
 function FilesHeader() {
+  const classes = useStyles({ header: { cursor: 'pointer' } });
+
   const {
     state: {
       language,
@@ -31,11 +33,9 @@ function FilesHeader() {
     targetFile,
   } = useContext(AppContext);
 
-  const classes = useStyles({ header: { cursor: 'pointer' } });
-
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
 
-  const chip = useCallback(({
+  const chip = useDeepCompareCallback(({
     label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
   }) => (
     <Chip

@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
+import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
 import {
@@ -33,13 +34,29 @@ import RowHeader from './RowHeader';
 
 const delimiters = { row: '\n', cell: '\t' };
 const _config = {
-  compositeKeyIndices: [0, 1, 2, 3],
+  compositeKeyIndices: [0, 1, 2, 3], // 0 is bookId, 1 is chapter, 2 is verse, 3 is id
   columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
   columnsShowDefault: [
     'SupportReference',
     'OccurrenceNote',
   ],
 };
+
+// WIP: multiple tsv types
+// const sevenColumnConfig = {
+//   ..._config,
+//   compositeKeyIndices: [0, 1], // 0 is reference 'GEN 1:1', 1 is id
+//   columnsFilter: ['Reference', 'SupportReference'],
+// };
+
+// const nineColumnConfig = {
+//   ..._config,
+//   compositeKeyIndices: [0, 1, 2, 3], // 0 is bookId, 1 is chapter, 2 is verse, 3 is id
+//   columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
+// };
+
+// // TODO: determine if the tsv includes scripture reference to render scripture RowHeader
+// const isScripture = () => {};
 
 const serverConfig = {
   server: SERVER_URL,
@@ -256,6 +273,15 @@ function TranslatableTSV({ datatable }) {
       <CircularProgress />
     </div>
   );
+};
+
+TranslatableTSVWrapper.propTypes = {
+  /** function triggered for save */
+  onSave: PropTypes.func.isRequired,
+  /** function triggered on edit */
+  onEdit: PropTypes.func.isRequired,
+  /** function triggered if content is dirty */
+  onContentIsDirty: PropTypes.func.isRequired,
 };
 
 export default TranslatableTSVWrapper;
