@@ -34,7 +34,33 @@ export function AppContextProvider({
   contentIsDirty: _contentIsDirty,
   children,
 }) {
-  const [state, actions] = useStateReducer({
+  const {
+    state,
+    state: {
+      authentication,
+      organization,
+      language,
+      sourceRepository,
+      targetRepository,
+      filepath,
+      config: _config,
+      criticalValidationErrors,
+      contentIsDirty,
+      cacheFileKey,
+      cacheWarningMessage,
+    },
+    actions,
+    actions: {
+      setAuthentication: onAuthentication,
+      setOrganization: onOrganization,
+      setSourceRepository,
+      setTargetRepoFromSourceRepo,
+      setFilepath,
+      setCriticalValidationErrors,
+      setCacheFileKey,
+      setCacheWarningMessage,
+    },
+  } = useStateReducer({
     authentication: _authentication,
     language: _language,
     sourceRepository: _sourceRepository,
@@ -46,30 +72,7 @@ export function AppContextProvider({
   // uw-languages-rcl
   const { state: languages } = useLanguages();
 
-  const {
-    authentication,
-    organization,
-    language,
-    sourceRepository,
-    targetRepository,
-    filepath,
-    config: _config,
-    criticalValidationErrors,
-    contentIsDirty,
-    cacheFileKey,
-    cacheWarningMessage,
-  } = state;
-
-  const {
-    setAuthentication: onAuthentication,
-    setOrganization: onOrganization,
-    setSourceRepository,
-    setTargetRepoFromSourceRepo,
-    setFilepath,
-    setCriticalValidationErrors,
-    setCacheFileKey,
-    setCacheWarningMessage,
-  } = actions;
+  const { isConfirmed } = useConfirm({ contentIsDirty });
 
   const authenticationHook = useAuthentication({
     authentication,
@@ -152,8 +155,6 @@ export function AppContextProvider({
       saveFileCache(file, content);
     }
   }, []);
-
-  const { isConfirmed } = useConfirm({ contentIsDirty });
 
   const onConfirmClose = () => {
     isConfirmed(localString('ConfirmCloseWindow'));

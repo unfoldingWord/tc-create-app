@@ -36,23 +36,19 @@ function ApplicationStepper() {
   const { state: sourceFileState, component: fileComponent } = sourceFileHook;
 
   const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = useState({
+
+  const alreadyCompleted = {
     0: !!authentication,
     1: !!organization,
     2: !!sourceRepository,
     3: !!language,
     4: !!sourceFileState,
-  });
+  };
+  const [completed, setCompleted] = useState(alreadyCompleted);
 
   useEffect(() => {
-    setCompleted({
-      0: !!authentication,
-      1: !!organization,
-      2: !!sourceRepository,
-      3: !!language,
-      4: !!sourceFileState,
-    });
-  }, [authentication, language, sourceRepository, sourceFileState, organization]);
+    setCompleted(alreadyCompleted);
+  }, [alreadyCompleted]);
 
   useEffect(() => {
     const newActiveStep = getActiveStep(completed);
@@ -150,11 +146,16 @@ function ApplicationStepper() {
                 {steps[activeStep].component()}
                 <Divider className={classes.divider} />
                 <div className={classes.buttons}>
-                  <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                  <Button
+                    data-test-id="stepper-back"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    className={classes.button}
+                  >
                     Back
                   </Button>
                   <Button
-                    data-test="stepper-next"
+                    data-test-id="stepper-next"
                     variant="contained"
                     color="primary"
                     onClick={handleNext}

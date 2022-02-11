@@ -44,9 +44,10 @@ const _config = {
 //   columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
 // };
 
+// override cache to 1 minute for scripture resources
 const serverConfig = {
   server: SERVER_URL,
-  cache: { maxAge: 1 * 1 * 1 * 60 * 1000 }, // override cache to 1 minute
+  cache: { maxAge: 1 * 1 * 1 * 60 * 1000 },
 };
 
 function TranslatableTSVWrapper({

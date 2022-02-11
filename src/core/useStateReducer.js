@@ -192,5 +192,5 @@ export const useStateReducer = ({
     setCacheFileKey,
     setCacheWarningMessage,
   };
-  return [state, actions];
+  return { state, actions };
 };
