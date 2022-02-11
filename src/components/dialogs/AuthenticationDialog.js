@@ -1,10 +1,5 @@
-import React, {
-  useContext,
-} from 'react';
-import {
-  useDeepCompareCallback,
-  useDeepCompareMemo,
-} from 'use-deep-compare';
+import React, { useContext } from 'react';
+import { useDeepCompareMemo } from 'use-deep-compare';
 import {
   Modal,
   Paper,
@@ -16,21 +11,14 @@ import { AppContext } from '../../App.context';
 
 function AuthenticationDialog({
   show,
-  open,
+  // open,
   close,
   saveRetry,
 }) {
   const classes = useStyles();
 
-  const {
-    state: { config },
-    targetFile,
-  } = useContext(AppContext);
+  const { state: { config } } = useContext(AppContext);
 
-  const autoSaveOnEdit = useDeepCompareCallback( async (content) => {
-    //console.log("tC Create / autosave", targetFile, content);
-    await targetFile.actions.saveCache(content);
-  }, [targetFile.actions]);
 
   const component = useDeepCompareMemo(() => {
     let _component = <></>;
@@ -51,7 +39,7 @@ function AuthenticationDialog({
       );
     };
     return _component;
-  }, [config, show, classes.modal, autoSaveOnEdit]);
+  }, [config, show, classes.modal]);
 
   return component;
 };

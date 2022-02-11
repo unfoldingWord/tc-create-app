@@ -6,22 +6,10 @@ import React, {
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
-import {
-  CircularProgress,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-} from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 
 import { DataTable } from 'datatable-translatable';
-
 import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
-
-import * as cv from 'uw-content-validation';
-import * as csv from '../../core/csvMaker';
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -30,6 +18,7 @@ import {
 import { SERVER_URL } from '../../core/state.defaults';
 
 import { AppContext } from '../../App.context';
+import useValidation from '../../hooks/useValidation';
 import RowHeader from './RowHeader';
 
 const delimiters = { row: '\n', cell: '\t' };
@@ -55,14 +44,9 @@ const _config = {
 //   columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
 // };
 
-// // TODO: determine if the tsv includes scripture reference to render scripture RowHeader
-// const isScripture = () => {};
-
 const serverConfig = {
   server: SERVER_URL,
-  cache: {
-    maxAge: 1 * 1 * 1 * 60 * 1000, // override cache to 1 minute
-  },
+  cache: { maxAge: 1 * 1 * 1 * 60 * 1000 }, // override cache to 1 minute
 };
 
 function TranslatableTSVWrapper({
@@ -72,21 +56,31 @@ function TranslatableTSVWrapper({
 }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
-  const [open, setOpen] = React.useState(false);
 
   const {
     state: {
       resourceLinks,
       expandedScripture,
-      validationPriority,
-      organization,
     },
     actions: { setResourceLinks },
-    sourceFile,
-    targetFile,
+    giteaReactToolkit: {
+      sourceFileHook,
+      targetFileHook,
+    },
   } = useContext(AppContext);
 
-  const bookId = sourceFile.state.filepath.split(/\d+-|\./)[1].toLowerCase();
+  const {
+    filepath: sourceFilepath,
+    content: sourceContent,
+  } = sourceFileHook.state || {};
+  const { content: targetContent } = targetFileHook.state || {};
+
+  const {
+    actions: { onValidate },
+    component: validationComponent,
+  } = useValidation( { delimiters } );
+
+  const bookId = sourceFilepath.split(/\d+-|\./)[1].toLowerCase();
 
   const onResourceLinks = useCallback((_resourceLinks) => {
     // Remove bookId and remove defaults:
@@ -109,89 +103,6 @@ function TranslatableTSVWrapper({
     return `header-${chapter}-${verse}-${uid}`;
   }, []);
 
-  const handleClose = useCallback( () => {
-    setOpen(false);
-  }, [setOpen]);
-
-  const _onValidate = useDeepCompareCallback(async (rows) => {
-    // sample name: en_tn_08-RUT.tsv
-    // NOTE! the content on-screen, in-memory does NOT include
-    // the headers. So the initial value of tsvRows will be
-    // the headers.
-    if ( targetFile.state && rows ) {
-      const _name = targetFile.state.name.split('_');
-      const langId = _name[0];
-      const bookID = _name[2].split('-')[1].split('.')[0];
-      let rowsString = 'Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote\n';
-
-      for (let i=0; i < rows.length; i++) {
-        let rowString = '';
-
-        for (let j=0; j < rows[i].length; j++) {
-          rowString += rows[i][j];
-
-          if ( j < (rows[i].length-1) ) {
-            rowString += '\t';
-          };
-        };
-        rowsString += rowString;
-        rowsString += '\n';
-      }
-      // const rawResults = await cv.checkTN_TSV9Table(langId, 'TN', bookID, 'dummy', rowsString, '', {suppressNoticeDisablingFlag: false});
-
-      const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookID, targetFile.state.name, rowsString, { suppressNoticeDisablingFlag: false });
-      const nl = rawResults.noticeList;
-      let hdrs = ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
-      let data = [];
-      data.push(hdrs);
-      let inPriorityRange = false;
-
-      Object.keys(nl).forEach ( key => {
-        inPriorityRange = false; // reset for each
-        const rowData = nl[key];
-
-        if ( validationPriority === 'med' && rowData.priority > 599 ) {
-          inPriorityRange = true;
-        } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
-          inPriorityRange = true;
-        } else if ( validationPriority === 'low' ) {
-          inPriorityRange = true;
-        };
-
-        if ( inPriorityRange ) {
-          csv.addRow( data, [
-            String(rowData.priority),
-            String(rowData.C),
-            String(rowData.V),
-            String(rowData.lineNumber),
-            String(rowData.rowID),
-            String(rowData.fieldName || ''),
-            String(rowData.characterIndex || ''),
-            String(rowData.extract || ''),
-            String(rowData.message),
-            String(rowData.location),
-          ]);
-        }
-      });
-
-      if ( data.length < 2 ) {
-        alert('No Validation Errors Found');
-        setOpen(false);
-        return;
-      };
-
-      let ts = new Date().toISOString();
-      let fn = 'Validation-' + targetFile.state.name + '-' + ts + '.csv';
-      csv.download(fn, csv.toCSV(data));
-    };
-    setOpen(false);
-  },[targetFile.state, validationPriority, organization.username]);
-
-  const onValidate = useCallback( (rows) => {
-    setOpen(true);
-    setTimeout( () => _onValidate(rows), 1);
-  }, [_onValidate]);
-
   const options = {
     page: 0,
     rowsPerPage: 25,
@@ -211,8 +122,8 @@ function TranslatableTSVWrapper({
     _config.rowHeader = rowHeader;
     return (
       <DataTable
-        sourceFile={sourceFile.state.content}
-        targetFile={targetFile.state.content}
+        sourceFile={sourceContent}
+        targetFile={targetContent}
         onSave={onSave}
         onEdit={onEdit}
         onValidate={onValidate}
@@ -223,7 +134,7 @@ function TranslatableTSVWrapper({
         options={options}
       />
     );
-  }, [sourceFile.state.content, targetFile.state.content, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
+  }, [sourceContent, targetContent, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
 
   return (
     <ResourcesContextProvider
@@ -236,29 +147,7 @@ function TranslatableTSVWrapper({
       config={serverConfig}
     >
       <TranslatableTSV datatable={datatable} />
-      {
-        open && <Dialog
-          disableBackdropClick
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{'Validation Running, Please Wait'}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <div style={{ textAlign: 'center' }}>
-                <CircularProgress />{' '}
-              </div>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
-      }
+      { validationComponent }
     </ResourcesContextProvider>
   );
 }
@@ -273,6 +162,11 @@ function TranslatableTSV({ datatable }) {
       <CircularProgress />
     </div>
   );
+};
+
+TranslatableTSV.propTypes = {
+  /** datatable to render */
+  datatable: PropTypes.element.isRequired,
 };
 
 TranslatableTSVWrapper.propTypes = {

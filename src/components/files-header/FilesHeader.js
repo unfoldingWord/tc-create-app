@@ -29,9 +29,14 @@ function FilesHeader() {
       sourceRepository,
       targetRepository,
     },
-    sourceFile,
-    targetFile,
+    giteaReactToolkit: {
+      sourceFileHook,
+      targetFileHook,
+    },
   } = useContext(AppContext);
+
+  const { html_url: sourceFileHtmlUrl, filepath: sourceFilepath } = sourceFileHook.state || {};
+  const { html_url: targetFileHtmlUrl } = targetFileHook.state || {};
 
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
 
@@ -76,7 +81,7 @@ function FilesHeader() {
   const sourceChip = useDeepCompareMemo(() => {
     const { full_name } = sourceRepository;
     let label = `${sourceLanguage.languageName} - ${full_name}/${sourceBranch}`;
-    let openDcsLink = sourceFile.state.html_url;
+    let openDcsLink = sourceFileHtmlUrl;
     let licenseLink= sourceRepository.html_url + '/src/branch/' + sourceBranch + '/LICENSE.md';
 
     // test for translator role and override lable, dcs link and compare link
@@ -84,7 +89,7 @@ function FilesHeader() {
       // https://qa.door43.org/unfoldingWord/en_tn/src/tag/v47/en_tn_66-JUD.tsv
       const prodTag = sourceRepository.catalog.prod.branch_or_tag_name;
       label = `${sourceLanguage.languageName} - ${full_name}/${prodTag}`;
-      openDcsLink = SERVER_URL + '/' + Path.join('unfoldingword',sourceRepository.name,'src','tag', prodTag, sourceFile.state.path);
+      openDcsLink = SERVER_URL + '/' + Path.join('unfoldingword',sourceRepository.name,'src','tag', prodTag, sourceFilepath);
       licenseLink = SERVER_URL + '/' + Path.join('unfoldingword',sourceRepository.name,'src','tag', prodTag, 'LICENSE.md');
     };
 
@@ -97,12 +102,12 @@ function FilesHeader() {
     return chip({
       label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
     });
-  }, [sourceRepository, targetRepository, sourceFile, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName, sourceOwner, targetOwner ]);
+  }, [sourceRepository, targetRepository, sourceFileHtmlUrl, sourceFilepath, chip, openLink, sourceCompareLink, sourceBranch, sourceLanguage.languageName, sourceOwner, targetOwner ]);
 
   const targetChip = useDeepCompareMemo(() => {
     const { full_name } = targetRepository;
     const label = `${language.languageName} - ${full_name}/${targetBranch}`;
-    const onClick = () => openLink(targetFile.state.html_url);
+    const onClick = () => openLink(targetFileHtmlUrl);
     const style = { background: '#fff9' };
     const onDelete = () => targetCompareLink && openLink(targetCompareLink);
     const deleteIcon = <Publish />;
@@ -113,7 +118,7 @@ function FilesHeader() {
     return chip({
       label, onDelete, style, onClick, deleteIcon, iconTooltip, deleteIconTooltip, licenseLink,
     });
-  }, [targetRepository, language, targetFile, chip, openLink, targetCompareLink, targetBranch]);
+  }, [targetRepository, language, targetFileHtmlUrl, chip, openLink, targetCompareLink, targetBranch]);
 
   return (
     <Grid className={classes.headers} container wrap="nowrap" spacing={2}>

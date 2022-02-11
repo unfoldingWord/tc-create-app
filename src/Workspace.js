@@ -8,9 +8,14 @@ import CriticalValidationErrorsDialog from './components/dialogs/CriticalValidat
 function Workspace() {
   const {
     state: { filepath, criticalValidationErrors },
-    targetFile,
-    sourceFile,
+    giteaReactToolkit: {
+      sourceFileHook,
+      targetFileHook,
+    },
   } = useContext(AppContext);
+
+  const { filepath: sourceFilepath } = sourceFileHook.state || {};
+  const { filepath: targetFilepath, content: targetContent } = targetFileHook.state || {};
 
   const component = useDeepCompareMemo(() => {
     let _component = <ApplicationStepper />;
@@ -21,8 +26,8 @@ function Workspace() {
       </div>
     );
 
-    if (sourceFile?.state?.filepath && targetFile?.state?.filepath && targetFile?.state?.content && filepath) {
-      if (targetFile.state.filepath === filepath) {
+    if (sourceFilepath && targetFilepath && targetContent && filepath) {
+      if (targetFilepath === filepath) {
         if (criticalValidationErrors.length > 0) {
           // target file validation errors
           _component = <CriticalValidationErrorsDialog />;
@@ -36,7 +41,13 @@ function Workspace() {
       _component = progressComponent;
     };
     return _component;
-  }, [sourceFile, targetFile, filepath, criticalValidationErrors]);
+  }, [
+    sourceFilepath,
+    targetFilepath,
+    filepath,
+    targetContent,
+    criticalValidationErrors,
+  ]);
 
   return component;
 };

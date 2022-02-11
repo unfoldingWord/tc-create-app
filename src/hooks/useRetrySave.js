@@ -1,90 +1,113 @@
-import {
+import React, {
   useState,
   useContext,
+  useEffect,
+  useCallback,
+  useMemo,
 } from 'react';
-import {
-  useDeepCompareCallback,
-  useDeepCompareEffect,
-} from 'use-deep-compare';
+import { useDeepCompareCallback } from 'use-deep-compare';
 
 import { parseError } from 'gitea-react-toolkit';
-
+import AuthenticationDialog from '../components/dialogs/AuthenticationDialog';
 import { AppContext } from '../App.context';
 
 function useRetrySave() {
   const {
-    auth,
-    targetFile,
+    giteaReactToolkit: {
+      authenticationHook,
+      targetFileHook,
+    },
   } = useContext(AppContext);
+
+  const { save, saveCache } = targetFileHook.actions || {};
+  const { onLoginFormSubmitLogin } = authenticationHook.actions || {};
+
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
   const [doSaveRetry, setDoSaveRetry] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
 
   const [showAuthenticationDialog, setShowAuthenticationDialog] = useState(false);
-  const closeAuthenticationDialog = () => setShowAuthenticationDialog(false);
-  const openAuthenticationDialog = () => setShowAuthenticationDialog(true);
 
-  useDeepCompareEffect(() => {
-    // This does not work in the saveRetry() function.
+  const openAuthenticationDialog = useCallback(() => {
+    setShowAuthenticationDialog(true);
+  }, []);
+
+  const closeAuthenticationDialog = useCallback(() => {
+    setShowAuthenticationDialog(false);
+  }, []);
+
+  useEffect(() => {
+    if (saveFailed) {
+      alert('Error saving file! File could not be saved.');
+    };
+  }, [saveFailed]);
+
+  const retrySave = useCallback(async () => {
+    try {
+      await save(savingTargetFileContent);
+    } catch (error) {
+      setSaveFailed(true);
+    };
+    closeAuthenticationDialog();
+  }, [save, savingTargetFileContent, closeAuthenticationDialog]);
+
+  useEffect(() => {
     if (doSaveRetry) {
       setDoSaveRetry(false);
-      targetFile.actions.save(savingTargetFileContent).then(() => {
-        // Saved successfully.
-        closeAuthenticationDialog();
-      },
-      () => {
-        // Error saving:
-        closeAuthenticationDialog();
-        alert('Error saving file! File could not be saved.');
-      });
-    }
-  }, [doSaveRetry, targetFile.actions, savingTargetFileContent]);
+      retrySave();
+    };
+  }, [doSaveRetry, retrySave]);
 
-  const saveOnTranslation = useDeepCompareCallback( async (content) => {
+  const saveTranslation = useDeepCompareCallback( async (content) => {
     setSavingTargetFileContent(content);
 
     try {
-      await targetFile.actions.save(content);
+      await save(content);
     } catch (error) {
-      debugger
-      const friendlyError = parseError({ error });
+      const { isRecoverable } = parseError({ error });
 
-      if (friendlyError.isRecoverable) {
+      // assumption is that it is an authentication issue.
+      if (isRecoverable) {
         openAuthenticationDialog();
       } else {
-        alert('Error saving file! File could not be saved.');
+        setSaveFailed(true);
       };
     };
-  }, [targetFile.actions]);
+  }, [save]);
 
-  const autoSaveOnEdit = useDeepCompareCallback( async (content) => {
-    //console.log("tC Create / autosave", targetFile, content);
-    await targetFile.actions.saveCache(content);
-  }, [targetFile.actions]);
+  const autoSaveOnEdit = useCallback( async (content) => {
+    await saveCache(content);
+  }, [saveCache]);
 
-  const saveRetry = useDeepCompareCallback( async ({
+  const saveRetry = useCallback( async ({
     username,
     password,
     remember,
   }) => {
-    await auth.actions.onLoginFormSubmitLogin({
+    await onLoginFormSubmitLogin({
       username,
       password,
       remember,
     });
     setDoSaveRetry(true);
-  }, [auth.actions, setDoSaveRetry]);
+  }, [onLoginFormSubmitLogin, setDoSaveRetry]);
+
+  const component = useMemo(() => (
+    <AuthenticationDialog
+      show={showAuthenticationDialog}
+      open={openAuthenticationDialog}
+      close={closeAuthenticationDialog}
+      saveRetry={saveRetry}
+    />
+  ), [saveRetry, showAuthenticationDialog, openAuthenticationDialog, closeAuthenticationDialog]);
 
   return {
-    state: { showAuthenticationDialog },
     actions: {
       autoSaveOnEdit,
-      saveOnTranslation,
-      setShowAuthenticationDialog,
-      openAuthenticationDialog,
-      closeAuthenticationDialog,
-      saveRetry,
+      saveTranslation,
     },
+    component,
   };
 };
 

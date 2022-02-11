@@ -49,11 +49,22 @@ export default function RowHeader({
   const [state, setState] = useState(defaultState);
 
   useDeepCompareEffect(() => {
+    let bookId, chapter, verse;
+    const firstCell = rowData[0].split(delimiters.cell)[1];
+    const matches = firstCell.match(/(\w{3}) (\d+):(\d+)/);
+
+    if (matches) {
+      bookId = matches[1];
+      chapter = matches[2];
+      verse = matches[3];
+    } else {
+      bookId = rowData[0].split(delimiters.cell)[1];
+      chapter = rowData[1].split(delimiters.cell)[1];
+      verse = rowData[2].split(delimiters.cell)[1];  
+    };
+
     const quote = rowData[5].split(delimiters.cell)[1];
     const occurrence = rowData[6].split(delimiters.cell)[1];
-    const bookId = rowData[0].split(delimiters.cell)[1];
-    const chapter = rowData[1].split(delimiters.cell)[1];
-    const verse = rowData[2].split(delimiters.cell)[1];
     const _state = {
       quote,
       occurrence,

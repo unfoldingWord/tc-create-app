@@ -22,16 +22,18 @@ function ApplicationStepper() {
   const {
     state: { language },
     actions: { setLanguage },
-    auth,
-    org,
-    sourceRepo,
-    sourceFile,
+    giteaReactToolkit: {
+      authenticationHook,
+      organizationHook,
+      sourceRepositoryHook,
+      sourceFileHook,
+    },
   } = useContext(AppContext);
 
-  const { state: authentication, component: authenticationComponent } = auth;
-  const { state: organization, components:{ list: organizationComponent } } = org;
-  const { state: sourceRepository, components: { browse: repositoryComponent } } = sourceRepo;
-  const { state: sourceFileState, component: fileComponent } = sourceFile;
+  const { state: authentication, component: authenticationComponent } = authenticationHook;
+  const { state: organization, components:{ list: organizationComponent } } = organizationHook;
+  const { state: sourceRepository, components: { browse: repositoryComponent } } = sourceRepositoryHook;
+  const { state: sourceFileState, component: fileComponent } = sourceFileHook;
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = useState({
@@ -76,12 +78,12 @@ function ApplicationStepper() {
     {
       label: 'Language',
       instructions: 'Select Your Language',
-      component: () => (
-        <LanguageSelect
+      component: function component() {
+        return (<LanguageSelect
           language={language}
           onLanguage={setLanguage}
-        />
-      ),
+        />);
+      },
     },
     {
       label: 'File',
@@ -129,7 +131,11 @@ function ApplicationStepper() {
             <Stepper activeStep={activeStep}>
               {steps.map((step, index) => (
                 <Step key={step.label}>
-                  <StepButton onClick={handleStep(index)} completed={completed[index]}>
+                  <StepButton
+                    data-test-id={`step-button-${step.label}`}
+                    onClick={handleStep(index)}
+                    completed={completed[index]}
+                  >
                     {step.label}
                   </StepButton>
                 </Step>

@@ -42,47 +42,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LanguageSelect({ language, onLanguage }) {
-  const appContext = useContext(AppContext);
+  const { state: { organization, languages } } = useContext(AppContext);
   const classes = useStyles();
 
   const handleChange = (object) => {
     const languageId = object.langId;
-    const _language = getLanguage({ languageId, languagesJSON: appContext.state.languages });
+    const _language = getLanguage({ languageId, languagesJSON: languages });
     onLanguage(_language);
   };
 
-  const getOrgLanguages = () => {
-    return appContext.state.organization.repo_languages || ['']
-  }
+  const getOrgLanguages = () => ( organization.repo_languages || [''] );
 
   const orgOptions = getOrgLanguages().map( (langId) => {
-      const formattedLanguage = getLanguage({languageId: langId, languagesJSON: appContext.state.languages});
-      //const value = formattedLanguage.languageId;
-      // test whether formattedLanguage has any properties.
-      // if it doesn't, then that means that the org has no languages for resources
-      let label;
-      if ( formattedLanguage.languageName ){
-        const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
-        const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
-        label = `${name} ${gatewayLabel}`;
-      }
-      return { langId, label };
-    }
-  );
+    const formattedLanguage = getLanguage({
+      languageId: langId,
+      languagesJSON: languages,
+    });
+    //const value = formattedLanguage.languageId;
+    // test whether formattedLanguage has any properties.
+    // if it doesn't, then that means that the org has no languages for resources
+    let label;
 
-  /*
-  const options = gatewayLanguages.map(
-    ({
-      languageId, languageName, localized, region, gateway,
-    }) => {
-      const value = languageId;
-      const name = `${languageId} - ${languageName} - ${localized}`;
-      const gatewayLabel = `(${region} ${gateway ? 'Gateway' : 'Other'})`;
-      const label = `${name} ${gatewayLabel}`;
-      return { value, label };
+    if ( formattedLanguage.languageName ){
+      const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
+      const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
+      label = `${name} ${gatewayLabel}`;
     }
-  );
-  */
+    return { langId, label };
+  });
+
   let value;
 
   if (language) {
@@ -92,14 +80,12 @@ function LanguageSelect({ language, onLanguage }) {
   return (
     <div className={classes.root}>
       {
-        orgOptions[0].label === undefined ? 
-        (
+        orgOptions[0].label === undefined ? (
           <div><p>No Languages Found</p></div>
-        )
-        :
-        (
+        ) : (
           <NoSsr>
             <Select
+              data-test-id={`language-select-${value}`}
               className="language-select-dropdown"
               classes={classes}
               options={orgOptions}
@@ -107,7 +93,7 @@ function LanguageSelect({ language, onLanguage }) {
               value={value}
               onChange={handleChange}
               placeholder="Select Language"
-          />
+            />
             <div className={classes.divider} />
           </NoSsr>
         )

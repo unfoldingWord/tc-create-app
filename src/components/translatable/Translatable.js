@@ -2,8 +2,8 @@ import React, {
   useEffect,
   useCallback,
   useContext,
+  useMemo,
 } from 'react';
-import { useDeepCompareMemo } from 'use-deep-compare';
 import { CircularProgress } from '@material-ui/core';
 
 import { Translatable as MarkDownTranslatable, MarkdownContextProvider } from 'markdown-translatable';
@@ -11,7 +11,6 @@ import { Translatable as MarkDownTranslatable, MarkdownContextProvider } from 'm
 import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import useRetrySave from '../../hooks/useRetrySave';
-import AuthenticationDialog from '../dialogs/AuthenticationDialog';
 import TranslatableTSV from './TranslatableTSV';
 
 function Translatable() {
@@ -21,27 +20,34 @@ function Translatable() {
       filepath,
     },
     actions: { setContentIsDirty },
-    sourceFile,
-    targetFile,
+    giteaReactToolkit: {
+      sourceFileHook,
+      targetFileHook,
+    },
   } = useContext(AppContext);
 
+  const { content: sourceFileContent, filepath: sourceFilepath } = sourceFileHook.state || {};
+  const { content: targetFileContent, filepath: targetFilepath } = targetFileHook.state || {};
+
   const {
-    state: { showAuthenticationDialog },
     actions: {
       autoSaveOnEdit,
-      saveOnTranslation,
-      openAuthenticationDialog,
-      closeAuthenticationDialog,
-      saveRetry,
+      saveTranslation,
     },
+    component: authenticationDialog,
   } = useRetrySave();
-
 
   const scrollToTop = useCallback(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const translatableComponent = useDeepCompareMemo(() => {
+  const filepathsMatch = (
+    filepath &&
+    filepath === sourceFilepath &&
+    filepath === targetFilepath
+  );
+
+  const translatableComponent = useMemo(() => {
     let _translatable = (
       <div style={{ textAlign: 'center' }}>
         <CircularProgress />{' '}
@@ -49,24 +55,22 @@ function Translatable() {
     );
 
     if (
-      filepath &&
-      sourceFile.state?.content &&
-      targetFile.state?.content &&
-      filepath === sourceFile.state?.filepath &&
-      filepath === targetFile.state?.filepath
+      filepathsMatch &&
+      sourceFileContent &&
+      targetFileContent
     ) {
       if (filepath.match(/\.md$/)) {
         let translatableProps = {
-          original: sourceFile?.state?.content,
-          translation: targetFile?.state?.content,
-          onTranslation: saveOnTranslation,
+          original: sourceFileContent,
+          translation: targetFileContent,
+          onTranslation: saveTranslation,
           onContentIsDirty: setContentIsDirty,
         };
         console.log('Markdown file selected');
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
       } else if (filepath.match(/\.tsv$/)) {
         console.log('tn 9 col file selected');
-        _translatable = <TranslatableTSV onSave={saveOnTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
+        _translatable = <TranslatableTSV onSave={saveTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       } else {
         console.log('Unsupported file selected');
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
@@ -75,12 +79,11 @@ function Translatable() {
     return _translatable;
   }, [
     filepath,
-    sourceFile.state.filepath,
-    sourceFile.state.content,
-    targetFile.state.filepath,
-    targetFile.state.content,
+    filepathsMatch,
+    sourceFileContent,
+    targetFileContent,
     setContentIsDirty,
-    saveOnTranslation,
+    saveTranslation,
     autoSaveOnEdit,
   ]);
 
@@ -88,7 +91,7 @@ function Translatable() {
     scrollToTop();
   }, [filepath, scrollToTop]);
 
-  const filesHeader = targetRepository && targetFile && <FilesHeader />;
+  const filesHeader = targetRepository && targetFileHook.state && <FilesHeader />;
 
   return (
     <div id='translatable'>
@@ -96,12 +99,7 @@ function Translatable() {
       <div id='translatableComponent'>
         {translatableComponent}
       </div>
-      <AuthenticationDialog
-        show={showAuthenticationDialog}
-        open={openAuthenticationDialog}
-        close={closeAuthenticationDialog}
-        saveRetry={saveRetry}
-      />
+      {authenticationDialog}
     </div>
   );
 };

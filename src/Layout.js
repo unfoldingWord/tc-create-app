@@ -35,9 +35,11 @@ export default function Layout() {
       criticalValidationErrors=[],
       cacheWarningMessage,
     },
-    auth,
-    sourceRepo,
-    sourceFile,
+    giteaReactToolkit: {
+      authenticationHook,
+      sourceRepositoryHook,
+      sourceFileHook,
+    },
   } = useContext(AppContext);
 
   const drawerMenu = <DrawerMenu commitHash={commitHash} />;
@@ -72,9 +74,9 @@ export default function Layout() {
             // buttons={buttons}
             drawerMenu={drawerMenu}
             filepath={filepath}
-            auth={auth}
-            repo={sourceRepo}
-            file={sourceFile}
+            auth={authenticationHook}
+            repo={sourceRepositoryHook}
+            file={sourceFileHook}
           />
         </header>
       </Headroom>

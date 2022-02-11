@@ -27,17 +27,27 @@ import { AppContext } from '../../App.context';
 function DrawerMenu() {
   const classes = useStyles();
 
-  const { state, actions } = useContext(AppContext);
-  const { fontScale, expandedScripture, validationPriority } = state;
-  const { setFontScale, setExpandedScripture, setValidationPriority } = actions;
+  const {
+    state: {
+      fontScale, expandedScripture, validationPriority,
+    },
+    actions: {
+      setFontScale,
+      setExpandedScripture,
+      setValidationPriority,
+    },
+  } = useContext(AppContext);
 
   const handleFontScale = (event, value) => setFontScale(value);
   const handleExpandScripture = (event) => setExpandedScripture(event.target.checked);
   const handleResetFontScale = () => setFontScale(100);
   const openLink = (link) => window.open(link, '_blank');
   const handleFeedback = () => openLink(appPackage.bugs.url);
+
   const handleValidationPriorityChange = (event, value) => {
-    value && setValidationPriority(value)
+    if (value) {
+      setValidationPriority(value);
+    };
   };
 
   return (

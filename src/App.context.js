@@ -71,7 +71,7 @@ export function AppContextProvider({
     setCacheWarningMessage,
   } = actions;
 
-  const auth = useAuthentication({
+  const authenticationHook = useAuthentication({
     authentication,
     onAuthentication,
     config: _config.authentication,
@@ -81,14 +81,14 @@ export function AppContextProvider({
 
   const config = authentication?.config || _config.authentication;
 
-  const org = useOrganization({
+  const organizationHook = useOrganization({
     authentication,
     organization,
     onOrganization,
     config,
   });
 
-  const sourceRepo = useRepository({
+  const sourceRepositoryHook = useRepository({
     authentication,
     repository: sourceRepository,
     onRepository: setSourceRepository,
@@ -96,7 +96,7 @@ export function AppContextProvider({
     config,
   });
 
-  const targetRepo = useRepository({
+  const targetRepositoryHook = useRepository({
     authentication,
     repository: targetRepository,
     onRepository: () => {},
@@ -159,7 +159,7 @@ export function AppContextProvider({
     isConfirmed(localString('ConfirmCloseWindow'));
   };
 
-  const sourceFile = useFile({
+  const sourceFileHook = useFile({
     config,
     authentication,
     repository: sourceRepository,
@@ -175,13 +175,13 @@ export function AppContextProvider({
   let defaultContent;
 
   if ( sourceRepository?.id === targetRepository?.id ) {
-    defaultContent = sourceFile?.state?.content;
+    defaultContent = sourceFileHook?.state?.content;
   } else {
-    defaultContent = sourceFile?.state?.publishedContent;
+    defaultContent = sourceFileHook?.state?.publishedContent;
     // sourceFile.state.content = defaultContent; // TODO: NEVER SET STATE LIKE THIS
   };
 
-  const targetFile = useFile({
+  const targetFileHook = useFile({
     config,
     authentication,
     repository: targetRepository,
@@ -222,12 +222,14 @@ export function AppContextProvider({
       ...actions,
       setCacheFileKey,
     },
-    auth,
-    org,
-    sourceRepo,
-    targetRepo,
-    sourceFile,
-    targetFile,
+    giteaReactToolkit: {
+      authenticationHook,
+      organizationHook,
+      sourceRepositoryHook,
+      targetRepositoryHook,
+      sourceFileHook,
+      targetFileHook,
+    },
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
