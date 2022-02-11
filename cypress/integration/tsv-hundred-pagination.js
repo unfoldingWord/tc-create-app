@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('File Change', function () {
+describe('pagination', function () {
     before(() => {
       cy.visit('/');
     });
@@ -29,11 +29,24 @@ describe('File Change', function () {
     it('Select File', function () {
       /** Select file */
       cy.contains('en_tn_57-TIT.tsv').should('be.be.visible').click();
-      cy.contains('Introduction to Titus');
     });
-    it('preview markdown', function () {
-     /**preview to markdown */
-      cy.get('[aria-label="Preview"]').click();
-      cy.contains('# Introduction to Titus');
+    it('File Change', function () {
+        /**File change */
+        cy.get('[data-test=drawer-menu-button]').click();
+        cy.get('[aria-label="secondary checkbox"]').click();
+        cy.contains('en_tn_18-JOB.tsv').click();
+        cy.contains('Introduction to Job', { timeout: 20000 })
+        cy.get('body > div.MuiDrawer-root.MuiDrawer-modal.makeStyles-drawer-6 > div.MuiBackdrop-root').click();
       });
+    it('pagination', function () {
+      /**select pagination */
+      cy.get('[data-testid=pagination-rows]').click();
+      cy.contains('100').should('be.be.visible').click();
+    });
+    it('pagination next', function () {
+      /**select next button */
+      cy.get('[data-testid="pagination-next"]').click();
+      cy.get('[data-testid="pagination-next"]').click();
+      cy.contains('The second builds on the first.')
+    });
   });
