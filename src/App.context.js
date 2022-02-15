@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useLanguages } from 'uw-languages-rcl';
 import { useStateReducer } from './core/useStateReducer';
 
 import { useGiteaReactToolkit } from './hooks/useGiteaReactToolkit';
@@ -9,36 +8,32 @@ import { useGiteaReactToolkit } from './hooks/useGiteaReactToolkit';
 export const AppContext = React.createContext();
 
 export function AppContextProvider({
-  authentication: _authentication,
-  language: _language,
-  sourceRepository: _sourceRepository,
-  filepath: _filepath,
-  organization: _organization,
-  resourceLinks: _resourceLinks,
-  contentIsDirty: _contentIsDirty,
+  authentication,
+  language,
+  sourceRepository,
+  filepath,
+  organization,
+  resourceLinks,
+  contentIsDirty,
   children,
 }) {
   const {
     state,
     actions,
   } = useStateReducer({
-    authentication: _authentication,
-    language: _language,
-    sourceRepository: _sourceRepository,
-    filepath: _filepath,
-    organization: _organization,
-    resourceLinks: _resourceLinks,
-    contentIsDirty: _contentIsDirty,
+    authentication,
+    language,
+    sourceRepository,
+    filepath,
+    organization,
+    resourceLinks,
+    contentIsDirty,
   });
-  // uw-languages-rcl
-  const { state: languages } = useLanguages();
+
   const giteaReactToolkit = useGiteaReactToolkit({ state, actions });
 
   const value = {
-    state: {
-      ...state,
-      languages,
-    },
+    state,
     actions,
     giteaReactToolkit,
   };

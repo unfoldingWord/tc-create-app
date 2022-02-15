@@ -1,6 +1,7 @@
 import React, {
   useContext, useEffect, useState,
 } from 'react';
+import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -37,16 +38,16 @@ function ApplicationStepper() {
 
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const alreadyCompleted = {
+  const alreadyCompleted = useDeepCompareMemo(() => ({
     0: !!authentication,
     1: !!organization,
     2: !!sourceRepository,
     3: !!language,
     4: !!sourceFileState,
-  };
+  }), [authentication, organization, sourceRepository, language, sourceFileState]);
   const [completed, setCompleted] = useState(alreadyCompleted);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     setCompleted(alreadyCompleted);
   }, [alreadyCompleted]);
 
@@ -78,6 +79,7 @@ function ApplicationStepper() {
         return (<LanguageSelect
           language={language}
           onLanguage={setLanguage}
+          organization={organization}
         />);
       },
     },

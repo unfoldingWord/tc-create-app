@@ -13,6 +13,7 @@ import {
 } from '@material-ui/icons';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 import { License } from 'scripture-resources-rcl';
+import { useLanguages } from 'uw-languages-rcl';
 
 import { AppContext } from '../../App.context';
 import { getLanguage } from '../languages/helpers';
@@ -25,7 +26,6 @@ function FilesHeader() {
   const {
     state: {
       language,
-      languages,
       sourceRepository,
       targetRepository,
     },
@@ -34,6 +34,8 @@ function FilesHeader() {
       targetFileHook,
     },
   } = useContext(AppContext);
+
+  const { state: languages } = useLanguages();
 
   const { html_url: sourceFileHtmlUrl, filepath: sourceFilepath } = sourceFileHook.state || {};
   const { html_url: targetFileHtmlUrl } = targetFileHook.state || {};
