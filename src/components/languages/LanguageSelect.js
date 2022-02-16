@@ -14,9 +14,8 @@ export default function LanguageSelect({
   onLanguage,
   organization,
 }) {
-  const { state: languages } = useLanguages();
-
   const classes = useStyles();
+  const { state: languages } = useLanguages();
 
   const handleChange = useDeepCompareCallback((object) => {
     const languageId = object.langId;
@@ -55,28 +54,36 @@ export default function LanguageSelect({
     return _value;
   }, [orgOptions]);
 
+  const component = useDeepCompareMemo(() => {
+    let _component = (
+      <div>
+        <p>No Languages Found</p>
+      </div>
+    );
+
+    if (orgOptions[0].label) {
+      _component = (
+        <NoSsr>
+          <Select
+            data-test-id={`language-select-${value}`}
+            className="language-select-dropdown"
+            classes={classes}
+            options={orgOptions}
+            components={components}
+            value={value}
+            onChange={handleChange}
+            placeholder="Select Language"
+          />
+          <div className={classes.divider} />
+        </NoSsr>
+      );
+    };
+    return _component;
+  }, [classes, orgOptions, components, value, handleChange]);
 
   return (
     <div className={classes.root}>
-      {
-        orgOptions[0].label === undefined ? (
-          <div><p>No Languages Found</p></div>
-        ) : (
-          <NoSsr>
-            <Select
-              data-test-id={`language-select-${value}`}
-              className="language-select-dropdown"
-              classes={classes}
-              options={orgOptions}
-              components={components}
-              value={value}
-              onChange={handleChange}
-              placeholder="Select Language"
-            />
-            <div className={classes.divider} />
-          </NoSsr>
-        )
-      }
+      {component}
     </div>
   );
 }
