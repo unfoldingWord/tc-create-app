@@ -1,7 +1,5 @@
-import React, {
-  useContext, useEffect, useState,
-} from 'react';
-import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
+import React, { useContext } from 'react';
+import { useDeepCompareMemo } from 'use-deep-compare';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Stepper,
@@ -13,113 +11,49 @@ import {
   Divider,
 } from '@material-ui/core';
 
-import { LanguageSelect } from '../languages';
 import { AppContext } from '../../App.context';
-import { getActiveStep } from './helpers';
+import useApplicationStepper from './useApplicationStepper';
+import NetlifyBadge from './NetlifyBadge';
 
 function ApplicationStepper() {
   const classes = useStyles();
 
   const {
-    state: { language },
-    actions: { setLanguage },
-    giteaReactToolkit: {
-      authenticationHook,
-      organizationHook,
-      sourceRepositoryHook,
-      sourceFileHook,
-    },
+    state,
+    actions,
+    giteaReactToolkit,
   } = useContext(AppContext);
 
-  const { state: authentication, component: authenticationComponent } = authenticationHook;
-  const { state: organization, components:{ list: organizationComponent } } = organizationHook;
-  const { state: sourceRepository, components: { browse: repositoryComponent } } = sourceRepositoryHook;
-  const { state: sourceFileState, component: fileComponent } = sourceFileHook;
-
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  const alreadyCompleted = useDeepCompareMemo(() => ({
-    0: !!authentication,
-    1: !!organization,
-    2: !!sourceRepository,
-    3: !!language,
-    4: !!sourceFileState,
-  }), [authentication, organization, sourceRepository, language, sourceFileState]);
-  const [completed, setCompleted] = useState(alreadyCompleted);
-
-  useDeepCompareEffect(() => {
-    setCompleted(alreadyCompleted);
-  }, [alreadyCompleted]);
-
-  useEffect(() => {
-    const newActiveStep = getActiveStep(completed);
-    setActiveStep(newActiveStep);
-  }, [completed, setActiveStep]);
-
-  const steps = [
-    {
-      label: 'Login',
-      instructions: 'Login to Door43',
-      component: () => (authenticationComponent),
+  const {
+    state: {
+      activeStep,
+      steps,
+      completed,
     },
-    {
-      label: 'Organization',
-      instructions: 'Select Your Organization',
-      component: () => (organizationComponent),
+    actions: {
+      handleBack,
+      handleStep,
+      handleNext,
     },
-    {
-      label: 'Resource',
-      instructions: 'Select Resource to Translate',
-      component: () => (repositoryComponent),
-    },
-    {
-      label: 'Language',
-      instructions: 'Select Your Language',
-      component: function component() {
-        return (<LanguageSelect
-          language={language}
-          onLanguage={setLanguage}
-          organization={organization}
-        />);
-      },
-    },
-    {
-      label: 'File',
-      instructions: 'Select File to Translate',
-      component: () => (fileComponent),
-    },
-  ];
+  } = useApplicationStepper({
+    state,
+    actions,
+    giteaReactToolkit,
+  });
 
-  const handleNext = () => {
-    let newActiveStep;
-    const totalSteps = steps.length;
-    const isLastStep = activeStep === totalSteps - 1;
-    const completedSteps = Object.keys(completed).length;
-    const allStepsCompleted = completedSteps === totalSteps;
-
-    if (isLastStep && !allStepsCompleted) {
-      // It's the last step, but not all steps have been completed,
-      // find the first step that has been completed
-      newActiveStep = steps.findIndex((step, i) => !(i in completed));
-    } else {
-      newActiveStep = parseInt(activeStep) + 1;
-    }
-    setActiveStep(newActiveStep);
-  };
-
-  const handleBack = () => setActiveStep(activeStep - 1);
-  const handleStep = step => () => setActiveStep(step);
-
-  const netlifyBadge = (
-    <div className={classes.netlifyBadge}>
-      <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">
-        <img
-          src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg"
-          alt="Deploys by Netlify"
-        />
-      </a>
-    </div>
-  );
+  const stepsComponent = useDeepCompareMemo(() => (
+    steps.map((step, index) => (
+      <Step key={step.label}>
+        <StepButton
+          data-test-id={`step-button-${step.label}`}
+          onClick={handleStep(index)}
+          completed={completed[index]}
+        >
+          {step.label}
+        </StepButton>
+      </Step>
+    ))
+  ), [steps]);
 
   if (steps[activeStep]) {
     return (
@@ -127,17 +61,7 @@ function ApplicationStepper() {
         <Paper>
           <div className={classes.root}>
             <Stepper activeStep={activeStep}>
-              {steps.map((step, index) => (
-                <Step key={step.label}>
-                  <StepButton
-                    data-test-id={`step-button-${step.label}`}
-                    onClick={handleStep(index)}
-                    completed={completed[index]}
-                  >
-                    {step.label}
-                  </StepButton>
-                </Step>
-              ))}
+              {stepsComponent}
             </Stepper>
             <div>
               <div className={classes.step}>
@@ -171,13 +95,13 @@ function ApplicationStepper() {
             </div>
           </div>
         </Paper>
-        {netlifyBadge}
+        <NetlifyBadge />
       </>
     );
   } else {
     return <div />;
-  }
-}
+  };
+};
 
 const useStyles = makeStyles(theme => ({
   root: { padding: `${theme.spacing(2)}px` },
@@ -196,11 +120,6 @@ const useStyles = makeStyles(theme => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-  },
-  netlifyBadge: {
-    width: '100%',
-    textAlign: 'center',
-    marginTop: theme.spacing(2),
   },
 }));
 
