@@ -2,6 +2,7 @@ import React, {
   useState,
   useCallback,
   useContext,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
@@ -21,28 +22,15 @@ import { AppContext } from '../../App.context';
 import useValidation from '../../hooks/useValidation';
 import RowHeader from './RowHeader';
 
+import {
+  columnNamesFromContent,
+  columnsFilterFromColumnNames,
+  columnsShowDefaultFromColumnNames,
+  compositeKeyIndicesFromColumnNames,
+  generateRowId,
+} from './helpers';
+
 const delimiters = { row: '\n', cell: '\t' };
-const _config = {
-  compositeKeyIndices: [0, 1, 2, 3], // 0 is bookId, 1 is chapter, 2 is verse, 3 is id
-  columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
-  columnsShowDefault: [
-    'SupportReference',
-    'OccurrenceNote',
-  ],
-};
-
-// WIP: multiple tsv types
-// const sevenColumnConfig = {
-//   ..._config,
-//   compositeKeyIndices: [0, 1], // 0 is reference 'GEN 1:1', 1 is id
-//   columnsFilter: ['Reference', 'SupportReference'],
-// };
-
-// const nineColumnConfig = {
-//   ..._config,
-//   compositeKeyIndices: [0, 1, 2, 3], // 0 is bookId, 1 is chapter, 2 is verse, 3 is id
-//   columnsFilter: ['Chapter', 'Verse', 'SupportReference'],
-// };
 
 // override cache to 1 minute for scripture resources
 const serverConfig = {
@@ -76,12 +64,17 @@ function TranslatableTSVWrapper({
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
 
+  const columnNames = useMemo(() => {
+    const _columnNames = columnNamesFromContent({ content: sourceContent, delimiters });
+    return _columnNames;
+  }, [sourceContent]);
+
   const {
     actions: { onValidate },
     component: validationComponent,
-  } = useValidation( { delimiters } );
+  } = useValidation( { columnCount: columnNames.length, delimiters } );
 
-  const bookId = sourceFilepath.split(/\d+-|\./)[1].toLowerCase();
+  const bookId = sourceFilepath?.split(/.*[-_]/)[1].split('.')[0].toLowerCase();
 
   const onResourceLinks = useCallback((_resourceLinks) => {
     // Remove bookId and remove defaults:
@@ -97,12 +90,14 @@ function TranslatableTSVWrapper({
   const defaultResourceLinksWithBookId = generateAllResourceLinks({ bookId, defaultResourceLinks });
   const allResourceLinksWithBookId = generateAllResourceLinks({ bookId, resourceLinks });
 
-  const generateRowId = useCallback((rowData) => {
-    const [chapter] = rowData[2].split(delimiters.cell);
-    const [verse] = rowData[3].split(delimiters.cell);
-    const [uid] = rowData[4].split(delimiters.cell);
-    return `header-${chapter}-${verse}-${uid}`;
-  }, []);
+  const _generateRowId = useDeepCompareCallback((rowData) => {
+    const rowId = generateRowId({
+      rowData,
+      columnNames,
+      delimiters,
+    });
+    return rowId;
+  }, [columnNames, delimiters]);
 
   const options = {
     page: 0,
@@ -110,32 +105,43 @@ function TranslatableTSVWrapper({
     rowsPerPageOptions: [10, 25, 50, 100],
   };
 
-  const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => (
-    <RowHeader
-      open={expandedScripture}
-      rowData={rowData}
-      actionsMenu={actionsMenu}
-      delimiters={delimiters}
-    />
-  ), [expandedScripture, delimiters]);
+  const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => {
+    const _props = {
+      open: expandedScripture,
+      rowData,
+      actionsMenu,
+      delimiters,
+      columnNames,
+      bookId,
+    };
+    return <RowHeader {..._props} />;
+  }, [expandedScripture, delimiters, columnNames]);
 
-  const datatable = useDeepCompareMemo(() => {
-    _config.rowHeader = rowHeader;
-    return (
-      <DataTable
-        sourceFile={sourceContent}
-        targetFile={targetContent}
-        onSave={onSave}
-        onEdit={onEdit}
-        onValidate={onValidate}
-        onContentIsDirty={onContentIsDirty}
-        delimiters={delimiters}
-        config={_config}
-        generateRowId={generateRowId}
-        options={options}
-      />
-    );
-  }, [sourceContent, targetContent, onSave, onEdit, onValidate, onContentIsDirty, generateRowId, options, rowHeader]);
+  const config = useDeepCompareMemo(() => {
+    let _config = {
+      rowHeader,
+      compositeKeyIndices: compositeKeyIndicesFromColumnNames({ columnNames }),
+      columnsFilter: columnsFilterFromColumnNames({ columnNames }),
+      columnsShowDefault: columnsShowDefaultFromColumnNames({ columnNames }),
+    };
+
+    return _config;
+  }, [columnNames, rowHeader]);
+
+  const datatable = useDeepCompareMemo(() => (
+    <DataTable
+      sourceFile={sourceContent}
+      targetFile={targetContent}
+      onSave={onSave}
+      onEdit={onEdit}
+      onValidate={onValidate}
+      onContentIsDirty={onContentIsDirty}
+      delimiters={delimiters}
+      config={config}
+      generateRowId={_generateRowId}
+      options={options}
+    />
+  ), [sourceContent, targetContent, onSave, onEdit, onValidate, onContentIsDirty, _generateRowId, options, rowHeader]);
 
   return (
     <ResourcesContextProvider

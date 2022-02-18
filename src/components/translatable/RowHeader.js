@@ -3,13 +3,10 @@ import { Typography } from '@material-ui/core';
 import { Waypoint } from 'react-waypoint';
 import { Skeleton } from '@material-ui/lab';
 
-import {
-  useDeepCompareCallback,
-  useDeepCompareEffect,
-  useDeepCompareMemo,
-} from 'use-deep-compare';
+import { useDeepCompareMemo } from 'use-deep-compare';
 
 import ScriptureHeader from './ScriptureHeader';
+import { columnIndexOfColumnNameFromColumnNames } from './helpers';
 
 const styles = {
   defaultHeader: {
@@ -29,6 +26,8 @@ export default function RowHeader({
   rowData,
   actionsMenu,
   delimiters,
+  columnNames,
+  bookId,
   open,
 }) {
   const [viewed, setViewed] = useState(false);
@@ -41,51 +40,55 @@ export default function RowHeader({
     setViewed(false);
   };
 
-  const defaultState = {
-    quote: undefined,
-    occurrence: undefined,
-    reference: undefined,
-  };
-  const [state, setState] = useState(defaultState);
+  const {
+    quote,
+    occurrence,
+    chapter,
+    verse,
+  } = useDeepCompareMemo(() => {
+    let chapter, verse, quote, occurrence;
 
-  useDeepCompareEffect(() => {
-    let bookId, chapter, verse;
-    const firstCell = rowData[0].split(delimiters.cell)[1];
-    const matches = firstCell.match(/(\w{3}) (\d+):(\d+)/);
+    const columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'Quote', 'Occurrence'];
+    const indices = columnNamesToUse.map(columnName => {
+      const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
+      return index;
+    });
+    const [ referenceIndex, chapterIndex, verseIndex, quoteIndex, occurrenceIndex] = indices;
 
-    if (matches) {
-      bookId = matches[1];
-      chapter = matches[2];
-      verse = matches[3];
-    } else {
-      bookId = rowData[0].split(delimiters.cell)[1];
-      chapter = rowData[1].split(delimiters.cell)[1];
-      verse = rowData[2].split(delimiters.cell)[1];  
+    if (referenceIndex > -1) {
+      // find columIndex of Reference
+      chapter = rowData[referenceIndex].split(delimiters.cell)[1].split(':')[0];
+      verse = rowData[referenceIndex].split(delimiters.cell)[1].split(':')[1];
+    } else if (chapterIndex && verseIndex) {
+      // find columnIndex columnName "Chapter"
+      chapter = rowData[chapterIndex].split(delimiters.cell)[1];
+      // find columnIndex columnName "Verse"
+      verse = rowData[verseIndex].split(delimiters.cell)[1];
     };
 
-    const quote = rowData[5].split(delimiters.cell)[1];
-    const occurrence = rowData[6].split(delimiters.cell)[1];
-    const _state = {
-      quote,
-      occurrence,
-      bookId,
+    if (quoteIndex > -1) {
+      quote = rowData[quoteIndex].split(delimiters.cell)[1];
+    };
+
+    if (occurrenceIndex > -1) {
+      occurrence = rowData[occurrenceIndex].split(delimiters.cell)[1];
+    }
+
+    return {
       chapter,
       verse,
+      quote,
+      occurrence,
     };
-    setState(_state);
   }, [rowData]);
-
-  const onQuote = useDeepCompareCallback((quote) => {
-    setState({ ...state, quote });
-  }, [state]);
 
   const scriptureHeader = useDeepCompareMemo(() => {
     let _component;
 
     const reference = {
-      bookId: state.bookId?.toLowerCase(),
-      chapter: parseInt(state.chapter),
-      verse: parseInt(state.verse),
+      bookId: bookId?.toLowerCase(),
+      chapter: parseInt(chapter),
+      verse: parseInt(verse),
     };
 
     if (viewed && reference.chapter > 0 && reference.verse > 0) {
@@ -93,9 +96,8 @@ export default function RowHeader({
         <div style={styles.quoteHeader}>
           <ScriptureHeader
             reference={reference}
-            quote={state.quote}
-            onQuote={onQuote}
-            occurrence={state.occurrence}
+            quote={quote}
+            occurrence={occurrence}
             height='250px'
             buttons={actionsMenu}
             open={open}
@@ -105,17 +107,17 @@ export default function RowHeader({
       );
     };
     return _component;
-  }, [viewed, state, actionsMenu, styles]);
+  }, [viewed, bookId, chapter, verse, quote, occurrence, actionsMenu, styles]);
 
   const defaultHeader = useDeepCompareMemo(() => (
     <div style={styles.defaultHeader}>
       <Typography variant='h6' style={styles.title}>
-        {`${state.bookId} ${state.chapter}:${state.verse}`}
+        {`${bookId} ${chapter}:${verse}`}
       </Typography>
       <Waypoint onLeave={onLeave} />
       {actionsMenu}
     </div>
-  ), [styles, state]);
+  ), [styles, bookId, chapter, verse]);
 
   const skeleton = (
     <>

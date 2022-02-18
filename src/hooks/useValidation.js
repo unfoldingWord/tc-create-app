@@ -16,7 +16,7 @@ import {
 import { AppContext } from '../App.context';
 import { downloadValidationResults, onValidate } from './validationHelpers';
 
-export default function useValidation({ delimiters }) {
+export default function useValidation({ columnCount, delimiters }) {
   // manage the state of the resources for the provider context
   const [open, setOpen] = React.useState(false);
 
@@ -36,14 +36,18 @@ export default function useValidation({ delimiters }) {
 
   const _onValidate = useCallback( async (rows) => {
     setOpen(true);
-    const validationResultData = await onValidate({
-      targetFileName,
-      targetContent,
-      delimiters,
-      organization,
-      validationPriority,
-      rows,
-    });
+    let validationResultData;
+
+    if (columnCount === 9) {
+      validationResultData = await onValidate({
+        targetFileName,
+        targetContent,
+        delimiters,
+        organization,
+        validationPriority,
+        rows,
+      });
+    }
 
     setOpen(false);
     downloadValidationResults({ targetFileName, validationResultData });
@@ -51,7 +55,7 @@ export default function useValidation({ delimiters }) {
     if ( validationResultData.length < 2 ) {
       alert('No Validation Errors Found');
     };
-  }, [delimiters, organization, targetContent, targetFileName, validationPriority]);
+  }, [columnCount, delimiters, organization, targetContent, targetFileName, validationPriority]);
 
   let component = <></>;
 
