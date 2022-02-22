@@ -30,11 +30,11 @@ export default function useValidation({ columnCount, delimiters }) {
 
   const { name: targetFileName, content: targetContent } = targetFileHook.state || {};
 
-  const handleClose = useCallback( () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
 
-  const _onValidate = useCallback( async (rows) => {
+  const _onValidate = useCallback(async (rows) => {
     setOpen(true);
     let validationResultData;
 
@@ -52,7 +52,7 @@ export default function useValidation({ columnCount, delimiters }) {
     setOpen(false);
     downloadValidationResults({ targetFileName, validationResultData });
 
-    if ( validationResultData.length < 2 ) {
+    if (validationResultData.length < 2) {
       alert('No Validation Errors Found');
     };
   }, [columnCount, delimiters, organization, targetContent, targetFileName, validationPriority]);

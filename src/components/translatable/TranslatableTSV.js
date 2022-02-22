@@ -72,7 +72,7 @@ function TranslatableTSVWrapper({
   const {
     actions: { onValidate },
     component: validationComponent,
-  } = useValidation( { columnCount: columnNames.length, delimiters } );
+  } = useValidation({ columnCount: columnNames.length, delimiters });
 
   const bookId = sourceFilepath?.split(/.*[-_]/)[1].split('.')[0].toLowerCase();
 
@@ -154,7 +154,7 @@ function TranslatableTSVWrapper({
       config={serverConfig}
     >
       <TranslatableTSV datatable={datatable} />
-      { validationComponent }
+      {validationComponent}
     </ResourcesContextProvider>
   );
 }

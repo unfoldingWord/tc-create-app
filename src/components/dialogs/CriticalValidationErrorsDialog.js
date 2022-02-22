@@ -17,7 +17,7 @@ export default function CriticalValidationErrorsDialog() {
     actions: { setSourceRepository, setCriticalValidationErrors },
   } = useContext(AppContext);
 
-  const handleClose = useCallback( () => {
+  const handleClose = useCallback(() => {
     setCriticalValidationErrors([]);
     setSourceRepository(undefined);
   }, [setCriticalValidationErrors, setSourceRepository]);
@@ -31,20 +31,20 @@ export default function CriticalValidationErrorsDialog() {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-      This file cannot be opened by tC Create as there are errors in the target file.
-      Please contact your administrator to address the following error(s)
+        This file cannot be opened by tC Create as there are errors in the target file.
+        Please contact your administrator to address the following error(s)
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           {
-            criticalValidationErrors.map( (msg,idx) => (
+            criticalValidationErrors.map((msg, idx) => (
               <>
-              <Typography key={idx}>
-                On <Link href={msg[0]} target="_blank" rel="noopener">
-                  line {msg[1]}
-                </Link>
-                &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
-              </Typography>
+                <Typography key={idx}>
+                  On <Link href={msg[0]} target="_blank" rel="noopener">
+                    line {msg[1]}
+                  </Link>
+                  &nbsp;{msg[2]}&nbsp;{msg[3]}&nbsp;{msg[4]}&nbsp;{msg[5]}
+                </Typography>
               </>
             ))
           }

@@ -36,11 +36,11 @@ export default function TargetChip({
 
   const deleteIcon = <Publish />;
 
-  const iconTooltip='OpenTargetText';
+  const iconTooltip = 'OpenTargetText';
 
   const deleteIconTooltip = 'CompareTarget';
 
-  const licenseLink= targetRepository.html_url + '/src/branch/' + targetBranch + '/LICENSE.md';
+  const licenseLink = targetRepository.html_url + '/src/branch/' + targetBranch + '/LICENSE.md';
 
   const chipProps = {
     label,

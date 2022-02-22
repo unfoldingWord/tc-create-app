@@ -131,7 +131,7 @@ const useStyles = makeStyles(theme => ({
     paddingRight: `${theme.spacing(2)}px`,
   },
   slider: { padding: `${theme.spacing(0.5)}px 0` },
-  expandScripture:{ color:'#31ADE3' },
+  expandScripture: { color: '#31ADE3' },
 }));
 
 export default DrawerMenu;

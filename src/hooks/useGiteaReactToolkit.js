@@ -154,13 +154,15 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     // sourceFile.state.content = defaultContent; // TODO: NEVER SET STATE LIKE THIS
   };
 
+  debugger
+
   const targetFileHook = useFile({
     config,
     authentication,
     repository: targetRepository,
     filepath,
     onFilepath: setFilepath,
-    defaultContent: defaultContent,
+    defaultContent,
     onOpenValidation: _onOpenValidation,
     onLoadCache: _onLoadCache,
     onSaveCache: _onSaveCache,

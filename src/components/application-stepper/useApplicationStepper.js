@@ -25,7 +25,7 @@ export default function useApplicationStepper(appContext) {
   } = appContext;
 
   const { state: authentication, component: authenticationComponent } = authenticationHook;
-  const { state: organization, components:{ list: organizationComponent } } = organizationHook;
+  const { state: organization, components: { list: organizationComponent } } = organizationHook;
   const { state: sourceRepository, components: { browse: repositoryComponent } } = sourceRepositoryHook;
   const { state: sourceFileState, component: fileComponent } = sourceFileHook;
 

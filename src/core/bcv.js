@@ -14,7 +14,7 @@ export const chaptersInBook = ({ bookId }) => {
   let chapters = [];
 
   if (bookId === 'obs') {
-    chapters = [...Array(50).keys()].map(i=>i+1);
+    chapters = [...Array(50).keys()].map(i => i + 1);
   } else {
     const book = bookData({ bookId });
 
@@ -42,7 +42,7 @@ export const validateBookId = (reference) => {
 };
 
 export const validateChapter = (reference) => {
-  const dependencies = ( validateBookId(reference) );
+  const dependencies = (validateBookId(reference));
   const chapters = chaptersInBook(reference);
   const valid = (dependencies && !!chapters[reference.chapter - 1]);
   return valid;

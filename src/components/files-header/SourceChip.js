@@ -38,12 +38,12 @@ export default function SourceChip({
   let licenseLink = sourceRepository.html_url + '/src/branch/' + sourceBranch + '/LICENSE.md';
 
   // test for translator role and override lable, dcs link and compare link
-  if ( sourceRepository.full_name !== targetRepository.full_name && sourceRepository?.catalog?.prod?.branch_or_tag_name) {
+  if (sourceRepository.full_name !== targetRepository.full_name && sourceRepository?.catalog?.prod?.branch_or_tag_name) {
     // https://qa.door43.org/unfoldingWord/en_tn/src/tag/v47/en_tn_66-JUD.tsv
     const prodTag = sourceRepository.catalog.prod.branch_or_tag_name;
     label = `${sourceLanguage.languageName} - ${sourceRepository.full_name}/${prodTag}`;
-    openDcsLink = SERVER_URL + '/' + Path.join('unfoldingword',sourceRepository.name,'src','tag', prodTag, sourceFilepath);
-    licenseLink = SERVER_URL + '/' + Path.join('unfoldingword',sourceRepository.name,'src','tag', prodTag, 'LICENSE.md');
+    openDcsLink = SERVER_URL + '/' + Path.join('unfoldingword', sourceRepository.name, 'src', 'tag', prodTag, sourceFilepath);
+    licenseLink = SERVER_URL + '/' + Path.join('unfoldingword', sourceRepository.name, 'src', 'tag', prodTag, 'LICENSE.md');
   };
 
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
@@ -53,9 +53,9 @@ export default function SourceChip({
 
   const style = { background: '#fff9' };
 
-  const deleteIcon = (targetOwner !== sourceOwner) ? <GetApp style={{ color:'#d3d3e6' }} /> : <GetApp />;
+  const deleteIcon = (targetOwner !== sourceOwner) ? <GetApp style={{ color: '#d3d3e6' }} /> : <GetApp />;
 
-  const iconTooltip='OpenSourceText';
+  const iconTooltip = 'OpenSourceText';
 
   const deleteIconTooltip = (targetOwner !== sourceOwner) ? 'Cannot compare source branch in translation mode.' : 'CompareSource';
 

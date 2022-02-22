@@ -19,11 +19,11 @@ export default function AutoSaveDialog() {
     actions: { setSourceRepository, setCacheWarningMessage },
   } = useContext(AppContext);
 
-  const handleClose = useCallback( () => {
+  const handleClose = useCallback(() => {
     setSourceRepository(undefined);
   }, [setSourceRepository]);
 
-  const handleCloseCachedFile = useCallback( () => {
+  const handleCloseCachedFile = useCallback(() => {
     // CLEAR cache:
     removeFileCache(cacheFileKey);
     // Reset dialog:
@@ -35,7 +35,7 @@ export default function AutoSaveDialog() {
   return (
     <Dialog
       open={cacheWarningMessage != null}
-      onClose={()=>setCacheWarningMessage(null)}
+      onClose={() => setCacheWarningMessage(null)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -56,7 +56,7 @@ export default function AutoSaveDialog() {
         </Button>
         <Button
           data-test-id="5LJPR3YqqPx5Ezkj"
-          onClick={()=>{// Reset dialog:
+          onClick={() => {// Reset dialog:
             setCacheWarningMessage(null);
           }}
           color="primary"

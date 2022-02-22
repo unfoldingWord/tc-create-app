@@ -15,7 +15,7 @@ export function download(filename, text) {
   document.body.removeChild(element);
 };
 
-export function addRow( csvdata, csvrow) {
+export function addRow(csvdata, csvrow) {
   // Rules below are a relaxed version of
   // https://tools.ietf.org/html/rfc4180
   // Specifically, no checks are made to ensure that all rows
@@ -30,12 +30,12 @@ export function addRow( csvdata, csvrow) {
   const row = csvrow.map(_cell => {
     let cell = String(_cell || '');
 
-    if ( cell.includes('"') ) {
+    if (cell.includes('"')) {
       // double the quotes
-      cell = cell.replace(/"/g,'""');
+      cell = cell.replace(/"/g, '""');
     };
 
-    if ( cell.includes('"') || cell.includes('\n') || cell.includes('\r') || cell.includes(',')) {
+    if (cell.includes('"') || cell.includes('\n') || cell.includes('\r') || cell.includes(',')) {
       cell = '"' + cell + '"';
     };
     // replace value
@@ -45,7 +45,7 @@ export function addRow( csvdata, csvrow) {
   csvdata.push(row);
 };
 
-export function toCSV( csvdata ) {
+export function toCSV(csvdata) {
   // Rules below are a relaxed version of
   // https://tools.ietf.org/html/rfc4180
   // Specifically, no checks are made to ensure that all rows
@@ -61,7 +61,7 @@ export function toCSV( csvdata ) {
   //  use CRLF after last row
 
   let data = '\uFEFF';
-  data = data + csvdata.map(rowCells => rowCells.join(',') ).join('\r\n');
+  data = data + csvdata.map(rowCells => rowCells.join(',')).join('\r\n');
 
   return data;
 };

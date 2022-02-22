@@ -32,7 +32,7 @@ export default function Layout() {
       fontScale,
       contentIsDirty,
       filepath,
-      criticalValidationErrors=[],
+      criticalValidationErrors = [],
       cacheWarningMessage,
     },
     giteaReactToolkit: {

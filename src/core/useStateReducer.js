@@ -33,7 +33,7 @@ export const useStateReducer = ({
     }
   }, [state.organization]);
 
-  const setValidationPriority = useCallback( (value) => {
+  const setValidationPriority = useCallback((value) => {
     dispatch({ type: 'set_validation_priority', value });
   }, []);
 

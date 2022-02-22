@@ -25,7 +25,7 @@ export default function LanguageSelect({
 
   const orgOptions = useDeepCompareMemo(() => {
     const orgLanguages = organization.repo_languages || [''];
-    const _orgOptions = orgLanguages.map( (langId) => {
+    const _orgOptions = orgLanguages.map((langId) => {
       const formattedLanguage = getLanguage({
         languageId: langId,
         languagesJSON: languages,
@@ -35,7 +35,7 @@ export default function LanguageSelect({
       // if it doesn't, then that means that the org has no languages for resources
       let label;
 
-      if ( formattedLanguage.languageName ){
+      if (formattedLanguage.languageName) {
         const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
         const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
         label = `${name} ${gatewayLabel}`;

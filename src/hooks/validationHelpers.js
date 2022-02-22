@@ -34,7 +34,7 @@ export const onValidate = async ({
 }) => {
   let validationResultData = [];
 
-  if ( targetFileName && targetContent && rows ) {
+  if (targetFileName && targetContent && rows) {
     const {
       langId,
       bookId,
@@ -47,25 +47,25 @@ export const onValidate = async ({
     });
     const rawResults = await cv.checkDeprecatedTN_TSV9Table(organization.username, langId, bookId, targetFileName, tsvString, { suppressNoticeDisablingFlag: false });
     const nl = rawResults.noticeList;
-    let hdrs = ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
+    let hdrs = ['Priority', 'Chapter', 'Verse', 'Line', 'Row ID', 'Details', 'Char Pos', 'Excerpt', 'Message', 'Location'];
 
     validationResultData.push(hdrs);
     let inPriorityRange = false;
 
-    Object.keys(nl).forEach ( key => {
+    Object.keys(nl).forEach(key => {
       inPriorityRange = false; // reset for each
       const rowData = nl[key];
 
-      if ( validationPriority === 'med' && rowData.priority > 599 ) {
+      if (validationPriority === 'med' && rowData.priority > 599) {
         inPriorityRange = true;
-      } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
+      } else if (validationPriority === 'high' && rowData.priority > 799) {
         inPriorityRange = true;
-      } else if ( validationPriority === 'low' ) {
+      } else if (validationPriority === 'low') {
         inPriorityRange = true;
       };
 
-      if ( inPriorityRange ) {
-        csv.addRow( validationResultData, [
+      if (inPriorityRange) {
+        csv.addRow(validationResultData, [
           rowData.priority,
           rowData.C,
           rowData.V,

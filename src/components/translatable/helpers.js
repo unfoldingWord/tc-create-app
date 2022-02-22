@@ -10,7 +10,7 @@ export const columnNamesFromContent = ({ content, delimiters }) => {
 };
 
 export const columnIndexOfColumnNameFromColumnNames = ({ columnNames, columnName }) => {
-  const columnIndex = columnNames.indexOf( columnName );
+  const columnIndex = columnNames.indexOf(columnName);
   return columnIndex;
 };
 
@@ -53,7 +53,7 @@ export const compositeKeyIndicesFromColumnNames = ({ columnNames }) => {
     return index;
   });
 
-  const compositeKeyIndices = indices.filter(index => (index > -1) );
+  const compositeKeyIndices = indices.filter(index => (index > -1));
 
   return compositeKeyIndices;
 };
@@ -66,8 +66,8 @@ export const columnsFilterFromColumnNames = ({ columnNames }) => {
     return index;
   });
 
-  const columnsIndices = indices.filter(index => (index > -1) );
-  const columnsFilter = columnsIndices.map(index => (columnNames[index]) );
+  const columnsIndices = indices.filter(index => (index > -1));
+  const columnsFilter = columnsIndices.map(index => (columnNames[index]));
 
   return columnsFilter;
 };
@@ -80,8 +80,8 @@ export const columnsShowDefaultFromColumnNames = ({ columnNames }) => {
     return index;
   });
 
-  const columnsIndices = indices.filter(index => (index > -1) );
-  const columnsShowDefault = columnsIndices.map(index => (columnNames[index]) );
+  const columnsIndices = indices.filter(index => (index > -1));
+  const columnsShowDefault = columnsIndices.map(index => (columnNames[index]));
 
   return columnsShowDefault;
 };

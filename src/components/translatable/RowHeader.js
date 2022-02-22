@@ -53,7 +53,7 @@ export default function RowHeader({
       const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
       return index;
     });
-    const [ referenceIndex, chapterIndex, verseIndex, quoteIndex, occurrenceIndex] = indices;
+    const [referenceIndex, chapterIndex, verseIndex, quoteIndex, occurrenceIndex] = indices;
 
     if (referenceIndex > -1) {
       // find columIndex of Reference

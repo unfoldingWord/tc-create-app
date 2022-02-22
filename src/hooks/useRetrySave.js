@@ -59,7 +59,7 @@ function useRetrySave() {
     };
   }, [doSaveRetry, retrySave]);
 
-  const saveTranslation = useDeepCompareCallback( async (content) => {
+  const saveTranslation = useDeepCompareCallback(async (content) => {
     setSavingTargetFileContent(content);
 
     try {
@@ -76,11 +76,11 @@ function useRetrySave() {
     };
   }, [save]);
 
-  const autoSaveOnEdit = useCallback( async (content) => {
+  const autoSaveOnEdit = useCallback(async (content) => {
     await saveCache(content);
   }, [saveCache]);
 
-  const saveRetry = useCallback( async ({
+  const saveRetry = useCallback(async ({
     username,
     password,
     remember,
