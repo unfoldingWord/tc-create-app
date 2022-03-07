@@ -7,7 +7,7 @@ import CriticalValidationErrorsDialog from './components/dialogs/CriticalValidat
 
 function Workspace() {
   const {
-    state: { filepath, criticalValidationErrors },
+    state: { filepath, criticalValidationErrors, authentication, organization, sourceRepository, language },
     giteaReactToolkit: {
       sourceFileHook,
       targetFileHook,
@@ -18,6 +18,7 @@ function Workspace() {
   const { filepath: targetFilepath, content: targetContent } = targetFileHook.state || {};
 
   const component = useDeepCompareMemo(() => {
+    // app stepper is the default view
     let _component = <ApplicationStepper />;
 
     const progressComponent = (
@@ -26,20 +27,30 @@ function Workspace() {
       </div>
     );
 
-    if (sourceFilepath && targetFilepath && targetContent && filepath) {
-      if (targetFilepath === filepath) {
-        if (criticalValidationErrors.length > 0) {
-          // target file validation errors
-          _component = <CriticalValidationErrorsDialog />;
+    // requirements to exit the stepper
+    const canExitStepper = authentication && organization && sourceRepository && language && filepath
+
+    if (canExitStepper) {
+      const contentLoaded = sourceFilepath && targetFilepath && targetContent
+
+      if (contentLoaded) {
+        const sourceAndTargetMatch = targetFilepath === filepath;
+
+        if (sourceAndTargetMatch) {
+          if (criticalValidationErrors.length > 0) {
+            // target file validation errors
+            _component = <CriticalValidationErrorsDialog />;
+          } else {
+            _component = <Translatable />;
+          };
         } else {
-          _component = <Translatable />;
+          _component = progressComponent;
         };
-      } else {
+      } else if (filepath) {
         _component = progressComponent;
       };
-    } else if (filepath) {
-      _component = progressComponent;
     };
+
     return _component;
   }, [
     sourceFilepath,

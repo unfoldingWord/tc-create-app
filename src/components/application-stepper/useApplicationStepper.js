@@ -10,7 +10,7 @@ import {
 } from 'use-deep-compare';
 
 import { LanguageSelect } from '../languages';
-import { getActiveStep } from './helpers';
+import { getActiveStep, getNextStep } from './helpers';
 
 export default function useApplicationStepper(appContext) {
   const {
@@ -38,6 +38,7 @@ export default function useApplicationStepper(appContext) {
     3: !!language,
     4: !!sourceFileState,
   }), [authentication, organization, sourceRepository, language, sourceFileState]);
+
   const [completed, setCompleted] = useState(alreadyCompleted);
 
   useDeepCompareEffect(() => {
@@ -45,9 +46,9 @@ export default function useApplicationStepper(appContext) {
   }, [alreadyCompleted]);
 
   useEffect(() => {
-    const newActiveStep = getActiveStep(completed);
+    const newActiveStep = getActiveStep(alreadyCompleted);
     setActiveStep(newActiveStep);
-  }, [completed, setActiveStep]);
+  }, [alreadyCompleted, setActiveStep]);
 
   const steps = useDeepCompareMemo(() => ([
     {
@@ -92,20 +93,8 @@ export default function useApplicationStepper(appContext) {
   ]);
 
   const handleNext = useDeepCompareCallback(() => {
-    let newActiveStep;
-    const totalSteps = steps.length;
-    const isLastStep = activeStep === totalSteps - 1;
-    const completedSteps = Object.keys(completed).length;
-    const allStepsCompleted = completedSteps === totalSteps;
-
-    if (isLastStep && !allStepsCompleted) {
-      // It's the last step, but not all steps have been completed,
-      // find the first step that has been completed
-      newActiveStep = steps.findIndex((step, i) => !(i in completed));
-    } else {
-      newActiveStep = parseInt(activeStep) + 1;
-    }
-    setActiveStep(newActiveStep);
+    const nextStep = getNextStep({ activeStep, steps, completed })
+    setActiveStep(nextStep);
   }, [steps, activeStep, completed]);
 
   const handleBack = useCallback(() => {

@@ -74,7 +74,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   const targetRepositoryHook = useRepository({
     authentication,
     repository: targetRepository,
-    onRepository: () => {},
+    onRepository: () => { },
     branch: targetRepository?.branch,
     urls: _config.repository.urls,
     config,
@@ -91,7 +91,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     return notices;
   }, [setCriticalValidationErrors]);
 
-  const _onLoadCache = useCallback( async ({ html_url, file }) => {
+  const _onLoadCache = useCallback(async ({ html_url, file }) => {
     if (html_url) {
       let _cachedFile = await loadFileCache(html_url);
 
@@ -147,14 +147,12 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
   let defaultContent;
 
-  if ( sourceRepository?.id === targetRepository?.id ) {
+  if (sourceRepository?.id === targetRepository?.id) {
     defaultContent = sourceFileHook?.state?.content;
   } else {
     defaultContent = sourceFileHook?.state?.publishedContent;
     // sourceFile.state.content = defaultContent; // TODO: NEVER SET STATE LIKE THIS
   };
-
-  debugger
 
   const targetFileHook = useFile({
     config,

@@ -46,14 +46,14 @@ function ApplicationStepper() {
       <Step key={step.label}>
         <StepButton
           data-test-id={`step-button-${step.label}`}
-          onClick={handleStep(index)}
+          onClick={() => handleStep(index)}
           completed={completed[index]}
         >
           {step.label}
         </StepButton>
       </Step>
     ))
-  ), [steps]);
+  ), [steps, completed]);
 
   if (steps[activeStep]) {
     return (
