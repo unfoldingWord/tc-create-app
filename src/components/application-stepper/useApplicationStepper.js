@@ -5,33 +5,29 @@ import React, {
 } from 'react';
 import {
   useDeepCompareCallback,
-  useDeepCompareEffect,
   useDeepCompareMemo,
 } from 'use-deep-compare';
 
 import { LanguageSelect } from '../languages';
 import { getActiveStep, getNextStep } from './helpers';
 
-export default function useApplicationStepper(appContext) {
-  const {
-    state: { language },
-    actions: { setLanguage },
-    giteaReactToolkit: {
-      authenticationHook,
-      organizationHook,
-      sourceRepositoryHook,
-      sourceFileHook,
-    },
-  } = appContext;
+export default function useApplicationStepper({ // could pass in appContext aka app stateReducer values
+  state: { language },
+  actions: { setLanguage },
+  giteaReactToolkit: {
+    authenticationHook,
+    organizationHook,
+    sourceRepositoryHook,
+    sourceFileHook,
+  },
+}) {
 
   const { state: authentication, component: authenticationComponent } = authenticationHook;
   const { state: organization, components: { list: organizationComponent } } = organizationHook;
   const { state: sourceRepository, components: { browse: repositoryComponent } } = sourceRepositoryHook;
   const { state: sourceFileState, component: fileComponent } = sourceFileHook;
 
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  const alreadyCompleted = useDeepCompareMemo(() => ({
+  const completed = useDeepCompareMemo(() => ({
     0: !!authentication,
     1: !!organization,
     2: !!sourceRepository,
@@ -39,16 +35,12 @@ export default function useApplicationStepper(appContext) {
     4: !!sourceFileState,
   }), [authentication, organization, sourceRepository, language, sourceFileState]);
 
-  const [completed, setCompleted] = useState(alreadyCompleted);
-
-  useDeepCompareEffect(() => {
-    setCompleted(alreadyCompleted);
-  }, [alreadyCompleted]);
+  const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
-    const newActiveStep = getActiveStep(alreadyCompleted);
+    const newActiveStep = getActiveStep(completed);
     setActiveStep(newActiveStep);
-  }, [alreadyCompleted, setActiveStep]);
+  }, [completed, setActiveStep]);
 
   const steps = useDeepCompareMemo(() => ([
     {

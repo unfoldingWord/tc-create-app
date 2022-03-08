@@ -14,9 +14,10 @@ export const prepareDataForValidation = ({
   const _name = targetFileName.split('_');
   const langId = _name[0];
   const bookId = _name[2].split('-')[1].split('.')[0];
-  let tsvString = targetContent.substring(0, targetContent.indexOf(delimiters.row));
+  let tsvString = targetContent.substring(0, targetContent.indexOf(delimiters.row)) + '\n';
 
   tsvString = tsvString + rows.map((cells) => cells.join(delimiters.cell)).join(delimiters.row);
+
   return {
     langId,
     bookId,

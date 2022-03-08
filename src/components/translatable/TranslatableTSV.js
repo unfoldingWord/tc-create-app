@@ -7,10 +7,8 @@ import React, {
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
-import { CircularProgress } from '@material-ui/core';
-
 import { DataTable } from 'datatable-translatable';
-import { ResourcesContextProvider, ResourcesContext } from 'scripture-resources-rcl';
+import { ResourcesContextProvider } from 'scripture-resources-rcl';
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -38,7 +36,7 @@ const serverConfig = {
   cache: { maxAge: 1 * 1 * 1 * 60 * 1000 },
 };
 
-function TranslatableTSVWrapper({
+export default function TranslatableTSV({
   onSave,
   onEdit,
   onContentIsDirty,
@@ -128,21 +126,6 @@ function TranslatableTSVWrapper({
     return _config;
   }, [columnNames, rowHeader]);
 
-  const datatable = useDeepCompareMemo(() => (
-    <DataTable
-      sourceFile={sourceContent}
-      targetFile={targetContent}
-      onSave={onSave}
-      onEdit={onEdit}
-      onValidate={onValidate}
-      onContentIsDirty={onContentIsDirty}
-      delimiters={delimiters}
-      config={config}
-      generateRowId={_generateRowId}
-      options={options}
-    />
-  ), [sourceContent, targetContent, onSave, onEdit, onValidate, onContentIsDirty, _generateRowId, options, rowHeader]);
-
   return (
     <ResourcesContextProvider
       reference={{ bookId }}
@@ -153,30 +136,24 @@ function TranslatableTSVWrapper({
       onResources={setResources}
       config={serverConfig}
     >
-      <TranslatableTSV datatable={datatable} />
+      <DataTable
+        sourceFile={sourceContent}
+        targetFile={targetContent}
+        onSave={onSave}
+        onEdit={onEdit}
+        onValidate={onValidate}
+        onContentIsDirty={onContentIsDirty}
+        delimiters={delimiters}
+        config={config}
+        generateRowId={_generateRowId}
+        options={options}
+      />
       {validationComponent}
     </ResourcesContextProvider>
-  );
-}
-
-function TranslatableTSV({ datatable }) {
-  const { state: { books } } = useContext(ResourcesContext);
-  return books ? datatable : (
-    <div style={{
-      width: '100%', display: 'flex', justifyContent: 'center',
-    }}
-    >
-      <CircularProgress />
-    </div>
   );
 };
 
 TranslatableTSV.propTypes = {
-  /** datatable to render */
-  datatable: PropTypes.element.isRequired,
-};
-
-TranslatableTSVWrapper.propTypes = {
   /** function triggered for save */
   onSave: PropTypes.func.isRequired,
   /** function triggered on edit */
@@ -184,5 +161,3 @@ TranslatableTSVWrapper.propTypes = {
   /** function triggered if content is dirty */
   onContentIsDirty: PropTypes.func.isRequired,
 };
-
-export default TranslatableTSVWrapper;

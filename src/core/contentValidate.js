@@ -9,16 +9,19 @@ function processNoticeList(notices, validationPriority) {
   let data = [];
   data.push(hdrs);
   let inPriorityRange = false;
+
   Object.keys(notices).forEach(key => {
     inPriorityRange = false; // reset for each
     const rowData = notices[key];
+
     if (validationPriority === 'med' && rowData.priority > 599) {
       inPriorityRange = true;
     } else if (validationPriority === 'high' && rowData.priority > 799) {
       inPriorityRange = true;
     } else if (validationPriority === 'low') {
       inPriorityRange = true;
-    }
+    };
+
     if (inPriorityRange) {
       csv.addRow(data, [
         String(rowData.priority),
@@ -31,12 +34,12 @@ function processNoticeList(notices, validationPriority) {
         String(rowData.excerpt || ""),
         String(rowData.message),
         String(rowData.location),
-      ])
-    }
+      ]);
+    };
   });
 
   return data;
-}
+};
 
 
 /*

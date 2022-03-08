@@ -69,12 +69,12 @@ function Translatable() {
         console.log('Markdown file selected');
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
       } else if (filepath.match(/\.tsv$/)) {
-        console.log('tn 9 col file selected');
+        console.log('TSV file selected');
         _translatable = <TranslatableTSV onSave={saveTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
       } else {
         console.log('Unsupported file selected');
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
-      }
+      };
     };
     return _translatable;
   }, [
@@ -91,7 +91,7 @@ function Translatable() {
     scrollToTop();
   }, [filepath, scrollToTop]);
 
-  const filesHeader = targetRepository && targetFileHook.state && <FilesHeader />;
+  const filesHeader = (targetRepository && targetFileHook.state) ? <FilesHeader /> : <></>;
 
   return (
     <div id='translatable'>

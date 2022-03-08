@@ -32,7 +32,6 @@ export default function Layout() {
       fontScale,
       contentIsDirty,
       filepath,
-      criticalValidationErrors = [],
       cacheWarningMessage,
     },
     giteaReactToolkit: {
@@ -58,42 +57,31 @@ export default function Layout() {
     workspace: { margin: `${theme.spacing(2)}px` },
   };
 
-  const validationDialog = <SourceValidationDialog />;
-
-  let component = (
-    <>
-      <Headroom pinStart={64} style={style.headroom}
-        onPin={onHeadroomPin}
-        onUnfix={onHeadroomUnfix}
-        onUnpin={onHeadroomUnpin}
-      >
-        <header id='App-header'>
-          <ApplicationBar
-            title={title}
-            build={commitHash}
-            // buttons={buttons}
-            drawerMenu={drawerMenu}
-            filepath={filepath}
-            auth={authenticationHook}
-            repo={sourceRepositoryHook}
-            file={sourceFileHook}
-          />
-        </header>
-      </Headroom>
-      <div id='Workspace-Container' style={style.workspace}>
-        <Workspace />
-      </div>
-    </>
-  );
-
-  if (criticalValidationErrors.length > 0) {
-    component = validationDialog;
-  };
-
   return (
     <div className='App' style={style.app}>
       <MuiThemeProvider theme={theme}>
-        {component}
+        <Headroom pinStart={64} style={style.headroom}
+          onPin={onHeadroomPin}
+          onUnfix={onHeadroomUnfix}
+          onUnpin={onHeadroomUnpin}
+        >
+          <header id='App-header'>
+            <ApplicationBar
+              title={title}
+              build={commitHash}
+              // buttons={buttons}
+              drawerMenu={drawerMenu}
+              filepath={filepath}
+              auth={authenticationHook}
+              repo={sourceRepositoryHook}
+              file={sourceFileHook}
+            />
+          </header>
+        </Headroom>
+        <SourceValidationDialog />
+        <div id='Workspace-Container' style={style.workspace}>
+          <Workspace />
+        </div>
         <ConfirmDialog contentIsDirty={contentIsDirty || cacheWarningMessage} />
         <AutoSaveDialog />
       </MuiThemeProvider>

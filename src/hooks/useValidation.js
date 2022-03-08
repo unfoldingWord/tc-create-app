@@ -47,13 +47,14 @@ export default function useValidation({ columnCount, delimiters }) {
         validationPriority,
         rows,
       });
-    }
+    };
 
     setOpen(false);
-    downloadValidationResults({ targetFileName, validationResultData });
 
     if (validationResultData.length < 2) {
       alert('No Validation Errors Found');
+    } else {
+      downloadValidationResults({ targetFileName, validationResultData });
     };
   }, [columnCount, delimiters, organization, targetContent, targetFileName, validationPriority]);
 
