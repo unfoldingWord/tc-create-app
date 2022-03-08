@@ -15,19 +15,17 @@ export default function ScriptureHeader({
   const __occurrence = (_occurrence === '\\-1') ? -1 : _occurrence;
   const occurrence = Number(__occurrence);
 
-  const component = useDeepCompareMemo(() => {
-    return (
-      <ParallelScripture
-        open={open}
-        reference={reference}
-        quote={quote}
-        onQuote={onQuote}
-        occurrence={occurrence}
-        height='250px'
-        buttons={buttons}
-      />
-    );
-  }, [quote, occurrence, reference, open, buttons, onQuote]);
+  const component = useDeepCompareMemo(() => (
+    <ParallelScripture
+      open={open}
+      reference={reference}
+      quote={quote}
+      onQuote={onQuote}
+      occurrence={occurrence}
+      height='250px'
+      buttons={buttons}
+    />
+  ), [quote, occurrence, reference, open, buttons, onQuote]);
 
   return (
     <MuiThemeProvider theme={getMuiTheme}>

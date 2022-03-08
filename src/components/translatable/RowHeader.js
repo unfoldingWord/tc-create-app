@@ -48,7 +48,7 @@ export default function RowHeader({
   } = useDeepCompareMemo(() => {
     let chapter, verse, quote, occurrence;
 
-    const columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'Quote', 'Occurrence'];
+    const columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
     const indices = columnNamesToUse.map(columnName => {
       const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
       return index;
@@ -72,7 +72,7 @@ export default function RowHeader({
 
     if (occurrenceIndex > -1) {
       occurrence = rowData[occurrenceIndex].split(delimiters.cell)[1];
-    }
+    };
 
     return {
       chapter,
