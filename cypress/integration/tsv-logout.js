@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Application Stepper', function () {
+describe('Logout', function () {
   before(() => {
     cy.visit('/');
   });
@@ -19,7 +19,7 @@ describe('Application Stepper', function () {
   it('Select Resource', function () {
     /** Select resource */
     cy.wait(1000);
-    cy.contains('Translation Academy').click();
+    cy.contains('Translation Notes').click();
   });
   it('Select Language', function () {
     /** Select language */
@@ -28,12 +28,11 @@ describe('Application Stepper', function () {
   });
   it('Select File', function () {
     /** Select file */
-    cy.contains('checking/').should('be.be.visible').click();
-    cy.contains('acceptable/').should('be.be.visible').click();
-    cy.contains('01.md').should('be.be.visible').click();
+    cy.contains('en_tn_57-TIT.tsv').should('be.be.visible').click();
   });
-  it('Look for String in .MD file', function () {
-    /** Testing file selection*/
-    cy.contains('Translation in an Acceptable Style', { timeout: 10000 });
+  it('logout', function () {
+    /**logout process */
+    cy.get('[data-test=user-menu-icon]').click();
+    cy.get('[data-test=logout-button]').click();
   });
 });
