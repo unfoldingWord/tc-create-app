@@ -73,7 +73,7 @@ export const columnsFilterFromColumnNames = ({ columnNames }) => {
 };
 
 export const columnsShowDefaultFromColumnNames = ({ columnNames }) => {
-  const columnNamesToUse = ['Question', 'Response', 'SupportReference', 'OccurrenceNote', 'OrigWords', 'TWLink'];
+  const columnNamesToUse = ['Question', 'Response', 'SupportReference', 'OccurrenceNote', 'OrigWords', 'TWLink', 'Note'];
 
   const indices = columnNamesToUse.map(columnName => {
     const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
