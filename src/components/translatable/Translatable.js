@@ -108,22 +108,21 @@ function Translatable() {
       </div>
     );
 
-    const saveOnTranslation = (
-      async (content) => {
-        setSavingTargetFileContent(content);
-        try {
-          await targetFileActions.save(content);
-        } catch (error) {
-          const friendlyError = parseError({ error });
+    const saveOnTranslation = ( async (content) => {
+      setSavingTargetFileContent(content);
 
-          if (friendlyError.isRecoverable) {
-            openAuthenticationModal();
-          } else {
-            alert("Error saving file! File could not be saved.");
-          }
+      try {
+        await targetFileActions.save(content);
+      } catch (error) {
+        const friendlyError = parseError({ error });
+
+        if (friendlyError.isRecoverable) {
+          openAuthenticationModal();
+        } else {
+          alert('Error saving file! File could not be saved.');
         }
       }
-    );
+    });
 
     const autoSaveOnEdit = (
       async (content) => {
@@ -134,8 +133,8 @@ function Translatable() {
 
     if (
       filepath &&
-      sourceFile &&
-      targetFile &&
+      sourceFile?.content &&
+      targetFile?.content &&
       filepath === sourceFile.filepath &&
       filepath === targetFile.filepath
     ) {
