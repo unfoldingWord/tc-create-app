@@ -15,50 +15,46 @@ import * as csv from '../core/csvMaker';
 // this determination.
 
 function resourceCodeFromFilename(filename) {
-  let resourceCode;
+  let resourceCode = '';
 
-  if (filename.match(/^tn_...\.tsv$/)) {
-    console.log("tn_... file selected");
-    resourceCode = "TN"
+  const isTSV = !!filename.match(/\.tsv$/);
+  const isOBS = !!filename.match(/_OBS/);
+  const isTN = !!filename.match(/^tn_/);
+  const isTQ = !!filename.match(/^tq_/);
+  const isSQ = !!filename.match(/^sq_/);
+  const isSN = !!filename.match(/^sn_/);
+  const isTWL = !!filename.match(/^twl_/);
 
-  } else if (filename.match(/^tq_OBS\.tsv$/)) {
-    console.log("tq_OBS file selected");
-    resourceCode = "OBS-TQ"
+  if (isTSV) {
+    if (isTN) {
+      resourceCode = 'TN';
+    } else if (isTQ) {
+      resourceCode = 'TQ';
+    } else if (isSQ) {
+      resourceCode = 'SQ';
+    } else if (isSN) {
+      resourceCode = 'SN';
+    } else if (isTWL) {
+      resourceCode = 'TWL';
+    } else {
+      resourceCode = 'TN9';
+    };
 
-  } else if (filename.match(/^tq_...\.tsv$/)) {
-    console.log("tq_... file selected");
-    resourceCode = "TQ"
-
-  } else if (filename.match(/^sq_OBS.tsv$/)) {
-    console.log("sq_OBS file selected");
-    resourceCode = "OBS-SQ"
-
-  } else if (filename.match(/^sq_...\.tsv$/)) {
-    console.log("sq_... file selected");
-    resourceCode = "SQ"
-
-  } else if (filename.match(/^sn_OBS.tsv$/)) {
-    console.log("sn_OBS file selected");
-    resourceCode = "OBS-SN"
-
-  } else if (filename.match(/^sn_...\.tsv$/)) {
-    console.log("sn_... file selected");
-    resourceCode = "SN"
-
-  } else if (filename.match(/^twl_...\.tsv$/)) {
-    console.log("twl_... file selected")
-    resourceCode = "TWL"
-
-  } else if (filename.match(/\.tsv$/)) {
-    console.log("tn 9 col file selected")
-    resourceCode = "TN9"
-
+    if (isOBS) {
+      resourceCode = 'OBS-' + resourceCode;
+    };
   } else {
-    console.log("Unsupported file selected")
     resourceCode = null
-  }
+  };
+
+  if (resourceCode) {
+    console.log('validationHelpers.resourceCodeFromFilename: ', resourceCode);
+  } else {
+    console.log("validationHelpers.resourceCodeFromFilename: Unsupported file selected");
+  };
+
   return resourceCode;
-}
+};
 
 // this function copied from gatewayAdmin
 // it will return the CV function to use for the given
