@@ -72,6 +72,18 @@ Cypress tests
 - Validation
   - ensure all validation that worked before works
 
+Other issues noted:
+- Must use the uw-tsv-parser package to parse TSV files; these cases noted:
+  - SQ is not previewing correctly.
+  - SN is not previewing correctly.
+  - obs-sq is not previewing correctly.
+- obs-sn issues:
+  - includes SupportReference by default. Default should only be the Note column
+  - The row toolbar is missing.
+- obs-sq issues:
+  - Must use uw-tsv-parser... preview is not working correctly.
+  - The row toolbar is missing.
+
 LATER:
 
 Confusing Naming conventions
