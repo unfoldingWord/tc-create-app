@@ -1,9 +1,9 @@
 import { useCallback, useReducer } from 'react';
 import { ensureRepo } from 'gitea-react-toolkit';
 
-import { stateReducer } from './state.reducer';
-import { saveState } from './persistence';
-import defaults from './state.defaults';
+import { stateReducer } from '../core/state.reducer';
+import { saveState } from '../core/persistence';
+import defaults from '../core/state.defaults';
 
 export const useStateReducer = ({
   authentication,
@@ -59,6 +59,7 @@ export const useStateReducer = ({
   }, []);
 
   const setFilepath = useCallback((value) => {
+    console.log('useReducer.setFilepath', value)
     if (value !== state.filepath) {
       dispatch({ type: 'set_filepath', value });
       saveState('filepath', value);
