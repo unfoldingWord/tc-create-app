@@ -38,16 +38,14 @@ export default function useValidation({ columnCount, delimiters }) {
     setOpen(true);
     let validationResultData;
 
-    if (columnCount === 9) {
-      validationResultData = await onValidate({
-        targetFileName,
-        targetContent,
-        delimiters,
-        organization,
-        validationPriority,
-        rows,
-      });
-    };
+    validationResultData = await onValidate({
+      targetFileName,
+      targetContent,
+      delimiters,
+      organization,
+      validationPriority,
+      rows,
+    });
 
     setOpen(false);
 
@@ -56,7 +54,7 @@ export default function useValidation({ columnCount, delimiters }) {
     } else {
       downloadValidationResults({ targetFileName, validationResultData });
     };
-  }, [columnCount, delimiters, organization, targetContent, targetFileName, validationPriority]);
+  }, [delimiters, organization, targetContent, targetFileName, validationPriority]);
 
   let component = <></>;
 
