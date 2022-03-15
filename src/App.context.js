@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useStateReducer } from './core/useStateReducer';
-
+import { useStateReducer } from './hooks/useStateReducer';
 import { useGiteaReactToolkit } from './hooks/useGiteaReactToolkit';
 
 export const AppContext = React.createContext();
