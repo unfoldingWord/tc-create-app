@@ -126,7 +126,17 @@ export default function RowHeader({
     </>
   );
 
-  const component = viewed ? (scriptureHeader || defaultHeader) : skeleton;
+  let component = skeleton;
+
+  if (viewed) {
+    const isOBS = bookId.toLowerCase() === "obs";
+
+    if (isOBS) {
+      component = defaultHeader
+    } else {
+      component = scriptureHeader || defaultHeader;
+    };
+  };
 
   return component;
 };
