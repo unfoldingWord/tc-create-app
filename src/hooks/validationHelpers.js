@@ -94,9 +94,9 @@ function selectCvFunction(resourceCode) {
     default:
       console.log(`Resource Id not yet supported ${resourceCode}.`);
       cvFunction = null;
-  }
+  };
   return cvFunction;
-}
+};
 
 // a simple filter to discard certain rows
 // returns true to include and false to exclude.

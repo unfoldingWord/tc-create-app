@@ -9,6 +9,8 @@ import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider } from 'scripture-resources-rcl';
+import * as parser from 'uw-tsv-parser';
+
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -147,6 +149,7 @@ export default function TranslatableTSV({
         config={config}
         generateRowId={_generateRowId}
         options={options}
+        parser={parser}
       />
       {validationComponent}
     </ResourcesContextProvider>
