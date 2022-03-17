@@ -13,11 +13,6 @@ Cypress tests
   - back/next button after each progress
 
 Other issues noted:
-- The row toolbar is missing.
-  - obs-sq
-  - obs-sn
-  - obs-tn
-  - obs-tq
 - obs-sn issues:
   - includes SupportReference by default. Default should only be the Note column
 
@@ -100,3 +95,9 @@ Bugs to Address
   - SQ is not previewing correctly.
   - SN is not previewing correctly.
   - obs-sq is not previewing correctly.
+
+- The row toolbar is missing.
+  - obs-sq
+  - obs-sn
+  - obs-tn
+  - obs-tq
