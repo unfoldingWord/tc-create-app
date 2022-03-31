@@ -1,12 +1,98 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
 import { NoSsr } from '@material-ui/core';
+import { useLanguages } from 'uw-languages-rcl';
 
-import { AppContext } from '../../App.context';
 import { getLanguage } from './helpers';
 import * as components from './Components';
+
+export default function LanguageSelect({
+  language,
+  onLanguage,
+  organization,
+}) {
+  const classes = useStyles();
+  const { state: languages } = useLanguages();
+
+  const handleChange = useDeepCompareCallback((object) => {
+    const languageId = object.langId;
+    const _language = getLanguage({ languageId, languagesJSON: languages });
+    onLanguage(_language);
+  }, [languages]);
+
+  const orgOptions = useDeepCompareMemo(() => {
+    const orgLanguages = organization.repo_languages || [''];
+    const _orgOptions = orgLanguages.map((langId) => {
+      const formattedLanguage = getLanguage({
+        languageId: langId,
+        languagesJSON: languages,
+      });
+      //const value = formattedLanguage.languageId;
+      // test whether formattedLanguage has any properties.
+      // if it doesn't, then that means that the org has no languages for resources
+      let label;
+
+      if (formattedLanguage.languageName) {
+        const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
+        const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
+        label = `${name} ${gatewayLabel}`;
+      };
+      return { langId, label };
+    });
+    return _orgOptions;
+  }, [organization.repo_languages, languages]);
+
+  const value = useDeepCompareMemo(() => {
+    let _value;
+
+    if (language) {
+      _value = orgOptions.filter((object) => object.value === language.languageId)[0];
+    };
+    return _value;
+  }, [orgOptions]);
+
+  const component = useDeepCompareMemo(() => {
+    let _component = (
+      <div>
+        <p>No Languages Found</p>
+      </div>
+    );
+
+    if (orgOptions[0].label) {
+      _component = (
+        <NoSsr>
+          <Select
+            data-test-id={`language-select-${value}`}
+            className="language-select-dropdown"
+            classes={classes}
+            options={orgOptions}
+            components={components}
+            value={value}
+            onChange={handleChange}
+            placeholder="Select Language"
+          />
+          <div className={classes.divider} />
+        </NoSsr>
+      );
+    };
+    return _component;
+  }, [classes, orgOptions, components, value, handleChange]);
+
+  return (
+    <div className={classes.root}>
+      {component}
+    </div>
+  );
+}
+
+LanguageSelect.propTypes = {
+  language: PropTypes.object,
+  onLanguage: PropTypes.func.isRequired,
+  organization: PropTypes.object.isRequired,
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,85 +126,3 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: { height: theme.spacing(2) },
 }));
-
-function LanguageSelect({ language, onLanguage }) {
-  const appContext = useContext(AppContext);
-  const classes = useStyles();
-
-  const handleChange = (object) => {
-    const languageId = object.langId;
-    const _language = getLanguage({ languageId, languagesJSON: appContext.state.languages });
-    onLanguage(_language);
-  };
-
-  const getOrgLanguages = () => {
-    return appContext.state.organization.repo_languages || ['']
-  }
-
-  const orgOptions = getOrgLanguages().map( (langId) => {
-      const formattedLanguage = getLanguage({languageId: langId, languagesJSON: appContext.state.languages});
-      //const value = formattedLanguage.languageId;
-      // test whether formattedLanguage has any properties.
-      // if it doesn't, then that means that the org has no languages for resources
-      let label;
-      if ( formattedLanguage.languageName ){
-        const name = `${langId} - ${formattedLanguage.languageName} - ${formattedLanguage.localized}`;
-        const gatewayLabel = `(${formattedLanguage.region} ${formattedLanguage.gateway ? 'Gateway' : 'Other'})`;
-        label = `${name} ${gatewayLabel}`;
-      }
-      return { langId, label };
-    }
-  );
-
-  /*
-  const options = gatewayLanguages.map(
-    ({
-      languageId, languageName, localized, region, gateway,
-    }) => {
-      const value = languageId;
-      const name = `${languageId} - ${languageName} - ${localized}`;
-      const gatewayLabel = `(${region} ${gateway ? 'Gateway' : 'Other'})`;
-      const label = `${name} ${gatewayLabel}`;
-      return { value, label };
-    }
-  );
-  */
-  let value;
-
-  if (language) {
-    value = orgOptions.filter((object) => object.value === language.languageId)[0];
-  }
-
-  return (
-    <div className={classes.root}>
-      {
-        orgOptions[0].label === undefined ? 
-        (
-          <div><p>No Languages Found</p></div>
-        )
-        :
-        (
-          <NoSsr>
-            <Select
-              className="language-select-dropdown"
-              classes={classes}
-              options={orgOptions}
-              components={components}
-              value={value}
-              onChange={handleChange}
-              placeholder="Select Language"
-          />
-            <div className={classes.divider} />
-          </NoSsr>
-        )
-      }
-    </div>
-  );
-}
-
-LanguageSelect.propTypes = {
-  language: PropTypes.object,
-  onLanguage: PropTypes.func.isRequired,
-};
-
-export default LanguageSelect;
