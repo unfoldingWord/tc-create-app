@@ -41,6 +41,7 @@ describe('checking all resources are loaded with content', function () {
   it('Select en_tw File', function () {
     /** Select file */
     cy.contains('Translation Words').should('be.be.visible').click();
+    cy.wait(2000);
     cy.contains('bible/').click();
     cy.contains('kt/').click();
     cy.contains('abomination.md').should('be.be.visible').click();
@@ -111,6 +112,7 @@ describe('checking all resources are loaded with content', function () {
     /** Select file */
     cy.contains('Open Bible Stories Study Questions').click();
     cy.contains('sq_OBS.tsv').click();
+    cy.wait(2000);
     cy.contains('A Guide to Using the Stories in the OBS');
     cy.get('[id="deleteIcon_en_obs-sq"]').click();
   });
