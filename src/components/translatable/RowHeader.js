@@ -113,7 +113,7 @@ export default function RowHeader({
   const defaultHeader = useDeepCompareMemo(() => (
     <div style={styles.defaultHeader}>
       <Typography variant='h6' style={styles.title}>
-        {`${bookId} ${chapter}:${verse}`.toUpperCase()}
+        {`${bookId}`.toUpperCase()}{` ${chapter}:${verse}`}
       </Typography>
       <Waypoint onLeave={onLeave} />
       {actionsMenu}
