@@ -18,6 +18,7 @@ const styles = {
   quoteHeader: { width: '100%' },
   title: {
     lineHeight: '1.0',
+    fontWeight: 'bold',
     paddingTop: '11px',
   },
 };
@@ -112,7 +113,7 @@ export default function RowHeader({
   const defaultHeader = useDeepCompareMemo(() => (
     <div style={styles.defaultHeader}>
       <Typography variant='h6' style={styles.title}>
-        {`${bookId} ${chapter}:${verse}`}
+        {`${bookId.toUpperCase()} ${chapter}:${verse}`}
       </Typography>
       <Waypoint onLeave={onLeave} />
       {actionsMenu}
