@@ -56,15 +56,11 @@ export default function LanguageSelect({
   }, [orgOptions]);
 
   const component = useDeepCompareMemo(() => {
-    let _component = (
-      <div>
-        {
-          orgOptions.length !== 0 ?
-            <CircularProgress data-test-id='circular-progress-language-select' /> :
-            <p data-test-id='circular-progress-language-select'>No Languages Found</p>
-        }
-      </div>
-    );
+    let _component = orgOptions.length !== 0 ?
+      <div className={classes.sppiner}>
+        <CircularProgress data-test-id='circular-progress-language-select' />
+      </div> :
+      <p data-test-id='no-laguages-found'>No Languages Found</p>
 
     if (orgOptions[0].label) {
       _component = (
@@ -130,4 +126,5 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
   },
   divider: { height: theme.spacing(2) },
+  sppiner: { textAlign: 'center' },
 }));
