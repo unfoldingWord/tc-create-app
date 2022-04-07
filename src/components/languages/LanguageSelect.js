@@ -5,6 +5,7 @@ import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
 import { NoSsr } from '@material-ui/core';
 import { useLanguages } from 'uw-languages-rcl';
+import { CircularProgress } from '@material-ui/core';
 
 import { getLanguage } from './helpers';
 import * as components from './Components';
@@ -55,11 +56,11 @@ export default function LanguageSelect({
   }, [orgOptions]);
 
   const component = useDeepCompareMemo(() => {
-    let _component = (
-      <div>
-        <p>No Languages Found</p>
-      </div>
-    );
+    let _component = orgOptions.length !== 0 ?
+      <div className={classes.spinner}>
+        <CircularProgress data-test-id='circular-progress-language-select' />
+      </div> :
+      <p data-test-id='no-laguages-found'>No Languages Found</p>
 
     if (orgOptions[0].label) {
       _component = (
@@ -125,4 +126,5 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
   },
   divider: { height: theme.spacing(2) },
+  spinner: { textAlign: 'center' },
 }));
