@@ -129,7 +129,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   }, []);
 
   const onConfirmClose = () => {
-    isConfirmed(localString('ConfirmCloseWindow'));
+    return isConfirmed(localString('ConfirmCloseWindow'));
   };
 
   const sourceFileHook = useFile({
