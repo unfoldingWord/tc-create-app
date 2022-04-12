@@ -29,14 +29,40 @@ describe('Parallel scripture viewer toggle', function () {
         cy.contains('en_tn_57-TIT.tsv').should('be.be.visible').click();
         cy.contains('Introduction to Titus');
     });
+    it('select origQuote', function () {
+        /** Select file */
+        // cy.contains('κατὰ πίστιν');
+        cy.get('[data-testid="View Columns-iconButton"]').click();
+        cy.get('[value="OrigQuote"]').click();
+        cy.get('[aria-label="Close"]').click();
+    });
     it('search for origquote', function () {
         /** Select file */
-        cy.contains('κατὰ πίστιν');
-        cy.get('[class="MuiTableCell-root-620 MuiTableCell-body-622 makeStyles-cell-619"]')
+        cy.wait(3000);
+        cy.contains('κατὰ πίστιν').should('have.attr', 'class', 'makeStyles-html-374');;
+        // cy.get('[class="MuiTableCell-root-620 MuiTableCell-body-622 makeStyles-cell-619"]')
     });
-    it('search for data-test', function () {
-        /** Select file */
-        cy.contains('κατὰ').should('have.attr', 'data-testselected', 'true');
-        cy.contains('πίστιν').should('have.attr', 'data-testselected', 'true');
-    });
+    // it('search for data-test', function () {
+    //     /** Select file */
+    //     cy.contains('κατὰ').should('have.attr', 'data-testselected', 'true');
+    //     cy.contains('πίστιν').should('have.attr', 'data-testselected', 'true');
+    // });
+    // it('select origQuote', function () {
+    //     /** Select file */
+    //     // cy.contains('κατὰ πίστιν');
+    //     cy.get('[data-testid="View Columns-iconButton"]').click();
+    //     cy.get('[value="OrigQuote"]').click();
+    //     cy.get('[aria-label="Close"]').click();
+    // });
+    // it('search for origquote', function () {
+    //     /** Select file */
+    //     cy.wait(3000);
+    //     cy.contains('κατὰ πίστιν').should('have.attr', 'class', 'makeStyles-html-374');;
+    //     // cy.get('[class="MuiTableCell-root-620 MuiTableCell-body-622 makeStyles-cell-619"]')
+    // });
+    // it('search for data-test', function () {
+    //     /** Select file */
+    //     cy.contains('κατὰ').should('have.attr', 'data-testselected', 'true');
+    //     cy.contains('πίστιν').should('have.attr', 'data-testselected', 'true');
+    // });
 });
