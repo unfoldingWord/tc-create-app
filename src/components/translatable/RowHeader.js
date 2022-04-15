@@ -49,7 +49,13 @@ export default function RowHeader({
   } = useDeepCompareMemo(() => {
     let chapter, verse, quote, occurrence;
 
-    const columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
+    let columnNamesToUse = [];
+    if (columnNames.includes('OrigWords')) {
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigWords', 'Occurrence'];
+    } else {
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
+    }
+
     const indices = columnNamesToUse.map(columnName => {
       const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
       return index;
