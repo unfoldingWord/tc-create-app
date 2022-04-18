@@ -111,13 +111,16 @@ export default function RowHeader({
   }, [viewed, bookId, chapter, verse, quote, occurrence, actionsMenu, styles]);
 
   const defaultHeader = useDeepCompareMemo(() => (
-    <div style={styles.defaultHeader}>
-      <Typography variant='h6' style={styles.title}>
-        {`${bookId.toUpperCase()} ${chapter}:${verse}`}
-      </Typography>
-      <Waypoint onLeave={onLeave} />
-      {actionsMenu}
-    </div>
+    <>
+      {console.log(chapter, verse)}
+      <div style={styles.defaultHeader}>
+        <Typography variant='h6' style={styles.title}>
+          {chapter && verse !== undefined ? `${bookId.toUpperCase()} ${chapter}:${verse}` : `${bookId.toUpperCase()} ${chapter}`}
+        </Typography>
+        <Waypoint onLeave={onLeave} />
+        {actionsMenu}
+      </div>
+    </>
   ), [styles, bookId, chapter, verse]);
 
   const skeleton = (
