@@ -36,7 +36,7 @@
     "axios": "^0.21.0",
     "datatable-translatable": "0.11.14",
     "deep-freeze": "^0.0.1",
-    "eslint-plugin-test-selectors": "^1.3.0",
+    "eslint-plugin-test-selectors": "^2.0.3",
     "gitea-react-toolkit": "2.1.0-beta",
     "lodash.isequal": "^4.5.0",
     "markdown-translatable": "2.0.0",
