@@ -114,7 +114,7 @@ export default function RowHeader({
       );
     };
     return _component;
-  }, [viewed, bookId, chapter, verse, quote, occurrence, actionsMenu, styles]);
+  }, [viewed, bookId, chapter, verse, quote, occurrence, actionsMenu, styles, open]);
 
   const defaultHeader = useDeepCompareMemo(() => (
     <>
