@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareEffect } from 'use-deep-compare';
 
@@ -43,6 +43,8 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCacheWarningMessage,
     },
   } = applicationStateReducer;
+
+  const [cachedFile, setCachedFile] = useState();
 
   const { isConfirmed } = useConfirm({ contentIsDirty });
 
@@ -92,12 +94,13 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   }, [setCriticalValidationErrors]);
 
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
+    // console.log("tcc // _onLoadCache", html_url, file);
     if (html_url) {
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
-        // console.log("tcc // file", file, html_url);
-        // console.log("tcc // cached file", _cachedFile);
+        console.log("tcc // file", file, html_url);
+        console.log("tcc // cached file", _cachedFile);
 
         if (_cachedFile?.sha && file?.sha && _cachedFile?.sha !== file?.sha) {
           // Allow app to provide CACHED ("offline" content);
@@ -114,6 +117,8 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
           setCacheFileKey(html_url);
           setCacheWarningMessage(_cacheWarningMessage);
+        } else {
+          setCachedFile(_cachedFile);
         };
       };
 
@@ -122,7 +127,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   }, [setCacheFileKey, setCacheWarningMessage]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
-    //console.log("tcc // _onSaveCache", file, content);
+    console.log("tcc // _onSaveCache", file, content);
     if (file) {
       saveFileCache(file, content);
     }
@@ -190,6 +195,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     targetRepositoryHook,
     sourceFileHook,
     targetFileHook,
+    cachedFile,
   };
 };
 

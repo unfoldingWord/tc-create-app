@@ -55,6 +55,7 @@ export default function TranslatableTSV({
     giteaReactToolkit: {
       sourceFileHook,
       targetFileHook,
+      cachedFile
     },
   } = useContext(AppContext);
 
@@ -63,6 +64,8 @@ export default function TranslatableTSV({
     content: sourceContent,
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
+  const { content: cachedContent } = cachedFile || {};
+  console.log("TranslatableTSV.js: cachedContent", cachedContent)
 
   const columnNames = useMemo(() => {
     const _columnNames = columnNamesFromContent({ content: sourceContent, delimiters });
@@ -140,7 +143,7 @@ export default function TranslatableTSV({
     >
       <DataTable
         sourceFile={sourceContent}
-        targetFile={targetContent}
+        targetFile={cachedContent || targetContent}
         onSave={onSave}
         onEdit={onEdit}
         onValidate={onValidate}
