@@ -99,8 +99,9 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
-        console.log("tcc // file", file, html_url);
-        console.log("tcc // cached file", _cachedFile);
+        setCachedFile(_cachedFile);
+        // console.log("tcc // file", file, html_url);
+        // console.log("tcc // cached file", _cachedFile);
 
         if (_cachedFile?.sha && file?.sha && _cachedFile?.sha !== file?.sha) {
           // Allow app to provide CACHED ("offline" content);
@@ -117,9 +118,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
           setCacheFileKey(html_url);
           setCacheWarningMessage(_cacheWarningMessage);
-        } else {
-          setCachedFile(_cachedFile);
-        };
+        }
       };
 
       return _cachedFile;
@@ -127,7 +126,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   }, [setCacheFileKey, setCacheWarningMessage]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
-    console.log("tcc // _onSaveCache", file, content);
+    // console.log("tcc // _onSaveCache", file, content);
     if (file) {
       saveFileCache(file, content);
     }
