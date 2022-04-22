@@ -41,6 +41,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCriticalValidationErrors,
       setCacheFileKey,
       setCacheWarningMessage,
+      setCachedFile,
     },
   } = applicationStateReducer;
 
@@ -92,10 +93,12 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   }, [setCriticalValidationErrors]);
 
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
+    // console.log("tcc // _onLoadCache", html_url, file);
     if (html_url) {
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
+        setCachedFile(_cachedFile);
         // console.log("tcc // file", file, html_url);
         // console.log("tcc // cached file", _cachedFile);
 
@@ -114,15 +117,15 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
           setCacheFileKey(html_url);
           setCacheWarningMessage(_cacheWarningMessage);
-        };
+        }
       };
 
       return _cachedFile;
     }
-  }, [setCacheFileKey, setCacheWarningMessage]);
+  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
-    //console.log("tcc // _onSaveCache", file, content);
+    // console.log("tcc // _onSaveCache", file, content);
     if (file) {
       saveFileCache(file, content);
     }
