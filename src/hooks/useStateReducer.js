@@ -26,8 +26,6 @@ export const useStateReducer = ({
   };
   const [state, dispatch] = useReducer(stateReducer, _defaults);
 
-  const clearCachedFile = useCallback(setCachedFile, []);
-
   const setOrganization = useCallback((value) => {
     if (value !== state.organization) {
       dispatch({ type: 'set_organization', value });
@@ -183,6 +181,10 @@ export const useStateReducer = ({
       saveState('cachedFile', value);
     };
   }, [state.cachedFile]);
+
+  const clearCachedFile = useCallback(() => {
+    setCachedFile();
+  }, [setCachedFile]);
 
   const actions = {
     setAuthentication,

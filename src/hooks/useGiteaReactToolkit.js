@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareEffect } from 'use-deep-compare';
 
@@ -122,7 +122,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
       return _cachedFile;
     }
-  }, [setCacheFileKey, setCacheWarningMessage]);
+  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
     // console.log("tcc // _onSaveCache", file, content);

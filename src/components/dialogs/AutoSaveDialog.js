@@ -16,12 +16,8 @@ export default function AutoSaveDialog() {
       cacheFileKey,
       cacheWarningMessage,
     },
-    actions: { setSourceRepository, setCacheWarningMessage, clearCachedFile },
+    actions: { setCacheWarningMessage, clearCachedFile },
   } = useContext(AppContext);
-
-  const handleClose = useCallback(() => {
-    setSourceRepository(undefined);
-  }, [setSourceRepository]);
 
   const handleCloseCachedFile = useCallback(() => {
     // CLEAR cache:
@@ -29,9 +25,7 @@ export default function AutoSaveDialog() {
     clearCachedFile();
     // Reset dialog:
     setCacheWarningMessage(null);
-    // Close current file:
-    handleClose();
-  }, [cacheFileKey, setCacheWarningMessage, handleClose]);
+  }, [cacheFileKey, setCacheWarningMessage, clearCachedFile]);
 
   return (
     <Dialog
