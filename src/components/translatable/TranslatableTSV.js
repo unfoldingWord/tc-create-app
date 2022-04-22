@@ -50,12 +50,12 @@ export default function TranslatableTSV({
     state: {
       resourceLinks,
       expandedScripture,
+      cachedFile,
     },
     actions: { setResourceLinks },
     giteaReactToolkit: {
       sourceFileHook,
       targetFileHook,
-      cachedFile
     },
   } = useContext(AppContext);
 

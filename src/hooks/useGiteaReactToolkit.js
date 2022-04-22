@@ -41,10 +41,9 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCriticalValidationErrors,
       setCacheFileKey,
       setCacheWarningMessage,
+      setCachedFile,
     },
   } = applicationStateReducer;
-
-  const [cachedFile, setCachedFile] = useState();
 
   const { isConfirmed } = useConfirm({ contentIsDirty });
 
@@ -194,7 +193,6 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     targetRepositoryHook,
     sourceFileHook,
     targetFileHook,
-    cachedFile,
   };
 };
 
