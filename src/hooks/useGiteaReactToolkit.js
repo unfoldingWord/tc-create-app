@@ -31,6 +31,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       filepath,
       config: _config,
       contentIsDirty,
+      cachedFile,
     },
     actions: {
       setAuthentication: onAuthentication,
@@ -96,7 +97,6 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
     // console.log("tcc // _onLoadCache", html_url, file);
     if (html_url) {
-      clearCachedFile();
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
@@ -124,7 +124,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
       return _cachedFile;
     }
-  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile, clearCachedFile]);
+  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
     // console.log("tcc // _onSaveCache", file, content);
@@ -170,6 +170,12 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onLoadCache: _onLoadCache,
     onSaveCache: _onSaveCache,
   });
+
+  useDeepCompareEffect(() => {
+    if (cachedFile && targetFileHook?.state?.html_url !== cachedFile?.html_url) {
+      clearCachedFile();
+    };
+  }, [cachedFile, targetFileHook, clearCachedFile]);
 
   useDeepCompareEffect(() => {
     if (authentication && sourceRepository && organization) {
