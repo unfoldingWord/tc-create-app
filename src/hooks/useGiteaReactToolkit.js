@@ -42,6 +42,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCacheFileKey,
       setCacheWarningMessage,
       setCachedFile,
+      clearCachedFile,
     },
   } = applicationStateReducer;
 
@@ -95,6 +96,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
     // console.log("tcc // _onLoadCache", html_url, file);
     if (html_url) {
+      clearCachedFile();
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
