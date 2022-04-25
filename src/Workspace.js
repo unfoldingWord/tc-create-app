@@ -37,7 +37,7 @@ function Workspace() {
         const sourceAndTargetMatch = targetFilepath === filepath;
 
         if (sourceAndTargetMatch) {
-          if (criticalValidationErrors.length > 0) {
+          if (criticalValidationErrors?.length > 0) {
             // target file validation errors
             _component = <CriticalValidationErrorsDialog />;
           } else {
