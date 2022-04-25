@@ -31,6 +31,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       filepath,
       config: _config,
       contentIsDirty,
+      cachedFile,
     },
     actions: {
       setAuthentication: onAuthentication,
@@ -42,6 +43,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCacheFileKey,
       setCacheWarningMessage,
       setCachedFile,
+      clearCachedFile,
     },
   } = applicationStateReducer;
 
@@ -168,6 +170,12 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onLoadCache: _onLoadCache,
     onSaveCache: _onSaveCache,
   });
+
+  useDeepCompareEffect(() => {
+    if (cachedFile && targetFileHook?.state?.html_url !== cachedFile?.html_url) {
+      clearCachedFile();
+    };
+  }, [cachedFile, targetFileHook, clearCachedFile]);
 
   useDeepCompareEffect(() => {
     if (authentication && sourceRepository && organization) {
