@@ -124,7 +124,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
       return _cachedFile;
     }
-  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
+  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile, clearCachedFile]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
     // console.log("tcc // _onSaveCache", file, content);
