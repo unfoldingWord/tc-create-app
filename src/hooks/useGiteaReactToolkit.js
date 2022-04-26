@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareEffect } from 'use-deep-compare';
+import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 
 import {
   useAuthentication,
@@ -150,20 +150,27 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
   });
 
-  let defaultContent;
+  const defaultContent = useDeepCompareMemo(() => {
+    let _defaultContent;
+    if (sourceRepository?.id === targetRepository?.id) {
+      _defaultContent = sourceFileHook?.state?.content;
+    } else {
+      _defaultContent = sourceFileHook?.state?.publishedContent;
+    };
+    return _defaultContent;
+  }, [sourceRepository, targetRepository, sourceFileHook]);
 
-  if (sourceRepository?.id === targetRepository?.id) {
-    defaultContent = sourceFileHook?.state?.content;
-  } else {
-    defaultContent = sourceFileHook?.state?.publishedContent;
-    // sourceFile.state.content = defaultContent; // TODO: NEVER SET STATE LIKE THIS
-  };
+
+  const readyForTargetFile = useMemo(() => {
+    const _readyForTargetFile = !!defaultContent;
+    return _readyForTargetFile;
+  }, [defaultContent]);
 
   const targetFileHook = useFile({
     config,
     authentication,
     repository: targetRepository,
-    filepath,
+    filepath: readyForTargetFile ? filepath : undefined,
     onFilepath: setFilepath,
     defaultContent,
     onOpenValidation: _onOpenValidation,
