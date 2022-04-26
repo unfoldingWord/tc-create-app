@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 
@@ -150,27 +150,35 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
   });
 
+  const { state: sourceFile } = sourceFileHook;
+
   const defaultContent = useDeepCompareMemo(() => {
     let _defaultContent;
-    if (sourceRepository?.id === targetRepository?.id) {
-      _defaultContent = sourceFileHook?.state?.content;
-    } else {
-      _defaultContent = sourceFileHook?.state?.publishedContent;
+
+    const filepathsExist = (!!filepath && !!sourceFile?.filepath)
+    const filepathsMatch = (filepath === sourceFile?.filepath);
+    const sourceFileIsReady = (filepathsExist && filepathsMatch);
+
+    if (sourceFileIsReady) {
+      const unfoldingWordOrganization = (sourceRepository?.id === targetRepository?.id);
+
+      if (unfoldingWordOrganization) { // uW Content creators use same organization and source/target repos
+        _defaultContent = sourceFile?.content;
+      } else { // non-uW translators use repo under another organization
+        _defaultContent = sourceFile?.publishedContent;
+      };
     };
+
     return _defaultContent;
-  }, [sourceRepository, targetRepository, sourceFileHook]);
+  }, [filepath, sourceFile, sourceRepository, targetRepository]);
 
-
-  const readyForTargetFile = useMemo(() => {
-    const _readyForTargetFile = !!defaultContent;
-    return _readyForTargetFile;
-  }, [defaultContent]);
+  const readyForTargetFile = !!defaultContent;
 
   const targetFileHook = useFile({
     config,
     authentication,
     repository: targetRepository,
-    filepath: readyForTargetFile ? filepath : undefined,
+    filepath: (readyForTargetFile ? filepath : undefined),
     onFilepath: setFilepath,
     defaultContent,
     onOpenValidation: _onOpenValidation,
