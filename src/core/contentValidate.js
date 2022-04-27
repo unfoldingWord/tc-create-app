@@ -4,23 +4,26 @@
 import * as csv from './csvMaker';
 import * as tsvParser from 'uw-tsv-parser';
 
-function processNoticeList( notices, validationPriority ) {
-  let hdrs =  ['Priority','Chapter','Verse','Line','Row ID','Details','Char Pos','Excerpt','Message','Location'];
+function processNoticeList(notices, validationPriority) {
+  let hdrs = ['Priority', 'Chapter', 'Verse', 'Line', 'Row ID', 'Details', 'Char Pos', 'Excerpt', 'Message', 'Location'];
   let data = [];
   data.push(hdrs);
   let inPriorityRange = false;
-  Object.keys(notices).forEach ( key => {
+
+  Object.keys(notices).forEach(key => {
     inPriorityRange = false; // reset for each
     const rowData = notices[key];
-    if ( validationPriority === 'med' && rowData.priority > 599 ) {
+
+    if (validationPriority === 'med' && rowData.priority > 599) {
       inPriorityRange = true;
-    } else if ( validationPriority === 'high' && rowData.priority > 799 ) {
+    } else if (validationPriority === 'high' && rowData.priority > 799) {
       inPriorityRange = true;
-    } else if ( validationPriority === 'low' ) {
+    } else if (validationPriority === 'low') {
       inPriorityRange = true;
-    }
-    if ( inPriorityRange ) {
-      csv.addRow( data, [
+    };
+
+    if (inPriorityRange) {
+      csv.addRow(data, [
         String(rowData.priority),
         String(rowData.C),
         String(rowData.V),
@@ -31,12 +34,12 @@ function processNoticeList( notices, validationPriority ) {
         String(rowData.excerpt || ""),
         String(rowData.message),
         String(rowData.location),
-      ])
-    }
+      ]);
+    };
   });
 
   return data;
-}
+};
 
 
 /*

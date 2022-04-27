@@ -1,13 +1,12 @@
-import {
-  useState, useEffect, useContext,
-} from 'react';
+import { useState, useContext } from 'react';
+import { useDeepCompareEffect } from 'use-deep-compare';
 import { ConfirmContext } from '../context/ConfirmContextProvider';
 
 export default function useConfirm({ contentIsDirty }) {
   const [needsCleanup, setNeedsCleanup] = useState(false);
   const [confirm, setConfirm] = useContext(ConfirmContext);
 
-  useEffect(() => () => {
+  useDeepCompareEffect(() => () => {
     if (confirm.cancel && needsCleanup) {
       confirm.cancel();
     }

@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ParallelScripture }
-  from 'scripture-resources-rcl';
+import { ParallelScripture } from 'scripture-resources-rcl';
+import { useDeepCompareMemo } from 'use-deep-compare';
 import { getMuiTheme } from './muiTheme';
 
-function QuoteSelector({
+export default function ScriptureHeader({
   quote,
   onQuote,
   occurrence: _occurrence,
@@ -14,7 +14,8 @@ function QuoteSelector({
 }) {
   const __occurrence = (_occurrence === '\\-1') ? -1 : _occurrence;
   const occurrence = Number(__occurrence);
-  const component = useMemo(() => (
+
+  const component = useDeepCompareMemo(() => (
     <ParallelScripture
       open={open}
       reference={reference}
@@ -23,12 +24,12 @@ function QuoteSelector({
       occurrence={occurrence}
       height='250px'
       buttons={buttons}
-    />), [buttons, occurrence, onQuote, open, quote, reference]);
+    />
+  ), [quote, occurrence, reference, open, buttons, onQuote]);
+
   return (
     <MuiThemeProvider theme={getMuiTheme}>
       {component}
     </MuiThemeProvider>
   );
 };
-
-export default React.memo(QuoteSelector);
