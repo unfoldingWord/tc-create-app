@@ -166,7 +166,7 @@ export const prepareDataForValidation = ({
   // tsvString = tsvString + rows.map((cells) => cells.join(delimiters.cell)).join(delimiters.row);
   // Now we parse *and* decode the updated target content, which is in 
   // a 2d array (ie, a table), in the variable "rows"
-  let tsvString = parser.tableToTsvString(rows);
+  let tsvString = parser.tableToTsvString(rows).data;
   // now put the header row string on the front 
   tsvString = headerRow + tsvString;
 
