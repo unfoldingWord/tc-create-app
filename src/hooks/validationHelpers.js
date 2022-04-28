@@ -173,7 +173,7 @@ export const prepareDataForValidation = ({
 
   const resourceCode = resourceCodeFromFilename(targetFileName);
   const cvFunction = selectCvFunction(resourceCode)
-  console.log("Resource code:", resourceCode)
+
   // language is not part of the file anymore (except for legacy case).
   // however if we are not chasing links, then I suspect we don't need
   // either org or language. So let's return an empty string
@@ -222,7 +222,6 @@ export const onValidate = async ({
     // This "shouldn't happen" since tc-create stricly supports only a 
     // subset of resource types and is in control of the data passed 
     // into this onValidate function.
-    console.log("onValidate() tsvString:", tsvString)
     const rawResults = await cvFunction(organization.username, langId, bookId, targetFileName, tsvString, options);
     const nl = rawResults.noticeList;
     let hdrs = ['Priority', 'Chapter', 'Verse', 'Line', 'Row ID', 'Details', 'Char Pos', 'Excerpt', 'Message', 'Location'];
