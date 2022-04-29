@@ -29,10 +29,10 @@ const ConfirmDialog = ({ contentIsDirty }) => {
       </DialogContent>
       <DialogActions>
         <Button data-test-id="Ec3EpnUNruInTNmUbFl5e" onClick={cancel} color="primary">
-            CANCEL
+          CANCEL
         </Button>
         <Button data-test-id="ASDE4JeHBc7Sk4G-tyEP7" onClick={proceed} color="primary" autoFocus>
-            OK
+          OK
         </Button>
       </DialogActions>
     </Dialog>

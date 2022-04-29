@@ -37,7 +37,7 @@ export const Control = (props) => (
 
 export const Option = (props) => (
   <MenuItem
-    buttonRef={props.innerRef}
+    ref={props.innerRef}
     selected={props.isFocused}
     component="div"
     style={{
