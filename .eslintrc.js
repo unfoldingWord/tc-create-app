@@ -1,22 +1,28 @@
 module.exports = {
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "@unfoldingword"
+  'extends': [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    '@unfoldingword',
+    'prettier',
   ],
-  "plugins": [
-    "react",
-    "cypress",
-    "chai-friendly"
-  ],
-  "rules": {
-    "react/jsx-tag-spacing": ["error"],
-    "react/jsx-closing-bracket-location": ["error", "line-aligned"]
+  'parserOptions': {
+    'ecmaFeatures': { 'jsx': true },
+    'ecmaVersion': 12,
+    'sourceType': 'module',
   },
-  "env": {
-    "browser": true,
-    "node": true,
-    "jest": true,
-    "cypress/globals": true
-  }
-}
+  'plugins': [
+    'react',
+  ],
+  'rules': {
+    'react-hooks/rules-of-hooks': 'error',
+    'react/jsx-tag-spacing': ['error'],
+    'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
+    'indent': ['error', 2, { 'ignoredNodes': ['TemplateLiteral'] }],
+  },
+  'env': {
+    'browser': true,
+    'node': true,
+    'es2021': true,
+  },
+};

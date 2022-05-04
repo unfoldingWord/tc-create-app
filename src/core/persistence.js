@@ -59,7 +59,7 @@ const cacheStore = localforage.createInstance({
   name: `${appPackage.name}-cache-store`,
 });
 
-export const removeFileCache = async(filepath) => {
+export const removeFileCache = async (filepath) => {
   await cacheStore.removeItem(filepath);
 };
 

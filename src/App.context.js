@@ -1,66 +1,52 @@
-import React, { useEffect, 
-  //useState //uw-languages-rcl
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-// import { loadState } from './core/persistence';
-import { useStateReducer } from './core/useStateReducer';
-import { useLanguages } from 'uw-languages-rcl';
+import { useStateReducer } from './hooks/useStateReducer';
+import { useGiteaReactToolkit } from './hooks/useGiteaReactToolkit';
 
 export const AppContext = React.createContext();
 
 export function AppContextProvider({
-  authentication: __authentication,
-  language: __language,
-  sourceRepository: __sourceRepository,
-  filepath: __filepath,
-  organization: __organization,
+  authentication,
+  language,
+  sourceRepository,
+  filepath,
+  organization,
+  resourceLinks,
+  contentIsDirty,
   children,
-  resourceLinks: __resourceLinks,
-  contentIsDirty: __contentIsDirty
 }) {
-  const [state, actions] = useStateReducer({
-    authentication: __authentication,
-    language: __language,
-    sourceRepository: __sourceRepository,
-    filepath: __filepath,
-    organization: __organization,
-    resourceLinks: __resourceLinks,
-    contentIsDirty: __contentIsDirty,
-  });
-  // uw-languages-rcl
-  const { state: languages } = useLanguages();
-
   const {
-    authentication, language, sourceRepository, organization,
-  } = state;
-
-  const { setTargetRepoFromSourceRepo } = actions;
-
-  const authMemo = authentication && JSON.stringify(authentication);
-
-  useEffect(() => {
-    if (authMemo && sourceRepository && organization) {
-      const _authentication = JSON.parse(authMemo);
-
-      setTargetRepoFromSourceRepo({
-        authentication: _authentication,
-        sourceRepository,
-        language,
-        organization,
-      });
-    }
-  }, [
-    authMemo,
-    sourceRepository,
+    state,
+    actions,
+  } = useStateReducer({
+    authentication,
     language,
-    setTargetRepoFromSourceRepo,
+    sourceRepository,
+    filepath,
     organization,
-  ]);
+    resourceLinks,
+    contentIsDirty,
+  });
+
+  const giteaReactToolkit = useGiteaReactToolkit({ state, actions });
 
   const value = {
-    state: {...state, languages},
+    state,
     actions,
+    giteaReactToolkit,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-}
+};
+
+AppContextProvider.propTypes = {
+  authentication: PropTypes.object,
+  language: PropTypes.object,
+  sourceRepository: PropTypes.object,
+  filepath: PropTypes.string,
+  organization: PropTypes.object,
+  resourceLinks: PropTypes.array,
+  contentIsDirty: PropTypes.bool,
+  children: PropTypes.element,
+};
