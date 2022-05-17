@@ -43,7 +43,6 @@ export default function App() {
 
   const props = { ...filteredState };
 
-  console.log('APP.JS');
   return !filteredState
     ? (
       <></>

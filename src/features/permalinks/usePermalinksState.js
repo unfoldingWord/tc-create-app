@@ -23,7 +23,7 @@ export default function usePermalinksState(loadedState) {
     if (!languages?.length || !orgClient || !repoClient || !loadedState) return;
     
     console.log('Loading app from permalink...');
-    console.log({ loadedState });
+    
     const authentication = loadedState.authentication;
 
     const organization = loadedKeys.organization === permalink.organization

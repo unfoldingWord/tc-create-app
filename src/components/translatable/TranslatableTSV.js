@@ -111,8 +111,6 @@ export default function TranslatableTSV({
 
   const { query } = usePermalinks({});
 
-  console.log({columnNames,targetContent,cachedContent});
-
   useEffect(() => {
     const exludedFromSearch = ['columns', 'check'];
 
@@ -121,7 +119,6 @@ export default function TranslatableTSV({
     //Sets searchText to first searchable param in query string.
     Object.keys(query).forEach((key) => {
       if (!exludedFromSearch.includes(key) && !options?.searchText) {
-        console.log('CHANGING OPTIONS');
         setOptions((options) => ({ ...options, searchText: query[key] }));
       }
     });
@@ -138,10 +135,6 @@ export default function TranslatableTSV({
       const columnsShowDefault = columnNames.map(column =>
         query[column] && column
       );
-      console.log({
-        columnsShowDefault,
-        validColumns
-      });
       setExtraColumns([
         ...columnsShowDefault,
         ...validColumns,
@@ -163,7 +156,6 @@ export default function TranslatableTSV({
   }, [expandedScripture, delimiters, columnNames]);
 
   const config = useDeepCompareMemo(() => {
-    console.log({DefaultColumns: [...new Set([...columnsShowDefaultFromColumnNames({ columnNames }), ...extraColumns])]})
     let _config = {
       rowHeader,
       compositeKeyIndices: compositeKeyIndicesFromColumnNames({ columnNames }),
@@ -174,7 +166,6 @@ export default function TranslatableTSV({
     return _config;
   }, [columnNames, extraColumns, rowHeader]);
 
-  console.log({ config });
   return (
     <ResourcesContextProvider
       reference={{ bookId }}
