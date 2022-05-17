@@ -9,16 +9,12 @@ import { loadState, loadAuthentication } from './core/persistence';
 import ConfirmContextProvider from './context/ConfirmContextProvider';
 import { AppContextProvider } from './App.context';
 import Layout from './Layout';
-import usePermalinksState from './hooks/usePermalinksState';
-import routes from './core/routes.json';
-import { usePermalinks } from '@gwdevs/permalinks-hooks';
-
+import usePermalinksState from './features/permalinks/usePermalinksState';
+import PermalinksHandler from './features/permalinks/PermalinksHandler';
 
 export default function App() {
   const [resumedState, setResumedState] = useState();
-  const { permalink, pathname } = usePermalinks({ routes });
-  const isLoadingPermalink = !pathname;
-  const { isLoading: isLoadingPermalinkState, permalinkState } = usePermalinksState({ permalink });
+  const { permalinkState: filteredState } = usePermalinksState(resumedState);
 
   const resumeState = useCallback(async () => {
     // note that the authentication context manages its own
@@ -42,26 +38,22 @@ export default function App() {
   }, []);
 
   useEffect(() => { 
-    if (isLoadingPermalink || isLoadingPermalinkState)
-      return;
-
-    if (!permalinkState)
       resumeState();
-    else
-      setResumedState(permalinkState);
-    
-  }, [permalinkState, isLoadingPermalink, isLoadingPermalinkState, resumeState]);
+  }, [resumeState]);
 
-  const props = { ...resumedState };
+  const props = { ...filteredState };
 
-  return !resumedState
+  console.log('APP.JS');
+  return !filteredState
     ? (
       <></>
     )
     : (
         <ConfirmContextProvider>
           <AppContextProvider {...props}>
-            <Layout />
+            <PermalinksHandler>
+              <Layout />
+            </PermalinksHandler>
           </AppContextProvider>
         </ConfirmContextProvider>
     );

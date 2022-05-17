@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
   useMemo,
+  useEffect
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
@@ -21,6 +22,7 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { AppContext } from '../../App.context';
 import useValidation from '../../hooks/useValidation';
 import RowHeader from './RowHeader';
+import { usePermalinks } from '@gwdevs/permalinks-hooks';
 
 import {
   columnNamesFromContent,
@@ -101,11 +103,52 @@ export default function TranslatableTSV({
     return rowId;
   }, [columnNames, delimiters]);
 
-  const options = {
+  const [options, setOptions] = useState({
     page: 0,
     rowsPerPage: 25,
     rowsPerPageOptions: [10, 25, 50, 100],
-  };
+  });
+
+  const { query } = usePermalinks({});
+
+  console.log({columnNames,targetContent,cachedContent});
+
+  useEffect(() => {
+    const exludedFromSearch = ['columns', 'check'];
+
+    if (!query) return;
+
+    //Sets searchText to first searchable param in query string.
+    Object.keys(query).forEach((key) => {
+      if (!exludedFromSearch.includes(key) && !options?.searchText) {
+        console.log('CHANGING OPTIONS');
+        setOptions((options) => ({ ...options, searchText: query[key] }));
+      }
+    });
+
+  },[query,options.searchText]);
+
+  const [extraColumns, setExtraColumns] = useState([]);
+
+  useEffect(() => {
+    if (query && columnNames && !extraColumns.length) {
+      const queryColumns = query.columns?.split(',');
+      const validColumns = columnNames.map(column => queryColumns && queryColumns.includes(column) && column) || [];
+
+      const columnsShowDefault = columnNames.map(column =>
+        query[column] && column
+      );
+      console.log({
+        columnsShowDefault,
+        validColumns
+      });
+      setExtraColumns([
+        ...columnsShowDefault,
+        ...validColumns,
+      ]);
+    }
+  }, [query, columnNames, extraColumns]);
+  
 
   const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => {
     const _props = {
@@ -120,16 +163,18 @@ export default function TranslatableTSV({
   }, [expandedScripture, delimiters, columnNames]);
 
   const config = useDeepCompareMemo(() => {
+    console.log({DefaultColumns: [...new Set([...columnsShowDefaultFromColumnNames({ columnNames }), ...extraColumns])]})
     let _config = {
       rowHeader,
       compositeKeyIndices: compositeKeyIndicesFromColumnNames({ columnNames }),
       columnsFilter: columnsFilterFromColumnNames({ columnNames }),
-      columnsShowDefault: columnsShowDefaultFromColumnNames({ columnNames }),
+      columnsShowDefault: [...new Set([...columnsShowDefaultFromColumnNames({ columnNames }), ...extraColumns])],
     };
 
     return _config;
-  }, [columnNames, rowHeader]);
+  }, [columnNames, extraColumns, rowHeader]);
 
+  console.log({ config });
   return (
     <ResourcesContextProvider
       reference={{ bookId }}
