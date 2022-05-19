@@ -41,7 +41,7 @@
     "lodash.isequal": "^4.5.0",
     "markdown-translatable": "2.1.0",
     "react": "^16.14.0",
-    "react-beforeunload": "^2.5.1",
+    "react-beforeunload": "^2.5.3",
     "react-dom": "^16.12.0",
     "react-headroom": "^3.0.0",
     "react-select": "^4.1.0",
