@@ -37,10 +37,13 @@ describe('Parallel scripture viewer toggle', function () {
         //     /** Select file */
         cy.get('[aria-labelledby="mui-component-select-Chapter"]').click();
         cy.get('[data-value="front"]').click();
+        cy.get('[aria-label="Close"]').click();
     });
     it('search for muichip chapter', function () {
         //     /** Select file */
-        cy.get('[class="MuiButtonBase-root-163 MuiIconButton-root-155 MUIDataTableToolbar-filterCloseIcon-107"]').click();
-        cy.contains('Chapter - front').should('have.attr', 'class', 'MuiChip-label-6149');
+        // cy.get('[class= "MuiChip-root-936 MUIDataTableFilterList-chip-590 MuiChip-deletable-943"]');
+        cy.wait(2000);
+        cy.contains('Chapter - front').should('be.be.visible');
+        cy.wait(2000);
     });
 });
