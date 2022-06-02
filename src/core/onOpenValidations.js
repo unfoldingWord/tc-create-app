@@ -15,31 +15,78 @@
 */
 import * as tsvparser from 'uw-tsv-parser';
 
+// legacy note format 
 const onOpenValidationTn9 = (content, url) => {
+  console.log("... on open matched a legacy note format.")
   const tsvHeader = "Book\tChapter\tVerse\tID\tSupportReference\tOrigQuote\tOccurrence\tGLQuote\tOccurrenceNote";
   const numColumns = 9;
   const idcolumn = 3; //zero based
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
+
+// Note TSV formats
 const onOpenValidationTn7 = (content, url) => {
+  console.log("... on open matched a Note format.")
   const tsvHeader = "Reference\tID\tTags\tSupportReference\tQuote\tOccurrence\tNote";
   const numColumns = 7;
   const idcolumn = 1; //zero based
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
+const onOpenValidationSn = (content, url) => {
+  // same as 7 col TN
+  return onOpenValidationTn7(content, url);
+}
+const onOpenValidationObsSn = (content, url) => {
+  // same as 7 col TN
+  return onOpenValidationTn7(content, url);
+}
+const onOpenValidationObsTn = (content, url) => {
+  // same as 7 col TN
+  return onOpenValidationTn7(content, url);
+}
+
+// Word list formats
 const onOpenValidationTwl = (content, url) => {
+  console.log("... on open matched a TWL format.")
   const tsvHeader = "Reference\tID\tTags\tOrigWords\tOccurrence\tTWLink";
   const numColumns = 6;
   const idcolumn = 1; //zero based
   return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
 }
+
+// Questions formats
+const onOpenValidationTq = (content, url) => {
+  console.log("... on open matched a Question format.")
+  const tsvHeader = "Reference\tID\tTags\tQuote\tOccurrence\tQuestion\tResponse";
+  const numColumns = 7;
+  const idcolumn = 1; //zero based
+  return onOpenValidationTsvGeneric(content, url, tsvHeader, numColumns, idcolumn);
+}
+const onOpenValidationSq = (content, url) => {
+  // same as tQ
+  return onOpenValidationTq(content, url);
+}
+const onOpenValidationObsTq = (content, url) => {
+  // same as tQ
+  return onOpenValidationTq(content, url);
+}
+const onOpenValidationObsSq = (content, url) => {
+  // same as tQ
+  return onOpenValidationTq(content, url);
+}
+
+/*
+  Actual checking happens here after the above compute the extra info needed
+*/
 const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolumn) => {
   const { data, header } = tsvparser.tsvStringToTable(content);
   let idarray = [];
   let idarrayline = [];
   let criticalNotices = [];
   const incomingTsvHeader = header.join('\t');
-
+  console.log("onOpenValidationTsvGeneric() headers, 'is' vs 'should be':",
+    tsvHeader, incomingTsvHeader
+  );
   // is the content correct?
   if (tsvHeader !== incomingTsvHeader) {
     criticalNotices.push([
@@ -120,20 +167,38 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
       }
     }
   }
-
+  console.log("Number of on open notices found:", criticalNotices.length)
   return criticalNotices;
 }
 
 export const onOpenValidation = (filename, content, url) => {
+  console.log("Running on-open-validation for filename:", filename);
   const link = url.replace('/src/', '/blame/');
   let criticalNotices = [];
 
-  if (filename.match(/^tn_...\.tsv$/)) {
+  if (filename.match(/^tn_OBS\.tsv$/)) {
+    criticalNotices = onOpenValidationObsTn(content, link);
+  } else if (filename.match(/^tn_...\.tsv$/)) {
     criticalNotices = onOpenValidationTn7(content, link);
   } else if (filename.match(/tn_..-...\.tsv$/)) {
     criticalNotices = onOpenValidationTn9(content, link);
+  } else if (filename.match(/^sn_OBS\.tsv$/)) {
+    criticalNotices = onOpenValidationObsSn(content, link);
+  } else if (filename.match(/^sn_...\.tsv$/)) {
+    criticalNotices = onOpenValidationSn(content, link);
   } else if (filename.match(/^twl_...\.tsv$/)) {
     criticalNotices = onOpenValidationTwl(content, link);
+  } else if (filename.match(/^tq_OBS\.tsv$/)) {
+    criticalNotices = onOpenValidationObsTq(content, link);
+  } else if (filename.match(/^tq_...\.tsv$/)) {
+    criticalNotices = onOpenValidationTq(content, link);
+  } else if (filename.match(/^sq_OBS\.tsv$/)) {
+    criticalNotices = onOpenValidationObsSq(content, link);
+  } else if (filename.match(/^sq_...\.tsv$/)) {
+    criticalNotices = onOpenValidationSq(content, link);
   }
+
+
+
   return criticalNotices;
 }
