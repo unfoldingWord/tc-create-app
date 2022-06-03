@@ -84,9 +84,6 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
   let idarrayline = [];
   let criticalNotices = [];
   const incomingTsvHeader = header.join('\t');
-  console.log("onOpenValidationTsvGeneric() headers, 'is' vs 'should be':",
-    tsvHeader, incomingTsvHeader
-  );
   // is the content correct?
   if (tsvHeader !== incomingTsvHeader) {
     criticalNotices.push([
@@ -102,7 +99,6 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
     let firstdiff = -1;
     let maxlength = Math.max(tsvHeader.length, incomingTsvHeader.length);
     for (let i = 0; i < maxlength; i++) {
-      //console.log("s vs t:", tsvHeader[i], rows[0][i]);
       if (tsvHeader.charCodeAt(i) !== incomingTsvHeader.charCodeAt(i)) {
         firstdiff = i;
         break;
@@ -142,12 +138,12 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
       let location = idarray.indexOf(cols[idcolumn]);
       if (location === -1) {
         idarray.push(cols[idcolumn]);
-        idarrayline.push(i);
+        idarrayline.push(i + 1);
       } else {
         criticalNotices.push([
           `${link}#L${line}`,
           `${line}`,
-          `Row ID ${cols[idcolumn]} is a duplicate of ID on row ${idarrayline[location + 1]}`
+          `Row ID ${cols[idcolumn]} is a duplicate of ID on row ${idarrayline[location]}`
         ])
       }
 
@@ -172,7 +168,6 @@ const onOpenValidationTsvGeneric = (content, link, tsvHeader, numColumns, idcolu
 }
 
 export const onOpenValidation = (filename, content, url) => {
-  console.log("Running on-open-validation for filename:", filename);
   const link = url.replace('/src/', '/blame/');
   let criticalNotices = [];
 
