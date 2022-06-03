@@ -3,7 +3,6 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-  useEffect
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
@@ -22,7 +21,6 @@ import { SERVER_URL } from '../../core/state.defaults';
 import { AppContext } from '../../App.context';
 import useValidation from '../../hooks/useValidation';
 import RowHeader from './RowHeader';
-import { usePermalinks } from '@gwdevs/permalinks-hooks';
 
 import {
   columnNamesFromContent,
@@ -31,6 +29,7 @@ import {
   compositeKeyIndicesFromColumnNames,
   generateRowId,
 } from './helpers';
+import useQueryOptions from '../../features/permalinks/useQueryOptions';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -103,45 +102,14 @@ export default function TranslatableTSV({
     return rowId;
   }, [columnNames, delimiters]);
 
-  const [options, setOptions] = useState({
-    page: 0,
-    rowsPerPage: 25,
-    rowsPerPageOptions: [10, 25, 50, 100],
+  const { options, extraColumns } = useQueryOptions({
+    defaultOptions: {
+      page: 0,
+      rowsPerPage: 25,
+      rowsPerPageOptions: [10, 25, 50, 100],
+    },
+    columnNames
   });
-
-  const { query } = usePermalinks({});
-
-  useEffect(() => {
-    const exludedFromSearch = ['columns', 'check'];
-
-    if (!query) return;
-
-    //Sets searchText to first searchable param in query string.
-    Object.keys(query).forEach((key) => {
-      if (!exludedFromSearch.includes(key) && !options?.searchText) {
-        setOptions((options) => ({ ...options, searchText: query[key] }));
-      }
-    });
-
-  },[query,options.searchText]);
-
-  const [extraColumns, setExtraColumns] = useState([]);
-
-  useEffect(() => {
-    if (query && columnNames && !extraColumns.length) {
-      const queryColumns = query.columns?.split(',');
-      const validColumns = columnNames.map(column => queryColumns && queryColumns.includes(column) && column) || [];
-
-      const columnsShowDefault = columnNames.map(column =>
-        query[column] && column
-      );
-      setExtraColumns([
-        ...columnsShowDefault,
-        ...validColumns,
-      ]);
-    }
-  }, [query, columnNames, extraColumns]);
-  
 
   const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => {
     const _props = {
@@ -160,7 +128,7 @@ export default function TranslatableTSV({
       rowHeader,
       compositeKeyIndices: compositeKeyIndicesFromColumnNames({ columnNames }),
       columnsFilter: columnsFilterFromColumnNames({ columnNames }),
-      columnsShowDefault: [...new Set([...columnsShowDefaultFromColumnNames({ columnNames }), ...extraColumns])],
+      columnsShowDefault: [...columnsShowDefaultFromColumnNames({ columnNames }), ...extraColumns],
     };
 
     return _config;

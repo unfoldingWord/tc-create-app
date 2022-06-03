@@ -37,8 +37,8 @@ export default function App() {
     setResumedState(_resumedState);
   }, []);
 
-  useEffect(() => { 
-      resumeState();
+  useEffect(() => {
+    resumeState();
   }, [resumeState]);
 
   const props = { ...filteredState };

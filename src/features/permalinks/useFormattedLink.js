@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useDeepCompareEffect } from 'use-deep-compare';
 import useStateKeys from './useStateKeys';
 import { useLocation } from '@gwdevs/permalinks-hooks';
 
@@ -7,7 +8,7 @@ export default function useFormattedLink({ filepath, organization, sourceReposit
   const [formattedLink, setFormattedLink] = useState();
   const { search } = useLocation();
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const entry = 'project';
     const org = keys?.organization;
     const lang = keys?.language;

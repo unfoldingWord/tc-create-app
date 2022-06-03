@@ -1,10 +1,11 @@
-import { useState, useEffect,useCallback } from 'react';
+import { useState } from 'react';
 import { useLanguages } from 'uw-languages-rcl';
 import { usePermalinks } from '@gwdevs/permalinks-hooks';
 import useOrgApi from '../../hooks/api/useOrgApi';
 import useRepoApi from '../../hooks/api/useRepoApi';
 
 import { getLanguage } from '../../components/languages/helpers';
+import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import routes from './routes.json';
 import useStateKeys from './useStateKeys';
 
@@ -18,7 +19,7 @@ export default function usePermalinksState(loadedState) {
   
   const { keys: loadedKeys } = useStateKeys(loadedState);
   
-  const getPermalinkState = useCallback(async () => {
+  const getPermalinkState = useDeepCompareCallback(async () => {
    
     if (!languages?.length || !orgClient || !repoClient || !loadedState) return;
     
@@ -60,7 +61,7 @@ export default function usePermalinksState(loadedState) {
     window.history.replaceState(_permalinkState,'');
   }, [languages, orgClient, repoClient, permalink, loadedKeys, loadedState]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
 
     if (isLoadingPermalink && !loadedState)
       return;
