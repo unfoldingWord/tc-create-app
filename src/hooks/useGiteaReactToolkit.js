@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareEffect } from 'use-deep-compare';
+import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 
 import {
   useAuthentication,
@@ -31,6 +31,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       filepath,
       config: _config,
       contentIsDirty,
+      cachedFile,
     },
     actions: {
       setAuthentication: onAuthentication,
@@ -41,6 +42,8 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCriticalValidationErrors,
       setCacheFileKey,
       setCacheWarningMessage,
+      setCachedFile,
+      clearCachedFile,
     },
   } = applicationStateReducer;
 
@@ -92,10 +95,12 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   }, [setCriticalValidationErrors]);
 
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
+    // console.log("tcc // _onLoadCache", html_url, file);
     if (html_url) {
       let _cachedFile = await loadFileCache(html_url);
 
       if (_cachedFile && file) {
+        setCachedFile(_cachedFile);
         // console.log("tcc // file", file, html_url);
         // console.log("tcc // cached file", _cachedFile);
 
@@ -114,15 +119,15 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
           setCacheFileKey(html_url);
           setCacheWarningMessage(_cacheWarningMessage);
-        };
+        }
       };
 
       return _cachedFile;
     }
-  }, [setCacheFileKey, setCacheWarningMessage]);
+  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
 
   const _onSaveCache = useCallback(({ file, content }) => {
-    //console.log("tcc // _onSaveCache", file, content);
+    // console.log("tcc // _onSaveCache", file, content);
     if (file) {
       saveFileCache(file, content);
     }
@@ -145,26 +150,47 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
   });
 
-  let defaultContent;
+  const { state: sourceFile } = sourceFileHook;
 
-  if (sourceRepository?.id === targetRepository?.id) {
-    defaultContent = sourceFileHook?.state?.content;
-  } else {
-    defaultContent = sourceFileHook?.state?.publishedContent;
-    // sourceFile.state.content = defaultContent; // TODO: NEVER SET STATE LIKE THIS
-  };
+  const defaultContent = useDeepCompareMemo(() => {
+    let _defaultContent;
+
+    const filepathsExist = (!!filepath && !!sourceFile?.filepath)
+    const filepathsMatch = (filepath === sourceFile?.filepath);
+    const sourceFileIsReady = (filepathsExist && filepathsMatch);
+
+    if (sourceFileIsReady) {
+      const unfoldingWordOrganization = (sourceRepository?.id === targetRepository?.id);
+
+      if (unfoldingWordOrganization) { // uW Content creators use same organization and source/target repos
+        _defaultContent = sourceFile?.content;
+      } else { // non-uW translators use repo under another organization
+        _defaultContent = sourceFile?.publishedContent;
+      };
+    };
+
+    return _defaultContent;
+  }, [filepath, sourceFile, sourceRepository, targetRepository]);
+
+  const readyForTargetFile = !!defaultContent;
 
   const targetFileHook = useFile({
     config,
     authentication,
     repository: targetRepository,
-    filepath,
+    filepath: (readyForTargetFile ? filepath : undefined),
     onFilepath: setFilepath,
     defaultContent,
     onOpenValidation: _onOpenValidation,
     onLoadCache: _onLoadCache,
     onSaveCache: _onSaveCache,
   });
+
+  useDeepCompareEffect(() => {
+    if (cachedFile && targetFileHook?.state?.html_url !== cachedFile?.html_url) {
+      clearCachedFile();
+    };
+  }, [cachedFile, targetFileHook, clearCachedFile]);
 
   useDeepCompareEffect(() => {
     if (authentication && sourceRepository && organization) {
