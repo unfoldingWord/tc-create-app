@@ -30,18 +30,17 @@ describe('Parallel scripture viewer toggle', function () {
         cy.contains('Introduction to Titus');
     });
     it('select filter', function () {
-        /** Select file */
+        /** Select filter */
         cy.get('[data-testid="Filter Table-iconButton"]').click();
     });
     it('select chapter', function () {
-        //     /** Select file */
+        /** Select chapter */
         cy.get('[aria-labelledby="mui-component-select-Chapter"]').click();
         cy.get('[data-value="front"]').click();
         cy.get('[aria-label="Close"]').click();
     });
     it('search for muichip chapter', function () {
-        //     /** Select file */
-        // cy.get('[class= "MuiChip-root-936 MUIDataTableFilterList-chip-590 MuiChip-deletable-943"]');
+        /** Searching muichip */
         cy.wait(2000);
         cy.contains('Chapter - front').should('be.be.visible');
         cy.wait(2000);

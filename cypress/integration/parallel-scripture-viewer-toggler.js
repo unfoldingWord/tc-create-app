@@ -30,19 +30,23 @@ describe('Parallel scripture viewer toggle', function () {
         cy.contains('Introduction to Titus');
     });
     it('Select hamburger', function () {
-        /** Select language */
+        /** Select hamburger icon */
         cy.get('[data-test="drawer-menu-button"]').click();
     });
     it('Select view toggle', function () {
+        /** Select view toggle button in drawer */
         cy.get('[aria-label="secondary checkbox"]').click();
     });
     it('Select menu close button', function () {
+        /** Select close button in drawer */
         cy.get('[data-test="drawer-menu-close-button"]').click();
     });
     it('Select pagination next', function () {
+        /** Select pagination icon */
         cy.get('[data-testid="pagination-next"]').click();
     });
     it('Select Expand Scripture Pane', function () {
+        /** Select Expand Scripture icon */
         cy.get('[aria-label="Expand Scripture Pane"]').click({ multiple: true, timeout: 19000 });
     });
 });

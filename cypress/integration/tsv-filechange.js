@@ -31,17 +31,9 @@ describe('File Change', function () {
     cy.contains('en_tn_57-TIT.tsv').should('be.be.visible').click();
   });
   it('File Change', function () {
-    /**logout process */
+    /**changing file */
     cy.get('[data-test=drawer-menu-button]').click();
     cy.contains('en_tn_18-JOB.tsv').click();
     cy.contains('Introduction to Job', { timeout: 20000 });
-    //   cy.contains('# Introduction to Titus');
-    //   cy.get('[data-test=logout-button]').click();
   });
-  // it('preview markdown', function () {
-  //     /**logout process */
-  //     cy.get('[data-test=preview-icon]').click();
-  //     cy.contains('Introduction to Titus')
-  //   //   cy.get('[data-test=logout-button]').click();
-  //   });
 });
