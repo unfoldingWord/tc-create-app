@@ -175,6 +175,17 @@ export const useStateReducer = ({
     };
   }, [state.cacheWarningMessage]);
 
+  const setCachedFile = useCallback((value) => {
+    if (value !== state.cachedFile) {
+      dispatch({ type: 'set_cached_file', value });
+      saveState('cachedFile', value);
+    };
+  }, [state.cachedFile]);
+
+  const clearCachedFile = useCallback(() => {
+    setCachedFile();
+  }, [setCachedFile]);
+
   const actions = {
     setAuthentication,
     setLanguage,
@@ -192,6 +203,8 @@ export const useStateReducer = ({
     setCriticalValidationErrors,
     setCacheFileKey,
     setCacheWarningMessage,
+    setCachedFile,
+    clearCachedFile,
   };
   return { state, actions };
 };

@@ -1,5 +1,6 @@
 import * as cv from 'uw-content-validation';
 import * as csv from '../core/csvMaker';
+import * as parser from 'uw-tsv-parser';
 
 
 // This function was copied from a prior version of the
@@ -155,15 +156,20 @@ export const prepareDataForValidation = ({
   rows,
 }) => {
   // NOTE! the row data on-screen, in-memory does NOT include
-  // the headers. So the initial value of tsvRows will be
-  // the headers.
-  // const _name = targetFileName.split('_');
-  // const langId = _name[0];
-  // const bookId = _name[2].split('-')[1].split('.')[0];
+  // the headers. So first we must get the header. We get the header
+  // from the original target file content. But we use the updated
+  // content for the validation itself.
   const bookId = bookIdFromFilename(targetFileName);
-  let tsvString = targetContent.substring(0, targetContent.indexOf(delimiters.row)) + '\n';
+  // let tsvString = targetContent.substring(0, targetContent.indexOf(delimiters.row)) + '\n';
+  let headerRow = targetContent.substring(0, targetContent.indexOf(delimiters.row)) + '\n';
 
-  tsvString = tsvString + rows.map((cells) => cells.join(delimiters.cell)).join(delimiters.row);
+  // tsvString = tsvString + rows.map((cells) => cells.join(delimiters.cell)).join(delimiters.row);
+  // Now we parse *and* decode the updated target content, which is in 
+  // a 2d array (ie, a table), in the variable "rows"
+  let tsvString = parser.tableToTsvString(rows).data;
+  // now put the header row string on the front 
+  tsvString = headerRow + tsvString;
+
 
   const resourceCode = resourceCodeFromFilename(targetFileName);
   const cvFunction = selectCvFunction(resourceCode)

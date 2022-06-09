@@ -49,7 +49,13 @@ export default function RowHeader({
   } = useDeepCompareMemo(() => {
     let chapter, verse, quote, occurrence;
 
-    const columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
+    let columnNamesToUse = [];
+    if (columnNames.includes('OrigWords')) {
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigWords', 'Occurrence'];
+    } else {
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
+    }
+
     const indices = columnNamesToUse.map(columnName => {
       const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
       return index;
@@ -108,16 +114,19 @@ export default function RowHeader({
       );
     };
     return _component;
-  }, [viewed, bookId, chapter, verse, quote, occurrence, actionsMenu, styles]);
+  }, [viewed, bookId, chapter, verse, quote, occurrence, actionsMenu, styles, open]);
 
   const defaultHeader = useDeepCompareMemo(() => (
-    <div style={styles.defaultHeader}>
-      <Typography variant='h6' style={styles.title}>
-        {`${bookId.toUpperCase()} ${chapter}:${verse}`}
-      </Typography>
-      <Waypoint onLeave={onLeave} />
-      {actionsMenu}
-    </div>
+    <>
+      {console.log(chapter, verse)}
+      <div style={styles.defaultHeader}>
+        <Typography variant='h6' style={styles.title}>
+          {chapter && verse !== undefined ? `${bookId.toUpperCase()} ${chapter}:${verse}` : `${bookId.toUpperCase()} ${chapter}`}
+        </Typography>
+        <Waypoint onLeave={onLeave} />
+        {actionsMenu}
+      </div>
+    </>
   ), [styles, bookId, chapter, verse]);
 
   const skeleton = (
