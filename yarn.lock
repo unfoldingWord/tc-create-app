@@ -1511,10 +1511,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@gwdevs/permalinks-hooks@^1.0.5-beta.1":
-  version "1.0.5-beta.1"
-  resolved "https://registry.yarnpkg.com/@gwdevs/permalinks-hooks/-/permalinks-hooks-1.0.5-beta.1.tgz#7ef310f548ab87fc89944e9f8ea5c346bd98188b"
-  integrity sha512-TjPsW0cHVTZZ/qc2C2djqQWY/TeuQ+l6YK5O4QnSl/JKvFqcVZA8ANHQozWlGEuXhDtFwQic01V5RlnpDD6ktw==
+"@gwdevs/permalinks-hooks@^1.1.0-beta.1":
+  version "1.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@gwdevs/permalinks-hooks/-/permalinks-hooks-1.1.0-beta.1.tgz#bb872ff6b2f7410ac463b55964995074c8b2a18f"
+  integrity sha512-OTo/q1Kq3Ksv4ffp4bmuNpQitGxSeHzfsTu0pJwvwPE2h9bJFG5ZXZDBKl7wsL4ZnCQCqY5U7UsAkyT2EoCw4Q==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
