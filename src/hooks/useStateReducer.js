@@ -194,7 +194,7 @@ export const useStateReducer = ({
   const clearCachedFile = useCallback(() => {
     setCachedFile();
   }, [setCachedFile]);
-  
+
   const actions = {
     setAuthentication,
     setLanguage,

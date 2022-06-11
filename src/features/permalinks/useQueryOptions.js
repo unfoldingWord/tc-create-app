@@ -34,6 +34,6 @@ export default function useQueryOptions({defaultOptions,columnNames}) {
       ]);
     }
   }, [query, columnNames]);
-  
+
   return {options,extraColumns}
 }
