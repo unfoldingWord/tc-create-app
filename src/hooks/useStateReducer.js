@@ -84,6 +84,15 @@ export const useStateReducer = ({
     setFilepath();
   }, [setFilepath, setLanguage, setOrganization, setSourceRepository]);
 
+  const setState = useCallback((value) => {
+    const { organization, sourceRepository, language, filePath } = value;
+    dispatch({ type: 'set_state', value });
+    saveState('organization', organization);
+    saveState('sourceRepository', sourceRepository);
+    saveState('language', language);
+    saveState('filePath', filePath);
+  }, []);
+
   const setAuthentication = useCallback((value) => {
     if (JSON.stringify(value) !== JSON.stringify(state.authentication)) {
       dispatch({ type: 'set_authentication', value });
@@ -185,7 +194,7 @@ export const useStateReducer = ({
   const clearCachedFile = useCallback(() => {
     setCachedFile();
   }, [setCachedFile]);
-
+  
   const actions = {
     setAuthentication,
     setLanguage,
@@ -205,6 +214,7 @@ export const useStateReducer = ({
     setCacheWarningMessage,
     setCachedFile,
     clearCachedFile,
+    setState,
   };
   return { state, actions };
 };

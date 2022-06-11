@@ -20,13 +20,13 @@ export default function useInitialState() {
   const repoClient = useRepoApi();
   const orgClient = useOrgApi();
 
-  const getLocalState = useCallback(async () => {
+  const getLocalState = useCallback(async (authenticated=false) => {
     const authentication = await loadAuthentication('authentication');
-    const organization = await loadState('organization');
-    const language = await loadState('language');
-    const sourceRepository = await loadState('sourceRepository');
-    const resourceLinks = await loadState('resourceLinks');
-    const filepath = await loadState('filepath');
+    const organization = (!authenticated || authentication) && await loadState('organization');
+    const language = (!authenticated || authentication) && await loadState('language');
+    const sourceRepository = (!authenticated || authentication) && await loadState('sourceRepository');
+    const resourceLinks = (!authenticated || authentication) && await loadState('resourceLinks');
+    const filepath = (!authenticated || authentication) && await loadState('filepath');
     return {
       authentication,
       language,
@@ -42,7 +42,7 @@ export default function useInitialState() {
     if (!permalink && isLoadingPermalink) return;
 
     if (!permalink && !isLoadingPermalink) {
-      setInitialState(await getLocalState());
+      setInitialState(await getLocalState(true));
       return;
     }
 
@@ -88,8 +88,6 @@ export default function useInitialState() {
       resourceLinks: null,
     };
     setInitialState(permalinkState);
-    window.history.replaceState(permalinkState, '');
-
   }, [languages,permalink,isLoadingPermalink,repoClient,orgClient]);
 
   useDeepCompareEffect(() => {

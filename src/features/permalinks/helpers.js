@@ -7,3 +7,24 @@ export function getStateKeys(state = {}) {
     filepath: filepath,
   }
 }
+
+export const getFormattedLink = (state) => {
+  const search = window.location.search;
+  const keys = getStateKeys(state);
+  const entry = 'project';
+  const org = keys?.organization;
+  const lang = keys?.language;
+  const repo = keys?.resource;
+  const filepath = keys?.filepath;
+
+  const path = [org, lang, repo, filepath].filter(Boolean).join('/');
+  if (!!path) {
+    const permalink = entry + '/' + path;
+    return search ? permalink + search : permalink;
+  }
+};
+
+export function getHistoryState(state) {
+  const historyState = window.history.state || window.history.replaceState(state, null);
+  return historyState || state;
+}

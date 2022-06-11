@@ -1,6 +1,6 @@
 [
   {
     "entry": "project",
-    "path": ["organization","language","resource","...filepath"]
+    "path": ["organization","resource","language","...filepath"]
   }
 ]

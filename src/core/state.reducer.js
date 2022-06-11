@@ -53,6 +53,9 @@ export const stateReducer = (state, action) => {
     case `set_cached_file`:
       _state['cachedFile'] = value;
       break;
+    case `set_state`:
+      _state = value;
+      break;
     default:
       throw new Error(`Unsupported action type: ${action.type}`);
   }
