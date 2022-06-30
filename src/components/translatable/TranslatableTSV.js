@@ -29,6 +29,7 @@ import {
   compositeKeyIndicesFromColumnNames,
   generateRowId,
 } from './helpers';
+import useQueryOptions from '../../features/permalinks/useQueryOptions';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -101,11 +102,14 @@ export default function TranslatableTSV({
     return rowId;
   }, [columnNames, delimiters]);
 
-  const options = {
-    page: 0,
-    rowsPerPage: 25,
-    rowsPerPageOptions: [10, 25, 50, 100],
-  };
+  const { options, extraColumns } = useQueryOptions({
+    defaultOptions: {
+      page: 0,
+      rowsPerPage: 25,
+      rowsPerPageOptions: [10, 25, 50, 100],
+    },
+    columnNames
+  });
 
   const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => {
     const _props = {
@@ -124,11 +128,11 @@ export default function TranslatableTSV({
       rowHeader,
       compositeKeyIndices: compositeKeyIndicesFromColumnNames({ columnNames }),
       columnsFilter: columnsFilterFromColumnNames({ columnNames }),
-      columnsShowDefault: columnsShowDefaultFromColumnNames({ columnNames }),
+      columnsShowDefault: [...columnsShowDefaultFromColumnNames({ columnNames }), ...extraColumns],
     };
 
     return _config;
-  }, [columnNames, rowHeader]);
+  }, [columnNames, extraColumns, rowHeader]);
 
   return (
     <ResourcesContextProvider

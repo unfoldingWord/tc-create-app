@@ -1562,6 +1562,11 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
+"@gwdevs/permalinks-hooks@^1.1.0-beta.1":
+  version "1.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@gwdevs/permalinks-hooks/-/permalinks-hooks-1.1.0-beta.1.tgz#bb872ff6b2f7410ac463b55964995074c8b2a18f"
+  integrity sha512-OTo/q1Kq3Ksv4ffp4bmuNpQitGxSeHzfsTu0pJwvwPE2h9bJFG5ZXZDBKl7wsL4ZnCQCqY5U7UsAkyT2EoCw4Q==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -5605,6 +5610,13 @@ dayjs@^1.9.3:
   version "1.11.3"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.3.tgz#4754eb694a624057b9ad2224b67b15d552589258"
   integrity sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==
+
+dcs-js@^1.2.0-beta.1:
+  version "1.2.0-beta.1"
+  resolved "https://registry.yarnpkg.com/dcs-js/-/dcs-js-1.2.0-beta.1.tgz#f907ff6e5bbe6de8e81744dc657fd153c64e0c24"
+  integrity sha512-jxors4rKSgdQKwtkTXyhl5uuSiUC4w9Wk6sER65P2ub8tiThzmTph7vsJPRPvO+GIWmNBZopQfF91IiXqlMYjg==
+  dependencies:
+    axios "^0.21.1"
 
 debounce-promise@^3.1.0:
   version "3.1.2"
