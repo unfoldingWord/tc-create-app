@@ -15,7 +15,7 @@ export default function App() {
     : (
         <ConfirmContextProvider>
           <AppContextProvider {...props}>
-            <PermalinksHandler intialState={initialState}>
+            <PermalinksHandler>
               <Layout />
             </PermalinksHandler>
           </AppContextProvider>
