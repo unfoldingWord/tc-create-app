@@ -6,9 +6,7 @@ import { loadState, saveState, loadAuthentication } from '../../core/persistence
 import routes from './routes.json';
 import { useLanguages } from 'uw-languages-rcl';
 import { usePermalinks } from '@gwdevs/permalinks-hooks';
-import useOrgApi from '../../hooks/api/useOrgApi';
-import useRepoApi from '../../hooks/api/useRepoApi';
-
+import { getUser, readRepo } from "gitea-react-toolkit";
 import { getLanguage } from '../../components/languages/helpers';
 import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 
@@ -16,9 +14,6 @@ export default function useInitialState() {
   const [initialState, setInitialState] = useState();
   const { state: languages } = useLanguages();
   const { permalink, isLoading: isLoadingPermalink } = usePermalinks({ routes });
-
-  const repoClient = useRepoApi();
-  const orgClient = useOrgApi();
 
   const getLocalState = useCallback(async (authenticated=false) => {
     const authentication = await loadAuthentication('authentication');
@@ -63,7 +58,7 @@ export default function useInitialState() {
 
     const organization = localState.organization?.username === permalink.organization
       ? localState.organization
-      : permalink.organization && await orgClient.orgGet(permalink.organization).then(({ data }) => {
+      : permalink.organization && await getUser({username: permalink.organization}).then(({ data }) => {
         saveState('organization', data);
         return data
       }).catch(err => console.warn(err))
@@ -71,7 +66,7 @@ export default function useInitialState() {
     const sourceRepoName = 'en_' + permalink.resource;
     const sourceRepository = localState.sourceRepository?.full_name.split('/')[1].split('_')[1] === permalink.resource
       ? localState.sourceRepository
-      : permalink.resource && await repoClient.repoGet('unfoldingWord', sourceRepoName).then(({ data }) => {
+      : permalink.resource && await readRepo({owner:'unfoldingWord', repo:sourceRepoName}).then(({ data }) => {
         data.tree_url = `api/v1/repos/unfoldingWord/${sourceRepoName}/git/trees/master`;
         saveState('sourceRepository', data);
         return data;
@@ -88,7 +83,7 @@ export default function useInitialState() {
       resourceLinks: null,
     };
     setInitialState(permalinkState);
-  }, [languages,permalink,isLoadingPermalink,repoClient,orgClient]);
+  }, [languages,permalink,isLoadingPermalink]);
 
   useDeepCompareEffect(() => {
     if (!initialState) setState();
