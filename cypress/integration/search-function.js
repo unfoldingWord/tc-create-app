@@ -32,6 +32,7 @@ describe('Parallel scripture viewer toggle', function () {
     it('select search', function () {
         /** Select search */
         cy.get('[data-testid="Search-iconButton"]').click().type('important');
+        cy.get('[data-test="preview-icon"]').click()
     });
     it('search word', function () {
         /** Search word */
