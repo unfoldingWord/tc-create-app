@@ -12,11 +12,13 @@ describe('checking all resources are loaded with content', function () {
   it('Select Organization', function () {
     /** Select organization */
     cy.wait(1000);
+    // cy.contains('translate_test').click();
     cy.contains('unfoldingWord').click();
   });
   it('Select Resource', function () {
     /** Select resource */
     cy.wait(1000);
+    // cy.contains('Study Questions in TSV files for Bible books').click();
     cy.contains('Translation Notes').click();
   });
   it('Select Language', function () {
@@ -41,6 +43,7 @@ describe('checking all resources are loaded with content', function () {
   it('Select en_tw File', function () {
     /** Select file */
     cy.contains('Translation Words').should('be.be.visible').click();
+    cy.wait(2000);
     cy.contains('bible/').click();
     cy.contains('kt/').click();
     cy.contains('abomination.md').should('be.be.visible').click();
@@ -61,18 +64,11 @@ describe('checking all resources are loaded with content', function () {
     cy.contains('I, Paul, write this letter to you, Titus.');
     cy.get('[id="deleteIcon_en_tq"]').click();
   });
-  it('Select en_sq File', function () {
-    /** Select file */
-    cy.contains('Study Questions in TSV files for Bible books').click();
-    cy.contains('sq_TIT.tsv').should('be.be.visible').click();
-    cy.contains('Titus Study Questions');
-    cy.get('[id="deleteIcon_en_sq"]').click();
-  });
   it('Select en_sn File', function () {
     /** Select file */
     cy.contains('Study Notes in TSV files for Bible books').click();
-    cy.contains('sn_TIT.tsv').should('be.be.visible').click();
-    cy.contains('Introduction to Titus');
+    cy.contains('sn_MRK.tsv').should('be.be.visible').click();
+    cy.contains('This is the beginning of the good news');
     cy.get('[id="deleteIcon_en_sn"]').click();
   });
   it('Select en_obs File', function () {
@@ -83,7 +79,6 @@ describe('checking all resources are loaded with content', function () {
     cy.contains('1. The Creation');
     cy.get('[id="deleteIcon_en_obs"]').click();
   });
-
   it('Select en_obs-tq File', function () {
     /** Select file */
     cy.contains('Open Bible Stories Translation Questions').click();
@@ -104,13 +99,14 @@ describe('checking all resources are loaded with content', function () {
     /** Select file */
     cy.contains('Open Bible Stories Study Notes').click();
     cy.contains('sn_OBS.tsv').click();
-    cy.contains('The term God refers to the eternal');
+    cy.contains('The term **God** refers');
     cy.get('[id="deleteIcon_en_obs-sn"]').click();
   });
   it('Select en_obs-sq File', function () {
     /** Select file */
     cy.contains('Open Bible Stories Study Questions').click();
     cy.contains('sq_OBS.tsv').click();
+    cy.wait(2000);
     cy.contains('A Guide to Using the Stories in the OBS');
     cy.get('[id="deleteIcon_en_obs-sq"]').click();
   });
