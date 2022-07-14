@@ -118,7 +118,7 @@ export default function RowHeader({
 
   const defaultHeader = useDeepCompareMemo(() => (
     <>
-      {console.log(chapter, verse)}
+      {/* {console.log(chapter, verse)} */}
       <div style={styles.defaultHeader}>
         <Typography variant='h6' style={styles.title}>
           {chapter && verse !== undefined ? `${bookId.toUpperCase()} ${chapter}:${verse}` : `${bookId.toUpperCase()} ${chapter}`}

@@ -84,7 +84,7 @@ function useRetrySave() {
       // We are using a user branch so autosave the cache.
       await saveCache(content);
     }
-  }, [saveCache]);
+  }, [saveCache, branch, html_url]);
 
   const saveRetry = useCallback(async ({
     username,
