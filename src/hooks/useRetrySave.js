@@ -17,11 +17,14 @@ function useRetrySave() {
       authenticationHook,
       targetFileHook,
     },
+    state: {
+      targetRepository: { branch }
+    },
   } = useContext(AppContext);
 
   const { save, saveCache } = targetFileHook.actions || {};
+  const { html_url } = targetFileHook.state || {};
   const { onLoginFormSubmitLogin } = authenticationHook.actions || {};
-
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
   const [doSaveRetry, setDoSaveRetry] = useState(false);
@@ -77,8 +80,11 @@ function useRetrySave() {
   }, [save]);
 
   const autoSaveOnEdit = useCallback(async (content) => {
-    await saveCache(content);
-  }, [saveCache]);
+    if (html_url.includes(branch)) {
+      // We are using a user branch so autosave the cache.
+      await saveCache(content);
+    }
+  }, [saveCache, branch, html_url]);
 
   const saveRetry = useCallback(async ({
     username,

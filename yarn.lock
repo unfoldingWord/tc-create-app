@@ -5585,10 +5585,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.7.tgz#815f9ac6014bd6a6379359d7266bf64c48d3a554"
-  integrity sha512-xvnRpXpKhHO7fkyNossLraZwxoMlFr3mNjE2VLGj371M2Zsf+Ofbo/LA+Jx0TxChv8FLG7wmCjuC+q0Amatwjg==
+datatable-translatable@1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.12.tgz#a6fe5311d4d6d581d7568257db02f9535532b9ae"
+  integrity sha512-B5rNGRlL8e9G9qrN1LvM9uYqUEzqWkb/Ml/8aPNyBBf+nh+STLzeibspW5tebOc7qqra0Y/zU5N3VXnGOM5LAQ==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
@@ -6544,6 +6544,11 @@ eslint-plugin-react-hooks@^1.5.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.7.0.tgz#6210b6d5a37205f0b92858f895a4e827020a7d04"
   integrity sha512-iXTCFcOmlWvw4+TOE8CLWj6yX1GwzT0Y6cUfHHZqWnSk144VmVIRcVGtUAzrLES7C798lmvnt02C7rxaOX1HNA==
+
+eslint-plugin-react-hooks@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.6.0.tgz#4c3e697ad95b77e93f8646aaa1630c1ba607edd3"
+  integrity sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==
 
 eslint-plugin-react-native-globals@^0.1.1:
   version "0.1.2"

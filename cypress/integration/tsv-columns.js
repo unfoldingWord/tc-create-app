@@ -32,13 +32,9 @@ describe('Columns', function () {
   });
   it('columns', function () {
     /**logout process */
-    //   cy.contains('Translation Notes').click();
     cy.get('[data-testid="View Columns-iconButton"]').click();
-    cy.contains('Book').focused().click();
-    cy.contains('Book');
-    cy.contains('TIT');
-    //   cy.contains('rowHeader').should('be.be.visible').click();
-    //   cy.get('[data-testid=pagination-rows]').click();
-    // cy.get('[value=50] input').click();
+    cy.contains('ID').focused().click();
+    cy.get('[aria-label="Close"]').click();
+    cy.contains('m2jl');
   });
 });

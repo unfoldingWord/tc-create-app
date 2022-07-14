@@ -47,6 +47,6 @@ describe('pagination', function () {
     /**select next button */
     cy.get('[data-testid="pagination-next"]').click();
     cy.get('[data-testid="pagination-next"]').click();
-    cy.contains('The second builds on the first.');
+    cy.contains('figs-metaphor');
   });
 });
