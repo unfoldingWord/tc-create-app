@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe('Preview', function () {
   before(() => {
     cy.visit('/');
@@ -30,17 +28,14 @@ describe('Preview', function () {
     /** Select file */
     cy.contains('en_tn_57-TIT.tsv').should('be.be.visible').click();
   });
-  it('preview', function () {
-    /**logout process */
-    // cy.get('#translatableComponent > div > div.MuiToolbar-root-110.MuiToolbar-regular-112.MUIDataTableToolbar-root-95.MuiToolbar-gutters-111 > div.MUIDataTableToolbar-actions-99 > button:nth-child(5)').click();
-    // cy.contains('# Introduction to Titus');
-    // cy.get('#MUIDataTableBodyRow-0 > td:nth-child(2) > div > div > div > div.makeStyles-translation-254 > div:nth-child(1) > div.MuiGrid-root-266.MuiGrid-item-268.MuiGrid-grid-xs-6-306 > div > pre > code').type('Hello');
-    // cy.get('#translatableComponent > div > div.MuiToolbar-root-110.MuiToolbar-regular-112.MUIDataTableToolbar-root-95.MuiToolbar-gutters-111 > div.MUIDataTableToolbar-actions-99 > div > button').click();
-    cy.get('#MUIDataTableBodyRow-0 > td:nth-child(2) > div > div > div > div.makeStyles-translation-254 > div:nth-child(1) > div.MuiGrid-root-266.MuiGrid-item-268.MuiGrid-grid-xs-6-306 > div > div > p').type('Hello');
+  it('Edit Save', function () {
+    /**Edit save process */
+    cy.wait(5000);
+    cy.get('[data-test=id_header-front-intro-m2jl_SupportReference_content]').type('Hello');
     cy.wait(1000);
-    // cy.get('#translatableComponent > div > div.MuiToolbar-root-110.MuiToolbar-regular-112.MUIDataTableToolbar-root-95.MuiToolbar-gutters-111 > div.MUIDataTableToolbar-actions-99 > div > button').click();
+    cy.get('[data-testid=Search-iconButton]').click();
     cy.get('[aria-label="Save"]').click();
-    // cy.get('#translatableComponent > div > div.MuiToolbar-root-110.MuiToolbar-regular-112.MUIDataTableToolbar-root-95.MuiToolbar-gutters-111 > div.MUIDataTableToolbar-actions-99 > div > button > span.MuiIconButton-label-162 > svg').click();
+    cy.log('');
     cy.wait(1000);
   });
 });
