@@ -29,11 +29,11 @@ describe('File Change', function () {
   it('Select File', function () {
     /** Select file */
     cy.contains('en_tn_57-TIT.tsv').should('be.be.visible').click();
-    cy.contains('Introduction to Titus');
+    cy.contains('# Introduction to Titus');
   });
   it('preview markdown', function () {
     /**preview to markdown */
     cy.get('[aria-label="Preview"]').click();
-    cy.contains('# Introduction to Titus');
+    cy.contains('Introduction to Titus');
   });
 });
