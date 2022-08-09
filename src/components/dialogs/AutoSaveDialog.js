@@ -18,6 +18,7 @@ export default function AutoSaveDialog() {
     },
     actions: { setCacheWarningMessage, clearCachedFile },
   } = useContext(AppContext);
+  const [open, setOpen] = React.useState(false);
 
   const handleCloseCachedFile = useCallback(() => {
     // CLEAR cache:
@@ -27,38 +28,53 @@ export default function AutoSaveDialog() {
     setCacheWarningMessage(null);
   }, [cacheFileKey, setCacheWarningMessage, clearCachedFile]);
 
+  const handleClose = useCallback(() => {
+    setCacheWarningMessage(null)
+  })
+
   return (
     <Dialog
       open={cacheWarningMessage != null}
-      onClose={() => setCacheWarningMessage(null)}
+      onClose={() => cacheWarningMessage === 'out of date' ? handleClose : setCacheWarningMessage(null)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Your file was autosaved, but the file was later edited by another process...
-          <p><pre>{cacheWarningMessage}</pre></p>
-          Do you want to keep or discard this file?
+          {(cacheWarningMessage === 'out of date' || cacheWarningMessage === null) ? 'Your branch is more than 2 weeks out of date. Older branches are more likely to conflict with newer work. Please contact your administrator to update your branch.' :
+            <>Your file was autosaved, but the file was later edited by another process...
+              <p><pre>{cacheWarningMessage}</pre></p>
+              Do you want to keep or discard this file?</>}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button
-          data-test-id="ShV9tWcn2YMF7Gau"
-          color="primary"
-          onClick={handleCloseCachedFile}
-        >
-          Discard My AutoSaved File
-        </Button>
-        <Button
-          data-test-id="5LJPR3YqqPx5Ezkj"
-          onClick={() => {// Reset dialog:
-            setCacheWarningMessage(null);
-          }}
-          color="primary"
-          autoFocus
-        >
-          Keep My AutoSaved File
-        </Button>
+        {(cacheWarningMessage === 'out of date' || cacheWarningMessage === null) ? <>
+          <Button
+            data-test-id="out of date"
+            color="primary"
+            onClick={handleClose}
+          >
+            OK
+          </Button>
+        </> :
+          <>
+            <Button
+              data-test-id="ShV9tWcn2YMF7Gau"
+              color="primary"
+              onClick={handleCloseCachedFile}
+            >
+              Discard My AutoSaved File
+            </Button>
+            <Button
+              data-test-id="5LJPR3YqqPx5Ezkj"
+              onClick={() => {// Reset dialog:
+                setCacheWarningMessage(null);
+              }}
+              color="primary"
+              autoFocus
+            >
+              Keep My AutoSaved File
+            </Button></>}
       </DialogActions>
     </Dialog>
   );
