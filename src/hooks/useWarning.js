@@ -40,7 +40,6 @@ export function useWarning(applicationStateReducer) {
                     const date1 = new Date(masterBranch?.commit.timestamp);
                     const date2 = new Date(branch?.commit.timestamp);
                     date2.setDate(date2.getDate() + 14);
-                    console.log(date2);
                     if (date2 <= date1) {
                         setCacheWarningMessage('out of date');
                         console.log("WARNING - BRANCH IS OLD")
