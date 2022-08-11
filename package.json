@@ -34,7 +34,7 @@
     "@material-ui/lab": "4.0.0-alpha.60",
     "@material-ui/styles": "^4.11.3",
     "axios": "^0.21.0",
-    "datatable-translatable": "1.0.12",
+    "datatable-translatable": "1.0.12-beta.r.7",
     "deep-freeze": "^0.0.1",
     "gitea-react-toolkit": "2.2.1",
     "lodash.isequal": "^4.5.0",

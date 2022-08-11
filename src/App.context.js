@@ -31,13 +31,13 @@ export function AppContextProvider({
   });
 
   const giteaReactToolkit = useGiteaReactToolkit({ state, actions });
-  const waring = useWarning({ state, actions })
+  const warning = useWarning({ state, actions })
 
   const value = {
     state,
     actions,
     giteaReactToolkit,
-    waring,
+    warning,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

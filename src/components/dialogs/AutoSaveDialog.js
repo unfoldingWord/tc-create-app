@@ -18,7 +18,6 @@ export default function AutoSaveDialog() {
     },
     actions: { setCacheWarningMessage, clearCachedFile },
   } = useContext(AppContext);
-  const [open, setOpen] = React.useState(false);
 
   const handleCloseCachedFile = useCallback(() => {
     // CLEAR cache:
@@ -28,14 +27,10 @@ export default function AutoSaveDialog() {
     setCacheWarningMessage(null);
   }, [cacheFileKey, setCacheWarningMessage, clearCachedFile]);
 
-  const handleClose = useCallback(() => {
-    setCacheWarningMessage(null)
-  })
-
   return (
     <Dialog
       open={cacheWarningMessage != null}
-      onClose={() => cacheWarningMessage === 'out of date' ? handleClose : setCacheWarningMessage(null)}
+      onClose={() => setCacheWarningMessage(null)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -52,7 +47,7 @@ export default function AutoSaveDialog() {
           <Button
             data-test-id="out of date"
             color="primary"
-            onClick={handleClose}
+            onClick={() => setCacheWarningMessage(null)}
           >
             OK
           </Button>
