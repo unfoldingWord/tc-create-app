@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useStateReducer } from './hooks/useStateReducer';
 import { useGiteaReactToolkit } from './hooks/useGiteaReactToolkit';
+import { useWarning } from './hooks/useWarning';
 
 export const AppContext = React.createContext();
 
@@ -30,11 +31,13 @@ export function AppContextProvider({
   });
 
   const giteaReactToolkit = useGiteaReactToolkit({ state, actions });
+  const warning = useWarning({ state, actions })
 
   const value = {
     state,
     actions,
     giteaReactToolkit,
+    warning,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
