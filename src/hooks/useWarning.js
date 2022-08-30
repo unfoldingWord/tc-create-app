@@ -46,8 +46,8 @@ export function useWarning(applicationStateReducer) {
       }
     };
     compareBranches();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceRepository, targetRepository, config]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 }
 
 useWarning.propTypes = {
