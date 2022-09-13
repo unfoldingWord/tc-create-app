@@ -46,6 +46,7 @@ export const generateRowId = ({
 };
 
 export const compositeKeyIndicesFromColumnNames = ({ columnNames }) => {
+  // const columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'ID'];
   const columnNamesToUse = ['ID'];
 
   const indices = columnNamesToUse.map(columnName => {
