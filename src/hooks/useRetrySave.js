@@ -65,6 +65,7 @@ function useRetrySave() {
 
     try {
       await save(content);
+      saveCache(null)
     } catch (error) {
       const { isRecoverable } = parseError({ error });
 
