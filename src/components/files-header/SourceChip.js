@@ -42,8 +42,8 @@ export default function SourceChip({
     // https://qa.door43.org/unfoldingWord/en_tn/src/tag/v47/en_tn_66-JUD.tsv
     const prodTag = sourceRepository.catalog.prod.branch_or_tag_name;
     label = `${sourceLanguage.languageName} - ${sourceRepository.full_name}/${prodTag}`;
-    openDcsLink = SERVER_URL + '/' + Path.join('unfoldingword', sourceRepository.name, 'src', 'tag', prodTag, sourceFilepath);
-    licenseLink = SERVER_URL + '/' + Path.join('unfoldingword', sourceRepository.name, 'src', 'tag', prodTag, 'LICENSE.md');
+    openDcsLink = SERVER_URL + '/' + Path.join('unfoldingWord', sourceRepository.name, 'src', 'tag', prodTag, sourceFilepath);
+    licenseLink = SERVER_URL + '/' + Path.join('unfoldingWord', sourceRepository.name, 'src', 'tag', prodTag, 'LICENSE.md');
   };
 
   const openLink = useCallback((link) => window.open(link, '_blank'), []);
