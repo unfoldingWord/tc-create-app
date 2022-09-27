@@ -15180,10 +15180,10 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.3.1.tgz#0e25990c3a72a67c0db84ede4f6da63869f772bc"
-  integrity sha512-zG9PkgmF6LJnwfYTcSFCjF2bnqZvrePIkNELPUlLbOq13ysv/sZ639cMCm2DRuwecm7cQlzpWJHWC9ulAQOuUA==
+scripture-resources-rcl@5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.3.2.tgz#bcbfc50b13d2a6e0bc4488b3b9c36df52bce8eea"
+  integrity sha512-MaaxrK2kSNUt36QU473nuBcvluX1DncjIZi3OEdX63bYthokU7Gui7poz6doBnj3CfF5KnGdCaG3HmWPJ54CHQ==
   dependencies:
     deep-freeze "^0.0.1"
     gitea-react-toolkit "1.11.1-rc.1"
