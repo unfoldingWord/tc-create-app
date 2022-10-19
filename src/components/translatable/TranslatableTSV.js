@@ -51,6 +51,7 @@ export default function TranslatableTSV({
       resourceLinks,
       expandedScripture,
       cachedFile,
+      selectedFont,
     },
     actions: { setResourceLinks },
     giteaReactToolkit: {
@@ -152,6 +153,7 @@ export default function TranslatableTSV({
         generateRowId={_generateRowId}
         options={options}
         parser={parser}
+        translationFontFamily={selectedFont}
       />
       {validationComponent}
     </ResourcesContextProvider>

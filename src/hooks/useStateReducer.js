@@ -1,5 +1,6 @@
 import { useCallback, useReducer } from 'react';
 import { ensureRepo } from 'gitea-react-toolkit';
+import WebFontLoader from "webfontloader";
 
 import { stateReducer } from '../core/state.reducer';
 import { saveState } from '../core/persistence';
@@ -41,6 +42,9 @@ export const useStateReducer = ({
     dispatch({ type: 'set_font_scale', value });
   }, []);
 
+  const setSelectedFont = useCallback((value) => {
+    dispatch({ type: 'set_selected_scale', value });
+  }, []);
   const setExpandedScripture = useCallback((value) => {
     dispatch({ type: 'set_expanded_scripture', value });
   }, []);
@@ -190,6 +194,7 @@ export const useStateReducer = ({
     setAuthentication,
     setLanguage,
     setFontScale,
+    setSelectedFont,
     setExpandedScripture,
     setConfig,
     setResourceLinks,

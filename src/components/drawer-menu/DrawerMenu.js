@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import MenuBookOutlined from '@material-ui/icons/MenuBookOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -12,7 +12,17 @@ import {
   Slider,
   Switch,
   RadioGroup, Radio, FormControl, FormLabel, FormControlLabel,
+	Select,
+	MenuItem,
 } from '@material-ui/core';
+
+import {
+	useDetectFonts,
+	useAssumeGraphite,
+	useDetectDir,
+	fontList as fontsArray,
+	graphiteEnabledFontList as graphiteEnabledFontsArray
+} from "font-detect-rhl";
 
 import {
   FormatSize,
@@ -23,16 +33,18 @@ import {
 
 import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
+import FontMenuItem from "./FontMenuItem";
 
 function DrawerMenu() {
   const classes = useStyles();
 
   const {
     state: {
-      fontScale, expandedScripture, validationPriority,
+      fontScale, expandedScripture, validationPriority, selectedFont,
     },
     actions: {
       setFontScale,
+      setSelectedFont,
       setExpandedScripture,
       setValidationPriority,
     },
@@ -47,8 +59,53 @@ function DrawerMenu() {
   const handleValidationPriorityChange = (event, value) => {
     if (value) {
       setValidationPriority(value);
-    };
+    }
   };
+
+
+	const dir = useDetectDir({ text: "example" });
+
+	const notdir = useMemo(() => {
+		const _notdir = dir === "ltr" ? "rtl" : "ltr";
+		return _notdir;
+	}, [dir]);
+
+	const handleFontChange = (event) => {
+		setSelectedFont(event.target.value);
+	};
+
+	// const handleChangeLineHeight = (event) => {
+	// 	setSelectedLineHeight(event.target.value);
+	// };
+
+	// Should Graphite-enabled fonts be detected?
+	const isGraphiteAssumed = useAssumeGraphite({});
+
+	// Detecting Graphite-enabled fonts
+	const detectedGEFonts = useDetectFonts({
+		fonts: isGraphiteAssumed ? graphiteEnabledFontsArray : []
+	});
+
+	const detectedGEFontsComponents =
+		isGraphiteAssumed &&
+		detectedGEFonts.map((font, index) => (
+			<MenuItem key={index} value={font.name} dense>
+				<FontMenuItem font={font} />
+			</MenuItem>
+		));
+
+	const noneDetectedGEMsg = "none detected";
+
+	//Detecting fonts:
+	const detectedFonts = useDetectFonts({ fonts: fontsArray });
+
+	const detectedFontsComponents = detectedFonts.map((font, index) => (
+		<MenuItem key={index} value={font.name} dense>
+			<FontMenuItem font={font} />
+		</MenuItem>
+	));
+
+	const noneDetectedMsg = "none detected";
 
   return (
     <List>
@@ -76,6 +133,36 @@ function DrawerMenu() {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
+	  <ListItem>
+	    <FormControl fullWidth style={{ maxWidth: 250 }}>
+		  <FormLabel id="demo-simple-select-label">Font</FormLabel>
+		  <Select
+			  labelId="demo-simple-select-label"
+			  id="demo-simple-select"
+			  value={selectedFont}
+			  label="Font"
+			  onChange={handleFontChange}
+		  >
+			  <MenuItem key={1} value="monospace">
+				  default
+			  </MenuItem>
+			  {isGraphiteAssumed && <hr />}
+			  <b>
+				  {isGraphiteAssumed && "Graphite-Enabled Fonts:"}
+				  {detectedGEFontsComponents.length === 0 &&
+					  isGraphiteAssumed &&
+					  noneDetectedGEMsg}
+			  </b>
+			  {detectedGEFontsComponents}
+			  <hr />
+			  <b>
+				  Detected Fonts:{" "}
+				  {detectedFontsComponents.length === 0 && noneDetectedMsg}
+			  </b>
+			  {detectedFontsComponents}
+		  </Select>
+	    </FormControl>
+	  </ListItem>
       <ListItem button onClick={handleFeedback}>
         <ListItemIcon className={classes.icon}>
           <FeedbackOutlined />

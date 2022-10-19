@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Lato",
+    "id": "lato-v22",
+    "version": "v22"
+  },
+  {
+    "name": "Montserrat",
+    "id": "montserrat-v23",
+    "version": "v23"
+  },
+  {
+    "name": "Noto Sans JP",
+    "id": "noto-sans-jp-v40",
+    "version": "v40"
+  },
+  {
+    "name": "Open Sans",
+    "id": "open-sans-v28",
+    "version": "v28"
+  },
+  {
+    "name": "Oswald",
+    "id": "oswald-v47",
+    "version": "v47"
+  },
+  {
+    "name": "Poppins",
+    "id": "poppins-v19",
+    "version": "v19"
+  },
+  {
+    "name": "Roboto",
+    "id": "roboto-v29",
+    "version": "v29"
+  },
+  {
+    "name": "Roboto Condensed",
+    "id": "roboto-condensed-v24",
+    "version": "v24"
+  },
+  {
+    "name": "Roboto Mono",
+    "id": "roboto-mono-v13",
+    "version": "v13"
+  },
+  {
+    "name": "Source Sans Pro",
+    "id": "source-sans-pro-v19",
+    "version": "v19"
+  }
+]
