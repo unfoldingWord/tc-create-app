@@ -30,7 +30,6 @@ export default function Layout() {
   const {
     state: {
       fontScale,
-      selectedFont,
       contentIsDirty,
       filepath,
       cacheWarningMessage,
@@ -53,7 +52,7 @@ export default function Layout() {
   });
 
   const style = {
-    app: { fontSize: `${fontScale / 100}em`, fontFamily: selectedFont },
+    app: { fontSize: `${fontScale / 100}em` },
     headroom: { zIndex: '200' },
     workspace: { margin: `${theme.spacing(2)}px` },
   };

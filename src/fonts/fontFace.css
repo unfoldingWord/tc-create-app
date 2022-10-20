@@ -1,0 +1,151 @@
+/*
+Scheherazade-webfont-example.css
+Scheherazade v3.100
+3 Mar 2021
+This file is part of Scheherazade font family (http://software.sil.org/scheherazade)
+and is Copyright (c) 1994-2021 SIL International (http://www.sil.org/),
+with Reserved Font Names "Scheherazade" and "SIL". This Font Software is licensed
+under the SIL Open Font License, Version 1.1. You should have received a copy
+of the license along with this Font Software. If this is not the case, go to
+(http://scripts.sil.org/OFL) for all the details including a FAQ.
+*/
+
+/* use Scheherazade - Regular in .woff format */
+@font-face {
+  font-family: "Scheherazade New";
+  src: url(ScheherazadeNew/ScheherazadeNew-Regular.woff2);
+}
+@font-face {
+  font-family: "Scheherazade New";
+  font-weight: bold;
+  src: url(ScheherazadeNew/ScheherazadeNew-Bold.woff2);
+}
+
+/* use Charis SIL - Regular in .woff2 format */
+@font-face {
+  font-family: "Charis SIL";
+  src: url(CharisSIL/CharisSIL-Regular.woff2);
+}
+/* use Charis SIL - Italic in .woff2 format */
+@font-face {
+  font-family: "Charis SIL";
+  font-style: italic;
+  src: url(CharisSIL/CharisSIL-Italic.woff2);
+}
+/* use Charis SIL - Bold in .woff2 format */
+@font-face {
+	font-family: "Charis SIL";
+	font-weight: bold;
+	src: url(CharisSIL/CharisSIL-Bold.woff2);
+}
+/* use Charis SIL - Bold Italic in .woff2 format */
+@font-face {
+	font-family: "Charis SIL";
+	font-weight: bold;
+	font-style: italic;
+	src: url(CharisSIL/CharisSIL-BoldItalic.woff2);
+}
+
+@font-face {
+  font-family: "Abyssinica SIL";
+  src: url(AbyssinicaSIL/AbyssinicaSIL-Regular.woff2);
+}
+@font-face {
+  font-family: Andika;
+  src: url(Andika/Andika-Regular.woff2);
+}
+/* use Andika - Italic in .woff2 format */
+@font-face {
+  font-family: Andika;
+  font-style: italic;
+  src: url(Andika/Andika-Italic.woff2);
+}
+/* use Andika - Bold in .woff2 format */
+@font-face {
+	font-family: Andika;
+	font-weight: bold;
+	src: url(Andika/Andika-Bold.woff2);
+}
+/* use Andika - Bold Italic in .woff2 format */
+@font-face {
+	font-family: Andika;
+	font-weight: bold;
+	font-style: italic;
+	src: url(Andika/Andika-BoldItalic.woff2);
+}
+
+/* use Annapurna SIL - Regular in .woff format */
+@font-face {
+  font-family: "Annapurna SIL";
+  src: url(AnnapurnaSIL/AnnapurnaSIL-Regular.woff);
+}
+
+@font-face {
+    font-family: "Annapurna SIL";
+    font-weight: bold;
+    src: url(AnnapurnaSIL/AnnapurnaSIL-Bold.woff);
+}
+
+@font-face {
+  font-family: "Awami Nastaliq";
+  src: url(AwamiNastaliq/AwamiNastaliq-Regular.woff2);
+}
+@font-face {
+  font-family: "Awami Nastaliq";
+  font-weight: bold;
+  src: url(AwamiNastaliq/AwamiNastaliq-Bold.woff2);
+}
+@font-face {
+  font-family: "Doulos SIL";
+  src: url(DouloSIL/DoulosSIL-Regular.woff2);
+}
+@font-face {
+  font-family: "Ezra SIL";
+  src: url(EzraSIL/SILEOT.woff);
+}
+
+@font-face {
+  font-family: "Ezra SIL SR";
+  src: url(EzraSIL/SILEOTSR.woff);
+}
+
+/* use Gentium Plus - Regular in .woff format */
+@font-face {
+  font-family: "Gentium Plus";
+  src: url(GentiumBookPlus/GentiumPlus-Regular.woff2);
+}
+/* use Gentium Plus - Italic in .woff2 format */
+@font-face {
+  font-family: "Gentium Plus";
+  font-style: italic;
+  src: url(GentiumBookPlus/GentiumPlus-Italic.woff2);
+}
+/* use Gentium Plus - Bold in .woff2 format */
+@font-face {
+	font-family: "Gentium Plus";
+	font-weight: bold;
+	src: url(GentiumBookPlus/GentiumPlus-Bold.woff2);
+}
+/* use Gentium Plus - Bold Italic in .woff2 format */
+@font-face {
+	font-family: "Gentium Plus";
+	font-weight: bold;
+	font-style: italic;
+	src: url(GentiumBookPlus/GentiumPlus-BoldItalic.woff2);
+}
+
+@font-face {
+    font-family: Harmattan;
+    src: url(Harmattan/Harmattan-Regular.woff);
+}
+
+@font-face {
+  font-family: Lateef;
+  src: url(Lateef/Lateef-Regular.woff2);
+}
+@font-face {
+  font-family: Lateef;
+  font-weight: bold;
+  src: url(Lateef/Lateef-Bold.woff2);
+}
+

@@ -1,10 +1,10 @@
 import { useCallback, useReducer } from 'react';
 import { ensureRepo } from 'gitea-react-toolkit';
-import WebFontLoader from "webfontloader";
 
 import { stateReducer } from '../core/state.reducer';
 import { saveState } from '../core/persistence';
 import defaults from '../core/state.defaults';
+import { getDefaultFontForLanguage } from './fontHelpers'
 
 export const useStateReducer = ({
   authentication,
@@ -25,6 +25,9 @@ export const useStateReducer = ({
     resourceLinks,
     contentIsDirty,
   };
+
+  _defaults.selectedFont = getDefaultFontForLanguage(language)
+
   const [state, dispatch] = useReducer(stateReducer, _defaults);
 
   const setOrganization = useCallback((value) => {

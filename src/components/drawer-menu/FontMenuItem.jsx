@@ -4,7 +4,7 @@ import { Popover, Typography } from "@material-ui/core";
 
 export default function FontMenuItem({ font }) {
 	const [anchorEl, setAnchorEl] = useState(null);
-	const [previewFont, setPreviewFont] = useState({ name: "Arial" });
+	const [previewFont, setPreviewFont] = useState("Arial" );
 
 	const handlePopoverOpen = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -21,13 +21,13 @@ export default function FontMenuItem({ font }) {
 			justifyContent: "space-between"
 		},
 		previewltr: {
-			fontFamily: previewFont.name,
+			fontFamily: previewFont,
 			fontSize: "1em",
 			maxWidth: "35vw",
 			direction: "LTR"
 		},
 		previewrtl: {
-			fontFamily: previewFont.name,
+			fontFamily: previewFont,
 			fontSize: "1em",
 			maxWidth: "35vw",
 			direction: "RTL"
@@ -49,15 +49,15 @@ export default function FontMenuItem({ font }) {
 				onMouseLeave={handlePopoverClose}
 			>
 				<Typography variant="body2" component="div">
-					{font.name}&nbsp;
+					{font}&nbsp;
 				</Typography>
 				<Typography
-					style={{ width: "100%", fontFamily: font.name}}
+					style={{ width: "100%", fontFamily: font}}
 					noWrap
 					variant="body2"
 					component="div"
 				>
-					{font.name}
+					{font}
 				</Typography>
 			</div>
 			<Popover
@@ -95,8 +95,5 @@ export default function FontMenuItem({ font }) {
 }
 
 FontMenuItem.propTypes = {
-	font: PropTypes.shape({
-		name: PropTypes.string,
-		id: PropTypes.string
-	})
+	font: PropTypes.string
 };

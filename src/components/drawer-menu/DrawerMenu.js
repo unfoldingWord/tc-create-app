@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import MenuBookOutlined from '@material-ui/icons/MenuBookOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -17,14 +17,6 @@ import {
 } from '@material-ui/core';
 
 import {
-	useDetectFonts,
-	useAssumeGraphite,
-	useDetectDir,
-	fontList as fontsArray,
-	graphiteEnabledFontList as graphiteEnabledFontsArray
-} from "font-detect-rhl";
-
-import {
   FormatSize,
   Undo,
   FeedbackOutlined,
@@ -34,6 +26,7 @@ import {
 import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
 import FontMenuItem from "./FontMenuItem";
+import defaults from '../../core/state.defaults';
 
 function DrawerMenu() {
   const classes = useStyles();
@@ -62,50 +55,29 @@ function DrawerMenu() {
     }
   };
 
-
-	const dir = useDetectDir({ text: "example" });
-
-	const notdir = useMemo(() => {
-		const _notdir = dir === "ltr" ? "rtl" : "ltr";
-		return _notdir;
-	}, [dir]);
-
 	const handleFontChange = (event) => {
 		setSelectedFont(event.target.value);
 	};
 
-	// const handleChangeLineHeight = (event) => {
-	// 	setSelectedLineHeight(event.target.value);
-	// };
+	const silFonts = [
+    'Scheherazade New',
+    'Charis SIL',
+    'Abyssinica SIL',
+    'Andika',
+    'Annapurna SIL',
+    'Awami Nastaliq',
+    'Doulos SIL',
+    'Gentium Plus',
+    'Harmattan',
+    'Lateef',
+  ];
 
-	// Should Graphite-enabled fonts be detected?
-	const isGraphiteAssumed = useAssumeGraphite({});
 
-	// Detecting Graphite-enabled fonts
-	const detectedGEFonts = useDetectFonts({
-		fonts: isGraphiteAssumed ? graphiteEnabledFontsArray : []
-	});
-
-	const detectedGEFontsComponents =
-		isGraphiteAssumed &&
-		detectedGEFonts.map((font, index) => (
-			<MenuItem key={index} value={font.name} dense>
-				<FontMenuItem font={font} />
-			</MenuItem>
-		));
-
-	const noneDetectedGEMsg = "none detected";
-
-	//Detecting fonts:
-	const detectedFonts = useDetectFonts({ fonts: fontsArray });
-
-	const detectedFontsComponents = detectedFonts.map((font, index) => (
-		<MenuItem key={index} value={font.name} dense>
+	const fontsComponents = silFonts.map((font, index) => (
+		<MenuItem key={index} value={font} dense>
 			<FontMenuItem font={font} />
 		</MenuItem>
 	));
-
-	const noneDetectedMsg = "none detected";
 
   return (
     <List>
@@ -143,23 +115,10 @@ function DrawerMenu() {
 			  label="Font"
 			  onChange={handleFontChange}
 		  >
-			  <MenuItem key={1} value="monospace">
+			  <MenuItem key={1} value={defaults.selectedFont}>
 				  default
 			  </MenuItem>
-			  {isGraphiteAssumed && <hr />}
-			  <b>
-				  {isGraphiteAssumed && "Graphite-Enabled Fonts:"}
-				  {detectedGEFontsComponents.length === 0 &&
-					  isGraphiteAssumed &&
-					  noneDetectedGEMsg}
-			  </b>
-			  {detectedGEFontsComponents}
-			  <hr />
-			  <b>
-				  Detected Fonts:{" "}
-				  {detectedFontsComponents.length === 0 && noneDetectedMsg}
-			  </b>
-			  {detectedFontsComponents}
+			  {fontsComponents}
 		  </Select>
 	    </FormControl>
 	  </ListItem>
