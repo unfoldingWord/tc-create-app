@@ -5642,14 +5642,14 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@1.0.12-beta.r.7:
-  version "1.0.12-beta.r.7"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.12-beta.r.7.tgz#008f19256d4bbbdeddeb7d2c78422db0212efbd4"
-  integrity sha512-Rd/R/imHvUp3MQtfWOrRYGiDLte3CllAP4U+E07RB7LjbxvGnhzSOH8J+5cWQKB65DCFIhBbT0fv4/iOZ9t2ug==
+datatable-translatable@1.0.13-beta:
+  version "1.0.13-beta"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.13-beta.tgz#1ca1a6aaf13d31f3e22ea276c9e529f46f544a4d"
+  integrity sha512-FeiqjlnhRibXxzyHPMKlyUhtkWLt+3cKd4C/U3NVFz0USgxJqsCf/X18J6TaqIwg+96RXR0DB+YYEgVVENjzhQ==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
-    markdown-translatable "2.1.1"
+    markdown-translatable "2.1.2-beta"
     mui-datatables "3.3.1"
     use-deep-compare-effect "^1.3.1"
 
@@ -11103,10 +11103,10 @@ markdown-translatable@1.3.1-rc.1:
     turndown "^7.0.0"
     turndown-plugin-gfm "^1.0.2"
 
-markdown-translatable@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-2.1.1.tgz#da5f0d6b42e73eada0314300362bb5818ecd5cb8"
-  integrity sha512-HYcHo76ooko6Z9bxaLERS6g/B9LXqnIP6kPyMGE3LwPOD/Nk60Q05mec+Zim8k5JswFvXsSOOJXt14jQXKb/3w==
+markdown-translatable@2.1.2-beta, markdown-translatable@2.1.2.beta:
+  version "2.1.2-beta"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-2.1.2-beta.tgz#41d387eb475d945307e1c1cf05dd5458b7606ac3"
+  integrity sha512-T0i5SG3/XFEZfHsggLYL4bLyYcEJY6CjezJ8F7gXsxPtJsmgcciQwKcNc8B/5xAgIl0zWjUpmbIYMNe+wB1dtA==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
