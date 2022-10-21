@@ -26,8 +26,9 @@ export const useStateReducer = ({
     contentIsDirty,
   };
 
-  _defaults.selectedFont = getDefaultFontForLanguage(language)
-
+  if ( language ) {
+    _defaults.selectedFont = getDefaultFontForLanguage(language)
+  }
   const [state, dispatch] = useReducer(stateReducer, _defaults);
 
   const setOrganization = useCallback((value) => {
