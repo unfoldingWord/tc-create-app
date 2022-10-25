@@ -138,3 +138,18 @@
   src: url(Lateef/Lateef-Bold.woff2);
 }
 
+@font-face {
+    font-family: Padauk;
+    src: url(Padauk/Padauk-Regular.woff2);
+}
+
+@font-face {
+    font-family: Padauk;
+    font-weight: bold;
+    src: url(Padauk/Padauk-Bold.woff2);
+}
+
+@font-face {
+    font-family: Noto;
+    src: url(Noto/GoNotoCurrent.woff2);
+}

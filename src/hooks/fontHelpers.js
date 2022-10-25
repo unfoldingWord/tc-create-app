@@ -10,6 +10,9 @@ export const getDefaultFontForLanguage = (language) => {
   // ur - Urdu
   // ur-x-dcv - Urdu - Dominant Culture Variant
   switch (language.languageId) {
+    case 'ar-x-dcv':
+    case 'ar': // Arabic
+      return 'Awami Nastaliq'
     case 'apd': // Arabic, Sudanese Spoken
       return 'Scheherazade New'
     case 'am': // Amharic
@@ -19,10 +22,13 @@ export const getDefaultFontForLanguage = (language) => {
     case 'ne': // Nepali
     case 'ur-Deva': // Urdu Devanagari script
       return 'AnnapurnaSILW'
+    case 'ur-x-dcv':
     case 'ur': // Urdu
       return 'AwamiNastaliqRW'
     case 'km':
       return 'Mondulkiri'
+    case 'my':
+      return 'Padauk'
     default:
       return defaults.selectedFont
   }

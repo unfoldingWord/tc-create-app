@@ -60,7 +60,9 @@ function Translatable() {
       sourceFileContent &&
       targetFileContent
     ) {
+      console.log('translatableComponent', selectedFont)
       if (filepath.match(/\.md$/)) {
+
         let translatableProps = {
           original: sourceFileContent,
           translation: targetFileContent,

@@ -25,7 +25,6 @@ import {
 
 import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
-import FontMenuItem from "./FontMenuItem";
 import defaults from '../../core/state.defaults';
 
 function DrawerMenu() {
@@ -70,12 +69,14 @@ function DrawerMenu() {
     'Gentium Plus',
     'Harmattan',
     'Lateef',
+    'Noto',
+    'Padauk',
   ];
 
 
 	const fontsComponents = silFonts.map((font, index) => (
-		<MenuItem key={index} value={font} dense>
-			<FontMenuItem font={font} />
+		<MenuItem key={index} value={font}>
+      {font}
 		</MenuItem>
 	));
 
@@ -106,17 +107,15 @@ function DrawerMenu() {
         </ListItemSecondaryAction>
       </ListItem>
 	  <ListItem>
-	    <FormControl fullWidth style={{ maxWidth: 250 }}>
-		  <FormLabel id="demo-simple-select-label">Font</FormLabel>
+	    <FormControl fullWidth filled  >
+		  <FormLabel id="font-select-label">Font</FormLabel>
 		  <Select
-			  labelId="demo-simple-select-label"
-			  id="demo-simple-select"
+			  labelId="font-select-label"
+			  id="font-select"
 			  value={selectedFont}
-			  label="Font"
 			  onChange={handleFontChange}
 		  >
 			  <MenuItem key={1} value={defaults.selectedFont}>
-				  default
 			  </MenuItem>
 			  {fontsComponents}
 		  </Select>
