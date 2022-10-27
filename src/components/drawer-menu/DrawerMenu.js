@@ -116,6 +116,7 @@ function DrawerMenu() {
 			  onChange={handleFontChange}
 		  >
 			  <MenuItem key={1} value={defaults.selectedFont}>
+          default
 			  </MenuItem>
 			  {fontsComponents}
 		  </Select>
