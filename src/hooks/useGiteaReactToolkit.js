@@ -94,6 +94,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     return notices;
   }, [setCriticalValidationErrors]);
 
+  // eslint-disable-next-line
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
     // console.log("tcc // _onLoadCache", html_url, file);
     if (html_url) {
@@ -126,6 +127,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     }
   }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
 
+  // eslint-disable-next-line
   const _onSaveCache = useCallback(({ file, content }) => {
     // console.log("tcc // _onSaveCache", file, content);
     if (file) {
@@ -182,8 +184,9 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onFilepath: setFilepath,
     defaultContent,
     onOpenValidation: _onOpenValidation,
-    onLoadCache: _onLoadCache,
-    onSaveCache: _onSaveCache,
+    // Disable autosave based on discussion in https://github.com/unfoldingWord/tc-create-app/issues/1417
+    // onLoadCache: _onLoadCache,
+    // onSaveCache: _onSaveCache,
   });
 
   useDeepCompareEffect(() => {
