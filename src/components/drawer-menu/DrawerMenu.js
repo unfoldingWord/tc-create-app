@@ -23,9 +23,12 @@ import {
   BugReportOutlined,
 } from '@material-ui/icons';
 
+import Alert from '@material-ui/lab/Alert'
+
 import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
 import defaults from '../../core/state.defaults';
+import fontList from '../../fonts/fontList';
 
 function DrawerMenu() {
   const classes = useStyles();
@@ -58,25 +61,13 @@ function DrawerMenu() {
 		setSelectedFont(event.target.value);
 	};
 
-	const silFonts = [
-    'Scheherazade New',
-    'Charis SIL',
-    'Abyssinica SIL',
-    'Andika',
-    'Annapurna SIL',
-    'Awami Nastaliq',
-    'Doulos SIL',
-    'Gentium Plus',
-    'Harmattan',
-    'Lateef',
-    'Noto',
-    'Padauk',
-  ];
+  const isFF = navigator.userAgent.match(/firefox|fxios/i)
 
+  const isSelectedFontGraphite = fontList.find((font) => font.fontFamily === selectedFont)?.graphite
 
-	const fontsComponents = silFonts.map((font, index) => (
-		<MenuItem key={index} value={font}>
-      {font}
+	const fontsComponents = fontList.map((font, index) => (
+		<MenuItem key={index} value={font.fontFamily}>
+      {font.name}
 		</MenuItem>
 	));
 
@@ -108,7 +99,7 @@ function DrawerMenu() {
       </ListItem>
 	  <ListItem>
 	    <FormControl fullWidth filled  >
-		  <FormLabel id="font-select-label">Font</FormLabel>
+        <FormLabel id="font-select-label">Font {!isFF && isSelectedFontGraphite ? <Alert severity="warning">Selected font uses Graphite features not supported by your browser. Please use Firefox with this font for the most accurate rendering.</Alert> : ''}</FormLabel>
 		  <Select
 			  labelId="font-select-label"
 			  id="font-select"
