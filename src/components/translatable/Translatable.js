@@ -18,6 +18,7 @@ function Translatable() {
     state: {
       targetRepository,
       filepath,
+      selectedFont,
     },
     actions: { setContentIsDirty },
     giteaReactToolkit: {
@@ -60,11 +61,13 @@ function Translatable() {
       targetFileContent
     ) {
       if (filepath.match(/\.md$/)) {
+
         let translatableProps = {
           original: sourceFileContent,
           translation: targetFileContent,
           onTranslation: saveTranslation,
           onContentIsDirty: setContentIsDirty,
+          translationFontFamily: selectedFont,
         };
         console.log('Markdown file selected');
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
@@ -85,6 +88,7 @@ function Translatable() {
     setContentIsDirty,
     saveTranslation,
     autoSaveOnEdit,
+    selectedFont,
   ]);
 
   useEffect(() => {

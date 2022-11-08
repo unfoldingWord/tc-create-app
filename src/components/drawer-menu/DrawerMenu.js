@@ -12,6 +12,8 @@ import {
   Slider,
   Switch,
   RadioGroup, Radio, FormControl, FormLabel, FormControlLabel,
+	Select,
+	MenuItem,
 } from '@material-ui/core';
 
 import {
@@ -21,18 +23,23 @@ import {
   BugReportOutlined,
 } from '@material-ui/icons';
 
+import Alert from '@material-ui/lab/Alert'
+
 import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
+import defaults from '../../core/state.defaults';
+import fontList from '../../fonts/fontList';
 
 function DrawerMenu() {
   const classes = useStyles();
 
   const {
     state: {
-      fontScale, expandedScripture, validationPriority,
+      fontScale, expandedScripture, validationPriority, selectedFont,
     },
     actions: {
       setFontScale,
+      setSelectedFont,
       setExpandedScripture,
       setValidationPriority,
     },
@@ -47,8 +54,22 @@ function DrawerMenu() {
   const handleValidationPriorityChange = (event, value) => {
     if (value) {
       setValidationPriority(value);
-    };
+    }
   };
+
+	const handleFontChange = (event) => {
+		setSelectedFont(event.target.value);
+	};
+
+  const isFF = navigator.userAgent.match(/firefox|fxios/i)
+
+  const isSelectedFontGraphite = fontList.find((font) => font.fontFamily === selectedFont)?.graphite
+
+	const fontsComponents = fontList.map((font, index) => (
+		<MenuItem key={index} value={font.fontFamily}>
+      {font.name}
+		</MenuItem>
+	));
 
   return (
     <List>
@@ -76,6 +97,22 @@ function DrawerMenu() {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
+	  <ListItem>
+	    <FormControl fullWidth filled  >
+        <FormLabel id="font-select-label">Font {!isFF && isSelectedFontGraphite ? <Alert severity="warning">Selected font uses Graphite features not supported by your browser. Please use Firefox with this font for the most accurate rendering.</Alert> : ''}</FormLabel>
+		  <Select
+			  labelId="font-select-label"
+			  id="font-select"
+			  value={selectedFont}
+			  onChange={handleFontChange}
+		  >
+			  <MenuItem key={1} value={defaults.selectedFont}>
+          default
+			  </MenuItem>
+			  {fontsComponents}
+		  </Select>
+	    </FormControl>
+	  </ListItem>
       <ListItem button onClick={handleFeedback}>
         <ListItemIcon className={classes.icon}>
           <FeedbackOutlined />

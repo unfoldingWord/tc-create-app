@@ -17,6 +17,9 @@ export const stateReducer = (state, action) => {
     case 'set_font_scale':
       _state['fontScale'] = value;
       break;
+    case 'set_selected_scale':
+      _state['selectedFont'] = value;
+      break;
     case 'set_config':
       _state['config'] = value;
       break;
