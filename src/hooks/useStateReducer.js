@@ -4,6 +4,7 @@ import { ensureRepo } from 'gitea-react-toolkit';
 import { stateReducer } from '../core/state.reducer';
 import { saveState } from '../core/persistence';
 import defaults from '../core/state.defaults';
+import { getDefaultFontForLanguage } from './fontHelpers'
 
 export const useStateReducer = ({
   authentication,
@@ -24,6 +25,10 @@ export const useStateReducer = ({
     resourceLinks,
     contentIsDirty,
   };
+
+  if ( language ) {
+    _defaults.selectedFont = getDefaultFontForLanguage(language)
+  }
   const [state, dispatch] = useReducer(stateReducer, _defaults);
 
   const setOrganization = useCallback((value) => {
@@ -41,6 +46,9 @@ export const useStateReducer = ({
     dispatch({ type: 'set_font_scale', value });
   }, []);
 
+  const setSelectedFont = useCallback((value) => {
+    dispatch({ type: 'set_selected_scale', value });
+  }, []);
   const setExpandedScripture = useCallback((value) => {
     dispatch({ type: 'set_expanded_scripture', value });
   }, []);
@@ -190,6 +198,7 @@ export const useStateReducer = ({
     setAuthentication,
     setLanguage,
     setFontScale,
+    setSelectedFont,
     setExpandedScripture,
     setConfig,
     setResourceLinks,

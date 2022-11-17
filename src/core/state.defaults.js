@@ -33,5 +33,8 @@ export default {
   validationPriority: 'high',
   expandedScripture: true,
   fontScale: 100,
+  selectedFont: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",\n' +
+	  '    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",\n' +
+	  '    sans-serif',
   config,
 };
