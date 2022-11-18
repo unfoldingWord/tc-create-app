@@ -53,7 +53,7 @@ export default function RowHeader({
     if (columnNames.includes('OrigWords')) {
       columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigWords', 'Occurrence'];
     } else {
-      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'Quote', 'Occurrence'];
     }
 
     const indices = columnNamesToUse.map(columnName => {
