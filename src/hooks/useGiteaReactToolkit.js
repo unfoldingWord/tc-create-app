@@ -47,6 +47,10 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     },
   } = applicationStateReducer;
 
+  console.log("ssssssssssssssssssssssssss", sourceRepository);
+  console.log("tttttttttttttttttttttttttt", sourceRepository);
+
+
   const { isConfirmed } = useConfirm({ contentIsDirty });
 
   const authenticationHook = useAuthentication({
@@ -84,6 +88,11 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   });
 
   const _onOpenValidation = useCallback((filename, content, url) => {
+
+    if (filename.startsWith("en")) {
+      window.alert("tC Create cannot continue to open this file because it is in an outdated format. Please contact your administrator to update the repository's files to the latest format.")
+      setCriticalValidationErrors(["tC Create cannot continue to open this file because it is in an outdated format. Please contact your administrator to update the repository's files to the latest format."]);
+    }
     const notices = onOpenValidation(filename, content, url);
 
     if (notices.length > 0) {

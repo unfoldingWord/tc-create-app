@@ -171,6 +171,10 @@ export const onOpenValidation = (filename, content, url) => {
   const link = url.replace('/src/', '/blame/');
   let criticalNotices = [];
 
+  // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", filename)
+  // if (filename.startsWith("en")) {
+  //   criticalNotices.push(["tC Create cannot continue to open this file because it is in an outdated format. Please contact your administrator to update the repository's files to the latest format."])
+  // }
   if (filename.match(/^tn_OBS\.tsv$/)) {
     criticalNotices = onOpenValidationObsTn(content, link);
   } else if (filename.match(/^tn_...\.tsv$/)) {
