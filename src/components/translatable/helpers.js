@@ -1,3 +1,49 @@
+import { parseReferenceToList } from 'bible-reference-range'
+
+
+/**
+ * helper function to check if the reference string starts with a chapter specification
+ **/
+export const startsWithChapterSpec = (refStr) => {
+  let retVal = false
+  const splitCh = ':'
+  if (refStr?.includes(splitCh)) {
+    const startsWith = refStr.substring(0, refStr.indexOf(splitCh))
+    const strLen = startsWith.length
+    retVal = /^\d+$/.test(startsWith) && (strLen > 0) && (strLen <= 3)
+  }
+  return retVal
+}
+
+/**
+ * helper function to get a reference array based on reference chunks
+ * -> requirement:
+ * each entry in the chunks array must have the following format:
+ * {chapter, verse, endChapter, endVerse}
+ **/
+export const getRefArrayBasedOnRefStr = (refStr) => {
+  const resArr = []
+  const refChunks = parseReferenceToList(refStr)
+  refChunks && refChunks.forEach(chunk => {
+    // Skip verse ranges across chapters -> not yet implemented
+    // TBD: lg - would first have to get bookData here
+    if (!chunk.endChapter || chunk.endChapter === chunk.chapter) {
+      const ch = chunk.chapter
+      if (ch) {
+        if (chunk.endVerse) {
+          for (let i = chunk.verse; i <= chunk.endVerse; i++) {
+            resArr.push(`${ch}:${i}`)
+          }
+        } else if (chunk.verse) {
+          resArr.push(`${ch}:${chunk.verse}`)
+        }
+      }
+    }
+  })
+  console.log(resArr)
+  return resArr
+}
+
 export const columnsLineFromContent = ({ content, delimiters }) => {
   const columnsLine = content.substring(0, content.indexOf(delimiters.row));
   return columnsLine;

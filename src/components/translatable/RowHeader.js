@@ -6,7 +6,11 @@ import { Skeleton } from '@material-ui/lab';
 import { useDeepCompareMemo } from 'use-deep-compare';
 
 import ScriptureHeader from './ScriptureHeader';
-import { columnIndexOfColumnNameFromColumnNames } from './helpers';
+import { 
+  columnIndexOfColumnNameFromColumnNames,
+  startsWithChapterSpec,
+  getRefArrayBasedOnRefStr
+} from './helpers';
 
 const styles = {
   defaultHeader: {
@@ -61,6 +65,7 @@ export default function RowHeader({
       return index;
     });
     const [referenceIndex, chapterIndex, verseIndex, quoteIndex, occurrenceIndex] = indices;
+    console.log(referenceIndex)
 
     if (referenceIndex > -1) {
       // find columIndex of Reference
@@ -91,12 +96,26 @@ export default function RowHeader({
 
   const scriptureHeader = useDeepCompareMemo(() => {
     let _component;
+    let verseRefArray = undefined
+
+    if (verse && (typeof verse ==='string') 
+        && ((verse.includes('-') 
+        || verse.includes(':') 
+        || verse.includes(',') 
+        || verse.includes(';')))) {
+
+      const refStr = startsWithChapterSpec(verse) ? `${verse}` : `${chapter}:${verse}`
+      verseRefArray = getRefArrayBasedOnRefStr(refStr)
+    }
 
     const reference = {
       bookId: bookId?.toLowerCase(),
       chapter: parseInt(chapter),
       verse: parseInt(verse),
+      verseRefArray,
     };
+
+    console.log(reference)
 
     if (viewed && reference.chapter > 0 && reference.verse > 0) {
       _component = (
