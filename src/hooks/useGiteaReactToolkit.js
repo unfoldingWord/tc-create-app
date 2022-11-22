@@ -114,18 +114,20 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       }
     }
 
-    checkTargetFilesAreNotTSV9().catch(console.error)
-
     const notices = onOpenValidation(filename, content, url);
 
     // prevent opening the old tsv9 source file
-    if (filename.startsWith("en_") && filename.endsWith('.tsv')) {
-      notices.push([
-          url,
-          '1',
-          "tC Create cannot continue to open this file because the source is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
-        ]
-      );
+    if ( targetRepository.full_name.endsWith('_tn') ) {
+      if ( filename.startsWith("en_") && filename.endsWith('.tsv') ) {
+        notices.push([
+            url,
+            '1',
+            "tC Create cannot continue to open this file because the source is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
+          ]
+        );
+      }
+
+      checkTargetFilesAreNotTSV9().catch(console.error)
     }
     else if (notices.length > 0) {
       setCriticalValidationErrors(notices);
