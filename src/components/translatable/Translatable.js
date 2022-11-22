@@ -96,7 +96,7 @@ function Translatable() {
     scrollToTop();
   }, [filepath, scrollToTop]);
 
-  const filesHeader = (targetRepository && targetFileHook.state && sourceRepository && sourceRepository.state ) ? <FilesHeader /> : <></>;
+  const filesHeader = (targetRepository && targetFileHook.state && sourceRepository ) ? <FilesHeader /> : <></>;
 
   return (
     <div id='translatable'>
