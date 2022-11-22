@@ -7920,10 +7920,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gitea-react-toolkit@2.0.0-beta.2:
-  version "2.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.0.0-beta.2.tgz#02f8b40394f83179f6c523d9c34821a2a35d7f06"
-  integrity sha512-dbzeh4NDE4JHaE/50zxAFQDEjuh/tuMluwItTDlDlv72Na8p6RaeCvjftrqFEQ9jRSJiAlU2MthLxIzbnvKZSw==
+gitea-react-toolkit@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.2.1.tgz#e13191ae6e3089d12d0f2eeaa69ce49c740651a2"
+  integrity sha512-9VPuWOHQv+z+H2j+GRhShVPKRC1O+qVNWcoashjpXhd1IS4lF820YIl/YDacFa7SvgOpm/sOZ3MPVnxcGIG4aA==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -7939,10 +7939,10 @@ gitea-react-toolkit@2.0.0-beta.2:
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
 
-gitea-react-toolkit@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.2.1.tgz#e13191ae6e3089d12d0f2eeaa69ce49c740651a2"
-  integrity sha512-9VPuWOHQv+z+H2j+GRhShVPKRC1O+qVNWcoashjpXhd1IS4lF820YIl/YDacFa7SvgOpm/sOZ3MPVnxcGIG4aA==
+gitea-react-toolkit@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.2.3.tgz#bee53efdb0038ad8353d9736ebc1dab70b04b9ac"
+  integrity sha512-BAe6Cs5YOLFOxXAZsUHbVGte2R9uyBqlnzKBbVAvuquw1lOqOIANV6YmA4Qr+1uhmRVSSMVWm9pq9aygMtV2gg==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"

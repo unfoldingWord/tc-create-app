@@ -23,6 +23,7 @@ import { localString } from '../core/localStrings';
 export function useGiteaReactToolkit(applicationStateReducer) {
   const {
     state: {
+      server,
       authentication,
       organization,
       language,
@@ -47,9 +48,9 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     },
   } = applicationStateReducer;
 
-  console.log("ssssssssssssssssssssssssss", sourceRepository);
-  console.log("tttttttttttttttttttttttttt", sourceRepository);
 
+  console.log("SourceRepo", sourceRepository);
+  console.log("TargetRepo", targetRepository);
 
   const { isConfirmed } = useConfirm({ contentIsDirty });
 
@@ -87,62 +88,94 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     config,
   });
 
+
+
   const _onOpenValidation = useCallback((filename, content, url) => {
 
-    if (filename.startsWith("en")) {
-      window.alert("tC Create cannot continue to open this file because it is in an outdated format. Please contact your administrator to update the repository's files to the latest format.")
-      setCriticalValidationErrors(["tC Create cannot continue to open this file because it is in an outdated format. Please contact your administrator to update the repository's files to the latest format."]);
-    }
     const notices = onOpenValidation(filename, content, url);
 
-    if (notices.length > 0) {
+    const trees = async () => {
+      const fetchData = await fetch(
+        `${server}/api/v1/repos/${targetRepository.full_name}/git/trees/${targetRepository.branch}?&recursive=t&per_page=999999`,
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+
+      const _fetchData = fetchData.json();
+      console.log("fetchData", _fetchData);
+      return _fetchData
+    }
+
+    const treesResponse = trees().then((data) => {
+      console.log("dataaaa", data)
+    }, (data) => {
+      console.log("Rejected", data)
+    }).catch((err) => {
+      console.log("error recieved", err)
+    });
+
+
+    // prevent opening the old tsv9 source file
+    if (filename.startsWith("en_")) {
+      notices.push([
+        url,
+        '1',
+        "tC Create cannot continue to open this file because it is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
+      ]
+      );
+    }
+    else if (notices.length > 0) {
       setCriticalValidationErrors(notices);
     } else {
       setCriticalValidationErrors([]);
     }
     return notices;
-  }, [setCriticalValidationErrors]);
+  }, [setCriticalValidationErrors, targetRepository]);
+
+  // disabled for 1.8 release
 
   // eslint-disable-next-line
-  const _onLoadCache = useCallback(async ({ html_url, file }) => {
-    // console.log("tcc // _onLoadCache", html_url, file);
-    if (html_url) {
-      let _cachedFile = await loadFileCache(html_url);
+  // const _onLoadCache = useCallback(async ({ html_url, file }) => {
+  //   // console.log("tcc // _onLoadCache", html_url, file);
+  //   if (html_url) {
+  //     let _cachedFile = await loadFileCache(html_url);
 
-      if (_cachedFile && file) {
-        setCachedFile(_cachedFile);
-        // console.log("tcc // file", file, html_url);
-        // console.log("tcc // cached file", _cachedFile);
+  //     if (_cachedFile && file) {
+  //       setCachedFile(_cachedFile);
+  //       // console.log("tcc // file", file, html_url);
+  //       // console.log("tcc // cached file", _cachedFile);
 
-        if (_cachedFile?.sha && file?.sha && _cachedFile?.sha !== file?.sha) {
-          // Allow app to provide CACHED ("offline" content);
-          // Might be different BRANCH (different user) or different FILE.
-          // Might be STALE (sha has changed on DCS).
-          // (NOTE: STALE cache would mean THIS user edited the same file in another browser.)
+  //       if (_cachedFile?.sha && file?.sha && _cachedFile?.sha !== file?.sha) {
+  //         // Allow app to provide CACHED ("offline" content);
+  //         // Might be different BRANCH (different user) or different FILE.
+  //         // Might be STALE (sha has changed on DCS).
+  //         // (NOTE: STALE cache would mean THIS user edited the same file in another browser.)
 
-          const _cacheWarningMessage =
-            'AutoSaved file: \n' + //_cachedFile.filepath + ".\n" +
-            'Edited: ' + _cachedFile.timestamp?.toLocaleString() + '\n' +
-            'Checksum: ' + _cachedFile.sha + '\n\n' +
-            'Server file (newer): \n' + //file.name + ".\n" +
-            'Checksum: ' + file.sha + '\n\n';
+  //         const _cacheWarningMessage =
+  //           'AutoSaved file: \n' + //_cachedFile.filepath + ".\n" +
+  //           'Edited: ' + _cachedFile.timestamp?.toLocaleString() + '\n' +
+  //           'Checksum: ' + _cachedFile.sha + '\n\n' +
+  //           'Server file (newer): \n' + //file.name + ".\n" +
+  //           'Checksum: ' + file.sha + '\n\n';
 
-          setCacheFileKey(html_url);
-          setCacheWarningMessage(_cacheWarningMessage);
-        }
-      };
+  //         setCacheFileKey(html_url);
+  //         setCacheWarningMessage(_cacheWarningMessage);
+  //       }
+  //     };
 
-      return _cachedFile;
-    }
-  }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
+  //     return _cachedFile;
+  //   }
+  // }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
 
-  // eslint-disable-next-line
-  const _onSaveCache = useCallback(({ file, content }) => {
-    // console.log("tcc // _onSaveCache", file, content);
-    if (file) {
-      saveFileCache(file, content);
-    }
-  }, []);
+
+  // disabled for 1.8 release
+
+  // // eslint-disable-next-line
+  // const _onSaveCache = useCallback(({ file, content }) => {
+  //   // console.log("tcc // _onSaveCache", file, content);
+  //   if (file) {
+  //     saveFileCache(file, content);
+  //   }
+  // }, []);
 
   const onConfirmClose = () => {
     return isConfirmed(localString('ConfirmCloseWindow'));

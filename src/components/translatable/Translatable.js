@@ -17,6 +17,7 @@ function Translatable() {
   const {
     state: {
       targetRepository,
+      sourceRepository,
       filepath,
       selectedFont,
     },
