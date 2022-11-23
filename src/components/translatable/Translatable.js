@@ -17,6 +17,7 @@ function Translatable() {
   const {
     state: {
       targetRepository,
+      sourceRepository,
       filepath,
       selectedFont,
     },
@@ -95,7 +96,7 @@ function Translatable() {
     scrollToTop();
   }, [filepath, scrollToTop]);
 
-  const filesHeader = (targetRepository && targetFileHook.state) ? <FilesHeader /> : <></>;
+  const filesHeader = (targetRepository && targetFileHook.state && sourceRepository ) ? <FilesHeader /> : <></>;
 
   return (
     <div id='translatable'>

@@ -84,15 +84,58 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   });
 
   const _onOpenValidation = useCallback((filename, content, url) => {
+
+    const checkTargetFilesAreNotTSV9 = async () => {
+      let response = await fetch(
+        `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/${ targetRepository.branch }?&recursive=t&per_page=999999`,
+        { headers: config.headers }
+      )
+      if ( 404 === response.status) {
+        response = await fetch(
+          `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/master?&recursive=t&per_page=999999`,
+          { headers: config.headers }
+        )
+      }
+
+      const data = await response.json();
+      let oldTsv9 = false;
+      for (const file of data.tree ) {
+        if ( file.path.startsWith('en_') && file.path.endsWith('.tsv')) {
+          oldTsv9 = true;
+          break;
+        }
+      }
+      if ( oldTsv9 ) {
+        setCriticalValidationErrors([[
+          url,
+          '1',
+          "tC Create cannot continue to open this file because the target is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
+        ]]);
+      }
+    }
+
     const notices = onOpenValidation(filename, content, url);
 
-    if (notices.length > 0) {
+    // prevent opening the old tsv9 source file
+    if ( targetRepository.full_name.endsWith('_tn') ) {
+      if ( filename.startsWith("en_") && filename.endsWith('.tsv') ) {
+        notices.push([
+            url,
+            '1',
+            "tC Create cannot continue to open this file because the source is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
+          ]
+        );
+      }
+
+      checkTargetFilesAreNotTSV9().catch(console.error)
+    }
+    else if (notices.length > 0) {
       setCriticalValidationErrors(notices);
     } else {
       setCriticalValidationErrors([]);
     }
     return notices;
-  }, [setCriticalValidationErrors]);
+  }, [setCriticalValidationErrors, targetRepository, config]);
 
   // eslint-disable-next-line
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
