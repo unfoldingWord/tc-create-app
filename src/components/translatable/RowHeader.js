@@ -9,7 +9,7 @@ import ScriptureHeader from './ScriptureHeader';
 import { 
   columnIndexOfColumnNameFromColumnNames,
   startsWithChapterSpec,
-  getRefArrayBasedOnRefStr
+  getBcvQueryBasedOnRefStr
 } from './helpers';
 
 const styles = {
@@ -65,7 +65,6 @@ export default function RowHeader({
       return index;
     });
     const [referenceIndex, chapterIndex, verseIndex, quoteIndex, occurrenceIndex] = indices;
-    console.log(referenceIndex)
 
     if (referenceIndex > -1) {
       // find columIndex of Reference
@@ -96,7 +95,8 @@ export default function RowHeader({
 
   const scriptureHeader = useDeepCompareMemo(() => {
     let _component;
-    let verseRefArray = undefined
+    let bcvQuery = undefined
+    const bookId_lowCase = bookId?.toLowerCase()
 
     if (verse && (typeof verse ==='string') 
         && ((verse.includes('-') 
@@ -105,19 +105,17 @@ export default function RowHeader({
         || verse.includes(';')))) {
 
       const refStr = startsWithChapterSpec(verse) ? `${verse}` : `${chapter}:${verse}`
-      verseRefArray = getRefArrayBasedOnRefStr(refStr)
+      bcvQuery = getBcvQueryBasedOnRefStr(refStr, bookId_lowCase)
     }
 
     const reference = {
-      bookId: bookId?.toLowerCase(),
+      bookId: bookId_lowCase,
       chapter: parseInt(chapter),
-      verse: parseInt(verse),
-      verseRefArray,
+      verse: verse,
+      bcvQuery,
     };
 
-    console.log(reference)
-
-    if (viewed && reference.chapter > 0 && reference.verse > 0) {
+    if (viewed && reference.chapter > 0 && (verse || bcvQuery)) {
       _component = (
         <div style={styles.quoteHeader}>
           <ScriptureHeader
@@ -137,7 +135,6 @@ export default function RowHeader({
 
   const defaultHeader = useDeepCompareMemo(() => (
     <>
-      {/* {console.log(chapter, verse)} */}
       <div style={styles.defaultHeader}>
         <Typography variant='h6' style={styles.title}>
           {chapter && verse !== undefined ? `${bookId.toUpperCase()} ${chapter}:${verse}` : `${bookId.toUpperCase()} ${chapter}`}

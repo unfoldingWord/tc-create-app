@@ -16,32 +16,41 @@ export const startsWithChapterSpec = (refStr) => {
 }
 
 /**
- * helper function to get a reference array based on reference chunks
+ * helper function to get a bcvQuery structure based on a reference string
+ * with the help of reference chunks (from the bible-reference-range rcl)
  * -> requirement:
  * each entry in the chunks array must have the following format:
  * {chapter, verse, endChapter, endVerse}
  **/
-export const getRefArrayBasedOnRefStr = (refStr) => {
-  const resArr = []
-  const refChunks = parseReferenceToList(refStr)
-  refChunks && refChunks.forEach(chunk => {
-    // Skip verse ranges across chapters -> not yet implemented
-    // TBD: lg - would first have to get bookData here
-    if (!chunk.endChapter || chunk.endChapter === chunk.chapter) {
-      const ch = chunk.chapter
-      if (ch) {
-        if (chunk.endVerse) {
-          for (let i = chunk.verse; i <= chunk.endVerse; i++) {
-            resArr.push(`${ch}:${i}`)
+export const getBcvQueryBasedOnRefStr = (refStr,bookId) => {
+  let book = {}
+
+  if (bookId) {
+    book[bookId] = { ch: {} }
+    const refChunks = parseReferenceToList(refStr)
+    refChunks && refChunks.forEach(chunk => {
+      // TBD: lg - would first have to get bookData here
+      // Skip verse ranges across chapters -> not yet implemented
+      if (!chunk.endChapter || chunk.endChapter === chunk.chapter) {
+        const chNum = chunk.chapter
+
+        if (chNum) {
+          if (!book[bookId].ch[chNum]) {
+            book[bookId].ch[chNum] = { v: {} }
           }
-        } else if (chunk.verse) {
-          resArr.push(`${ch}:${chunk.verse}`)
+
+          if (chunk.endVerse) {
+            for (let i = chunk.verse; i <= chunk.endVerse; i++) {
+              book[bookId].ch[chNum].v[i] = {}
+            }
+          } else if (chunk.verse) {
+            book[bookId].ch[chNum].v[chunk.verse] = {}
+          }
         }
       }
-    }
-  })
-  console.log(resArr)
-  return resArr
+    })
+  }
+  return { book }
 }
 
 export const columnsLineFromContent = ({ content, delimiters }) => {
