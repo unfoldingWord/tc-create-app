@@ -1,5 +1,5 @@
 import { parseReferenceToList } from 'bible-reference-range'
-
+import { versesInChapter } from '../../core/bcv'
 
 /**
  * helper function to check if the reference string starts with a chapter specification
@@ -29,18 +29,19 @@ export const getBcvQueryBasedOnRefStr = (refStr,bookId) => {
     book[bookId] = { ch: {} }
     const refChunks = parseReferenceToList(refStr)
     refChunks && refChunks.forEach(chunk => {
-      // TBD: lg - would first have to get bookData here
-      // Skip verse ranges across chapters -> not yet implemented
-      if (!chunk.endChapter || chunk.endChapter === chunk.chapter) {
-        const chNum = chunk.chapter
-
+      const endCh = chunk.endChapter || chunk.chapter
+      for (let chNum = chunk.chapter; chNum <= endCh; chNum++) {
         if (chNum) {
           if (!book[bookId].ch[chNum]) {
             book[bookId].ch[chNum] = { v: {} }
           }
 
           if (chunk.endVerse) {
-            for (let i = chunk.verse; i <= chunk.endVerse; i++) {
+            const endV = (chNum===endCh) 
+                          ? chunk.endVerse
+                          : versesInChapter({bookId, chapter: chNum})
+            const begV = (chNum===chunk.chapter) ? chunk.verse : 1
+            for (let i = begV; i <= endV; i++) {
               book[bookId].ch[chNum].v[i] = {}
             }
           } else if (chunk.verse) {
@@ -83,9 +84,12 @@ export const generateRowId = ({
   const uidIndex = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName: 'ID' }) + 1;
 
   if (referenceIndex) {
+    const splitCh = ':'
     // find columIndex of Reference
-    chapter = rowData[referenceIndex].split(delimiters.cell)[0].split(':')[0];
-    verse = rowData[referenceIndex].split(delimiters.cell)[0].split(':')[1];
+    const [_chapter, ...rest] = rowData[referenceIndex].split(delimiters.cell)[0].split(splitCh)
+    chapter = _chapter
+    verse = rest.join(splitCh)
+
   } else if (chapterIndex && verseIndex) {
     // find columnIndex columnName "Chapter"
     chapter = rowData[chapterIndex].split(delimiters.cell)[0];

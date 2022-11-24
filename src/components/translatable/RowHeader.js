@@ -68,8 +68,11 @@ export default function RowHeader({
 
     if (referenceIndex > -1) {
       // find columIndex of Reference
-      chapter = rowData[referenceIndex].split(delimiters.cell)[1].split(':')[0];
-      verse = rowData[referenceIndex].split(delimiters.cell)[1].split(':')[1];
+      const splitCh = ':'
+      const [_chapter, ...rest] = rowData[referenceIndex].split(delimiters.cell)[1].split(splitCh)
+      chapter = _chapter
+      verse = rest.join(splitCh)
+  
     } else if (chapterIndex && verseIndex) {
       // find columnIndex columnName "Chapter"
       chapter = rowData[chapterIndex].split(delimiters.cell)[1];
