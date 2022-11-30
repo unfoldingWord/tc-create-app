@@ -90,7 +90,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
         `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/${ targetRepository.branch }?&recursive=t&per_page=999999`,
         { headers: config.headers }
       )
-      if ( 404 === response.status) {
+      if ( 200 !== response.status) {
         response = await fetch(
           `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/master?&recursive=t&per_page=999999`,
           { headers: config.headers }
