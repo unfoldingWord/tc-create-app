@@ -139,7 +139,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCriticalValidationErrors([]);
     }
     return notices;
-  }, [setCriticalValidationErrors, sourceRepositoryHook, targetRepository, config, filepath]);
+  }, [setCriticalValidationErrors, targetRepository, config, filepath]);
 
   // eslint-disable-next-line
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
