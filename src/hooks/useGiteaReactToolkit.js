@@ -118,9 +118,9 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     }
 
     const notices = onOpenValidation(filename, content, url);
-
+    console.log("sourceRepository:", sourceRepository)
     // prevent opening the old tsv9 source file
-    if ( targetRepository.full_name.endsWith('_tn') ) {
+    if ( targetRepository.full_name.endsWith('_tn')  && filepath.startsWith('tn_') ) {
       if ( filename.startsWith("en_") && filename.endsWith('.tsv') ) {
         notices.push([
             url,
@@ -140,7 +140,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
       setCriticalValidationErrors([]);
     }
     return notices;
-  }, [setCriticalValidationErrors, targetRepository, config]);
+  }, [setCriticalValidationErrors, sourceRepositoryHook, targetRepository, config]);
 
   // eslint-disable-next-line
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
