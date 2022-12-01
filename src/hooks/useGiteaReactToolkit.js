@@ -106,11 +106,14 @@ export function useGiteaReactToolkit(applicationStateReducer) {
         }
       }
       if ( oldTsv9 ) {
+        console.log("Found tsv9 - cannot continue!")
         setCriticalValidationErrors([[
           url,
           '1',
           "tC Create cannot continue to open this file because the target is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
         ]]);
+      } else {
+        console.log("Found tsv7 - good to go!")
       }
     }
 
@@ -129,9 +132,11 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
       checkTargetFilesAreNotTSV9().catch(console.error)
     }
-    else if (notices.length > 0) {
+    if (notices.length > 0) {
+      console.log("Notices found:", notices.length)
       setCriticalValidationErrors(notices);
     } else {
+      console.log("No notices found!")
       setCriticalValidationErrors([]);
     }
     return notices;
