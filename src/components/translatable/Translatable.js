@@ -55,7 +55,9 @@ function Translatable() {
         <CircularProgress />{' '}
       </div>
     );
-
+    console.log("filepathsMatch=", filepathsMatch)
+    console.log("sourceFileContent", sourceFileContent)
+    console.log("targetFileContent", targetFileContent)
     if (
       filepathsMatch &&
       sourceFileContent &&

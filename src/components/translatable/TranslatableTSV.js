@@ -63,14 +63,16 @@ export default function TranslatableTSV({
   const {
     filepath: sourceFilepath,
     content: sourceContent,
+    publishedContent,
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
   const { content: cachedContent } = cachedFile || {};
-
+  console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, publishedContent)
   const columnNames = useMemo(() => {
-    const _columnNames = columnNamesFromContent({ content: sourceContent, delimiters });
+    const _content = sourceContent ? sourceContent : publishedContent;
+    const _columnNames = columnNamesFromContent({ content: _content, delimiters });
     return _columnNames;
-  }, [sourceContent]);
+  }, [sourceContent, publishedContent]);
 
   const {
     actions: { onValidate },
@@ -142,7 +144,7 @@ export default function TranslatableTSV({
       config={serverConfig}
     >
       <DataTable
-        sourceFile={sourceContent}
+        sourceFile={sourceContent ? sourceContent : publishedContent}
         targetFile={cachedContent || targetContent}
         onSave={onSave}
         onEdit={onEdit}
