@@ -54,8 +54,8 @@ export default function RowHeader({
     let chapter, verse, quote, occurrence;
 
     let columnNamesToUse = [];
-    if (columnNames.includes('OrigWords')) {
-      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigWords', 'Occurrence'];
+    if (columnNames.includes('OrigQuote')) {
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
     } else {
       columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'Quote', 'Occurrence'];
     }
