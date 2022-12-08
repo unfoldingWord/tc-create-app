@@ -73,6 +73,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     urls: _config.repository.urls,
     config,
   });
+  
   const targetRepositoryHook = useRepository({
     authentication,
     repository: targetRepository,
@@ -197,6 +198,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onConfirmClose,
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
   });
+  
   const { state: sourceFile } = sourceFileHook;
 
   const defaultContent = useDeepCompareMemo(() => {
@@ -205,6 +207,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     const filepathsExist = (!!filepath && !!sourceFile?.filepath)
     const filepathsMatch = (filepath === sourceFile?.filepath);
     const sourceFileIsReady = (filepathsExist && filepathsMatch);
+    
     if (sourceFileIsReady) {
       const unfoldingWordOrganization = (sourceRepository?.id === targetRepository?.id);
 
@@ -255,6 +258,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     language,
     organization,
   ]);
+  
   return {
     authenticationHook,
     organizationHook,
