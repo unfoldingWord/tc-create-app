@@ -73,7 +73,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     urls: _config.repository.urls,
     config,
   });
-
+  
   const targetRepositoryHook = useRepository({
     authentication,
     repository: targetRepository,
@@ -84,16 +84,64 @@ export function useGiteaReactToolkit(applicationStateReducer) {
   });
 
   const _onOpenValidation = useCallback((filename, content, url) => {
-    const notices = onOpenValidation(filename, content, url);
 
+    const checkTargetFilesAreNotTSV9 = async () => {
+      let response = await fetch(
+        `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/${ targetRepository.branch }?&recursive=t&per_page=999999`,
+        { headers: config.headers }
+      )
+      if ( 200 !== response.status) {
+        response = await fetch(
+          `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/master?&recursive=t&per_page=999999`,
+          { headers: config.headers }
+        )
+      }
+
+      const data = await response.json();
+      let oldTsv9 = false;
+      for (const file of data.tree ) {
+        if ( file.path.startsWith('en_') && file.path.endsWith('.tsv')) {
+          oldTsv9 = true;
+          break;
+        }
+      }
+      if ( oldTsv9 ) {
+        console.log("Found tsv9 - cannot continue!")
+        setCriticalValidationErrors([[
+          url,
+          '1',
+          "tC Create cannot continue to open this file because the target is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
+        ]]);
+      } else {
+        console.log("Found tsv7 - good to go!")
+      }
+    }
+
+    const notices = onOpenValidation(filename, content, url);
+    // prevent opening the old tsv9 source file
+    if ( targetRepository.full_name.endsWith('_tn')  && filepath.startsWith('tn_') ) {
+      if ( filename.startsWith("en_") && filename.endsWith('.tsv') ) {
+        notices.push([
+            url,
+            '1',
+            "tC Create cannot continue to open this file because the source is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
+          ]
+        );
+      }
+
+      checkTargetFilesAreNotTSV9().catch(console.error)
+    }
     if (notices.length > 0) {
+      console.log("Notices found:", notices.length)
       setCriticalValidationErrors(notices);
     } else {
+      console.log("No notices found!")
       setCriticalValidationErrors([]);
     }
     return notices;
-  }, [setCriticalValidationErrors]);
+  }, [setCriticalValidationErrors, targetRepository, config, filepath]);
 
+  // eslint-disable-next-line
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
     // console.log("tcc // _onLoadCache", html_url, file);
     if (html_url) {
@@ -126,6 +174,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     }
   }, [setCacheFileKey, setCacheWarningMessage, setCachedFile]);
 
+  // eslint-disable-next-line
   const _onSaveCache = useCallback(({ file, content }) => {
     // console.log("tcc // _onSaveCache", file, content);
     if (file) {
@@ -149,7 +198,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onConfirmClose,
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
   });
-
+  
   const { state: sourceFile } = sourceFileHook;
 
   const defaultContent = useDeepCompareMemo(() => {
@@ -158,7 +207,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     const filepathsExist = (!!filepath && !!sourceFile?.filepath)
     const filepathsMatch = (filepath === sourceFile?.filepath);
     const sourceFileIsReady = (filepathsExist && filepathsMatch);
-
+    
     if (sourceFileIsReady) {
       const unfoldingWordOrganization = (sourceRepository?.id === targetRepository?.id);
 
@@ -182,8 +231,9 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onFilepath: setFilepath,
     defaultContent,
     onOpenValidation: _onOpenValidation,
-    onLoadCache: _onLoadCache,
-    onSaveCache: _onSaveCache,
+    // Disable autosave based on discussion in https://github.com/unfoldingWord/tc-create-app/issues/1417
+    // onLoadCache: _onLoadCache,
+    // onSaveCache: _onSaveCache,
   });
 
   useDeepCompareEffect(() => {
@@ -208,7 +258,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     language,
     organization,
   ]);
-
+  
   return {
     authenticationHook,
     organizationHook,

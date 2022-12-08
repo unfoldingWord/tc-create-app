@@ -51,6 +51,7 @@ export default function TranslatableTSV({
       resourceLinks,
       expandedScripture,
       cachedFile,
+      selectedFont,
     },
     actions: { setResourceLinks },
     giteaReactToolkit: {
@@ -62,14 +63,16 @@ export default function TranslatableTSV({
   const {
     filepath: sourceFilepath,
     content: sourceContent,
+    publishedContent: releasedSourceContent,
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
   const { content: cachedContent } = cachedFile || {};
-
+  console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
   const columnNames = useMemo(() => {
-    const _columnNames = columnNamesFromContent({ content: sourceContent, delimiters });
+    const _content = sourceContent || releasedSourceContent;
+    const _columnNames = columnNamesFromContent({ content: _content, delimiters });
     return _columnNames;
-  }, [sourceContent]);
+  }, [sourceContent, releasedSourceContent]);
 
   const {
     actions: { onValidate },
@@ -141,7 +144,7 @@ export default function TranslatableTSV({
       config={serverConfig}
     >
       <DataTable
-        sourceFile={sourceContent}
+        sourceFile={sourceContent || releasedSourceContent}
         targetFile={cachedContent || targetContent}
         onSave={onSave}
         onEdit={onEdit}
@@ -152,6 +155,7 @@ export default function TranslatableTSV({
         generateRowId={_generateRowId}
         options={options}
         parser={parser}
+        translationFontFamily={selectedFont}
       />
       {validationComponent}
     </ResourcesContextProvider>

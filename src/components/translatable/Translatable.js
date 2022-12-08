@@ -17,7 +17,9 @@ function Translatable() {
   const {
     state: {
       targetRepository,
+      sourceRepository,
       filepath,
+      selectedFont,
     },
     actions: { setContentIsDirty },
     giteaReactToolkit: {
@@ -26,7 +28,7 @@ function Translatable() {
     },
   } = useContext(AppContext);
 
-  const { content: sourceFileContent, filepath: sourceFilepath } = sourceFileHook.state || {};
+  const { content: sourceFileContent, publishedContent: releasedSourceContent, filepath: sourceFilepath } = sourceFileHook.state || {};
   const { content: targetFileContent, filepath: targetFilepath } = targetFileHook.state || {};
 
   const {
@@ -53,18 +55,24 @@ function Translatable() {
         <CircularProgress />{' '}
       </div>
     );
-
+    console.log("filepathsMatch=", filepathsMatch)
+    console.log("sourceFileContent", sourceFileContent)
+    console.log("releasedSourceContent", releasedSourceContent)
+    console.log("sourceFileHook:", sourceFileHook)
+    console.log("targetFileContent", targetFileContent)
     if (
       filepathsMatch &&
-      sourceFileContent &&
+      (sourceFileContent || releasedSourceContent) &&
       targetFileContent
     ) {
       if (filepath.match(/\.md$/)) {
+
         let translatableProps = {
-          original: sourceFileContent,
+          original: sourceFileContent ? sourceFileContent : releasedSourceContent,
           translation: targetFileContent,
           onTranslation: saveTranslation,
           onContentIsDirty: setContentIsDirty,
+          translationFontFamily: selectedFont,
         };
         console.log('Markdown file selected');
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
@@ -81,17 +89,20 @@ function Translatable() {
     filepath,
     filepathsMatch,
     sourceFileContent,
+    releasedSourceContent,
+    sourceFileHook,
     targetFileContent,
     setContentIsDirty,
     saveTranslation,
     autoSaveOnEdit,
+    selectedFont,
   ]);
 
   useEffect(() => {
     scrollToTop();
   }, [filepath, scrollToTop]);
 
-  const filesHeader = (targetRepository && targetFileHook.state) ? <FilesHeader /> : <></>;
+  const filesHeader = (targetRepository && targetFileHook.state && sourceRepository ) ? <FilesHeader /> : <></>;
 
   return (
     <div id='translatable'>
