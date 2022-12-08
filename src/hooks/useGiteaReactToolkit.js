@@ -73,7 +73,6 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     urls: _config.repository.urls,
     config,
   });
-  console.log("sourceRepositoryHook:", sourceRepositoryHook)
   const targetRepositoryHook = useRepository({
     authentication,
     repository: targetRepository,
@@ -198,7 +197,6 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onConfirmClose,
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
   });
-  console.log("sourceFileHook:",sourceFileHook)
   const { state: sourceFile } = sourceFileHook;
 
   const defaultContent = useDeepCompareMemo(() => {
@@ -207,7 +205,6 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     const filepathsExist = (!!filepath && !!sourceFile?.filepath)
     const filepathsMatch = (filepath === sourceFile?.filepath);
     const sourceFileIsReady = (filepathsExist && filepathsMatch);
-    console.log("sourceFileIsReady:", sourceFileIsReady)
     if (sourceFileIsReady) {
       const unfoldingWordOrganization = (sourceRepository?.id === targetRepository?.id);
 
@@ -215,7 +212,6 @@ export function useGiteaReactToolkit(applicationStateReducer) {
         _defaultContent = sourceFile?.content;
       } else { // non-uW translators use repo under another organization
         _defaultContent = sourceFile?.publishedContent;
-        console.log("on the else, _defaultContent:", _defaultContent)
       };
     };
 
@@ -259,7 +255,6 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     language,
     organization,
   ]);
-  console.log("useGiteaReactToolkit() targetFileHook, targetRepositoryHook", targetFileHook, targetRepositoryHook);
   return {
     authenticationHook,
     organizationHook,
