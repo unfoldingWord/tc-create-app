@@ -25,6 +25,7 @@ const config = {
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-tn',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-sn',
       SERVER_URL + '/api/v1/repos/unfoldingWord/en_obs-sq',
+      SERVER_URL + '/api/v1/repos/unfoldingWord/en_tl',
     ],
   },
 };
@@ -33,5 +34,8 @@ export default {
   validationPriority: 'high',
   expandedScripture: true,
   fontScale: 100,
+  selectedFont: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",\n' +
+    '    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",\n' +
+    '    sans-serif',
   config,
 };
