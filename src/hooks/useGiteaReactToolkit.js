@@ -73,7 +73,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     urls: _config.repository.urls,
     config,
   });
-
+  
   const targetRepositoryHook = useRepository({
     authentication,
     repository: targetRepository,
@@ -90,7 +90,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
         `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/${ targetRepository.branch }?&recursive=t&per_page=999999`,
         { headers: config.headers }
       )
-      if ( 404 === response.status) {
+      if ( 200 !== response.status) {
         response = await fetch(
           `${ config.server }/api/v1/repos/${ targetRepository.full_name }/git/trees/master?&recursive=t&per_page=999999`,
           { headers: config.headers }
@@ -106,18 +106,20 @@ export function useGiteaReactToolkit(applicationStateReducer) {
         }
       }
       if ( oldTsv9 ) {
+        console.log("Found tsv9 - cannot continue!")
         setCriticalValidationErrors([[
           url,
           '1',
           "tC Create cannot continue to open this file because the target is in an outdated format. Please contact your administrator to update the repository's files to the latest format."
         ]]);
+      } else {
+        console.log("Found tsv7 - good to go!")
       }
     }
 
     const notices = onOpenValidation(filename, content, url);
-
     // prevent opening the old tsv9 source file
-    if ( targetRepository.full_name.endsWith('_tn') ) {
+    if ( targetRepository.full_name.endsWith('_tn')  && filepath.startsWith('tn_') ) {
       if ( filename.startsWith("en_") && filename.endsWith('.tsv') ) {
         notices.push([
             url,
@@ -129,13 +131,15 @@ export function useGiteaReactToolkit(applicationStateReducer) {
 
       checkTargetFilesAreNotTSV9().catch(console.error)
     }
-    else if (notices.length > 0) {
+    if (notices.length > 0) {
+      console.log("Notices found:", notices.length)
       setCriticalValidationErrors(notices);
     } else {
+      console.log("No notices found!")
       setCriticalValidationErrors([]);
     }
     return notices;
-  }, [setCriticalValidationErrors, targetRepository, config]);
+  }, [setCriticalValidationErrors, targetRepository, config, filepath]);
 
   // eslint-disable-next-line
   const _onLoadCache = useCallback(async ({ html_url, file }) => {
@@ -194,7 +198,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     onConfirmClose,
     releaseFlag: (organization?.username !== 'unfoldingWord') ? true : false,
   });
-
+  
   const { state: sourceFile } = sourceFileHook;
 
   const defaultContent = useDeepCompareMemo(() => {
@@ -203,7 +207,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     const filepathsExist = (!!filepath && !!sourceFile?.filepath)
     const filepathsMatch = (filepath === sourceFile?.filepath);
     const sourceFileIsReady = (filepathsExist && filepathsMatch);
-
+    
     if (sourceFileIsReady) {
       const unfoldingWordOrganization = (sourceRepository?.id === targetRepository?.id);
 
@@ -254,7 +258,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     language,
     organization,
   ]);
-
+  
   return {
     authenticationHook,
     organizationHook,

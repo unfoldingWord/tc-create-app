@@ -110,6 +110,11 @@ function cvFilter(rowData, filename) {
     // all linked documents are not being processed
     return false
   }
+  if (String(rowData.priority) === '950') {
+    // discard these since it is no longer true
+    // that tC cannot process an asterisk in the rc link for languate
+    return false
+  }
   if ((filename.startsWith("tq") || filename.startsWith("sq"))
     && String(rowData.priority) === '119'
     && String(rowData.fieldName) === 'Quote') {

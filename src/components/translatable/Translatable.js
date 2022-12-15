@@ -28,7 +28,7 @@ function Translatable() {
     },
   } = useContext(AppContext);
 
-  const { content: sourceFileContent, filepath: sourceFilepath } = sourceFileHook.state || {};
+  const { content: sourceFileContent, publishedContent: releasedSourceContent, filepath: sourceFilepath } = sourceFileHook.state || {};
   const { content: targetFileContent, filepath: targetFilepath } = targetFileHook.state || {};
 
   const {
@@ -55,16 +55,20 @@ function Translatable() {
         <CircularProgress />{' '}
       </div>
     );
-
+    console.log("filepathsMatch=", filepathsMatch)
+    console.log("sourceFileContent", sourceFileContent)
+    console.log("releasedSourceContent", releasedSourceContent)
+    console.log("sourceFileHook:", sourceFileHook)
+    console.log("targetFileContent", targetFileContent)
     if (
       filepathsMatch &&
-      sourceFileContent &&
+      (sourceFileContent || releasedSourceContent) &&
       targetFileContent
     ) {
       if (filepath.match(/\.md$/)) {
 
         let translatableProps = {
-          original: sourceFileContent,
+          original: sourceFileContent ? sourceFileContent : releasedSourceContent,
           translation: targetFileContent,
           onTranslation: saveTranslation,
           onContentIsDirty: setContentIsDirty,
@@ -85,6 +89,8 @@ function Translatable() {
     filepath,
     filepathsMatch,
     sourceFileContent,
+    releasedSourceContent,
+    sourceFileHook,
     targetFileContent,
     setContentIsDirty,
     saveTranslation,

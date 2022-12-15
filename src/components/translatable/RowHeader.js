@@ -6,7 +6,11 @@ import { Skeleton } from '@material-ui/lab';
 import { useDeepCompareMemo } from 'use-deep-compare';
 
 import ScriptureHeader from './ScriptureHeader';
-import { columnIndexOfColumnNameFromColumnNames } from './helpers';
+import { 
+  columnIndexOfColumnNameFromColumnNames,
+  startsWithChapterSpec,
+  getBcvQueryBasedOnRefStr
+} from './helpers';
 
 const styles = {
   defaultHeader: {
@@ -50,8 +54,8 @@ export default function RowHeader({
     let chapter, verse, quote, occurrence;
 
     let columnNamesToUse = [];
-    if (columnNames.includes('OrigWords')) {
-      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigWords', 'Occurrence'];
+    if (columnNames.includes('OrigQuote')) {
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
     } else {
       columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'Quote', 'Occurrence'];
     }
@@ -64,8 +68,11 @@ export default function RowHeader({
 
     if (referenceIndex > -1) {
       // find columIndex of Reference
-      chapter = rowData[referenceIndex].split(delimiters.cell)[1].split(':')[0];
-      verse = rowData[referenceIndex].split(delimiters.cell)[1].split(':')[1];
+      const splitCh = ':'
+      const [_chapter, ...rest] = rowData[referenceIndex].split(delimiters.cell)[1].split(splitCh)
+      chapter = _chapter
+      verse = rest.join(splitCh)
+  
     } else if (chapterIndex && verseIndex) {
       // find columnIndex columnName "Chapter"
       chapter = rowData[chapterIndex].split(delimiters.cell)[1];
@@ -91,14 +98,27 @@ export default function RowHeader({
 
   const scriptureHeader = useDeepCompareMemo(() => {
     let _component;
+    let bcvQuery = undefined
+    const bookId_lowCase = bookId?.toLowerCase()
+
+    if (verse && (typeof verse ==='string') 
+        && ((verse.includes('-') 
+        || verse.includes(':') 
+        || verse.includes(',') 
+        || verse.includes(';')))) {
+
+      const refStr = startsWithChapterSpec(verse) ? `${verse}` : `${chapter}:${verse}`
+      bcvQuery = getBcvQueryBasedOnRefStr(refStr, bookId_lowCase)
+    }
 
     const reference = {
-      bookId: bookId?.toLowerCase(),
+      bookId: bookId_lowCase,
       chapter: parseInt(chapter),
-      verse: parseInt(verse),
+      verse: verse,
+      bcvQuery,
     };
 
-    if (viewed && reference.chapter > 0 && reference.verse > 0) {
+    if (viewed && reference.chapter > 0 && (verse || bcvQuery)) {
       _component = (
         <div style={styles.quoteHeader}>
           <ScriptureHeader
@@ -118,7 +138,6 @@ export default function RowHeader({
 
   const defaultHeader = useDeepCompareMemo(() => (
     <>
-      {/* {console.log(chapter, verse)} */}
       <div style={styles.defaultHeader}>
         <Typography variant='h6' style={styles.title}>
           {chapter && verse !== undefined ? `${bookId.toUpperCase()} ${chapter}:${verse}` : `${bookId.toUpperCase()} ${chapter}`}
