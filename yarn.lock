@@ -5659,10 +5659,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@1.0.14-beta.0:
-  version "1.0.14-beta.0"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.14-beta.0.tgz#1f566f814c99067bb65c53b1d8f6f7858f0785ee"
-  integrity sha512-hDOQbkLQFcVln6uyEa3k/omeYRstFInX9BgOksX163X+89RfPnJza8u4Y8VQmu1tH/h246PnM71QenBOcJqNlw==
+datatable-translatable@1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.15.tgz#3b1c75ab0c49152e7d19fccf085f0d6954447aed"
+  integrity sha512-X3IMcqrQMQIUwq/vCiXfu7wrcTaObVQPdetnIzMmTBGWEf5I0VPASdbeL+ioVuF4L1j1IAiyP7TcVqqpf6EdAw==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
