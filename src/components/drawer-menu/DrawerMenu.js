@@ -97,7 +97,7 @@ function DrawerMenu() {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
-	  <ListItem style={{display:'none'}}>
+	  <ListItem>
 	    <FormControl fullWidth filled>
         <FormLabel id="font-select-label">Font {!isFF && isSelectedFontGraphite ? <Alert severity="warning">Selected font uses Graphite features not supported by your browser. Please use Firefox with this font for the most accurate rendering.</Alert> : ''}</FormLabel>
 		  <Select
