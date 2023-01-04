@@ -2,7 +2,6 @@ import localforage from 'localforage';
 import appPackage from '../../package.json';
 
 const stateStore = localforage.createInstance({
-  driver: [localforage.INDEXEDDB],
   name: `${appPackage.name}-state-store`,
 });
 
@@ -55,7 +54,6 @@ export const saveAuthentication = async (authentication) => {
 };
 
 const cacheStore = localforage.createInstance({
-  driver: [localforage.INDEXEDDB],
   name: `${appPackage.name}-cache-store`,
 });
 
