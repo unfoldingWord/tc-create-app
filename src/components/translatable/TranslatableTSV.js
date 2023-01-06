@@ -29,6 +29,7 @@ import {
   compositeKeyIndicesFromColumnNames,
   generateRowId,
 } from './helpers';
+import ChapterVerseFilters from './ChapterVerseFilters';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -133,6 +134,40 @@ export default function TranslatableTSV({
     return _config;
   }, [columnNames, rowHeader]);
 
+  const REF_FILTER_INDEX = 1;
+
+  const chapterVerseFilter = {
+    name: "ChapterVerse",
+    options: {
+      empty: true,
+      display: "excluded",
+      filterType: "custom",
+      filterOptions: {
+        //TODO: modify logic to allow search strings like `1:5-6`, etc.
+        logic: (location, filters, row) => {
+          if (filters.length) return !filters.includes(row[0]);
+          return false;
+        },
+        display: (filterList, onChange, _index, column, filterData) => {
+          const filterValues = filterData[REF_FILTER_INDEX].reduce(
+            (cv, reference, i) => {
+              const [chapter, verse] = reference.replace('\t', "").split(":");
+              if(!cv[chapter]) cv[chapter] = [];
+              cv[chapter].push(verse)
+              return cv;
+            },
+            {}
+          );
+          const index = REF_FILTER_INDEX;
+          console.log({ filterList, onChange, index, column, filterData });
+          const optionValues = filterValues;
+          return <ChapterVerseFilters onChange={onChange} cvData={optionValues} filters={filterList} index={index}/>
+        },
+        fullWidth: true
+      }
+    }
+  }
+
   return (
     <ResourcesContextProvider
       reference={{ bookId }}
@@ -155,6 +190,7 @@ export default function TranslatableTSV({
         generateRowId={_generateRowId}
         options={options}
         parser={parser}
+        columns={[chapterVerseFilter]}
         translationFontFamily={selectedFont}
       />
       {validationComponent}
