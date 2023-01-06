@@ -136,8 +136,8 @@ export default function TranslatableTSV({
 
   const REF_FILTER_INDEX = 1;
 
-  const chapterFilter = {
-    name: "Chapter",
+  const chapterVerseFilter = {
+    name: "ChapterVerse",
     options: {
       empty: true,
       display: "excluded",
@@ -190,7 +190,7 @@ export default function TranslatableTSV({
         generateRowId={_generateRowId}
         options={options}
         parser={parser}
-        columns={[chapterFilter]}
+        columns={[chapterVerseFilter]}
         translationFontFamily={selectedFont}
       />
       {validationComponent}
