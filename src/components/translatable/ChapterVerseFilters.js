@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, ListItemText, MenuItem, Select, Box } from "@material-ui/core";
-import React, { useCallback,useState } from "react";
+import React, { useState } from "react";
+import { useDeepCompareCallback } from "use-deep-compare";
 
 const SelectSimple = ({options,onChange,label,value,...props}) => {
   return (
@@ -22,13 +23,13 @@ const SelectSimple = ({options,onChange,label,value,...props}) => {
   )
 }
 
+const column = { name: "Reference", filterType: "custom" };
 
 const ChapterVerseFilters = ({ cvData, filters, onChange, index }) => {
   const [chapter, setChapter] = useState("All");
   const [verse, setVerse] = useState("All");
-  const column = { name: "Reference", filterType: "custom" };
 
-  const handleChapterChange = useCallback((event) => {
+  const handleChapterChange = useDeepCompareCallback((event) => {
     event.preventDefault();
     const chapter = event.target.value;
     const verse = "All";
@@ -40,16 +41,16 @@ const ChapterVerseFilters = ({ cvData, filters, onChange, index }) => {
     }
     filters[index] = cvData[chapter].map((verse) => `${chapter}:${verse}`)
     onChange(filters[index], index, column)
-  }, [onChange, index, column])
+  }, [onChange,index,filters,cvData])
 
-  const handleVerseChange = useCallback((event) => {
+  const handleVerseChange = useDeepCompareCallback((event) => {
     event.preventDefault()
     if (chapter === "All") return;
     const verse = event.target.value;
     filters[index] = [`${chapter}:${verse}`]
     onChange(filters[index], index, column)
     setVerse(verse);
-  },[chapter,onChange, index, column])
+  }, [onChange,index,filters,chapter])
 
   return (
     <Box sx={{display:"grid", gridTemplateColumns: "1fr 1fr", gap: "17px"}}>
