@@ -151,7 +151,7 @@ export default function TranslatableTSV({
         display: (filterList, onChange, _index, column, filterData) => {
           const filterValues = filterData[REF_FILTER_INDEX].reduce(
             (cv, reference, i) => {
-              const [chapter, verse] = reference.replace('\t', "").split(":");
+              const [chapter, verse] = reference.match(/(?:\\t)*([\d\w]+):([\d\w]+)/)?.[0].split(":");
               if(!cv[chapter]) cv[chapter] = [];
               cv[chapter].push(verse)
               return cv;
