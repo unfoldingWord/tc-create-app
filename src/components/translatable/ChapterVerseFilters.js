@@ -1,25 +1,20 @@
-import { FormControl, InputLabel, ListItemText, MenuItem, Select, Box } from "@material-ui/core";
+import { Box, TextField } from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
 import React, { useState } from "react";
 import { useDeepCompareCallback } from "use-deep-compare";
 
 const SelectSimple = ({options,onChange,label,value,...props}) => {
   return (
-    <FormControl {...props}>
-      <InputLabel htmlFor='select-multiple-chip'>
-        {label}
-      </InputLabel>
-      <Select
-        value={value}
-        renderValue={selected => selected}
-        onChange={onChange}
-      >
-        {options.map(item => (
-          <MenuItem key={item} value={item}>
-            <ListItemText primary={item} />
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Autocomplete
+      value={value}
+      style={{overflow: 'visible'}}
+      options={options}
+      getOptionLabel={(option) => `${option}`}
+      onChange={onChange}
+      handleHomeEndKeys
+      renderInput={(params) => <TextField {...params} label={label}
+      />}
+    />
   )
 }
 
@@ -29,28 +24,38 @@ const ChapterVerseFilters = ({ cvData, filters, onChange, index }) => {
   const [chapter, setChapter] = useState("All");
   const [verse, setVerse] = useState("All");
 
-  const handleChapterChange = useDeepCompareCallback((event) => {
+  const chapterOptions = ["All", ...Object.keys(cvData)];
+  const verseOptions = ["All", ...(cvData[chapter] || [])];
+
+  const getVersesInChapter = useDeepCompareCallback((chapter) => cvData[chapter]?.map((verse) => `${chapter}:${verse}`), [cvData]);
+
+  const handleChapterChange = useDeepCompareCallback((event, newValue) => {
     event.preventDefault();
-    const chapter = event.target.value;
+    const chapter = newValue;
     const verse = "All";
     setChapter(chapter);
     setVerse(verse);
-    if (chapter === "All") {
+    if (chapter === "All" || chapter === null) {
       onChange([], index, column);
       return;
     }
-    filters[index] = cvData[chapter].map((verse) => `${chapter}:${verse}`)
+    filters[index] = getVersesInChapter(chapter)
     onChange(filters[index], index, column)
-  }, [onChange,index,filters,cvData])
+  }, [onChange,index,filters,getVersesInChapter])
 
-  const handleVerseChange = useDeepCompareCallback((event) => {
+  const handleVerseChange = useDeepCompareCallback((event,newValue) => {
     event.preventDefault()
     if (chapter === "All") return;
-    const verse = event.target.value;
-    filters[index] = [`${chapter}:${verse}`]
-    onChange(filters[index], index, column)
+    const verse = newValue;
     setVerse(verse);
-  }, [onChange,index,filters,chapter])
+    if (verse === "All") {
+      filters[index] = getVersesInChapter(chapter);
+      onChange([], index, column);
+      return;
+    }
+    filters[index] = verse ? [`${chapter}:${verse}`] : [];
+    onChange(filters[index], index, column)
+  }, [onChange,index,filters,chapter,getVersesInChapter])
 
   return (
     <Box sx={{display:"grid", gridTemplateColumns: "1fr 1fr", gap: "17px"}}>
@@ -58,13 +63,13 @@ const ChapterVerseFilters = ({ cvData, filters, onChange, index }) => {
         value={chapter}
         label={"Chapter"}
         onChange={handleChapterChange}
-        options={["All", ...Object.keys(cvData)]}
+        options={chapterOptions}
       />
       <SelectSimple
         value={verse}
         label={"Verse"}
         onChange={handleVerseChange}
-        options={["All", ...(cvData[chapter] || [])]}
+        options={verseOptions}
       />
     </Box>
   )

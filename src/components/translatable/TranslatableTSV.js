@@ -143,14 +143,13 @@ export default function TranslatableTSV({
       display: "excluded",
       filterType: "custom",
       filterOptions: {
-        //TODO: modify logic to allow search strings like `1:5-6`, etc.
         logic: (location, filters, row) => {
           if (filters.length) return !filters.includes(row[0]);
           return false;
         },
         display: (filterList, onChange, _index, column, filterData) => {
           const filterValues = filterData[REF_FILTER_INDEX].reduce(
-            (cv, reference, i) => {
+            (cv, reference) => {
               const [chapter, verse] = reference.match(/(?:\\t)*([\d\w]+):([\d\w]+)/)?.[0].split(":");
               if(!cv[chapter]) cv[chapter] = [];
               cv[chapter].push(verse)
@@ -159,7 +158,6 @@ export default function TranslatableTSV({
             {}
           );
           const index = REF_FILTER_INDEX;
-          console.log({ filterList, onChange, index, column, filterData });
           const optionValues = filterValues;
           return <ChapterVerseFilters onChange={onChange} cvData={optionValues} filters={filterList} index={index}/>
         },
