@@ -86,19 +86,24 @@ export const generateRowId = ({
   if (referenceIndex) {
     const splitCh = ':'
     // find columIndex of Reference
-    const [_chapter, ...rest] = rowData[referenceIndex].split(delimiters.cell)[0].split(splitCh)
+    const [referenceFromOriginal, referenceFromTranslation] = rowData[referenceIndex].split(delimiters.cell);
+    const reference = referenceFromOriginal || referenceFromTranslation;
+    const [_chapter, ...rest] = reference.split(splitCh)
     chapter = _chapter
     verse = rest.join(splitCh)
 
   } else if (chapterIndex && verseIndex) {
     // find columnIndex columnName "Chapter"
-    chapter = rowData[chapterIndex].split(delimiters.cell)[0];
+    const [chapterFromOriginal, chapterFromTranslation] = rowData[chapterIndex].split(delimiters.cell);
+    chapter = chapterFromOriginal || chapterFromTranslation
     // find columnIndex columnName "Verse"
-    verse = rowData[verseIndex].split(delimiters.cell)[0];
+    const [verseFromOriginal, verseFromTranslation] = rowData[verseIndex].split(delimiters.cell);
+    verse = verseFromOriginal || verseFromTranslation;
   };
 
   if (uidIndex) {
-    uid = rowData[uidIndex].split(delimiters.cell)[0];
+    const [uidFromOriginal, uidFromTranslation] = rowData[uidIndex].split(delimiters.cell);
+    uid = uidFromOriginal || uidFromTranslation;
   };
 
   return `header-${chapter}-${verse}-${uid}`;

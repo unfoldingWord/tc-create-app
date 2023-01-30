@@ -5671,10 +5671,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.17.tgz#331c359a95139e433f7590207af77cc4abe6a6cd"
-  integrity sha512-GiIrcciA0+LR32V0bQTDJemnVKYusJhG93Drox2yphH8FCB6IEn5gAT/A8LXnzxQ4nZJK8YjpsMizNeJ2dBEtA==
+datatable-translatable@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.18.tgz#80879ea2d6ef062b5a6423881662bf5c1c8b2dc8"
+  integrity sha512-XIuRGgILcU1b2JSamqKkIoUrIlwW2JFVnp4lekFdaG8UE/3JK0RELAegAhGNDY6BLzVI+fyo70OZ5f6So5hryg==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
