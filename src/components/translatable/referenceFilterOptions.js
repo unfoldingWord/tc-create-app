@@ -4,7 +4,7 @@ import { ReferenceFilters } from "./ReferenceFilters";
 
 const doCleanRef = (dirtyRef) => dirtyRef.split("\t").find(ref => /[\w\d]+:[\w\d]+/.test(ref))
 
-export const referenceFilterOptions = 
+export const getReferenceFilterOptions = ({fullWidth}) => (
   {
     filterType: "custom",
     customFilterListOptions: {
@@ -60,6 +60,7 @@ export const referenceFilterOptions =
           {...{ filterList, onChange, index, column, values }}
         />
       )},
-      fullWidth: true
+      fullWidth
     }
   }
+)

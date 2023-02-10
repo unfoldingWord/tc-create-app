@@ -57,7 +57,7 @@ export const ReferenceFilters = ({
 
   return (
     <>
-      <FormControl>
+      <Box>
         <Autocomplete
           onChange={handleChangeReferences}
           id="reference-filter"
@@ -69,14 +69,12 @@ export const ReferenceFilters = ({
             <TextField {...params} label={column.label} />
           )}
         />
-      </FormControl>
-      <FormControl>
         <Box
           sx={{
-            mt:"1em",
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: "58px"
+            gap: "2rem",
+            mt:"2rem",
           }}
         >
           <Autocomplete
@@ -100,7 +98,7 @@ export const ReferenceFilters = ({
             renderInput={(params) => <TextField {...params} label={"Verses"} />}
           />
         </Box>
-      </FormControl>
+      </Box>
     </>
   );
 };

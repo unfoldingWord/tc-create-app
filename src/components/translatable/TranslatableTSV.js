@@ -30,7 +30,7 @@ import {
   generateRowId,
 } from './helpers';
 
-import { referenceFilterOptions } from './referenceFilterOptions';
+import { getReferenceFilterOptions } from './referenceFilterOptions';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -137,7 +137,11 @@ export default function TranslatableTSV({
 
   const columnsMap = {
     "Reference": {
-      options: referenceFilterOptions
+      options: {
+        ...getReferenceFilterOptions({
+          fullWidth: config.columnsFilter.length > 1
+        })
+      }
     }
   }
 
