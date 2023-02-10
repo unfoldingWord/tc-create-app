@@ -34,7 +34,7 @@
     "@material-ui/lab": "4.0.0-alpha.60",
     "@material-ui/styles": "^4.11.3",
     "axios": "^0.21.0",
-    "bible-reference-range": "^1.0.1",
+    "bible-reference-range": "^1.1.0",
     "datatable-translatable": "^1.0.19",
     "deep-freeze": "^0.0.1",
     "gitea-react-toolkit": "2.2.3",
