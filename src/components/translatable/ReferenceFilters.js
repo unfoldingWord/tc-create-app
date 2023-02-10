@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, TextField, Box } from "@material-ui/core";
+import { TextField, Box } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 
 export const ReferenceFilters = ({
