@@ -20,7 +20,7 @@ export const referenceFilterOptions =
           const references = filters.map((filter) => filter.split("|")[1]);
           const cleanLocation = doCleanRef(location);
           const baseReference = references.join(";")
-          if (filters.length) {
+          if (filters.length && cleanLocation) {
             return !doesReferenceContain(baseReference, cleanLocation);
           };
           return false;
