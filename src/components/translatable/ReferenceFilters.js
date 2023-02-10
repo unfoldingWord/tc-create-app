@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormControl, TextField, Box } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 
@@ -9,6 +9,7 @@ export const ReferenceFilters = ({
   values,
   column
 }) => {
+
   const { refSelected, cvSelected } = filterList[index].reduce(
     (values, filter) => {
       const [type, value] = filter.split("|")
@@ -23,11 +24,7 @@ export const ReferenceFilters = ({
     { cvSelected: [], refSelected: [] }
   );
 
-  const [c, v] = cvSelected?.[0]?.split(":") || [];
-
-  const [references, setReferences] = useState(refSelected || []);
-  const [chapter, setChapter] = useState(c || "All");
-  const [verses, setVerses] = useState(v || "All");
+  const [chapter = "All", verses = "All"] = cvSelected?.[0]?.split(":") || [];
 
   const buildCv = (c, v) => {
     if (c === "All") return [];
@@ -42,24 +39,20 @@ export const ReferenceFilters = ({
   };
 
   const handleChangeReferences = (event, newValue) => {
-    setReferences(newValue);
     const cv = buildCv(chapter, verses);
     handleChange(cv, newValue);
   };
 
   const handleChangeChapter = (event, newValue) => {
     const newChapter = newValue || "All";
-    setChapter(newChapter);
-    setVerses("All");
     const cv = buildCv(newChapter, verses);
-    handleChange(cv, references);
+    handleChange(cv, refSelected);
   };
 
   const handleChangeVerse = (event, newValue) => {
     const newVerses = newValue || "All";
-    setVerses(newVerses);
     const cv = buildCv(chapter, newVerses);
-    handleChange(cv, references);
+    handleChange(cv, refSelected);
   };
 
   return (
@@ -68,7 +61,7 @@ export const ReferenceFilters = ({
         <Autocomplete
           onChange={handleChangeReferences}
           id="reference-filter"
-          value={references || []}
+          value={refSelected || []}
           freeSolo
           multiple
           options={values.raw}
