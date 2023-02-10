@@ -80,7 +80,7 @@ export const ReferenceFilters = ({
           <Autocomplete
             value={chapter}
             style={{ overflow: "visible" }}
-            options={["All", ...Object.keys(values.cv)]}
+            options={["All", ...Array.from(values.cv.keys())]}
             getOptionLabel={(option) => `${option}`}
             onChange={handleChangeChapter}
             handleHomeEndKeys
@@ -91,7 +91,7 @@ export const ReferenceFilters = ({
           <Autocomplete
             value={verses}
             style={{ overflow: "visible" }}
-            options={["All", ...(values.cv[chapter] || [])]}
+            options={["All", ...(values.cv.get(chapter) || [])]}
             getOptionLabel={(option) => `${option}`}
             onChange={handleChangeVerse}
             handleHomeEndKeys

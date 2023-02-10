@@ -3,6 +3,14 @@ import { doesReferenceContain } from "bible-reference-range";
 import { ReferenceFilters } from "./ReferenceFilters";
 
 const doCleanRef = (dirtyRef) => dirtyRef.split("\t").find(ref => /[\w\d]+:[\w\d]+/.test(ref))
+const sortRefs =  (a, b) => {
+  if(isNaN(a) || isNaN(b)) return -1;
+  const x = parseInt(a);
+  const y = parseInt(b);
+  if (x < y) return -1;
+  if (x > y) return 1;
+  return 0;
+}
 
 export const getReferenceFilterOptions = ({fullWidth}) => (
   {
@@ -39,21 +47,14 @@ export const getReferenceFilterOptions = ({fullWidth}) => (
           return cvObject;
         },{});
 
-        const values = Object.keys(cvObject).reduce((refs, key) => {
-          const sorted = [...cvObject[key]].sort(function (a, b) {
-            if(isNaN(a) || isNaN(b)) return -1;
-            const x = parseInt(a);
-            const y = parseInt(b);
-            if (x < y) return -1;
-            if (x > y) return 1;
-            return 0;
-          });
+        const values = Object.keys(cvObject).sort(sortRefs).reduce((refs, key) => {
+          const sorted = [...cvObject[key]].sort(sortRefs);
           sorted.forEach(v => {
             refs.raw.push(`${key}:${v}`)
           })
-          refs.cv[key] = sorted;
+          refs.cv.set(key,sorted);
           return refs
-        },{raw: [], cv: {}})
+        },{raw: [], cv: new Map()})
 
         return (
         <ReferenceFilters
