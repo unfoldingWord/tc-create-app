@@ -32,6 +32,7 @@ export const referenceFilterOptions =
       display: (filterList, onChange, index, column, columns) => {
         const cvObject = columns[index].reduce((cvObject, ref) => {
           const cleanRef = doCleanRef(ref);
+          if (!cleanRef) return cvObject;
           const [chapter, verse] = cleanRef.split(":")
           if (!cvObject[chapter]) cvObject[chapter] = new Set();
           cvObject[chapter].add(verse);
