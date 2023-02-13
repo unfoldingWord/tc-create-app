@@ -57,7 +57,7 @@
     "word-aligner": "^1.0.0"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "3.9.2",
+    "@cypress/code-coverage": "3.10.0",
     "@rescripts/cli": "^0.0.16",
     "@rescripts/rescript-env": "^0.0.12",
     "@testing-library/react-hooks": "^5.1.0",
