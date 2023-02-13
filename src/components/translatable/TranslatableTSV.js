@@ -29,7 +29,8 @@ import {
   compositeKeyIndicesFromColumnNames,
   generateRowId,
 } from './helpers';
-import ChapterVerseFilters from './ChapterVerseFilters';
+
+import { getReferenceFilterOptions } from './referenceFilterOptions';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -134,34 +135,12 @@ export default function TranslatableTSV({
     return _config;
   }, [columnNames, rowHeader]);
 
-  const REF_FILTER_INDEX = 1;
-
-  const chapterVerseFilter = {
-    name: "ChapterVerse",
-    options: {
-      empty: true,
-      display: "excluded",
-      filterType: "custom",
-      filterOptions: {
-        logic: (location, filters, row) => {
-          if (filters.length) return !filters.includes(row[0]);
-          return false;
-        },
-        display: (filterList, onChange, _index, column, filterData) => {
-          const filterValues = filterData[REF_FILTER_INDEX].reduce(
-            (cv, reference) => {
-              const [chapter, verse] = reference.match(/(?:\\t)*([\d\w]+):([\d\w]+)/)?.[0].split(":");
-              if(!cv[chapter]) cv[chapter] = [];
-              cv[chapter].push(verse)
-              return cv;
-            },
-            {}
-          );
-          const index = REF_FILTER_INDEX;
-          const optionValues = filterValues;
-          return <ChapterVerseFilters onChange={onChange} cvData={optionValues} filters={filterList} index={index}/>
-        },
-        fullWidth: true
+  const columnsMap = {
+    "Reference": {
+      options: {
+        ...getReferenceFilterOptions({
+          fullWidth: config.columnsFilter.length > 1
+        })
       }
     }
   }
@@ -188,7 +167,7 @@ export default function TranslatableTSV({
         generateRowId={_generateRowId}
         options={options}
         parser={parser}
-        columns={[chapterVerseFilter]}
+        columnsMap={columnsMap}
         translationFontFamily={selectedFont}
       />
       {validationComponent}
