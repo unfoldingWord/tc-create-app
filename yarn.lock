@@ -6719,13 +6719,13 @@ eslint-plugin-react@^7.19.0:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.7"
 
-eslint-plugin-test-selectors@^1.3.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-test-selectors/-/eslint-plugin-test-selectors-1.3.2.tgz#4fb65afc6b0397ab1c4cafb823af99e19e167ad6"
-  integrity sha512-6f4bDE3b/YcP9SIAqxgd1+C1/oMF/qSjFXTF5H8Gq/H0iVekd6YrlPY3zX7WGAnVjMNEdOp9gK1OolfvIepzbg==
+eslint-plugin-test-selectors@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-test-selectors/-/eslint-plugin-test-selectors-2.0.4.tgz#4a6dc862bbb839a13ab5628b00d71682f048afa9"
+  integrity sha512-R96HyykzcolAn+AXttSkqPO1so0pOuDhJ2jy/59jEn5qp96XMVpHlO8CQ+oVk6kHZH0vQZPJggvZduEX/60zcg==
   dependencies:
-    jsx-ast-utils "^3.2.0"
-    nanoid "^3.1.18"
+    jsx-ast-utils "^3.2.1"
+    nanoid "^3.1.30"
     requireindex "^1.2.0"
 
 eslint-rule-composer@^0.3.0:
@@ -10396,13 +10396,13 @@ jsx-ast-utils@^2.0.1:
     array-includes "^3.1.1"
     object.assign "^4.1.0"
 
-"jsx-ast-utils@^2.4.1 || ^3.0.0", jsx-ast-utils@^3.2.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-3.3.0.tgz#e624f259143b9062c92b6413ff92a164c80d3ccb"
-  integrity sha512-XzO9luP6L0xkxwhIJMTJQpZo/eeN60K08jHdexfD569AGxeNug6UketeHXEhROoM8aR7EcUoOQmIhcJQjcuq8Q==
+"jsx-ast-utils@^2.4.1 || ^3.0.0", jsx-ast-utils@^3.2.1:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-3.3.3.tgz#76b3e6e6cece5c69d49a5792c3d01bd1a0cdc7ea"
+  integrity sha512-fYQHZTZ8jSfmWZ0iyzfwiU4WDX4HpHbMCZ3gPlWYiCl3BoeOTsqKBqnTVfH2rYT7eP5c3sVbeSPHnnJOaTrWiw==
   dependencies:
-    array-includes "^3.1.4"
-    object.assign "^4.1.2"
+    array-includes "^3.1.5"
+    object.assign "^4.1.3"
 
 jszip@^3.5.0:
   version "3.10.0"
@@ -11674,7 +11674,7 @@ nan@^2.12.1:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.16.0.tgz#664f43e45460fb98faf00edca0bb0d7b8dce7916"
   integrity sha512-UdAqHyFngu7TfQKsCBgAA6pWDkT8MAO7d0jyOecVhN5354xbLqdn8mV9Tat9gepAupm0bt2DbeaSC8vS52MuFA==
 
-nanoid@^3.1.18, nanoid@^3.3.4:
+nanoid@^3.1.30, nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
@@ -12214,6 +12214,16 @@ object.assign@^4.1.0, object.assign@^4.1.2:
     call-bind "^1.0.0"
     define-properties "^1.1.3"
     has-symbols "^1.0.1"
+    object-keys "^1.1.1"
+
+object.assign@^4.1.3:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.1.4.tgz#9673c7c7c351ab8c4d0b516f4343ebf4dfb7799f"
+  integrity sha512-1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==
+  dependencies:
+    call-bind "^1.0.2"
+    define-properties "^1.1.4"
+    has-symbols "^1.0.3"
     object-keys "^1.1.1"
 
 object.entries@^1.1.3, object.entries@^1.1.5:
