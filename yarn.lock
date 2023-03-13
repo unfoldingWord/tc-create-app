@@ -15274,10 +15274,10 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@5.3.6-beta.2:
-  version "5.3.6-beta.2"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.3.6-beta.2.tgz#4ccdaa00145fb0a16edc0f06e158cc66eb4e757a"
-  integrity sha512-73UtmQxqq/msUONr+04R7UhrKg27Ptk/JCOj60wDogRYXTs1/JSKYq2gNMhihFRpzrv0dydUkZJgzXrM9NwcWQ==
+scripture-resources-rcl@5.3.7:
+  version "5.3.7"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.3.7.tgz#887442be12471633dc310559d3a2d04dd2d02ef4"
+  integrity sha512-4TUcXfT37waLEcEJ8PSTje8wPvJmpfrx7NU+lZm8DPn8zyP3XH56+l6+XrkdAGNS4Gx1y84szZJ/HrPmyKzSxg==
   dependencies:
     bible-reference-range "^1.0.1"
     deep-freeze "^0.0.1"
