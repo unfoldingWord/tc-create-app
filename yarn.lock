@@ -5676,10 +5676,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^1.0.19:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.19.tgz#85fd010685b5e50969184ec00b97b3145a485470"
-  integrity sha512-ahpmSScrUBJj/Jnj3a/4ihGgJkGmYOrQgtiz5O2kmT9CKUc6jmJQoC31iq3YjVv8mOMUBFrwmVZLuCk7xqz7rA==
+datatable-translatable@^1.0.23:
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.23.tgz#fe7cb0b51d689b11d460422fa2270e9796b7e891"
+  integrity sha512-9F3Xs8aY6JQ0LFCniMrqY4bKqOK6+R4RPZx6df0kEGcGQIMNmo1OXWrQpDGJ2DGYnSD1vJoEny///DPPazI7mQ==
   dependencies:
     deep-freeze "^0.0.1"
     lodash.isequal "^4.5.0"
@@ -7978,10 +7978,10 @@ gitea-react-toolkit@2.2.1:
     use-deep-compare-effect "^1.3.1"
     utf8 "3.0.0"
 
-gitea-react-toolkit@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.2.3.tgz#bee53efdb0038ad8353d9736ebc1dab70b04b9ac"
-  integrity sha512-BAe6Cs5YOLFOxXAZsUHbVGte2R9uyBqlnzKBbVAvuquw1lOqOIANV6YmA4Qr+1uhmRVSSMVWm9pq9aygMtV2gg==
+gitea-react-toolkit@2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/gitea-react-toolkit/-/gitea-react-toolkit-2.2.4.tgz#ee98dbe61091798711f76815039fd9b5dedb1c87"
+  integrity sha512-Q2myLnOL/3VEBA43fSxKQaWH4wHF8aDYkcer71kN0ZlnWfz7MCcG44spers7o1x1Lw6FWYV54boLs86bmVi4Cg==
   dependencies:
     awesome-debounce-promise "2.1.0"
     axios "0.19.0"
@@ -11192,10 +11192,10 @@ markdown-translatable@2.1.2-beta.0:
     turndown "^7.0.0"
     turndown-plugin-gfm "^1.0.2"
 
-markdown-translatable@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-2.1.3.tgz#ac497b69181658c3da22cf94dfe7fad3c15a7c4a"
-  integrity sha512-3i1rFaZktsqBTE7r1VSeXhinjsHOIeyLtEIIOcuzTfO1PEQDp6n8esZ/nHGqmW7KiQ50854Va5pvz8cY15+6IQ==
+markdown-translatable@2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-2.1.4.tgz#e96b0acda9cdafc7ec5393a40fba60b98224f055"
+  integrity sha512-XBnhCY7pmAt4tj6TPtT9V73I4hK/bi+D2utN878kuxdb6010/zd4Z3Ws0q6A+el2s8mj4r3h0sdo31AaRqz+uw==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"
@@ -15274,10 +15274,10 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@5.3.6-beta.2:
-  version "5.3.6-beta.2"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.3.6-beta.2.tgz#4ccdaa00145fb0a16edc0f06e158cc66eb4e757a"
-  integrity sha512-73UtmQxqq/msUONr+04R7UhrKg27Ptk/JCOj60wDogRYXTs1/JSKYq2gNMhihFRpzrv0dydUkZJgzXrM9NwcWQ==
+scripture-resources-rcl@5.3.8:
+  version "5.3.8"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.3.8.tgz#148cb021522d95542f6f56f343a2039fc692a569"
+  integrity sha512-6z/vzjaYfctch5d21riFosw9URPu47/buALUMihcMTmWuUmPne6phcCxLQik0ZJIYrVmzKlJqMjvA2nNK2EhUQ==
   dependencies:
     bible-reference-range "^1.0.1"
     deep-freeze "^0.0.1"
