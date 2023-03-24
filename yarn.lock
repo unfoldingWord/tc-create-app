@@ -5676,12 +5676,11 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^1.0.23:
-  version "1.0.23"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.23.tgz#fe7cb0b51d689b11d460422fa2270e9796b7e891"
-  integrity sha512-9F3Xs8aY6JQ0LFCniMrqY4bKqOK6+R4RPZx6df0kEGcGQIMNmo1OXWrQpDGJ2DGYnSD1vJoEny///DPPazI7mQ==
+"datatable-translatable@file:.yalc/datatable-translatable":
+  version "1.0.24"
   dependencies:
     deep-freeze "^0.0.1"
+    extensible-rcl "^1.1.0"
     lodash.isequal "^4.5.0"
     markdown-translatable "2.1.2-beta.0"
     mui-datatables "3.3.1"
@@ -7208,6 +7207,11 @@ extend@^3.0.0, extend@~3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
+
+extensible-rcl@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/extensible-rcl/-/extensible-rcl-1.1.0.tgz#ed69f704277d05d4a8d559e1d863a1ef2428636e"
+  integrity sha512-i9Zr6tSs4G398cXEGyN8z4zfHvI0eDa40AcII1V8YNS4BFGezBkXkgQtnR/2xiYH4fLbnnCg9OcYaVfKwnb7iw==
 
 external-editor@^3.0.0, external-editor@^3.0.3:
   version "3.1.0"
@@ -14200,6 +14204,11 @@ react-icons@^3.8.0:
   integrity sha512-JRgiI/vdF6uyBgyZhVyYJUZAop95Sy4XDe/jmT3R/bKliFWpO/uZBwvSjWEdxwzec7SYbEPNPck0Kff2tUGM2Q==
   dependencies:
     camelcase "^5.0.0"
+
+react-icons@^4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.8.0.tgz#621e900caa23b912f737e41be57f27f6b2bff445"
+  integrity sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==
 
 react-input-autosize@^3.0.0:
   version "3.0.0"

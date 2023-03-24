@@ -10,7 +10,9 @@ import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider } from 'scripture-resources-rcl';
 import * as parser from 'uw-tsv-parser';
-
+import { MdUpdate } from 'react-icons/md'
+import { FiShare } from 'react-icons/fi'
+import IconButton from '@material-ui/core/IconButton';
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -135,6 +137,44 @@ export default function TranslatableTSV({
     return _config;
   }, [columnNames, rowHeader]);
 
+   // TODO: hook these up to API
+   const needToMergeFromMaster = true
+   const mergeFromMasterHasConflicts = false
+   const mergeToMasterHasConflicts = true
+ 
+   // eslint-disable-next-line no-nested-ternary
+   const mergeFromMasterTitle = mergeFromMasterHasConflicts ? 'Merge Conflicts for update from master' : (needToMergeFromMaster ? 'Update from master' : 'No merge conflicts for update with master')
+   // eslint-disable-next-line no-nested-ternary
+   const mergeFromMasterColor = mergeFromMasterHasConflicts ? 'red' : (needToMergeFromMaster ? 'orange' : 'lightgray')
+   const mergeToMasterTitle = mergeToMasterHasConflicts ? 'Merge Conflicts for share with master' : 'No merge conflicts for share with master'
+   const mergeToMasterColor = mergeToMasterHasConflicts ? 'red' : 'black'
+ 
+
+  const onRenderToolbar = ({ items }) => 
+  <>
+    {items}
+    <IconButton
+      // className={classes.margin}
+      key='update-from-master'
+      onClick={() => { }}
+      title={mergeFromMasterTitle}
+      aria-label={mergeFromMasterTitle}
+      style={{ cursor: 'pointer' }}
+    >
+      <MdUpdate id='update-from-master-icon' color={mergeFromMasterColor} />
+    </IconButton>
+    <IconButton
+      // className={classes.margin}
+      key='share-to-master'
+      onClick={() => { }}
+      title={mergeToMasterTitle}
+      aria-label={mergeToMasterTitle}
+      style={{ cursor: 'pointer' }}
+    >
+      <FiShare id='share-to-master-icon' color={mergeToMasterColor} />
+    </IconButton>
+    </>
+
   const columnsMap = {
     "Reference": {
       options: {
@@ -169,6 +209,7 @@ export default function TranslatableTSV({
         parser={parser}
         columnsMap={columnsMap}
         translationFontFamily={selectedFont}
+        onRenderToolbar={onRenderToolbar}
       />
       {validationComponent}
     </ResourcesContextProvider>
