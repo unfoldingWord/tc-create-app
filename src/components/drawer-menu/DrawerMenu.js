@@ -73,7 +73,7 @@ function DrawerMenu() {
   ));
   
   const mergeToMasterHasConflicts = false
-  const mergeToMasterTitle = mergeToMasterHasConflicts ? 'Merge Conflicts for share with master' : 'No merge conflicts for share with master'
+  // const mergeToMasterTitle = mergeToMasterHasConflicts ? 'Merge Conflicts for share with master' : 'No merge conflicts for share with master'
   const mergeToMasterColor = mergeToMasterHasConflicts ? 'red' : 'black'
 
   return (
