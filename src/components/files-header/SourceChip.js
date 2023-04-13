@@ -1,6 +1,6 @@
 import Path from 'path';
 import React, { useCallback } from 'react';
-import { GetApp } from '@material-ui/icons';
+import { GoDiff } from "react-icons/go";
 
 import { SERVER_URL } from '../../core/state.defaults';
 import FileChip from './FileChip';
@@ -53,7 +53,7 @@ export default function SourceChip({
 
   const style = { background: '#fff9' };
 
-  const deleteIcon = (targetOwner !== sourceOwner) ? <GetApp style={{ color: '#d3d3e6' }} /> : <GetApp />;
+  const deleteIcon = (targetOwner !== sourceOwner) ? <GoDiff style={{ color: 'lightgray' }} /> : <GoDiff />;
 
   const iconTooltip = 'OpenSourceText';
 

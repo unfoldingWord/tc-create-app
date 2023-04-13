@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import MenuBookOutlined from '@material-ui/icons/MenuBookOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import { FiShare } from 'react-icons/fi'
 import {
   List,
   ListItem,
@@ -69,7 +70,11 @@ function DrawerMenu() {
 		<MenuItem key={index} value={font.fontFamily}>
       {font.name}
 		</MenuItem>
-	));
+  ));
+  
+  const mergeToMasterHasConflicts = false
+  const mergeToMasterTitle = mergeToMasterHasConflicts ? 'Merge Conflicts for share with master' : 'No merge conflicts for share with master'
+  const mergeToMasterColor = mergeToMasterHasConflicts ? 'red' : 'black'
 
   return (
     <List>
@@ -138,6 +143,12 @@ function DrawerMenu() {
             inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
         </div>
+      </ListItem>
+      <ListItem button onClick={handleFeedback}>
+        <ListItemIcon className={classes.icon}>
+        <FiShare id='share-to-master-icon' color={mergeToMasterColor} />
+        </ListItemIcon>
+        <ListItemText primary="Merge my work" />
       </ListItem>
       <ListItem>
         <div>
