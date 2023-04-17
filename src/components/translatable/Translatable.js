@@ -106,6 +106,8 @@ function Translatable() {
     return _translatable;
   }, [
     filepath,
+    checkMergeStatus,
+    checkUpdateStatus,
     filepathsMatch,
     sourceFileContent,
     releasedSourceContent,
