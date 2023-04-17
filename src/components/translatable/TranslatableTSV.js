@@ -10,8 +10,6 @@ import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider } from 'scripture-resources-rcl';
 import * as parser from 'uw-tsv-parser';
-import { MdUpdate } from 'react-icons/md'
-import IconButton from '@material-ui/core/IconButton';
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -32,6 +30,8 @@ import {
 } from './helpers';
 
 import { getReferenceFilterOptions } from './referenceFilterOptions';
+import { useContentUpdateProps } from '../../hooks/useContentUpdateProps';
+import { UpdateBranchButton } from '../branch-merger/components/UpdateBranchButton';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -70,7 +70,7 @@ export default function TranslatableTSV({
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
   const { content: cachedContent } = cachedFile || {};
-  console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
+  // console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
   const columnNames = useMemo(() => {
     const _content = sourceContent || releasedSourceContent;
     const _columnNames = columnNamesFromContent({ content: _content, delimiters });
@@ -132,33 +132,15 @@ export default function TranslatableTSV({
       columnsFilter: columnsFilterFromColumnNames({ columnNames }),
       columnsShowDefault: columnsShowDefaultFromColumnNames({ columnNames }),
     };
-
     return _config;
   }, [columnNames, rowHeader]);
 
-   // TODO: hook these up to API
-   const needToMergeFromMaster = false
-   const mergeFromMasterHasConflicts = false
-
-   // eslint-disable-next-line no-nested-ternary
-   const mergeFromMasterTitle = mergeFromMasterHasConflicts ? 'Merge Conflicts for update from master' : (needToMergeFromMaster ? 'Update from master' : 'No merge conflicts for update with master')
-   // eslint-disable-next-line no-nested-ternary
-   const mergeFromMasterColor = mergeFromMasterHasConflicts ? 'red' : (needToMergeFromMaster ? 'orange' : 'lightgray')
-
+  const updateButtonProps = useContentUpdateProps();
 
   const onRenderToolbar = ({ items }) => 
   <>
     {items}
-    <IconButton
-      // className={classes.margin}
-      key='update-from-master'
-      onClick={() => { }}
-      title={mergeFromMasterTitle}
-      aria-label={mergeFromMasterTitle}
-      style={{ cursor: 'pointer' }}
-    >
-      <MdUpdate id='update-from-master-icon' color={mergeFromMasterColor} />
-    </IconButton>
+    <UpdateBranchButton {...updateButtonProps}/>
   </>
 
   const columnsMap = {

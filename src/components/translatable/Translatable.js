@@ -12,6 +12,7 @@ import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import useRetrySave from '../../hooks/useRetrySave';
 import TranslatableTSV from './TranslatableTSV';
+import { BranchMergerContext } from '../branch-merger/context/BranchMergerProvider';
 
 function Translatable() {
   const {
@@ -27,6 +28,13 @@ function Translatable() {
       targetFileHook,
     },
   } = useContext(AppContext);
+
+  const {
+    actions: {
+      checkUpdateStatus,
+      checkMergeStatus,
+    }
+  } = useContext(BranchMergerContext);
 
   const { content: sourceFileContent, publishedContent: releasedSourceContent, filepath: sourceFilepath } = sourceFileHook.state || {};
   const { content: targetFileContent, filepath: targetFilepath } = targetFileHook.state || {};
@@ -55,11 +63,11 @@ function Translatable() {
         <CircularProgress />{' '}
       </div>
     );
-    console.log("filepathsMatch=", filepathsMatch)
-    console.log("sourceFileContent", sourceFileContent)
-    console.log("releasedSourceContent", releasedSourceContent)
-    console.log("sourceFileHook:", sourceFileHook)
-    console.log("targetFileContent", targetFileContent)
+    // console.log("filepathsMatch=", filepathsMatch)
+    // console.log("sourceFileContent", sourceFileContent)
+    // console.log("releasedSourceContent", releasedSourceContent)
+    // console.log("sourceFileHook:", sourceFileHook)
+    // console.log("targetFileContent", targetFileContent)
     if (
       filepathsMatch &&
       (sourceFileContent || releasedSourceContent) &&
@@ -78,7 +86,18 @@ function Translatable() {
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
       } else if (filepath.match(/\.tsv$/)) {
         console.log('TSV file selected');
-        _translatable = <TranslatableTSV onSave={saveTranslation} onEdit={autoSaveOnEdit} onContentIsDirty={setContentIsDirty} />;
+        const onSave = function (...args) {
+          saveTranslation(...args);
+          checkUpdateStatus();
+          checkMergeStatus();
+        }
+        const onEdit = function (...args) {
+          autoSaveOnEdit(...args);
+        }
+        const onContentIsDirty = function (...args) {
+          setContentIsDirty(...args);
+        }
+        _translatable = <TranslatableTSV onSave={onSave} onEdit={onEdit} onContentIsDirty={onContentIsDirty} />;
       } else {
         console.log('Unsupported file selected');
         _translatable = <h3 style={{ 'textAlign': 'center' }} >Unsupported File. Please select .md or .tsv files.</h3>;
@@ -90,7 +109,6 @@ function Translatable() {
     filepathsMatch,
     sourceFileContent,
     releasedSourceContent,
-    sourceFileHook,
     targetFileContent,
     setContentIsDirty,
     saveTranslation,

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import MenuBookOutlined from '@material-ui/icons/MenuBookOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import { FiShare } from 'react-icons/fi'
 import {
   List,
   ListItem,
@@ -30,6 +29,9 @@ import appPackage from '../../../package.json';
 import { AppContext } from '../../App.context';
 import defaults from '../../core/state.defaults';
 import fontList from '../../fonts/fontList';
+import { MergeBranchButton } from '../branch-merger/components/MergeBranchButton';
+import { useMasterMergeProps } from '../../hooks/useMasterMergeProps';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 function DrawerMenu() {
   const classes = useStyles();
@@ -71,10 +73,9 @@ function DrawerMenu() {
       {font.name}
 		</MenuItem>
   ));
-  
-  const mergeToMasterHasConflicts = false
-  // const mergeToMasterTitle = mergeToMasterHasConflicts ? 'Merge Conflicts for share with master' : 'No merge conflicts for share with master'
-  const mergeToMasterColor = mergeToMasterHasConflicts ? 'red' : 'black'
+
+  const mergeButtonProps = useMasterMergeProps();
+  const { onClick,blocked,pending } = mergeButtonProps;
 
   return (
     <List>
@@ -144,11 +145,14 @@ function DrawerMenu() {
           />
         </div>
       </ListItem>
-      <ListItem button onClick={handleFeedback}>
+      <ListItem button onClick={onClick} disabled={!pending | blocked}>
         <ListItemIcon className={classes.icon}>
-        <FiShare id='share-to-master-icon' color={mergeToMasterColor} />
+          <DoneAllIcon/>
         </ListItemIcon>
         <ListItemText primary="Merge my work" />
+        <ListItemSecondaryAction>
+          <MergeBranchButton {...mergeButtonProps } />
+        </ListItemSecondaryAction>
       </ListItem>
       <ListItem>
         <div>

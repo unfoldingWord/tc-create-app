@@ -5736,6 +5736,13 @@ dayjs@^1.9.3:
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
   integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
 
+dcs-branch-merger@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/dcs-branch-merger/-/dcs-branch-merger-1.2.0.tgz#23411a6961994c68cc07970c8f7ecb410466de52"
+  integrity sha512-SKlbrGG+u+IPZ2Jr9rLZKD8tTOTaWlYDyqU9tQkRBOFMcq05tOivEx+Cga1YDQ8UdyzIg2s0ZPL7C79N4MddlQ==
+  dependencies:
+    path "0.12.7"
+
 debounce-promise@^3.1.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/debounce-promise/-/debounce-promise-3.1.2.tgz#320fb8c7d15a344455cd33cee5ab63530b6dc7c5"
