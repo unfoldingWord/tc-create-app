@@ -12,7 +12,7 @@ export function UpdateBranchButton({
   blocked = false,
   pending = false,
   loadingProps,
-  title = "Update user content",
+  title = "Update my content",
   ...props
 }) {
   const Icon = blocked ? MdUpdateDisabled : MdUpdate
