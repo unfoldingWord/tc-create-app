@@ -5,7 +5,7 @@ import { BranchMergerContext } from '../components/branch-merger/context/BranchM
 export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
   const [isLoading, setIsLoading] = useState(_isLoading);
   const {
-    state: { updateStatus, loadingUpdate }, actions: { updateUserBranch }
+    state: { updateStatus, loadingUpdate }, actions: { updateUserBranch, checkUpdateStatus }
   } = useContext(BranchMergerContext);
 
   const {
@@ -22,6 +22,11 @@ export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
   }, [targetFileHook.state])
 
   const { load: loadTargetFile } = targetFileHook.actions || {};
+  const { content: targetContent } = targetFileHook.state || {};
+
+  useEffect(() => {
+    checkUpdateStatus()
+  }, [targetContent,checkUpdateStatus])
 
   const pending = updateStatus.mergeNeeded || updateStatus.conflict
   const blocked = updateStatus.conflict || contentIsDirty;

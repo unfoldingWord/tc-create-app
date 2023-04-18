@@ -4,8 +4,10 @@ import { BranchMergerContext } from '../components/branch-merger/context/BranchM
 
 export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
   const [isLoading, setIsLoading] = useState(_isLoading);
+  const [open, setOpen] = useState(false);
+  
   const {
-    state: { mergeStatus, loadingMerge }, actions: { mergeMasterBranch }
+    state: { mergeStatus, loadingMerge }, actions: { mergeMasterBranch, checkMergeStatus }
   } = useContext(BranchMergerContext);
 
   const {
@@ -21,19 +23,48 @@ export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
 
   useEffect(() => {
     setIsLoading(false);
+    setOpen(false);
   }, [targetFileHook.state])
 
   const { load: loadTargetFile } = targetFileHook.actions || {};
+  const { content: targetContent } = targetFileHook.state || {};
+
+  useEffect(() => {
+    checkMergeStatus()
+  }, [targetContent,checkMergeStatus])
 
   const pending = mergeStatus.mergeNeeded || mergeStatus.conflict
   const blocked = mergeStatus.conflict || contentIsDirty;
 
   const onClick = () => {
+    setOpen(true);
+  }
+
+  const onCancel = () => {
+    setOpen(false);
+  }
+
+  const onSubmit = (description) => {
+    console.log({ description });
     setIsLoading(true);
-    mergeMasterBranch().then((response) => {
-      if (response.success && response.message === "") loadTargetFile()
-      else setIsLoading(false);
+    mergeMasterBranch(description).then((response) => {
+      if (response.success && response.message === "") {
+        loadTargetFile()
+      }
+      else {
+        setIsLoading(false)
+        setOpen(false);
+      };
     })
   }
-  return { isLoading: (isLoading | loadingMerge),onClick,pending,blocked,loadingProps }
+  return {
+    isLoading: (isLoading | loadingMerge),
+    onClick,
+    onSubmit,
+    onCancel,
+    open,
+    pending,
+    blocked,
+    loadingProps
+  }
 }

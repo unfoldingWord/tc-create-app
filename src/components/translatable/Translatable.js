@@ -88,8 +88,6 @@ function Translatable() {
         console.log('TSV file selected');
         const onSave = function (...args) {
           saveTranslation(...args);
-          checkUpdateStatus();
-          checkMergeStatus();
         }
         const onEdit = function (...args) {
           autoSaveOnEdit(...args);

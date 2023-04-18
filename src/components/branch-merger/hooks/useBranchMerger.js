@@ -85,11 +85,11 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
   /**
    * pushes user branch to master branch
    */
-  const mergeMasterBranch = useCallback(() => {
+  const mergeMasterBranch = useCallback((prDescription) => {
     setLoadingMerge(true);
     const setter = setMergeStatus;
     const handler = mergeUserIntoDefaultBranch;
-    return runMergeHandler({ setter, handler, params }).then(r => { setLoadingMerge(false);  return r})
+    return runMergeHandler({ setter, handler, params: {...params,prDescription} }).then(r => { setLoadingMerge(false);  return r})
   },[params,runMergeHandler]);
 
   useEffect(() => {

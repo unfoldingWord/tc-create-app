@@ -32,6 +32,7 @@ import fontList from '../../fonts/fontList';
 import { MergeBranchButton } from '../branch-merger/components/MergeBranchButton';
 import { useMasterMergeProps } from '../../hooks/useMasterMergeProps';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
+import MergeDialog from '../branch-merger/components/MergeDialog';
 
 function DrawerMenu() {
   const classes = useStyles();
@@ -151,7 +152,8 @@ function DrawerMenu() {
         </ListItemIcon>
         <ListItemText primary="Merge my work" />
         <ListItemSecondaryAction>
-          <MergeBranchButton {...mergeButtonProps } />
+          <MergeBranchButton {...mergeButtonProps} />
+          <MergeDialog {...mergeButtonProps} />
         </ListItemSecondaryAction>
       </ListItem>
       <ListItem>
