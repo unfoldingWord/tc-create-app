@@ -12,7 +12,6 @@ import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import useRetrySave from '../../hooks/useRetrySave';
 import TranslatableTSV from './TranslatableTSV';
-import { BranchMergerContext } from '../branch-merger/context/BranchMergerProvider';
 
 function Translatable() {
   const {
