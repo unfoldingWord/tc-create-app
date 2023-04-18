@@ -29,13 +29,6 @@ function Translatable() {
     },
   } = useContext(AppContext);
 
-  const {
-    actions: {
-      checkUpdateStatus,
-      checkMergeStatus,
-    }
-  } = useContext(BranchMergerContext);
-
   const { content: sourceFileContent, publishedContent: releasedSourceContent, filepath: sourceFilepath } = sourceFileHook.state || {};
   const { content: targetFileContent, filepath: targetFilepath } = targetFileHook.state || {};
 
