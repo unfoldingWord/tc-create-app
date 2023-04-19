@@ -33,6 +33,7 @@ import { MergeBranchButton } from '../branch-merger/components/MergeBranchButton
 import { useMasterMergeProps } from '../../hooks/useMasterMergeProps';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import MergeDialog from '../branch-merger/components/MergeDialog';
+import ErrorDialog from '../dialogs/ErrorDialog';
 
 function DrawerMenu() {
   const classes = useStyles();
@@ -76,7 +77,19 @@ function DrawerMenu() {
   ));
 
   const mergeButtonProps = useMasterMergeProps();
-  const { onClick,blocked,pending } = mergeButtonProps;
+  const {
+    onClick,
+    blocked,
+    pending,
+    dialogMessage,
+    dialogTitle,
+    dialogLink,
+    dialogLinkTooltip,
+    isLoading,
+    isErrorDialogOpen,
+    isMessageDialogOpen,
+    onCloseErrorDialog
+  } = mergeButtonProps;
 
   return (
     <List>
@@ -153,7 +166,8 @@ function DrawerMenu() {
         <ListItemText primary="Merge my work" />
         <ListItemSecondaryAction>
           <MergeBranchButton {...mergeButtonProps} />
-          <MergeDialog {...mergeButtonProps} />
+          <MergeDialog {...mergeButtonProps} open={isMessageDialogOpen} />
+          <ErrorDialog title={dialogTitle} link={dialogLink} linkTooltip={dialogLinkTooltip} content={dialogMessage} isLoading={isLoading} onClose={onCloseErrorDialog} open={isErrorDialogOpen} />
         </ListItemSecondaryAction>
       </ListItem>
       <ListItem>

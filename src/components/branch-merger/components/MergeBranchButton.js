@@ -24,7 +24,7 @@ export function MergeBranchButton({
         onClick={onClick}
         aria-label={title}
         style={{ cursor: 'pointer',  ...props.style}}
-        disabled={!pending | blocked}
+        // disabled={!pending | blocked}
       > 
         {isLoading ? (
           <CircularProgress

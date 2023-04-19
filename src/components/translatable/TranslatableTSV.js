@@ -32,6 +32,7 @@ import {
 import { getReferenceFilterOptions } from './referenceFilterOptions';
 import { useContentUpdateProps } from '../../hooks/useContentUpdateProps';
 import { UpdateBranchButton } from '../branch-merger/components/UpdateBranchButton';
+import ErrorDialog from '../dialogs/ErrorDialog';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -136,11 +137,13 @@ export default function TranslatableTSV({
   }, [columnNames, rowHeader]);
 
   const updateButtonProps = useContentUpdateProps();
+  const  {isErrorDialogOpen,onCloseErrorDialog,isLoading,dialogMessage,dialogTitle,dialogLink,dialogLinkTooltip} = updateButtonProps;
 
   const onRenderToolbar = ({ items }) => 
   <>
     {items}
-    <UpdateBranchButton {...updateButtonProps}/>
+    <UpdateBranchButton {...updateButtonProps} />
+      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading} link={dialogLink} linkTooltip={dialogLinkTooltip} />
   </>
 
   const columnsMap = {

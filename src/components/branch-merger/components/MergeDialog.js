@@ -44,8 +44,8 @@ export default function MergeDialog({ onSubmit, onCancel, open, isLoading, loadi
         >
           {isLoading ? (
               <>
-              <CircularProgress size='1rem' sx={{ mr: '0.5rem' }} {...loadingProps} />{' '}
-                {'Sending...'}
+              <CircularProgress size='1rem' style={{ marginRight: '0.5rem' }} {...loadingProps} />{' '}
+                {' Sending...'}
               </>
             ) : (
               'Submit'

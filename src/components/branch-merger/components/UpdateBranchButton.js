@@ -23,8 +23,8 @@ export function UpdateBranchButton({
         key='update-from-master'
         onClick={onClick}
         aria-label={title}
-        style={{ cursor: 'pointer',  ...props.style}}
-        disabled={!pending | blocked}
+        style={{ cursor: 'pointer',  ...props.style, ...(!pending | blocked ? {color: "rgba(0, 0, 0, 0.26)"} : {})}}
+        // disabled={!pending | blocked}
       > 
         {isLoading ? (
           <CircularProgress

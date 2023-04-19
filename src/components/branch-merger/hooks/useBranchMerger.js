@@ -12,8 +12,17 @@ const defaultStatus = {
   "success": false,
   "userBranchDeleted": false,
   "error": false,
-  "message": ""
+  "message": "",
+  "pullRequest": "",
 }
+
+const update = (params) => { console.log("running mergeDefaultIntoUserBranch"); return mergeDefaultIntoUserBranch(params) }
+
+const checkUpdate = (params) => { console.log("running checkMergeDefaultIntoUserBranch"); return checkMergeDefaultIntoUserBranch(params) }
+
+const checkMerge = (params) => { console.log("running checkMergeUserIntoDefaultBranch"); return checkMergeUserIntoDefaultBranch(params) }
+
+const merge = (params) => { console.log("running mergeUserIntoDefaultBranch"); return mergeUserIntoDefaultBranch(params) }
 
 export default function useBranchMerger({ server, owner, repo, userBranch, tokenid }) {
 
@@ -31,7 +40,7 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
   const params = useMemo(() => ({ server, owner, repo, userBranch, tokenid }), [server, owner, repo, userBranch, tokenid])
 
   const setStatus = useCallback((setter, newStatus) => setter( prevStatus => {
-    if (Object.keys(prevStatus).some(key => prevStatus[key] !== newStatus[key])) return newStatus;
+    if (Object.keys(prevStatus).some(key => prevStatus[key] !== newStatus[key])) return {...prevStatus, ...newStatus};
     return prevStatus;
   }), [])
 
@@ -42,7 +51,7 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
     };
   }, [setStatus])
 
-  const runMergeHandler = useCallback(({setter,handler,params}) => isInvalid(setter, params) ?? handler(params)
+  const runMergeHandler = useCallback(async ({setter,handler,params}) => isInvalid(setter, params) ?? handler(params)
   .then((newStatus) => {
     setStatus(setter, newStatus)
     return newStatus
@@ -52,13 +61,15 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
     return newStatus
   }),[isInvalid,setStatus]);
 
+  console.log({ mergeStatus, updateStatus });
+
   /**
    * updates the updateStatus state
    */
   const checkUpdateStatus = useCallback(() => {
     setLoadingUpdate(true);
     const setter = setUpdateStatus;
-    const handler = checkMergeDefaultIntoUserBranch;
+    const handler = checkUpdate
     return runMergeHandler({setter,handler,params}).then(r => { setLoadingUpdate(false);  return r})
   },[params,runMergeHandler])
 
@@ -68,7 +79,7 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
   const updateUserBranch = useCallback(() => {
     setLoadingUpdate(true);
     const setter = setUpdateStatus;
-    const handler = mergeDefaultIntoUserBranch;
+    const handler = update;
     return runMergeHandler({setter,handler,params}).then(r => { setLoadingUpdate(false);  return r})
   },[params,runMergeHandler]);
 
@@ -78,7 +89,7 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
   const checkMergeStatus = useCallback(() => {
     setLoadingMerge(true);
     const setter = setMergeStatus;
-    const handler = checkMergeUserIntoDefaultBranch;
+    const handler = checkMerge;
     return runMergeHandler({setter,handler,params}).then(r => { setLoadingMerge(false);  return r})
   }, [params,runMergeHandler])
 
@@ -88,8 +99,11 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
   const mergeMasterBranch = useCallback((prDescription) => {
     setLoadingMerge(true);
     const setter = setMergeStatus;
-    const handler = mergeUserIntoDefaultBranch;
-    return runMergeHandler({ setter, handler, params: {...params,prDescription} }).then(r => { setLoadingMerge(false);  return r})
+    const handler = merge;
+    return runMergeHandler({ setter, handler, params: { ...params, prDescription } }).then(r => {
+      setLoadingMerge(false);
+      return r
+    })
   },[params,runMergeHandler]);
 
   useEffect(() => {
