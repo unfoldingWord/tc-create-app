@@ -39,8 +39,7 @@ export default function LinkChip({
   }
 
   const dataTestId = `link-chip-${label}`;
-  console.log({ label })
-  
+
   const props = {
     onClick,
     icon,

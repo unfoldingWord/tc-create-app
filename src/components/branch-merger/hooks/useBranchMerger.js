@@ -16,13 +16,11 @@ const defaultStatus = {
   "pullRequest": "",
 }
 
-const update = (params) => { console.log("running mergeDefaultIntoUserBranch"); return mergeDefaultIntoUserBranch(params) }
-
-const checkUpdate = (params) => { console.log("running checkMergeDefaultIntoUserBranch"); return checkMergeDefaultIntoUserBranch(params) }
-
-const checkMerge = (params) => { console.log("running checkMergeUserIntoDefaultBranch"); return checkMergeUserIntoDefaultBranch(params) }
-
-const merge = (params) => { console.log("running mergeUserIntoDefaultBranch"); return mergeUserIntoDefaultBranch(params) }
+//Adapters
+const update = (params) => mergeDefaultIntoUserBranch(params);
+const checkUpdate = (params) => checkMergeDefaultIntoUserBranch(params);
+const merge = (params) => mergeUserIntoDefaultBranch(params);
+const checkMerge = (params) => checkMergeUserIntoDefaultBranch(params);
 
 export default function useBranchMerger({ server, owner, repo, userBranch, tokenid }) {
 
@@ -60,8 +58,6 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
     setStatus(setter, newStatus)
     return newStatus
   }),[isInvalid,setStatus]);
-
-  console.log({ mergeStatus, updateStatus });
 
   /**
    * updates the updateStatus state
