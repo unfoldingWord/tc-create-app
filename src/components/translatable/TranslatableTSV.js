@@ -43,12 +43,13 @@ const serverConfig = {
 };
 
 export default function TranslatableTSV({
-  onSave,
+  onSave: _onSave,
   onEdit,
   onContentIsDirty,
 }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   const {
     state: {
@@ -137,13 +138,21 @@ export default function TranslatableTSV({
   }, [columnNames, rowHeader]);
 
   const updateButtonProps = useContentUpdateProps();
-  const  {isErrorDialogOpen,onCloseErrorDialog,isLoading,dialogMessage,dialogTitle,dialogLink,dialogLinkTooltip} = updateButtonProps;
+  const {
+    isErrorDialogOpen,
+    onCloseErrorDialog,
+    isLoading,
+    dialogMessage,
+    dialogTitle,
+    dialogLink,
+    dialogLinkTooltip
+  } = updateButtonProps;
 
   const onRenderToolbar = ({ items }) => 
   <>
     {items}
-    <UpdateBranchButton {...updateButtonProps} />
-      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading} link={dialogLink} linkTooltip={dialogLinkTooltip} />
+    <UpdateBranchButton {...updateButtonProps} isLoading={isLoading | isSaving}/>
+      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving } link={dialogLink} linkTooltip={dialogLinkTooltip} />
   </>
 
   const columnsMap = {
@@ -154,6 +163,12 @@ export default function TranslatableTSV({
         })
       }
     }
+  }
+
+  const onSave = async function(...args) {
+    setIsSaving(true);
+    await _onSave(...args)
+    setIsSaving(false);
   }
 
   return (

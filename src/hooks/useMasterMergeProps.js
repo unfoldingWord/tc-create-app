@@ -8,7 +8,7 @@ export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
   const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
   
   const {
-    state: { mergeStatus, loadingMerge }, actions: { mergeMasterBranch, checkMergeStatus }
+    state: { mergeStatus, loadingMerge }, actions: { mergeMasterBranch, checkMergeStatus, checkUpdateStatus }
   } = useContext(BranchMergerContext);
 
   const {
@@ -89,6 +89,7 @@ export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
     mergeMasterBranch(description).then((response) => {
       if (response.success && response.message === "") {
         loadTargetFile()
+        checkUpdateStatus()
       }
       else {
         setIsErrorDialogOpen(true);

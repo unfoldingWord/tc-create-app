@@ -78,8 +78,8 @@ function Translatable() {
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
       } else if (filepath.match(/\.tsv$/)) {
         console.log('TSV file selected');
-        const onSave = function (...args) {
-          saveTranslation(...args);
+        const onSave = async function (...args) {
+          return await saveTranslation(...args);
         }
         const onEdit = function (...args) {
           autoSaveOnEdit(...args);
