@@ -58,7 +58,6 @@ function Translatable() {
     console.log("filepathsMatch=", filepathsMatch)
     console.log("sourceFileContent", sourceFileContent)
     console.log("releasedSourceContent", releasedSourceContent)
-    console.log("sourceFileHook:", sourceFileHook)
     console.log("targetFileContent", targetFileContent)
     if (
       filepathsMatch &&
