@@ -7,7 +7,6 @@ import { MdOutlinePublish, MdPublish } from "react-icons/md";
 
 export function MergeBranchButton({
   onClick = () => undefined,
-  onMerged = () => undefined,
   isLoading = false,
   blocked = false,
   pending = false,
