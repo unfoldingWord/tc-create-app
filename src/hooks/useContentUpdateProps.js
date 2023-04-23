@@ -19,16 +19,19 @@ export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
 
   const loadingProps = { color: loadingUpdate ? "primary" : "secondary" };
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, [targetFileHook.state])
-
   const { load: loadTargetFile } = targetFileHook.actions || {};
-  const { content: targetContent } = targetFileHook.state || {};
+  const { publishedContent } = targetFileHook.state || {};
 
   useEffect(() => {
-    checkUpdateStatus()
-  }, [targetContent,checkUpdateStatus])
+    /* publishedContent is undefined when the content is being saved
+    and an empty string when the content has finished saving. */
+    if(publishedContent !== undefined) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+      checkUpdateStatus(); //check after content is being saved and reloaded
+    }
+  },[publishedContent, checkUpdateStatus])
 
   const  {conflict,mergeNeeded,error,message,pullRequest} = updateStatus
   const pending = mergeNeeded || conflict

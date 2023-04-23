@@ -52,8 +52,13 @@ export default function SourceChip({
   const onDelete = () => ((targetOwner !== sourceOwner) ? false : sourceCompareLink && openLink(sourceCompareLink));
 
   const style = { background: '#fff9' };
+  const deleteStyle = {
+    color: (targetOwner !== sourceOwner) ? 'lightgray' : "inherit",
+    width: "inherit",
+    height: "inherit"
+  };
 
-  const deleteIcon = (targetOwner !== sourceOwner) ? <GoDiff style={{ color: 'lightgray' }} /> : <GoDiff />;
+  const deleteIcon = <GoDiff style={deleteStyle} /> ;
 
   const iconTooltip = 'OpenSourceText';
 

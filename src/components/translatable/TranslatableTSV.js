@@ -72,7 +72,7 @@ export default function TranslatableTSV({
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
   const { content: cachedContent } = cachedFile || {};
-  console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
+  // console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
   const columnNames = useMemo(() => {
     const _content = sourceContent || releasedSourceContent;
     const _columnNames = columnNamesFromContent({ content: _content, delimiters });

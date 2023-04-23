@@ -29,8 +29,8 @@ export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
   const { content: targetContent } = targetFileHook.state || {};
 
   useEffect(() => {
-    checkMergeStatus()
-  }, [targetContent,checkMergeStatus])
+    checkMergeStatus();
+  }, [targetContent,checkMergeStatus]);
 
   const  {conflict,mergeNeeded,error,message,pullRequest} = mergeStatus
   const pending = mergeNeeded || conflict

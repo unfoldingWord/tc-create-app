@@ -33,7 +33,12 @@ export default function TargetChip({
 
   const onDelete = () => targetCompareLink && openLink(targetCompareLink);
 
-  const deleteIcon = <GoDiff />;
+  const deleteStyle = {
+    width: "inherit",
+    height: "inherit"
+  };
+
+  const deleteIcon = <GoDiff style={deleteStyle} />;
 
   const iconTooltip = 'OpenTargetText';
 

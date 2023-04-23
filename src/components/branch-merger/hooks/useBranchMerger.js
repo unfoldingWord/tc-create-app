@@ -16,6 +16,12 @@ const defaultStatus = {
   "pullRequest": "",
 }
 
+/**
+ * Legend:
+ * merge = push from user branch to master branch
+ * update = pull from master branch to user branch
+ **/
+
 //Adapters
 const update = (params) => mergeDefaultIntoUserBranch(params);
 const checkUpdate = (params) => checkMergeDefaultIntoUserBranch(params);
@@ -23,12 +29,6 @@ const merge = (params) => mergeUserIntoDefaultBranch(params);
 const checkMerge = (params) => checkMergeUserIntoDefaultBranch(params);
 
 export default function useBranchMerger({ server, owner, repo, userBranch, tokenid }) {
-
-  /**
-   * Legend:
-   * merge = push from user branch to master branch
-   * update = pull from master branch to user branch
-   **/
 
   const [mergeStatus, setMergeStatus] = useState(defaultStatus);
   const [updateStatus, setUpdateStatus] = useState(defaultStatus);
