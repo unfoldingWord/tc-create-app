@@ -7,7 +7,6 @@ import { Tooltip } from '@material-ui/core';
 
 export function UpdateBranchButton({
   onClick = () => undefined,
-  onUpdated = () => undefined,
   isLoading = false,
   blocked = false,
   pending = false,
