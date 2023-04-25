@@ -19,7 +19,7 @@ export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
 
   useEffect(() => {
     console.log({ appState });
-  },appState)
+  },[appState])
 
   const loadingProps = { color: loadingUpdate ? "primary" : "secondary" };
 
