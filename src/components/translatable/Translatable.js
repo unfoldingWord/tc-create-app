@@ -78,7 +78,10 @@ function Translatable() {
       } else if (filepath.match(/\.tsv$/)) {
         console.log('TSV file selected');
         const onSave = async function (...args) {
-          return await saveTranslation(...args);
+          console.log("branch-merger: started saving");
+          const saved = await saveTranslation(...args);
+          console.log("branch-merger: finished saving");
+          return saved;
         }
         const onEdit = function (...args) {
           autoSaveOnEdit(...args);

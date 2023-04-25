@@ -65,8 +65,13 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
   const checkUpdateStatus = useCallback(() => {
     setLoadingUpdate(true);
     const setter = setUpdateStatus;
-    const handler = checkUpdate
-    return runMergeHandler({setter,handler,params}).then(r => { setLoadingUpdate(false);  return r})
+    const handler = checkUpdate;
+    console.log("branch-merger: started checking update");
+    return runMergeHandler({setter,handler,params}).then(r => { 
+      setLoadingUpdate(false);
+      console.log("branch-merger: finished checking update");
+      return r
+    })
   },[params,runMergeHandler])
 
   /**

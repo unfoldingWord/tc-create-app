@@ -11,16 +11,24 @@ export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
   } = useContext(BranchMergerContext);
 
   const {
-    state: { contentIsDirty },
+    state: { contentIsDirty, ...appState },
     giteaReactToolkit: {
       targetFileHook,
     },
   } = useContext(AppContext);
 
+  useEffect(() => {
+    console.log({ appState });
+  },appState)
+
   const loadingProps = { color: loadingUpdate ? "primary" : "secondary" };
 
   const { load: loadTargetFile } = targetFileHook.actions || {};
   const { publishedContent } = targetFileHook.state || {};
+
+  useEffect(() => {
+    console.log({ targetState: targetFileHook.state });
+  },[targetFileHook.state])
 
   useEffect(() => {
     /* publishedContent is undefined when the content is being saved
@@ -29,7 +37,9 @@ export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
       setIsLoading(false);
     } else {
       setIsLoading(true);
-      checkUpdateStatus(); //check after content is being saved and reloaded
+      setTimeout(() => {
+        checkUpdateStatus(); //check after content is being saved and reloaded
+      },1000);
     }
   },[publishedContent, checkUpdateStatus])
 
