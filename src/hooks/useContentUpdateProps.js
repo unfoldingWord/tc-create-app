@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import { AppContext } from '../App.context';
 import { BranchMergerContext } from '../components/branch-merger/context/BranchMergerProvider';
 
-export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
+export function useContentUpdateProps({isLoading: _isLoading = false, isSaving = false} = {}) {
   const [isLoading, setIsLoading] = useState(_isLoading);
   const [isErrorDialogOpen,setIsErrorDialogOpen] = useState(false);
 
@@ -11,37 +11,25 @@ export function useContentUpdateProps({isLoading: _isLoading = false} = {}) {
   } = useContext(BranchMergerContext);
 
   const {
-    state: { contentIsDirty, ...appState },
+    state: { contentIsDirty },
     giteaReactToolkit: {
       targetFileHook,
     },
   } = useContext(AppContext);
 
-  useEffect(() => {
-    console.log({ appState });
-  },[appState])
-
   const loadingProps = { color: loadingUpdate ? "primary" : "secondary" };
 
   const { load: loadTargetFile } = targetFileHook.actions || {};
-  const { publishedContent } = targetFileHook.state || {};
 
   useEffect(() => {
-    console.log({ targetState: targetFileHook.state });
-  },[targetFileHook.state])
-
-  useEffect(() => {
-    /* publishedContent is undefined when the content is being saved
-    and an empty string when the content has finished saving. */
-    if(publishedContent !== undefined) {
-      setIsLoading(false);
-    } else {
+    if(isSaving & !isLoading) {
       setIsLoading(true);
-      setTimeout(() => {
-        checkUpdateStatus(); //check after content is being saved and reloaded
-      },1000);
     }
-  },[publishedContent, checkUpdateStatus])
+    if(!isSaving & isLoading) {
+      checkUpdateStatus();
+      setIsLoading(false);
+    }
+  },[isSaving,isLoading,checkUpdateStatus])
 
   const  {conflict,mergeNeeded,error,message,pullRequest} = updateStatus
   const pending = mergeNeeded || conflict
