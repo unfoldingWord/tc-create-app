@@ -26,7 +26,7 @@ export default function FileChip({
   );
 
   const deleteIcon = (
-    <Tooltip title={deleteIconTooltip} arrow>{_deleteIcon}</Tooltip>
+    <Tooltip title={deleteIconTooltip} arrow><span>{_deleteIcon}</span></Tooltip>
   );
 
   const dataTestId = `file-chip-${label}`;

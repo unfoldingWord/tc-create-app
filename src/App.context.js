@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useStateReducer } from './hooks/useStateReducer';
 import { useGiteaReactToolkit } from './hooks/useGiteaReactToolkit';
 import { useWarning } from './hooks/useWarning';
+import BranchMergerProvider from './components/branch-merger/context/BranchMergerProvider';
 
 export const AppContext = React.createContext();
 
@@ -40,7 +41,21 @@ export function AppContextProvider({
     warning,
   };
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  const params = {
+    server: state.authentication?.config?.server,
+    owner: state.targetRepository?.owner?.login,
+    repo: state.targetRepository?.name,
+    userBranch: state.targetRepository?.branch,
+    tokenid: state.authentication?.token?.sha1,
+  }
+
+  return (
+    <AppContext.Provider value={value}>
+      <BranchMergerProvider {...params}>
+        {children}
+      </BranchMergerProvider>
+    </AppContext.Provider>
+  );
 };
 
 AppContextProvider.propTypes = {

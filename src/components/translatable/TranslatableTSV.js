@@ -10,7 +10,6 @@ import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider } from 'scripture-resources-rcl';
 import * as parser from 'uw-tsv-parser';
-
 import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
@@ -31,6 +30,9 @@ import {
 } from './helpers';
 
 import { getReferenceFilterOptions } from './referenceFilterOptions';
+import { useContentUpdateProps } from '../../hooks/useContentUpdateProps';
+import { UpdateBranchButton } from '../branch-merger/components/UpdateBranchButton';
+import ErrorDialog from '../dialogs/ErrorDialog';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -41,12 +43,13 @@ const serverConfig = {
 };
 
 export default function TranslatableTSV({
-  onSave,
+  onSave: _onSave,
   onEdit,
   onContentIsDirty,
 }) {
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   const {
     state: {
@@ -69,7 +72,7 @@ export default function TranslatableTSV({
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
   const { content: cachedContent } = cachedFile || {};
-  console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
+  // console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
   const columnNames = useMemo(() => {
     const _content = sourceContent || releasedSourceContent;
     const _columnNames = columnNamesFromContent({ content: _content, delimiters });
@@ -131,9 +134,26 @@ export default function TranslatableTSV({
       columnsFilter: columnsFilterFromColumnNames({ columnNames }),
       columnsShowDefault: columnsShowDefaultFromColumnNames({ columnNames }),
     };
-
     return _config;
   }, [columnNames, rowHeader]);
+
+  const updateButtonProps = useContentUpdateProps();
+  const {
+    isErrorDialogOpen,
+    onCloseErrorDialog,
+    isLoading,
+    dialogMessage,
+    dialogTitle,
+    dialogLink,
+    dialogLinkTooltip
+  } = updateButtonProps;
+
+  const onRenderToolbar = ({ items }) => 
+  <>
+    {items}
+    <UpdateBranchButton {...updateButtonProps} isLoading={isLoading | isSaving}/>
+      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving } link={dialogLink} linkTooltip={dialogLinkTooltip} />
+  </>
 
   const columnsMap = {
     "Reference": {
@@ -143,6 +163,12 @@ export default function TranslatableTSV({
         })
       }
     }
+  }
+
+  const onSave = async function(...args) {
+    setIsSaving(true);
+    await _onSave(...args)
+    setIsSaving(false);
   }
 
   return (
@@ -169,6 +195,7 @@ export default function TranslatableTSV({
         parser={parser}
         columnsMap={columnsMap}
         translationFontFamily={selectedFont}
+        onRenderToolbar={onRenderToolbar}
       />
       {validationComponent}
     </ResourcesContextProvider>
