@@ -137,7 +137,7 @@ export default function TranslatableTSV({
     return _config;
   }, [columnNames, rowHeader]);
 
-  const updateButtonProps = useContentUpdateProps();
+  const updateButtonProps = useContentUpdateProps({isSaving});
   const {
     isErrorDialogOpen,
     onCloseErrorDialog,
