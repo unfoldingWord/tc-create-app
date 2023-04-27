@@ -25,9 +25,14 @@ export function useContentUpdateProps({isLoading: _isLoading = false, isSaving =
     if(isSaving & !isLoading) {
       setIsLoading(true);
     }
-    if(!isSaving & isLoading) {
-      checkUpdateStatus();
-      setIsLoading(false);
+    if (!isSaving & isLoading) {
+      setTimeout(() => {
+        checkUpdateStatus().then((status) => {
+          if (status.conflict)
+            checkUpdateStatus();
+        });
+        setIsLoading(false);
+      },1000)
     }
   },[isSaving,isLoading,checkUpdateStatus])
 
