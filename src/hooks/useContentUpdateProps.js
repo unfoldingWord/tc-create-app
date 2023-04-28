@@ -26,6 +26,9 @@ export function useContentUpdateProps({isLoading: _isLoading = false, isSaving =
       setIsLoading(true);
     }
     if (!isSaving & isLoading) {
+      // There is a race condition with server returning
+      // a conflict while processing the last commit
+      // the setTimeout tries to make sure we don't get a false conflict
       setTimeout(() => {
         checkUpdateStatus().then((status) => {
           if (status.conflict)
