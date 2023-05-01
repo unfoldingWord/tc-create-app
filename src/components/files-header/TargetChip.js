@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
-import { Publish } from '@material-ui/icons';
-
+import { GoDiff } from "react-icons/go";
 import FileChip from './FileChip';
 
 export default function TargetChip({
@@ -34,7 +33,12 @@ export default function TargetChip({
 
   const onDelete = () => targetCompareLink && openLink(targetCompareLink);
 
-  const deleteIcon = <Publish />;
+  const deleteStyle = {
+    width: "inherit",
+    height: "inherit"
+  };
+
+  const deleteIcon = <GoDiff style={deleteStyle} />;
 
   const iconTooltip = 'OpenTargetText';
 

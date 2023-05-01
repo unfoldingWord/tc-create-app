@@ -47,7 +47,6 @@ export const localString = (id) => {
   // if there are no strings for the language
   if (strings[lang] === undefined) {
     lang = 'en';
-    return strings[lang]['LangNotSupported'];
   }
 
   let lstring = strings[lang][id];
