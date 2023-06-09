@@ -5727,10 +5727,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^1.0.24:
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.0.24.tgz#ed73e23d9b490d001d99386ee9b4f5de06c6b494"
-  integrity sha512-8V3Bg5fqIlTSXTG5BQT8N3gKJBcgCymwGYXKsJbiRKjonsznDKIdzQV7lSREM42/2HMBGO6Q472MS4gmGvjL5A==
+datatable-translatable@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.2.1.tgz#665c81f912542e710259a0e96803cee34f7d351d"
+  integrity sha512-WVA90z9sNVXcSjWR15Mdoo7quy/m4+wjaB2Zec+rZozcSJy9dWr4rJs6lCrPh7NjHknpRJ4Tx49atzGlvyZ/GA==
   dependencies:
     deep-freeze "^0.0.1"
     extensible-rcl "^1.1.0"
@@ -15426,12 +15426,12 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.5.1.tgz#d203ae2ac592fe20e5c453d50811c7bdf0866a34"
-  integrity sha512-RmPM+3LfZbi8fEMA6WjZJldqnncmI3me49FuQcnTCDj0WzXyLZYDJsKNXLfF/5M5hVElEcc3EVCb3U9D1l/PcQ==
+scripture-resources-rcl@^5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.5.2.tgz#1add70aab52694a4bbb114f9bfe6b89a43a09b02"
+  integrity sha512-2Yz0HcUACJrRZqAEAQvzJd27FJZn5vff3BEXeZWp+GMOOAZuRi1oFmXOHHWmgs79P8aALpB8IZpx+7X6sW+9hw==
   dependencies:
-    bible-reference-range "^1.0.1"
+    bible-reference-range "^1.1.0"
     deep-freeze "^0.0.1"
     gitea-react-toolkit "2.2.1"
     js-yaml-parser "^1.0.0"
@@ -15443,7 +15443,7 @@ scripture-resources-rcl@^5.5.1:
     string-punctuation-tokenizer "2.1.2"
     tc-ui-toolkit "^5.3.3"
     use-deep-compare-effect "^1.3.1"
-    usfm-js "3.4.0"
+    usfm-js "^3.4.2"
     uw-quote-helpers "^1.0.0"
     word-aligner "^1.0.0"
     xregexp "^4.1.1"
@@ -17308,13 +17308,6 @@ usfm-grammar@^2.2.0:
     ohm-js "^15.5.0"
     yargs "^17.0.1"
 
-usfm-js@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/usfm-js/-/usfm-js-3.4.0.tgz#d3a00634b7219163b2bf41dc9dd83d976ec7ef26"
-  integrity sha512-8pCtMxzb/E3/4PPLLpf9KK10vza1I1/4tZJaDhJ+ycTGfg5JfT6GmDTxYFd6Nw81sbS0CVoyyG89a5ff6yHCzA==
-  dependencies:
-    lodash.clonedeep "^4.5.0"
-
 usfm-js@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/usfm-js/-/usfm-js-2.1.0.tgz#2d5b200d491d87a9c443728436f8ef07fb0c8730"
@@ -17322,7 +17315,7 @@ usfm-js@^2.1.0:
   dependencies:
     lodash.clonedeep "^4.5.0"
 
-usfm-js@^3.3.1:
+usfm-js@^3.3.1, usfm-js@^3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/usfm-js/-/usfm-js-3.4.2.tgz#a4232cffe38c9f521246b007a4045648cbcf419a"
   integrity sha512-i5nGxGwFhkOWd7xgfVWQ6GTkCpksfy5AUIwNJcwanTn3ua5J1nwl3pjApCDA6x1B++8ICkcQMUt0FB/bkKdE2g==
