@@ -38,7 +38,7 @@ export default function useBranchMerger({ server, owner, repo, userBranch, token
   const params = useMemo(() => ({ server, owner, repo, userBranch, tokenid }), [server, owner, repo, userBranch, tokenid])
 
   const setStatus = useCallback((setter, newStatus) => setter( prevStatus => {
-    if (Object.keys(prevStatus).some(key => prevStatus[key] !== newStatus[key])) return {...prevStatus, ...newStatus};
+    if (Object.keys(newStatus).some(key => prevStatus[key] !== newStatus[key])) return {...defaultStatus, ...newStatus};
     return prevStatus;
   }), [])
 
