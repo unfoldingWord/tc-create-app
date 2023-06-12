@@ -54,7 +54,7 @@
     "use-deep-compare-effect": "^1.3.1",
     "usfm-js": "^2.1.0",
     "uw-content-validation": "3.1.2",
-    "uw-languages-rcl": "1.0.0",
+    "uw-languages-rcl": "1.0.2",
     "uw-tsv-parser": "1.0.2",
     "word-aligner": "^1.0.0"
   },
