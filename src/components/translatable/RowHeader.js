@@ -57,13 +57,14 @@ export default function RowHeader({
     if (columnNames.includes('OrigQuote')) {
       columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'OrigQuote', 'Occurrence'];
     } else {
-      columnNamesToUse = ['Reference', 'Chapter', 'Verse', 'Quote', 'Occurrence'];
+      columnNamesToUse = ['Reference', 'Chapter', 'Verse', columnNames.includes('OrigWords') ? 'OrigWords' : 'Quote', 'Occurrence'];
     }
 
     const indices = columnNamesToUse.map(columnName => {
       const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
       return index;
     });
+    console.log({indices})
     const [referenceIndex, chapterIndex, verseIndex, quoteIndex, occurrenceIndex] = indices;
 
     if (referenceIndex > -1) {
@@ -83,7 +84,7 @@ export default function RowHeader({
     if (quoteIndex > -1) {
       quote = rowData[quoteIndex].split(delimiters.cell)[1];
     };
-
+    console.log({rowData, quote, quoteIndex})
     if (occurrenceIndex > -1) {
       occurrence = rowData[occurrenceIndex].split(delimiters.cell)[1];
     };
