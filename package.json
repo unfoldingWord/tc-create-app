@@ -1,7 +1,7 @@
 {
   "name": "tc-create-app",
   "homepage": "https://create.translationcore.com/",
-  "version": "1.13",
+  "version": "1.14",
   "license": "MIT",
   "private": false,
   "bugs": {
@@ -48,7 +48,7 @@
     "react-icons": "^4.8.0",
     "react-select": "^4.1.0",
     "react-waypoint": "^10.1.0",
-    "scripture-resources-rcl": "^5.5.2",
+    "scripture-resources-rcl": "^5.5.3",
     "tc-ui-toolkit": "^5.3.3",
     "use-deep-compare": "^1.1.0",
     "use-deep-compare-effect": "^1.3.1",
