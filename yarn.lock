@@ -3236,6 +3236,11 @@ array-map@~0.0.0:
   resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.1.tgz#d1bf3cc8813a7daaa335e5c8eb21d9d06230c1a7"
   integrity sha512-sxHIeJTGEsRC8/hYkZzdJNNPZ41EXHVys7pqMw1iwE/Kx8/hto0UbDuGQsSJ0ujPovj9qUZl6EOY/EiZ2g3d9Q==
 
+array-move@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/array-move/-/array-move-4.0.0.tgz#2c3730f056cc926f62a59769a5a8cda2fb6d8c55"
+  integrity sha512-+RY54S8OuVvg94THpneQvFRmqWdAHeqtMzgMW6JNurHxe8rsS07cHQdfGkXnTUXiBcyZ0j3SiDIxxj0RPiqCkQ==
+
 array-reduce@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/array-reduce/-/array-reduce-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"
@@ -15426,11 +15431,12 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@^5.5.3:
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.5.3.tgz#7782d2eafd8679a5c23b1d084184196f3e86910a"
-  integrity sha512-8eBoYzOCvm6cDrECDfyiYlaLCcO83BbSoL4ndIPhnOr6BGXYHsynfc5ZAG2/jwbuU4Ul1WJXuxkSiz0NwjfbRQ==
+scripture-resources-rcl@5.5.4-beta.0:
+  version "5.5.4-beta.0"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.5.4-beta.0.tgz#f78e204231d32e64462830229398f2f73927490e"
+  integrity sha512-6fQE+nelf66j2+fbdOiOjQ/3V3Cj41Q/tnGoUMAvsMFifsg2u9V9rLydiBjsuY3e4lKog2jU42ZZJaq41oPllQ==
   dependencies:
+    array-move "^4.0.0"
     bible-reference-range "^1.1.0"
     deep-freeze "^0.0.1"
     gitea-react-toolkit "2.2.1"
