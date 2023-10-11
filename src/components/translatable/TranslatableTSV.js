@@ -14,6 +14,7 @@ import {
   defaultResourceLinks,
   stripDefaultsFromResourceLinks,
   generateAllResourceLinks,
+  ORIGINAL_LANG_POSITION,
 } from '../../core/resourceLinks';
 import { SERVER_URL } from '../../core/state.defaults';
 
@@ -180,6 +181,7 @@ export default function TranslatableTSV({
       resources={resources}
       onResources={setResources}
       config={serverConfig}
+      ORIGINAL_LANG_POSITION={ORIGINAL_LANG_POSITION}
     >
       <DataTable
         sourceFile={sourceContent || releasedSourceContent}

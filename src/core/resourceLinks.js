@@ -7,26 +7,33 @@ const enUltResourceLink = 'unfoldingWord/en/ult/master';
 const enUstResourceLink = 'unfoldingWord/en/ust/master';
 
 export const defaultResourceLinks = [
-  hebrewResourceLink,
-  greekResourceLink,
   enUltResourceLink,
   enUstResourceLink,
+  hebrewResourceLink,
+  greekResourceLink,
 ];
+
+// for changing the postion of resource in scripture RCL
+// to display the orginal language to first ORIGINAL_LANG_POSITION to first = 1 also read line no 32
+// default orignal language will be displayed last 
+  
+export const ORIGINAL_LANG_POSITION = 0
 
 export const generateAllResourceLinks = ({ bookId, resourceLinks = [] }) => {
   const reference = { bookId };
   const _testament = testament(reference);
   let originalLink =
-    _testament === 'old' ? hebrewResourceLink : greekResourceLink;
-
+  _testament === 'old' ? hebrewResourceLink : greekResourceLink;
   const _resourceLinks = resourceLinks || [];
 
   // need to add reference bookId to resource links
+  // To change the position of scripture resource in the panel, move the elements in different index in allResourceLinks
+  // eg move "originalLink" to the last index to move hebrew / greek to last 
   const allResourceLinks = [
-    originalLink,
     enUltResourceLink,
     enUstResourceLink,
     ..._resourceLinks,
+    originalLink,
   ];
 
   // Add bookId to all resource paths:

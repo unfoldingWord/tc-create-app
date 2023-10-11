@@ -5727,10 +5727,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.2.1.tgz#665c81f912542e710259a0e96803cee34f7d351d"
-  integrity sha512-WVA90z9sNVXcSjWR15Mdoo7quy/m4+wjaB2Zec+rZozcSJy9dWr4rJs6lCrPh7NjHknpRJ4Tx49atzGlvyZ/GA==
+datatable-translatable@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.2.2.tgz#cb12c862db592219c3450c2f97d59f76797fb8fe"
+  integrity sha512-TH/Ribv+P4Qs+3VhMcZYBHZgpRAfJGX++E3GYckJRyjZU4C6WWU/SmzvNdThXwkVXAFJvBP32yHPJ/ZLS2/Kaw==
   dependencies:
     deep-freeze "^0.0.1"
     extensible-rcl "^1.1.0"
@@ -15426,10 +15426,10 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scripture-resources-rcl@^5.5.3:
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.5.3.tgz#7782d2eafd8679a5c23b1d084184196f3e86910a"
-  integrity sha512-8eBoYzOCvm6cDrECDfyiYlaLCcO83BbSoL4ndIPhnOr6BGXYHsynfc5ZAG2/jwbuU4Ul1WJXuxkSiz0NwjfbRQ==
+scripture-resources-rcl@5.5.5:
+  version "5.5.5"
+  resolved "https://registry.yarnpkg.com/scripture-resources-rcl/-/scripture-resources-rcl-5.5.5.tgz#6fd6d05614be05b053abaf98236e9d701ae18299"
+  integrity sha512-GE22R5/PVai4xHPMvH6ITpXbIdGLTpXIk7BJODzLjkdxxZjKASyunynCsIWR8bg6oSdPL1i5zR1pdw1Zx9Vm0A==
   dependencies:
     bible-reference-range "^1.1.0"
     deep-freeze "^0.0.1"
