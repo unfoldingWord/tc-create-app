@@ -7,8 +7,8 @@ const enUltResourceLink = 'unfoldingWord/en/ult/master';
 const enUstResourceLink = 'unfoldingWord/en/ust/master';
 
 export const defaultResourceLinks = [
-  enUltResourceLink,
   enUstResourceLink,
+  enUltResourceLink,
   hebrewResourceLink,
   greekResourceLink,
 ];
@@ -30,8 +30,8 @@ export const generateAllResourceLinks = ({ bookId, resourceLinks = [] }) => {
   // To change the position of scripture resource in the panel, move the elements in different index in allResourceLinks
   // eg move "originalLink" to the last index to move hebrew / greek to last 
   const allResourceLinks = [
-    enUltResourceLink,
     enUstResourceLink,
+    enUltResourceLink,
     ..._resourceLinks,
     originalLink,
   ];
