@@ -5727,10 +5727,10 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-datatable-translatable@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.2.2.tgz#cb12c862db592219c3450c2f97d59f76797fb8fe"
-  integrity sha512-TH/Ribv+P4Qs+3VhMcZYBHZgpRAfJGX++E3GYckJRyjZU4C6WWU/SmzvNdThXwkVXAFJvBP32yHPJ/ZLS2/Kaw==
+datatable-translatable@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/datatable-translatable/-/datatable-translatable-1.2.3.tgz#f8d32c1f0da9a2b66662eca2983ea9d88185aca8"
+  integrity sha512-QT+JAKq5QfA+bGkrwFO5rMoTKaJ34/mGlMzKX3q2ILK7QdWYg5vP2Xq28iroAa5Fpu/Ka8tlCBIlFtYJwtygrA==
   dependencies:
     deep-freeze "^0.0.1"
     extensible-rcl "^1.1.0"
