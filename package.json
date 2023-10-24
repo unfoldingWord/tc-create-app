@@ -35,7 +35,7 @@
     "@material-ui/styles": "^4.11.3",
     "axios": "^0.21.0",
     "bible-reference-range": "^1.1.0",
-    "datatable-translatable": "1.2.2",
+    "datatable-translatable": "1.2.3",
     "dcs-branch-merger": "^1.3.0",
     "deep-freeze": "^0.0.1",
     "gitea-react-toolkit": "2.2.4",
