@@ -138,15 +138,25 @@ export const columnsFilterFromColumnNames = ({ columnNames }) => {
 };
 
 export const columnsShowDefaultFromColumnNames = ({ columnNames }) => {
-  const columnNamesToUse = ['Question', 'Response', 'SupportReference', 'OccurrenceNote', 'OrigWords', 'TWLink', 'Note'];
-
-  const indices = columnNamesToUse.map(columnName => {
+  const retrievedData = (localStorage.getItem("StoredColumn"))
+  if (retrievedData){
+    const splitString = retrievedData.split(',');
+    const columnNamesToUse = [...splitString];
+    const indices = columnNamesToUse.map(columnName => {
     const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
-    return index;
-  });
-
-  const columnsIndices = indices.filter(index => (index > -1));
-  const columnsShowDefault = columnsIndices.map(index => (columnNames[index]));
-
-  return columnsShowDefault;
+      return index;
+    });
+    const columnsIndices = indices.filter(index => (index > -1));
+    const columnsShowDefault = columnsIndices.map(index => (columnNames[index]));
+      return columnsShowDefault;
+  }else{
+    const columnNamesToUse = [];
+    const indices = columnNamesToUse.map(columnName => {
+    const index = columnIndexOfColumnNameFromColumnNames({ columnNames, columnName });
+      return index;
+    });
+    const columnsIndices = indices.filter(index => (index > -1));
+    const columnsShowDefault = columnsIndices.map(index => (columnNames[index]));
+      return columnsShowDefault;
+  }
 };
