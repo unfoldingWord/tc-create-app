@@ -55,32 +55,25 @@ function Translatable() {
         <CircularProgress />{' '}
       </div>
     );
-    // console.log("filepathsMatch=", filepathsMatch)
-    // console.log("sourceFileContent", sourceFileContent)
-    // console.log("releasedSourceContent", releasedSourceContent)
-    // console.log("targetFileContent", targetFileContent)
     if (
       filepathsMatch &&
       (sourceFileContent || releasedSourceContent) &&
       targetFileContent
     ) {
+      const organizationName = targetRepository?.full_name.split('/')[0]?.toLowerCase();
       if (filepath.match(/\.md$/)) {
 
         let translatableProps = {
-          original: sourceFileContent ? sourceFileContent : releasedSourceContent,
+          original: organizationName === "unfoldingword" ? sourceFileContent:releasedSourceContent,
           translation: targetFileContent,
           onTranslation: saveTranslation,
           onContentIsDirty: setContentIsDirty,
           translationFontFamily: selectedFont,
         };
-        console.log('Markdown file selected');
         _translatable = <MarkdownContextProvider><MarkDownTranslatable {...translatableProps} /></MarkdownContextProvider>;
       } else if (filepath.match(/\.tsv$/)) {
-        console.log('TSV file selected');
         const onSave = async function (...args) {
-          console.log("branch-merger: started saving");
           const saved = await saveTranslation(...args);
-          console.log("branch-merger: finished saving");
           return saved;
         }
         const onEdit = function (...args) {
@@ -106,6 +99,7 @@ function Translatable() {
     saveTranslation,
     autoSaveOnEdit,
     selectedFont,
+    targetRepository.full_name
   ]);
 
   useEffect(() => {
