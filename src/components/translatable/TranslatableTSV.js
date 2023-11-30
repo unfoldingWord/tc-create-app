@@ -58,6 +58,7 @@ export default function TranslatableTSV({
       expandedScripture,
       cachedFile,
       selectedFont,
+      targetRepository,
     },
     actions: { setResourceLinks },
     giteaReactToolkit: {
@@ -66,6 +67,8 @@ export default function TranslatableTSV({
     },
   } = useContext(AppContext);
 
+  const organizationName = targetRepository?.full_name.split('/')[0]?.toLowerCase();
+
   const {
     filepath: sourceFilepath,
     content: sourceContent,
@@ -73,12 +76,11 @@ export default function TranslatableTSV({
   } = sourceFileHook.state || {};
   const { content: targetContent } = targetFileHook.state || {};
   const { content: cachedContent } = cachedFile || {};
-  // console.log("TranslatableTSV() sourceContent, publishedContent:", sourceContent, releasedSourceContent)
   const columnNames = useMemo(() => {
-    const _content = sourceContent || releasedSourceContent;
+    const _content = organizationName === "unfoldingword" ? sourceContent : releasedSourceContent;
     const _columnNames = columnNamesFromContent({ content: _content, delimiters });
     return _columnNames;
-  }, [sourceContent, releasedSourceContent]);
+  }, [sourceContent, releasedSourceContent, organizationName ]);
 
   const {
     actions: { onValidate },
@@ -184,7 +186,7 @@ export default function TranslatableTSV({
       ORIGINAL_LANG_POSITION={ORIGINAL_LANG_POSITION}
     >
       <DataTable
-        sourceFile={sourceContent || releasedSourceContent}
+        sourceFile={organizationName === "unfoldingword" ? sourceContent : releasedSourceContent}
         targetFile={cachedContent || targetContent}
         onSave={onSave}
         onEdit={onEdit}
