@@ -5749,10 +5749,10 @@ dayjs@^1.9.3:
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
   integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
 
-dcs-branch-merger@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/dcs-branch-merger/-/dcs-branch-merger-1.3.0.tgz#0836fa5c6cd37d28fccc8b7fc9569b1ef3eae393"
-  integrity sha512-MZ8skMj7J96PQiYwu/ILTSE5gItpFvKNFshc/aekkEAMzXeo+ZDbO0v3g05CVQGXLHQ5vQ09igAUIXz36LzsZw==
+dcs-branch-merger@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/dcs-branch-merger/-/dcs-branch-merger-1.4.1.tgz#57a2819c8189f8f23325eff8bebf4f7c698b2c49"
+  integrity sha512-IJbG5OpZQkxNDYao+T5MOrtVatvzDBGsuEwoZ7kq214OCTwlR+J96ApyamNeg+/i5ZQ8oKa3H4OMM6NFp6s7Zw==
   dependencies:
     path "0.12.7"
 
