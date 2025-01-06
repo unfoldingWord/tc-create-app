@@ -136,6 +136,9 @@ export default function TranslatableTSV({
       compositeKeyIndices: compositeKeyIndicesFromColumnNames({ columnNames }),
       columnsFilter: columnsFilterFromColumnNames({ columnNames }),
       columnsShowDefault: columnsShowDefaultFromColumnNames({ columnNames }),
+      newRowDefaultValues: {
+        SupportReference: ""
+      }
     };
     return _config;
   }, [columnNames, rowHeader]);
