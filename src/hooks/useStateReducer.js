@@ -1,8 +1,8 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useReducer, useEffect } from 'react';
 import { ensureRepo } from 'gitea-react-toolkit';
 
 import { stateReducer } from '../core/state.reducer';
-import { saveState } from '../core/persistence';
+import { saveState, loadState } from '../core/persistence';
 import defaults from '../core/state.defaults';
 import { getDefaultFontForLanguage } from './fontHelpers'
 
@@ -31,6 +31,17 @@ export const useStateReducer = ({
   }
   const [state, dispatch] = useReducer(stateReducer, _defaults);
 
+  // Load saved scripture optimization setting
+  useEffect(() => {
+    const loadSavedOptimization = async () => {
+      const savedOptimization = await loadState('scriptureOptimization');
+      if (savedOptimization !== null && savedOptimization !== undefined) {
+        dispatch({ type: 'set_scripture_optimization', value: savedOptimization });
+      }
+    };
+    loadSavedOptimization();
+  }, []);
+
   const setOrganization = useCallback((value) => {
     if (value !== state.organization) {
       dispatch({ type: 'set_organization', value });
@@ -51,6 +62,11 @@ export const useStateReducer = ({
   }, []);
   const setExpandedScripture = useCallback((value) => {
     dispatch({ type: 'set_expanded_scripture', value });
+  }, []);
+
+  const setScriptureOptimization = useCallback((value) => {
+    dispatch({ type: 'set_scripture_optimization', value });
+    saveState('scriptureOptimization', value);
   }, []);
 
   const setConfig = useCallback((value) => {
@@ -200,6 +216,7 @@ export const useStateReducer = ({
     setFontScale,
     setSelectedFont,
     setExpandedScripture,
+    setScriptureOptimization,
     setConfig,
     setResourceLinks,
     setContentIsDirty,
