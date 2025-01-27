@@ -12,11 +12,6 @@ import {
   getBcvQueryBasedOnRefStr
 } from './helpers';
 
-const WAYPOINT_OFFSETS = {
-  topOffset: '-800px',
-  bottomOffset: '-800px',
-};
-
 const styles = {
   defaultHeader: {
     width: '100%',
@@ -40,9 +35,7 @@ export default function RowHeader({
   bookId,
   open,
 }) {
-  const [_viewed, setViewed] = useState(false);
-
-  const viewed = true;
+  const [viewed, setViewed] = useState(false);
 
   const onVisibility = (isVisible) => {
     setViewed(isVisible);
@@ -137,7 +130,7 @@ export default function RowHeader({
             buttons={actionsMenu}
             open={open}
           />
-          <Waypoint onLeave={onLeave} {...WAYPOINT_OFFSETS} />
+          <Waypoint onLeave={onLeave} />
         </div>
       );
     };
@@ -150,7 +143,7 @@ export default function RowHeader({
         <Typography variant='h6' style={styles.title}>
           {chapter && verse !== undefined ? `${bookId.toUpperCase()} ${chapter}:${verse}` : `${bookId.toUpperCase()} ${chapter}`}
         </Typography>
-        <Waypoint onLeave={onLeave} {...WAYPOINT_OFFSETS} />
+        <Waypoint onLeave={onLeave} />
         {actionsMenu}
       </div>
     </>
@@ -159,7 +152,7 @@ export default function RowHeader({
   const skeleton = (
     <>
       <Skeleton height={150} width='100%' />
-      <Waypoint onEnter={onVisibility} onLeave={onLeave} {...WAYPOINT_OFFSETS} />
+      <Waypoint onEnter={onVisibility} onLeave={onLeave} />
     </>
   );
 

@@ -21,6 +21,7 @@ import {
   Undo,
   FeedbackOutlined,
   BugReportOutlined,
+  SpeedOutlined,
 } from '@material-ui/icons';
 
 import Alert from '@material-ui/lab/Alert'
@@ -40,13 +41,14 @@ function DrawerMenu() {
 
   const {
     state: {
-      fontScale, expandedScripture, validationPriority, selectedFont,
+      fontScale, expandedScripture, validationPriority, selectedFont, scriptureOptimization,
     },
     actions: {
       setFontScale,
       setSelectedFont,
       setExpandedScripture,
       setValidationPriority,
+      setScriptureOptimization,
     },
   } = useContext(AppContext);
 
@@ -156,6 +158,21 @@ function DrawerMenu() {
             onChange={handleExpandScripture}
             name="default"
             inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+        </div>
+      </ListItem>
+      <ListItem data-test="scripture-optimization-pane" className={scriptureOptimization ? 'active' : null}>
+        <ListItemIcon className={classes.icon + scriptureOptimization ? 'active' : null}>
+          <SpeedOutlined />
+        </ListItemIcon>
+        <ListItemText primary="Optimize Scripture Loading" />
+        <div>
+          <Switch
+            color='primary'
+            checked={scriptureOptimization}
+            onChange={(event) => setScriptureOptimization(event.target.checked)}
+            name="optimization"
+            inputProps={{ 'aria-label': 'scripture optimization toggle' }}
           />
         </div>
       </ListItem>
