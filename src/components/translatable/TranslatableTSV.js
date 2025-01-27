@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
+import { FiMap } from "react-icons/fi";
 
 import { DataTable } from 'datatable-translatable';
 import { ResourcesContextProvider } from 'scripture-resources-rcl';
@@ -158,7 +159,8 @@ export default function TranslatableTSV({
   <>
     {items}
     <UpdateBranchButton {...updateButtonProps} isLoading={isLoading | isSaving}/>
-      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving } link={dialogLink} linkTooltip={dialogLinkTooltip} />
+      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving} link={dialogLink} linkTooltip={dialogLinkTooltip} />
+    <FiMap />
   </>
 
   const columnsMap = {

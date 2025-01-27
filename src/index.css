@@ -20,3 +20,47 @@ code {
 h1, h2, h3, h6 {
   margin: 0.2%;
 }
+
+
+#translatableComponent [class^='MuiToolbar'] {
+  border-bottom: 1px solid #d5d5d5;
+  /* box-shadow: 1px 2px 13px -10px #000; */
+  background: #e9e9e9;
+  /* color: aqua; */
+}
+
+
+#translatableComponent [id^='MUIDataTableBodyRow']:nth-child(2n-1) {
+  background: #ffffff;
+}
+
+#translatableComponent [id^='MUIDataTableBodyRow']:nth-child(n+2) {
+  border: 3px dashed transparent;
+  border-top-color: #bcbcbc;
+  padding-bottom: 2em !important;
+}
+
+
+#translatableComponent [id^='MUIDataTableBodyRow']:focus-within {
+border: 3px solid #31ade3;
+background: rgba(0,0,0,0.01);
+box-shadow: grey 0px 0px 5px inset;
+}
+
+.header-row > * {
+  padding: 0;
+}
+
+
+
+.header-row h6 {
+  font-weight: bolder
+}
+
+
+.MuiTableCell-root-212:nth-child(1) {
+  background: #fff;
+  position: relative!important;
+  top: 0!important;
+  z-index: 1;
+}
