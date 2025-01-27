@@ -34,6 +34,7 @@ import { getReferenceFilterOptions } from './referenceFilterOptions';
 import { useContentUpdateProps } from '../../hooks/useContentUpdateProps';
 import { UpdateBranchButton } from '../branch-merger/components/UpdateBranchButton';
 import ErrorDialog from '../dialogs/ErrorDialog';
+import { ToggleStickyHeadersButton } from './ToggleStickyHeadersButton';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -156,9 +157,10 @@ export default function TranslatableTSV({
 
   const onRenderToolbar = ({ items }) => 
   <>
+    <ToggleStickyHeadersButton />
     {items}
     <UpdateBranchButton {...updateButtonProps} isLoading={isLoading | isSaving}/>
-      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving } link={dialogLink} linkTooltip={dialogLinkTooltip} />
+      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving} link={dialogLink} linkTooltip={dialogLinkTooltip} />
   </>
 
   const columnsMap = {
