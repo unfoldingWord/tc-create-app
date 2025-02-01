@@ -27,7 +27,7 @@ export function ToggleStickyHeadersButton({
     const styleSheet = document.createElement('style');
     styleSheet.id = 'sticky-headers-style';
     styleSheet.textContent = `
-      .MuiTableCell-root-212:nth-child(1) {
+      [class*="MUIDataTableBodyRow-root"] > [class*="MuiTableCell-root"]:nth-child(1) {
         background: #fff;
         position: relative!important;
         top: 0!important;
