@@ -35,6 +35,7 @@ import { useContentUpdateProps } from '../../hooks/useContentUpdateProps';
 import { UpdateBranchButton } from '../branch-merger/components/UpdateBranchButton';
 import ErrorDialog from '../dialogs/ErrorDialog';
 import { ToggleStickyHeadersButton } from './ToggleStickyHeadersButton';
+import { useEventListeners } from '../../hooks/useEventListeners';
 
 const delimiters = { row: '\n', cell: '\t' };
 
@@ -52,6 +53,7 @@ export default function TranslatableTSV({
   // manage the state of the resources for the provider context
   const [resources, setResources] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
+  const { addEventListener, clearEventListeners } = useEventListeners();
 
   const {
     state: {
@@ -117,6 +119,25 @@ export default function TranslatableTSV({
     page: 0,
     rowsPerPage: 25,
     rowsPerPageOptions: [10, 25, 50, 100],
+    onCellClick: (colData, cellMeta) => {
+      clearEventListeners();
+
+      const { name: columnName } = colData.props.tableMeta.columnData;
+      if (columnName !== "Quote") return;
+
+      const quoteElement = cellMeta.event.target;
+      if (!quoteElement?.addEventListener) return;
+
+      // Prevent Enter key from creating new lines in Quote cells
+      const handleQuoteKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      };
+
+      addEventListener(quoteElement, 'keypress', handleQuoteKeyPress);
+    }
   };
 
   const rowHeader = useDeepCompareCallback((rowData, actionsMenu) => {
@@ -160,7 +181,7 @@ export default function TranslatableTSV({
     <ToggleStickyHeadersButton />
     {items}
     <UpdateBranchButton {...updateButtonProps} isLoading={isLoading | isSaving}/>
-      <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving} link={dialogLink} linkTooltip={dialogLinkTooltip} />
+    <ErrorDialog title={dialogTitle} content={dialogMessage} open={isErrorDialogOpen} onClose={onCloseErrorDialog} isLoading={isLoading | isSaving} link={dialogLink} linkTooltip={dialogLinkTooltip} />
   </>
 
   const columnsMap = {
