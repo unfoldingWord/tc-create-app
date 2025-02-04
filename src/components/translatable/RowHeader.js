@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Typography } from '@material-ui/core';
 import { Waypoint } from 'react-waypoint';
 import { Skeleton } from '@material-ui/lab';
-
 import { useDeepCompareMemo } from 'use-deep-compare';
 
+import { AppContext } from '../../App.context';
 import ScriptureHeader from './ScriptureHeader';
 import { 
   columnIndexOfColumnNameFromColumnNames,
@@ -35,7 +35,10 @@ export default function RowHeader({
   bookId,
   open,
 }) {
-  const [viewed, setViewed] = useState(false);
+  const [_viewed, setViewed] = useState(false);
+  const { state: { scriptureOptimization = false } } = useContext(AppContext);
+
+  const viewed = scriptureOptimization ? _viewed : true;
 
   const onVisibility = (isVisible) => {
     setViewed(isVisible);
