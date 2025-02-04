@@ -33,6 +33,7 @@ const config = {
 export default {
   validationPriority: 'high',
   expandedScripture: true,
+  scriptureOptimization: false,
   fontScale: 100,
   selectedFont: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",\n' +
     '    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",\n' +

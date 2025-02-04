@@ -44,6 +44,9 @@ export const stateReducer = (state, action) => {
     case 'set_validation_priority':
       _state['validationPriority'] = value;
       break;
+    case 'set_scripture_optimization':
+      _state['scriptureOptimization'] = value;
+      break;
     case 'set_critical_validation_errors':
       _state['criticalValidationErrors'] = value;
       break;
