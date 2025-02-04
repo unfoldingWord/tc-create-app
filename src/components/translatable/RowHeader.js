@@ -36,7 +36,7 @@ export default function RowHeader({
   open,
 }) {
   const [_viewed, setViewed] = useState(false);
-  const { state: { scriptureOptimization = true } } = useContext(AppContext);
+  const { state: { scriptureOptimization = false } } = useContext(AppContext);
 
   const viewed = scriptureOptimization ? _viewed : true;
 
