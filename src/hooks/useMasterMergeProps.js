@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useMemo } from 'react'
 import { AppContext } from '../App.context';
-import { BranchMergerContext } from '../components/branch-merger/context/BranchMergerProvider';
+import { useBranchMergerContext } from '../components/branch-merger/context/BranchMergerContext';
 
 export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
   const [isLoading, setIsLoading] = useState(_isLoading);
@@ -9,7 +9,7 @@ export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
   
   const {
     state: { mergeStatus, loadingMerge }, actions: { mergeMasterBranch, checkMergeStatus, checkUpdateStatus }
-  } = useContext(BranchMergerContext);
+  } = useBranchMergerContext();
 
   const {
     state: { contentIsDirty },

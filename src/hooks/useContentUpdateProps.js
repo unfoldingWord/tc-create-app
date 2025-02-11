@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { AppContext } from '../App.context';
-import { BranchMergerContext } from '../components/branch-merger/context/BranchMergerProvider';
+import { useBranchMergerContext } from '../components/branch-merger/context/BranchMergerContext';
 
 export function useContentUpdateProps({isLoading: _isLoading = false, isSaving = false} = {}) {
   const [isLoading, setIsLoading] = useState(_isLoading);
@@ -8,7 +8,9 @@ export function useContentUpdateProps({isLoading: _isLoading = false, isSaving =
 
   const {
     state: { updateStatus, loadingUpdate }, actions: { updateUserBranch, checkUpdateStatus }
-  } = useContext(BranchMergerContext);
+  } = useBranchMergerContext();
+
+  console.log("updateStatus", updateStatus)
 
   const {
     state: { contentIsDirty },
