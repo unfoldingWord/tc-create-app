@@ -9,6 +9,7 @@ import { loadState, loadAuthentication } from './core/persistence';
 import ConfirmContextProvider from './context/ConfirmContextProvider';
 import { AppContextProvider } from './App.context';
 import Layout from './Layout';
+import { SnackbarProviderWrapper } from './contexts/SnackbarContext';
 
 export default function App() {
   const [resumedState, setResumedState] = useState();
@@ -44,10 +45,12 @@ export default function App() {
   return !resumedState ? (
     <></>
   ) : (
-    <ConfirmContextProvider>
-      <AppContextProvider {...props}>
-        <Layout />
-      </AppContextProvider>
-    </ConfirmContextProvider>
+    <SnackbarProviderWrapper>
+      <ConfirmContextProvider>
+        <AppContextProvider {...props}>
+          <Layout />
+        </AppContextProvider>
+      </ConfirmContextProvider>
+    </SnackbarProviderWrapper>
   );
 };
