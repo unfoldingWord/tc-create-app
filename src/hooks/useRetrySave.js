@@ -21,7 +21,7 @@ function useRetrySave() {
   } = useContext(AppContext);
 
   const { save, saveCache } = targetFileHook.actions || {};
-  const { html_url } = targetFileHook.state || {};
+  const { html_url, content: currentContent } = targetFileHook.state || {};
   const { onLoginFormSubmitLogin } = authenticationHook.actions || {};
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
@@ -61,6 +61,12 @@ function useRetrySave() {
   }, [doSaveRetry, retrySave]);
 
   const saveTranslation = useDeepCompareCallback(async (content) => {
+    // Check if there are actual changes in the content
+    if (content === currentContent) {
+      // No changes detected, don't save
+      return;
+    }
+
     setSavingTargetFileContent(content);
 
     try {
@@ -75,7 +81,7 @@ function useRetrySave() {
         setSaveFailed(true);
       };
     };
-  }, [save]);
+  }, [save, currentContent, openAuthenticationDialog]);
 
   const autoSaveOnEdit = useCallback(async (content) => {
     if (html_url.includes(state?.targetRepository?.branch)) {
