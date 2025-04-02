@@ -1,7 +1,7 @@
 {
   "name": "tc-create-app",
   "homepage": "https://create.translationcore.com/",
-  "version": "1.19",
+  "version": "1.20",
   "license": "MIT",
   "private": false,
   "bugs": {
@@ -41,6 +41,7 @@
     "gitea-react-toolkit": "2.2.4",
     "lodash.isequal": "^4.5.0",
     "markdown-translatable": "2.1.4",
+    "notistack": "^3.0.2",
     "react": "^16.14.0",
     "react-beforeunload": "^2.5.1",
     "react-dom": "^16.12.0",
