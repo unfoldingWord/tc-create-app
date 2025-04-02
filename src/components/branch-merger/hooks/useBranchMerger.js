@@ -6,6 +6,7 @@ import {
 import { branchOperations } from '../branchOperations'
 import { createQueuedOperation } from '../utils/queuedOperation'
 import { withRetry } from '../utils/withRetry'
+import { useSnackbar } from '../../../contexts/SnackbarContext'
 
 /**
  * Hook for managing git branch operations between user branch and default/master branch.
@@ -31,6 +32,7 @@ export function useBranchMerger({
   autoCheck = false,
   autoCheckInterval = DEFAULT_AUTO_CHECK_INTERVAL
 } = {}) {
+  const snackbar = useSnackbar();
   const [mergeStatus, setMergeStatus] = useState(defaultStatus);
   const [updateStatus, setUpdateStatus] = useState(defaultStatus);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
@@ -61,6 +63,60 @@ export function useBranchMerger({
       };
     }
   }, [params]);
+
+  // Check if branch has any changes
+  const checkBranchHasChanges = useCallback(async () => {
+    try {
+      // First get the PR ID for this branch
+      const prsResponse = await fetch(
+        `${server}/api/v1/repos/${owner}/${repo}/pulls?state=open&sort=updated&order=desc`,
+        { 
+          headers: { 
+            'Authorization': `token ${tokenid}`,
+            'Accept': 'application/json'
+          } 
+        }
+      );
+
+      if (!prsResponse.ok) {
+        console.error('Failed to fetch PRs:', prsResponse.status);
+        return false;
+      }
+
+      const prs = await prsResponse.json();
+      const pr = prs.find(p => p.head.ref === userBranch);
+
+      if (!pr) {
+        console.log('No open PR found for branch:', userBranch);
+        return false;
+      }
+
+      // Get the list of changed files in the PR
+      const filesResponse = await fetch(
+        `${server}/api/v1/repos/${owner}/${repo}/pulls/${pr.number}/files`,
+        { 
+          headers: { 
+            'Authorization': `token ${tokenid}`,
+            'Accept': 'application/json'
+          } 
+        }
+      );
+
+      if (!filesResponse.ok) {
+        console.error('Failed to fetch PR files:', filesResponse.status);
+        return false;
+      }
+
+      const files = await filesResponse.json();
+      
+      // Check if there are any files with changes
+      return files && files.length > 0 && 
+             files.some(file => file.changes > 0);
+    } catch (error) {
+      console.error('Error checking branch changes:', error);
+      return false;
+    }
+  }, [server, owner, repo, userBranch, tokenid]);
 
   // Create operations with consistent error handling and loading states
   const checkUpdateStatus = useCallback(
@@ -93,7 +149,10 @@ export function useBranchMerger({
   const updateUserBranch = useCallback(
     async (additionalParams = {}) => {
       const validationError = validateParams();
-      if (validationError) return validationError;
+      if (validationError) {
+        snackbar.error(validationError.message);
+        return validationError;
+      }
 
       setLoadingUpdate(true);
       try {
@@ -101,6 +160,13 @@ export function useBranchMerger({
           queuedOperation(() => branchOperations.pullFromDefault({ ...params, ...additionalParams }))
         );
         setUpdateStatus(result);
+        
+        if (!result.error) {
+          snackbar.success('Successfully updated branch from default');
+        } else {
+          snackbar.error(result.message);
+        }
+        
         return result;
       } catch (error) {
         const errorStatus = { 
@@ -109,12 +175,13 @@ export function useBranchMerger({
           message: error.message 
         };
         setUpdateStatus(errorStatus);
+        snackbar.error(error.message);
         return errorStatus;
       } finally {
         setLoadingUpdate(false);
       }
     },
-    [params, queuedOperation, validateParams]
+    [params, queuedOperation, validateParams, snackbar]
   );
 
   const checkMergeStatus = useCallback(
@@ -124,6 +191,20 @@ export function useBranchMerger({
 
       setLoadingMerge(true);
       try {
+        // First check if branch has any changes
+        const hasChanges = await checkBranchHasChanges();
+        console.log('hasChanges', hasChanges);
+        if (!hasChanges) {
+          const errorStatus = {
+            ...defaultStatus,
+            error: true,
+            message: 'Cannot merge: Branch has no changes from the default branch'
+          };
+          setMergeStatus(errorStatus);
+          return errorStatus;
+        }
+
+        // If there are changes, proceed with the normal merge status check
         const result = await withRetry(() => 
           queuedOperation(() => branchOperations.checkPushToDefault({ ...params, ...additionalParams }))
         );
@@ -141,13 +222,29 @@ export function useBranchMerger({
         setLoadingMerge(false);
       }
     },
-    [params, queuedOperation, validateParams]
+    [params, queuedOperation, validateParams, checkBranchHasChanges]
   );
 
   const mergeMasterBranch = useCallback(
     async (prDescription) => {
       const validationError = validateParams();
-      if (validationError) return validationError;
+      if (validationError) {
+        snackbar.error(validationError.message);
+        return validationError;
+      }
+
+      // Check if branch has any changes before attempting merge
+      const hasChanges = await checkBranchHasChanges();
+      if (!hasChanges) {
+        const errorStatus = {
+          ...defaultStatus,
+          error: true,
+          message: 'Cannot merge: Branch has no changes from the default branch'
+        };
+        setMergeStatus(errorStatus);
+        snackbar.error(errorStatus.message);
+        return errorStatus;
+      }
 
       setLoadingMerge(true);
       try {
@@ -155,6 +252,13 @@ export function useBranchMerger({
           queuedOperation(() => branchOperations.pushToDefault({ ...params, prDescription }))
         );
         setMergeStatus(result);
+        
+        if (!result.error) {
+          snackbar.success('Successfully merged changes to default branch');
+        } else {
+          snackbar.error(result.message);
+        }
+        
         return result;
       } catch (error) {
         const errorStatus = { 
@@ -163,12 +267,13 @@ export function useBranchMerger({
           message: error.message 
         };
         setMergeStatus(errorStatus);
+        snackbar.error(error.message);
         return errorStatus;
       } finally {
         setLoadingMerge(false);
       }
     },
-    [params, queuedOperation, validateParams]
+    [params, queuedOperation, validateParams, checkBranchHasChanges, snackbar]
   );
 
   /**
