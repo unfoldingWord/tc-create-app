@@ -2,7 +2,7 @@
 # repository branch will inherit these settings.
 [build]
   [build.environment]
-    NODE_VERSION = "18"
+    NODE_VERSION = "16"
   
   # Effectively will be used for the development environment only
     REACT_APP_DOOR43_SERVER_URL = "https://qa.door43.org"
