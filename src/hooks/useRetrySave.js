@@ -71,6 +71,7 @@ function useRetrySave() {
   }, [authentication, save, closeAuthenticationDialog]);
 
   const saveTranslation = useDeepCompareCallback(async (content) => {
+    let saved = false;
     // Check if there are actual changes in the content
     if (content === currentContent) {
       // No changes detected, don't save
@@ -81,6 +82,7 @@ function useRetrySave() {
 
     try {
       await save(content);
+      saved = true;
     } catch (error) {
       const { isRecoverable } = parseError({ error });
 
@@ -91,6 +93,7 @@ function useRetrySave() {
         setSaveFailed(true);
       };
     };
+    return saved;
   }, [save, currentContent, openAuthenticationDialog]);
 
   const autoSaveOnEdit = useCallback(async (content) => {
