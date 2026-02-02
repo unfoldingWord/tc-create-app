@@ -3,7 +3,6 @@
   "homepage": "https://create.translationcore.com/",
   "version": "1.21.1",
   "license": "MIT",
-  "private": false,
   "bugs": {
     "url": "https://github.com/unfoldingWord/tc-create-app/issues"
   },
