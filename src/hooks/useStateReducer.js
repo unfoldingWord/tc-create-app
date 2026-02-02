@@ -173,8 +173,8 @@ export const useStateReducer = ({
 
   const setContentIsDirty = useCallback((value) => {
     if (value !== state.contentIsDirty) {
-      dispatch({ type: 'set_content_is_dirty', value });
-      saveState('contentIsDirty', value);
+      dispatch({ type: 'set_content_is_dirty', value: true });
+      saveState('contentIsDirty', true);
     }
   }, [state.contentIsDirty]);
 
