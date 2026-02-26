@@ -4,8 +4,9 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  useRef,
 } from 'react';
-import { useDeepCompareCallback } from 'use-deep-compare';
+import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 
 import { parseError } from 'gitea-react-toolkit';
 import AuthenticationDialog from '../components/dialogs/AuthenticationDialog';
@@ -25,10 +26,15 @@ function useRetrySave() {
   const { onLoginFormSubmitLogin } = authenticationHook.actions || {};
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
-  const [doSaveRetry, setDoSaveRetry] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
 
   const [showAuthenticationDialog, setShowAuthenticationDialog] = useState(false);
+
+  // Track authentication state for retry logic after re-login
+  // Fixes issue #1694: Re-login screen does not save when session expires
+  const authentication = state.authentication;
+  const authTokenRef = useRef(authentication?.token?.sha1);
+  const pendingSaveContentRef = useRef(null);
 
   const openAuthenticationDialog = useCallback(() => {
     setShowAuthenticationDialog(true);
@@ -44,23 +50,28 @@ function useRetrySave() {
     };
   }, [saveFailed]);
 
-  const retrySave = useCallback(async () => {
-    try {
-      await save(savingTargetFileContent);
-    } catch (error) {
-      setSaveFailed(true);
-    };
-    closeAuthenticationDialog();
-  }, [save, savingTargetFileContent, closeAuthenticationDialog]);
+  // Watch for authentication changes and retry save when auth is restored
+  // This ensures the save function has fresh credentials after re-login
+  useDeepCompareEffect(() => {
+    const currentToken = authentication?.token?.sha1;
+    const tokenChanged = currentToken && currentToken !== authTokenRef.current;
+    authTokenRef.current = currentToken;
 
-  useEffect(() => {
-    if (doSaveRetry) {
-      setDoSaveRetry(false);
-      retrySave();
-    };
-  }, [doSaveRetry, retrySave]);
+    if (tokenChanged && pendingSaveContentRef.current) {
+      const contentToSave = pendingSaveContentRef.current;
+      pendingSaveContentRef.current = null;
+
+      save(contentToSave)
+        .then(() => closeAuthenticationDialog())
+        .catch(() => {
+          setSaveFailed(true);
+          closeAuthenticationDialog();
+        });
+    }
+  }, [authentication, save, closeAuthenticationDialog]);
 
   const saveTranslation = useDeepCompareCallback(async (content) => {
+    let saved = false;
     // Check if there are actual changes in the content
     if (content === currentContent) {
       // No changes detected, don't save
@@ -71,6 +82,7 @@ function useRetrySave() {
 
     try {
       await save(content);
+      saved = true;
     } catch (error) {
       const { isRecoverable } = parseError({ error });
 
@@ -81,6 +93,7 @@ function useRetrySave() {
         setSaveFailed(true);
       };
     };
+    return saved;
   }, [save, currentContent, openAuthenticationDialog]);
 
   const autoSaveOnEdit = useCallback(async (content) => {
@@ -95,13 +108,15 @@ function useRetrySave() {
     password,
     remember,
   }) => {
+    // Store content to save after auth completes
+    // The useDeepCompareEffect will detect the token change and retry the save
+    pendingSaveContentRef.current = savingTargetFileContent;
     await onLoginFormSubmitLogin({
       username,
       password,
       remember,
     });
-    setDoSaveRetry(true);
-  }, [onLoginFormSubmitLogin, setDoSaveRetry]);
+  }, [onLoginFormSubmitLogin, savingTargetFileContent]);
 
   const component = useMemo(() => (
     <AuthenticationDialog
