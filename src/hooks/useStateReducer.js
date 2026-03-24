@@ -148,10 +148,26 @@ export const useStateReducer = ({
         const repo = { ...res, branch };
         setTargetRepository(repo);
       }).catch((err) => {
-        console.error('Failed to ensure target repository:', err);
-        alert(
-          `The organization "${owner}" does not contain the selected translation ${language.languageName} for the repository "${description}"\nPlease make sure that your repository has been set up correctly by your organization administrator.`
-        );
+        const httpStatus = err?.response?.status || err?.status;
+
+        // 409/422 typically means the branch was just created by another tab — retry once
+        if (httpStatus === 409 || httpStatus === 422) {
+          console.warn('ensureRepo conflict (branch may already exist), retrying...', err);
+          ensureRepo(params).then((res) => {
+            const repo = { ...res, branch };
+            setTargetRepository(repo);
+          }).catch((retryErr) => {
+            console.error('Failed to ensure target repository after retry:', retryErr);
+            alert(
+              `The organization "${owner}" does not contain the selected translation ${language.languageName} for the repository "${description}"\nPlease make sure that your repository has been set up correctly by your organization administrator.`
+            );
+          });
+        } else {
+          console.error('Failed to ensure target repository:', err);
+          alert(
+            `The organization "${owner}" does not contain the selected translation ${language.languageName} for the repository "${description}"\nPlease make sure that your repository has been set up correctly by your organization administrator.`
+          );
+        }
       });
     } else {
       setTargetRepository();
