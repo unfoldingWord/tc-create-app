@@ -72,7 +72,7 @@ export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
   const dialogLinkTooltip = "Pull-Request URL"
 
   const onClick = () => {
-    if (blocked | !pending) return setIsErrorDialogOpen(true)
+    if (blocked || !pending) return setIsErrorDialogOpen(true)
     setIsMessageDialogOpen(true);
   }
 
@@ -96,11 +96,15 @@ export function useMasterMergeProps({isLoading: _isLoading = false} = {}) {
         setIsLoading(false)
         setIsMessageDialogOpen(false);
       };
+    }).catch(() => {
+      setIsErrorDialogOpen(true);
+      setIsLoading(false);
+      setIsMessageDialogOpen(false);
     })
   }
 
   return {
-    isLoading: (isLoading | loadingMerge),
+    isLoading: (isLoading || loadingMerge),
     onClick,
     onSubmit,
     onCancel,

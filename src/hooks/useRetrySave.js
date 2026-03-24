@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 
-import { parseError } from 'gitea-react-toolkit';
+
 import AuthenticationDialog from '../components/dialogs/AuthenticationDialog';
 import { AppContext } from '../App.context';
 
@@ -84,10 +84,11 @@ function useRetrySave() {
       await save(content);
       saved = true;
     } catch (error) {
-      const { isRecoverable } = parseError({ error });
+      const httpStatus = error?.response?.status || error?.status;
 
-      // assumption is that it is an authentication issue.
-      if (isRecoverable) {
+      // Only show re-login dialog for actual auth failures (401/403)
+      if (httpStatus === 401 || httpStatus === 403) {
+        pendingSaveContentRef.current = content;
         openAuthenticationDialog();
       } else {
         setSaveFailed(true);
