@@ -50,7 +50,7 @@ export const loadAuthentication = async () => {
 };
 
 export const saveAuthentication = async (authentication) => {
-  saveState('authentication', authentication);
+  await saveState('authentication', authentication);
 };
 
 const cacheStore = localforage.createInstance({

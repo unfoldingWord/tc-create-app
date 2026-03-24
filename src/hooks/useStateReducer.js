@@ -148,13 +148,10 @@ export const useStateReducer = ({
         const repo = { ...res, branch };
         setTargetRepository(repo);
       }).catch((err) => {
-        setTimeout(() => {
-          clearState();
-          alert(
-            `The organization "${owner}" does not contain the selected translation ${language.languageName} for the repository "${description}"\nPlease make sure that your repository has been set up correctly by your organization administrator.`
-          );
-        }, 200);
-        console.error(err);
+        console.error('Failed to ensure target repository:', err);
+        alert(
+          `The organization "${owner}" does not contain the selected translation ${language.languageName} for the repository "${description}"\nPlease make sure that your repository has been set up correctly by your organization administrator.`
+        );
       });
     } else {
       setTargetRepository();

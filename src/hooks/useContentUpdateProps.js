@@ -24,10 +24,10 @@ export function useContentUpdateProps({isLoading: _isLoading = false, isSaving =
   const { load: loadTargetFile } = targetFileHook.actions || {};
 
   useEffect(() => {
-    if(isSaving & !isLoading) {
+    if(isSaving && !isLoading) {
       setIsLoading(true);
     }
-    if (!isSaving & isLoading) {
+    if (!isSaving && isLoading) {
       // There is a race condition with server returning
       // a conflict while processing the last commit
       // the setTimeout tries to make sure we don't get a false conflict
@@ -89,15 +89,18 @@ export function useContentUpdateProps({isLoading: _isLoading = false, isSaving =
     setIsLoading(true);
     updateUserBranch().then((response) => {
       if (response.success && response.message === "") loadTargetFile()
-      else { 
+      else {
         setIsErrorDialogOpen(true);
         setIsLoading(false)
       };
+    }).catch(() => {
+      setIsErrorDialogOpen(true);
+      setIsLoading(false);
     })
   }
 
   return {
-    isLoading: (isLoading | loadingUpdate),
+    isLoading: (isLoading || loadingUpdate),
     onClick,
     isErrorDialogOpen,
     onCloseErrorDialog,
