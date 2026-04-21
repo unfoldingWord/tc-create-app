@@ -21,7 +21,7 @@ function useRetrySave() {
     state,
   } = useContext(AppContext);
 
-  const { save, saveCache } = targetFileHook.actions || {};
+  const { save, saveCache, savePatch } = targetFileHook.actions || {};
   const { html_url, content: currentContent } = targetFileHook.state || {};
   const { onLoginFormSubmitLogin } = authenticationHook.actions || {};
 
@@ -70,7 +70,7 @@ function useRetrySave() {
     }
   }, [authentication, save, closeAuthenticationDialog]);
 
-  const saveTranslation = useDeepCompareCallback(async (content) => {
+  const saveTranslation = useDeepCompareCallback(async (content, _initialContent) => {
     let saved = false;
     // Check if there are actual changes in the content
     if (content === currentContent) {
@@ -81,7 +81,7 @@ function useRetrySave() {
     setSavingTargetFileContent(content);
 
     try {
-      await save(content);
+      await savePatch(content, _initialContent);
       saved = true;
     } catch (error) {
       const { isRecoverable } = parseError({ error });
