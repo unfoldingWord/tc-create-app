@@ -1,7 +1,7 @@
 {
   "name": "tc-create-app",
   "homepage": "https://create.translationcore.com/",
-  "version": "1.22",
+  "version": "1.22-beta",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/unfoldingWord/tc-create-app/issues"
