@@ -12,6 +12,38 @@ export function getCommitHash() {
 }
 
 /**
+ * strips a file path by removing leading slashes and dot-slashes,
+ *
+ * @param {string} filepath - The file path to normalize
+ * @returns {string} The normalized file path, or the original value if falsy
+ */
+export function stripPath(filepath) {
+  if (!filepath) {
+    return filepath;
+  }
+
+  const stripped = filepath
+    .replace(/^\.\/+/, '')
+    .replace(/^\/+/, ''); // remove root path
+  return stripped; // make explicitly relative path
+}
+
+/**
+ * Normalizes file contents by ensuring it ends with a newline character.
+ * If the contents are empty or already end with a newline, returns them unchanged.
+ *
+ * @param {string} contents - The file contents to normalize
+ * @returns {string} The normalized contents with a trailing newline, or the original value if falsy or already ends with newline
+ */
+export function normalizeNewLine(contents) {
+  if (!contents || contents.endsWith('\n')) {
+    return contents;
+  }
+
+  return `${contents}\n`;
+}
+
+/**
  * Normalizes a file path by removing leading slashes and dot-slashes,
  * then prepending './' to ensure a consistent relative path.
  *
@@ -23,10 +55,8 @@ export function normalizePath(filepath) {
     return filepath;
   }
 
-  const stripped = filepath
-    .replace(/^\.\/+/, '')
-    .replace(/^\/+/, ''); // remove root path
-  return './' + stripped; // make explicitly relative path
+  const normalized = './' + stripPath(filepath);
+  return normalized; // make explicitly relative path
 }
 
 /**
