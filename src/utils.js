@@ -13,7 +13,7 @@ export function getCommitHash() {
 
 /**
  * Normalizes a file path by removing leading slashes and dot-slashes,
- * then prepending './' to ensure a consistent format.
+ * then prepending './' to ensure a consistent relative path.
  *
  * @param {string} filepath - The file path to normalize
  * @returns {string} The normalized file path with './' prefix, or the original value if falsy
@@ -39,7 +39,7 @@ export function normalizePath(filepath) {
  * @returns {boolean} True if the paths match (either directly or after normalization), false otherwise
  */
 export function doFilesMatch(filepath, sourceFile) {
-  let matchFound = filepath === sourceFile;
+  let matchFound = filepath === sourceFile; // first try exact match
   if (!matchFound) { // TRICKY: some manifests are inconsistent on paths to file - it may start with `/` or `./`
     matchFound = normalizePath(filepath) === normalizePath(sourceFile);
   }
