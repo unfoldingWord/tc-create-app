@@ -19,7 +19,7 @@ import {
 import { onOpenValidation } from '../core/onOpenValidations';
 import useConfirm from '../hooks/useConfirm';
 import { localString } from '../core/localStrings';
-import { doFilesMatch, normalizePath } from "../utils";
+import { doFilesMatch, stripPath } from "../utils";
 
 export function useGiteaReactToolkit(applicationStateReducer) {
   const {
@@ -228,7 +228,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     config,
     authentication,
     repository: targetRepository,
-    filepath: (readyForTargetFile ? normalizePath(filepath) : undefined),
+    filepath: (readyForTargetFile ? stripPath(filepath) : undefined),
     onFilepath: setFilepath,
     defaultContent,
     onOpenValidation: _onOpenValidation,

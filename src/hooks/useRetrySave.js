@@ -11,6 +11,7 @@ import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import { parseError } from 'gitea-react-toolkit';
 import AuthenticationDialog from '../components/dialogs/AuthenticationDialog';
 import { AppContext } from '../App.context';
+import { normalizeNewLine } from "../utils";
 
 function useRetrySave() {
   const {
@@ -85,7 +86,7 @@ function useRetrySave() {
     setSavingTargetFileContent(content);
 
     try {
-      await savePatch(content, _initialContent);
+      await savePatch(normalizeNewLine(content), normalizeNewLine(_initialContent));
       saved = true;
     } catch (error) {
       const { isRecoverable } = parseError({ error });
