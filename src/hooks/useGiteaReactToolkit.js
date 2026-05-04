@@ -19,6 +19,7 @@ import {
 import { onOpenValidation } from '../core/onOpenValidations';
 import useConfirm from '../hooks/useConfirm';
 import { localString } from '../core/localStrings';
+import { doFilesMatch } from "../utils";
 
 export function useGiteaReactToolkit(applicationStateReducer) {
   const {
@@ -205,7 +206,7 @@ export function useGiteaReactToolkit(applicationStateReducer) {
     let _defaultContent;
 
     const filepathsExist = (!!filepath && !!sourceFile?.filepath)
-    const filepathsMatch = (filepath === sourceFile?.filepath);
+    const filepathsMatch = doFilesMatch(filepath, sourceFile?.filepath);
     const sourceFileIsReady = (filepathsExist && filepathsMatch);
     
     if (sourceFileIsReady) {
