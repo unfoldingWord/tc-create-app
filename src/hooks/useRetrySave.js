@@ -50,6 +50,10 @@ function useRetrySave() {
     };
   }, [saveFailed]);
 
+  useEffect(() => {
+    console.log('targetFileHook changed to.', targetFileHook);
+  }, [targetFileHook]);
+
   // Watch for authentication changes and retry save when auth is restored
   // This ensures the save function has fresh credentials after re-login
   useDeepCompareEffect(() => {
