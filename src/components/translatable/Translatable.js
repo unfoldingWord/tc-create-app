@@ -12,6 +12,7 @@ import { FilesHeader } from '../files-header';
 import { AppContext } from '../../App.context';
 import useRetrySave from '../../hooks/useRetrySave';
 import TranslatableTSV from './TranslatableTSV';
+import { doFilesMatch } from "../../utils";
 
 function Translatable() {
   const {
@@ -43,11 +44,7 @@ function Translatable() {
     window.scrollTo(0, 0);
   }, []);
 
-  const filepathsMatch = (
-    filepath &&
-    filepath === sourceFilepath &&
-    filepath === targetFilepath
-  );
+  const filepathsMatch = doFilesMatch(filepath, sourceFilepath) && doFilesMatch(filepath, targetFilepath);
 
   const translatableComponent = useMemo(() => {
     let _translatable = (
