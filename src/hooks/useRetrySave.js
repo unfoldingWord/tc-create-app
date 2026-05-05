@@ -11,6 +11,7 @@ import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import { parseError } from 'gitea-react-toolkit';
 import AuthenticationDialog from '../components/dialogs/AuthenticationDialog';
 import { AppContext } from '../App.context';
+import { normalizeNewLine } from "../utils";
 
 function useRetrySave() {
   const {
@@ -21,7 +22,7 @@ function useRetrySave() {
     state,
   } = useContext(AppContext);
 
-  const { save, saveCache } = targetFileHook.actions || {};
+  const { save, saveCache, savePatch } = targetFileHook.actions || {};
   const { html_url, content: currentContent } = targetFileHook.state || {};
   const { onLoginFormSubmitLogin } = authenticationHook.actions || {};
 
@@ -50,6 +51,10 @@ function useRetrySave() {
     };
   }, [saveFailed]);
 
+  useEffect(() => {
+    console.log('targetFileHook changed to.', targetFileHook);
+  }, [targetFileHook]);
+
   // Watch for authentication changes and retry save when auth is restored
   // This ensures the save function has fresh credentials after re-login
   useDeepCompareEffect(() => {
@@ -70,7 +75,7 @@ function useRetrySave() {
     }
   }, [authentication, save, closeAuthenticationDialog]);
 
-  const saveTranslation = useDeepCompareCallback(async (content) => {
+  const saveTranslation = useDeepCompareCallback(async (content, _initialContent) => {
     let saved = false;
     // Check if there are actual changes in the content
     if (content === currentContent) {
@@ -81,7 +86,7 @@ function useRetrySave() {
     setSavingTargetFileContent(content);
 
     try {
-      await save(content);
+      await savePatch(normalizeNewLine(content), normalizeNewLine(_initialContent));
       saved = true;
     } catch (error) {
       const { isRecoverable } = parseError({ error });

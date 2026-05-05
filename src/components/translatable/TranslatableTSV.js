@@ -2,6 +2,7 @@ import React, {
   useState,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -194,12 +195,16 @@ export default function TranslatableTSV({
     }
   }
 
-  const onSave = async function(...args) {
+  const onSave = async function(_newContent) {
     setIsSaving(true);
-    const saved = await _onSave(...args)
+    const saved = await _onSave(_newContent, targetContent);
     setIsSaving(false);
     return saved;
   }
+
+  useEffect(() => {
+    console.log(`targetContent changed`, targetContent);
+  }, [targetContent]);
 
   return (
     <ResourcesContextProvider
