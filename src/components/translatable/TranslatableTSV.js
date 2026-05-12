@@ -202,10 +202,6 @@ export default function TranslatableTSV({
     return saved;
   }
 
-  useEffect(() => {
-    console.log(`targetContent changed`, targetContent);
-  }, [targetContent]);
-
   return (
     <ResourcesContextProvider
       reference={{ bookId }}
