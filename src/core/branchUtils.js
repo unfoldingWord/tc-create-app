@@ -5,7 +5,11 @@ import { readBranch } from 'gitea-react-toolkit';
  * POST /api/v1/repos/{owner}/{repo}/branches
  */
 const createBranch = async ({ config, owner, repo, newBranch, oldBranch }) => {
-  const url = `${config.server}/api/v1/repos/${owner}/${repo}/branches`;
+  // Strip any trailing slash so the URL never contains a double-slash.
+  // (The toolkit avoids this by using axios baseURL + relative path; we must
+  // handle it ourselves because we use fetch with a fully-formed URL.)
+  const server = config.server.replace(/\/+$/, '');
+  const url = `${server}/api/v1/repos/${owner}/${repo}/branches`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
