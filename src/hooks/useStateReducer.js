@@ -1,6 +1,8 @@
 import { useCallback, useReducer, useEffect } from 'react';
 import { ensureRepo } from 'gitea-react-toolkit';
 
+import { ensureUserBranch } from '../core/branchUtils';
+
 import { stateReducer } from '../core/state.reducer';
 import { saveState, loadState } from '../core/persistence';
 import defaults from '../core/state.defaults';
@@ -144,8 +146,30 @@ export const useStateReducer = ({
         branch,
       };
 
-      ensureRepo(params).then((res) => {
+      ensureRepo(params).then(async (res) => {
         const repo = { ...res, branch };
+
+        // Eagerly create the user branch from the current default-branch HEAD
+        // before useFile loads the file.  This ensures the file blob SHA stored
+        // in memory belongs to the user branch (not master), so master can
+        // advance without invalidating our SHA and causing save failures.
+        // See: https://github.com/unfoldingWord/tc-create-app/issues/1712
+        try {
+          await ensureUserBranch({
+            config: authentication.config,
+            owner,
+            repo: translationRepoName,
+            branch,
+            defaultBranch: res.default_branch,
+          });
+        } catch (err) {
+          // Non-fatal: allow the session to continue.  The lazy-creation
+          // fallback in gitea-react-toolkit will still attempt to create the
+          // branch at save time, though that path is vulnerable to the
+          // stale-SHA race described in issue #1712.
+          console.warn('[useStateReducer] ensureUserBranch failed; save may fail if master advanced before first save:', err);
+        }
+
         setTargetRepository(repo);
       }).catch((err) => {
         setTimeout(() => {
