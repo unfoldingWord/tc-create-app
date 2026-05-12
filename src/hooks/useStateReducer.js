@@ -160,7 +160,7 @@ export const useStateReducer = ({
             owner,
             repo: translationRepoName,
             branch,
-            defaultBranch: res.default_branch,
+            defaultBranch: res.default_branch || 'master',
           });
         } catch (err) {
           // Non-fatal: allow the session to continue.  The lazy-creation

@@ -12,20 +12,6 @@ import { parseError } from 'gitea-react-toolkit';
 import AuthenticationDialog from '../components/dialogs/AuthenticationDialog';
 import { AppContext } from '../App.context';
 
-/**
- * Returns true when the error is likely a file-save conflict (stale SHA,
- * missing branch, or permission denied) rather than a network or auth issue.
- *
- * gitea-react-toolkit's saveFile() collapses all HTTP failures from the
- * Gitea Contents API into the generic message "Error creating file.", so we
- * cannot inspect an HTTP status code here.  The eager branch-creation in
- * useStateReducer (issue #1712 fix) should prevent most stale-SHA conflicts,
- * but this check keeps the fallback UX honest when an unexpected save failure
- * does slip through.
- */
-const isSaveConflict = (error) =>
-  error && error.message && error.message.includes('Error creating file.');
-
 function useRetrySave() {
   const {
     giteaReactToolkit: {
@@ -41,7 +27,6 @@ function useRetrySave() {
 
   const [savingTargetFileContent, setSavingTargetFileContent] = useState();
   const [saveFailed, setSaveFailed] = useState(false);
-  const [saveConflict, setSaveConflict] = useState(false);
 
   const [showAuthenticationDialog, setShowAuthenticationDialog] = useState(false);
 
@@ -64,22 +49,6 @@ function useRetrySave() {
       alert('Error saving file! File could not be saved.');
     };
   }, [saveFailed]);
-
-  useEffect(() => {
-    if (saveConflict) {
-      // The file on the server has changed since it was loaded (stale SHA).
-      // Prompt the user to reload so they work from the latest version.
-      const reload = window.confirm(
-        'The file could not be saved because the server copy has changed since you opened it.\n\n' +
-        'Click OK to reload the page and re-open the latest version, or Cancel to stay and try saving again.'
-      );
-      if (reload) {
-        window.location.reload();
-      } else {
-        setSaveConflict(false);
-      }
-    }
-  }, [saveConflict]);
 
   // Watch for authentication changes and retry save when auth is restored
   // This ensures the save function has fresh credentials after re-login
@@ -115,20 +84,12 @@ function useRetrySave() {
       await save(content);
       saved = true;
     } catch (error) {
-      // Distinguish save conflicts (stale SHA / branch missing) from genuine
-      // network/auth failures so we don't show a misleading login dialog.
-      // See: https://github.com/unfoldingWord/tc-create-app/issues/1712
-      if (isSaveConflict(error)) {
-        setSaveConflict(true);
-      } else {
-        const { isRecoverable } = parseError({ error });
+      const { isRecoverable } = parseError({ error });
 
-        if (isRecoverable) {
-          // Treat as a recoverable auth issue and offer re-login.
-          openAuthenticationDialog();
-        } else {
-          setSaveFailed(true);
-        }
+      if (isRecoverable) {
+        openAuthenticationDialog();
+      } else {
+        setSaveFailed(true);
       }
     };
     return saved;

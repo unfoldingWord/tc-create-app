@@ -19,7 +19,7 @@ function AuthenticationDialog({
 }) {
   const classes = useStyles();
 
-  const { state: { authentication, config } } = useContext(AppContext);
+  const { state: { config } } = useContext(AppContext);
 
   const component = useDeepCompareMemo(() => {
     let _component = <></>;
@@ -29,14 +29,16 @@ function AuthenticationDialog({
         <Modal open={true} onClose={close}>
           <Paper className={classes.modal}>
             {/*
-              Pass the real authentication object so the LoginForm does not
-              display a false "logged out" state when the underlying issue is
-              a server-side error rather than an expired session.
-              If authentication is null the form correctly shows the login UI.
+              authentication={null} is intentional: it forces LoginForm into
+              "logged-out" state so the username/password fields are always
+              enabled and the submit button reads "Login to try again" rather
+              than "Logout".  This is required for the re-login-and-retry-save
+              flow (issue #1694).  The "Refresh page" button below covers the
+              case where re-login is not the solution (e.g. a file conflict).
             */}
             <LoginForm
               config={config}
-              authentication={authentication}
+              authentication={null}
               actionText={'Login to try again...'}
               errorText={'Error! File was not saved.  Please log in again and retry.'}
               onSubmit={saveRetry}
@@ -58,7 +60,7 @@ function AuthenticationDialog({
       );
     };
     return _component;
-  }, [authentication, config, show, classes.modal, classes.refreshRow, classes.refreshHint]);
+  }, [config, show, classes.modal, classes.refreshRow, classes.refreshHint]);
 
   return component;
 };
