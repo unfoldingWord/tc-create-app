@@ -12,25 +12,8 @@ export function getCommitHash() {
 }
 
 /**
- * strips a file path by removing leading slashes and dot-slashes,
- *
- * @param {string} filepath - The file path to normalize
- * @returns {string} The normalized file path, or the original value if falsy
- */
-export function stripPath(filepath) {
-  if (!filepath) {
-    return filepath;
-  }
-
-  const stripped = filepath
-    .replace(/^\.\/+/, '')
-    .replace(/^\/+/, ''); // remove root path
-  return stripped; // make explicitly relative path
-}
-
-/**
  * Normalizes file contents by ensuring it ends with a newline character.
- * If the contents are empty or already end with a newline, returns them unchanged.
+ * If the contents are empty or already end with a newline, returns contents unchanged.
  *
  * @param {string} contents - The file contents to normalize
  * @returns {string} The normalized contents with a trailing newline, or the original value if falsy or already ends with newline
@@ -41,6 +24,23 @@ export function normalizeNewLine(contents) {
   }
 
   return `${contents}\n`;
+}
+
+/**
+ * cleans the leading file path by removing leading slashes and dot-slashes,
+ *
+ * @param {string} filepath - The file path to normalize
+ * @returns {string} The stripped file path, or the original value if falsy
+ */
+export function stripPath(filepath) {
+  if (!filepath) {
+    return filepath;
+  }
+
+  const stripped = filepath
+    .replace(/^\.\/+/, '')
+    .replace(/^\/+/, ''); // remove root path
+  return stripped; // make explicitly relative path
 }
 
 /**
@@ -63,6 +63,9 @@ export function normalizePath(filepath) {
  * Compares two file paths to determine if they refer to the same file.
  * Handles inconsistencies in path formatting by normalizing both paths
  * before comparison (e.g., paths that may start with '/' or './').
+ * 
+ * This is needed to handle inconsistent file paths in manifests across
+ * different repositories.
  *
  * @param {string} filepath - The first file path to compare
  * @param {string} sourceFile - The second file path to compare
