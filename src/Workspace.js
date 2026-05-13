@@ -4,6 +4,7 @@ import { useDeepCompareMemo } from 'use-deep-compare';
 import { ApplicationStepper, Translatable } from './components/';
 import { AppContext } from './App.context';
 import CriticalValidationErrorsDialog from './components/dialogs/CriticalValidationErrorsDialog';
+import { doFilesMatch } from "./utils";
 
 function Workspace() {
   const {
@@ -34,7 +35,7 @@ function Workspace() {
       const contentLoaded = sourceFilepath && targetFilepath && targetContent
 
       if (contentLoaded) {
-        const sourceAndTargetMatch = targetFilepath === filepath;
+        const sourceAndTargetMatch = doFilesMatch(targetFilepath, filepath);
 
         if (sourceAndTargetMatch) {
           if (criticalValidationErrors?.length > 0) {

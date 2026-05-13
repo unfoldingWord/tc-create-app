@@ -11,6 +11,7 @@ import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import { parseError } from 'gitea-react-toolkit';
 import AuthenticationDialog from '../components/dialogs/AuthenticationDialog';
 import { AppContext } from '../App.context';
+import { normalizeNewLine } from "../utils";
 
 function useRetrySave() {
   const {
@@ -21,7 +22,7 @@ function useRetrySave() {
     state,
   } = useContext(AppContext);
 
-  const { save, saveCache } = targetFileHook.actions || {};
+  const { save, saveCache, savePatch } = targetFileHook.actions || {};
   const { html_url, content: currentContent } = targetFileHook.state || {};
   const { onLoginFormSubmitLogin } = authenticationHook.actions || {};
 
@@ -70,7 +71,7 @@ function useRetrySave() {
     }
   }, [authentication, save, closeAuthenticationDialog]);
 
-  const saveTranslation = useDeepCompareCallback(async (content) => {
+  const saveTranslation = useDeepCompareCallback(async (content, _initialContent) => {
     let saved = false;
     // Check if there are actual changes in the content
     if (content === currentContent) {
@@ -81,16 +82,26 @@ function useRetrySave() {
     setSavingTargetFileContent(content);
 
     try {
-      await save(content);
+      await savePatch(normalizeNewLine(content), normalizeNewLine(_initialContent));
       saved = true;
     } catch (error) {
+      console.error('saveTranslation() savePatch failed', error);
+
       const { isRecoverable } = parseError({ error });
 
+      // assumption is that it is an authentication issue.
       if (isRecoverable) {
+        try { // retry with save of full file
+          console.log('saveTranslation() retry with full save');
+          await save(content);
+          return true; // success
+        } catch (error) {
+          console.error('saveTranslation() fallback full save failed', error);
+        }
         openAuthenticationDialog();
       } else {
         setSaveFailed(true);
-      }
+      };
     };
     return saved;
   }, [save, currentContent, openAuthenticationDialog]);
