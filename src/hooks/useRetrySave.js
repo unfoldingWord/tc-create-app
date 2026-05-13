@@ -86,12 +86,11 @@ function useRetrySave() {
     } catch (error) {
       const { isRecoverable } = parseError({ error });
 
-      // assumption is that it is an authentication issue.
       if (isRecoverable) {
         openAuthenticationDialog();
       } else {
         setSaveFailed(true);
-      };
+      }
     };
     return saved;
   }, [save, currentContent, openAuthenticationDialog]);
