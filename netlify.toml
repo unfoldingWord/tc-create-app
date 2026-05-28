@@ -1,6 +1,7 @@
 # Development context: All deploys to the main
 # repository branch will inherit these settings.
 [build]
+  command = "yarn update-languages && yarn build"
   [build.environment]
   # Effectively will be used for the development environment only
     NODE_VERSION = "16"
