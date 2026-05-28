@@ -17447,10 +17447,10 @@ uw-content-validation@3.1.2:
     usfm-js "^3.3.1"
     yaml "^1.10.2"
 
-uw-languages-rcl@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/uw-languages-rcl/-/uw-languages-rcl-1.0.2.tgz#ee13af81afa5a3c4e94b90882a29a5aa1e0f7844"
-  integrity sha512-DaQ1V0VQHPfRpRvrSI52YywMPR7T8BQiYEEdSdwJ+D5kRrqGrKhFQPnxNDaRWYny8uz3q87QHjUiOk208kiuHg==
+uw-languages-rcl@1.0.3-beta.5:
+  version "1.0.3-beta.5"
+  resolved "https://registry.yarnpkg.com/uw-languages-rcl/-/uw-languages-rcl-1.0.3-beta.5.tgz#158fb05c59d26f0c7fdd099025546b0c005d4f87"
+  integrity sha512-5JCzPuvtBI+48LgM0vtwtfnHWsp4tz72CRyaUdVG7v/azVSLVOXnO1LAGfpCCN/3W2ttRWUjfR8EJsyYRG8CeQ==
   dependencies:
     "@babel/runtime-corejs3" "^7.14.7"
     core-js "^3.15.2"

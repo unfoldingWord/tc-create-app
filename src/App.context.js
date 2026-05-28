@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useLanguages } from 'uw-languages-rcl';
 
 import { useStateReducer } from './hooks/useStateReducer';
 import { useGiteaReactToolkit } from './hooks/useGiteaReactToolkit';
 import { useWarning } from './hooks/useWarning';
 import BranchMergerProvider from './components/branch-merger/context/BranchMergerProvider';
+import defaultLanguages from './common/languages.json';
 
 export const AppContext = React.createContext();
 
@@ -37,12 +39,14 @@ export function AppContextProvider({
 
   const giteaReactToolkit = useGiteaReactToolkit({ state, actions });
   const warning = useWarning({ state, actions });
+  const { state: languages } = useLanguages({ defaultLanguages });
 
   const value = {
     state,
     actions,
     giteaReactToolkit,
     warning,
+    languages,
   };
 
   // Memoize branch merger params to prevent unnecessary re-renders
