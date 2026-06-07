@@ -20,6 +20,14 @@ module.exports = {
           loader: 'babel-loader',
         },
         {
+          // uw-content-validation@3.2.1 bundles yaml@2.x, whose browser dist
+          // ships modern JS (optional chaining) that webpack 4 cannot parse.
+          // Run it through Babel so the styleguidist build succeeds.
+          test: /\.js$/,
+          include: /node_modules\/uw-content-validation\/node_modules\/yaml/,
+          loader: 'babel-loader',
+        },
+        {
           test: /\.css$/,
           loader: 'style-loader!css-loader',
         }
