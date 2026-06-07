@@ -1,0 +1,23 @@
+# Development context: All deploys to the main
+# repository branch will inherit these settings.
+[build]
+  [build.environment]
+  # Effectively will be used for the development environment only
+    REACT_APP_DOOR43_SERVER_URL = "https://qa.door43.org"
+    CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
+    
+[context.production]
+  [context.production.environment]
+    REACT_APP_DOOR43_SERVER_URL = "https://git.door43.org"    
+    CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
+    
+[context.stage]
+  # Allows QA with PROD data.
+  [context.stage.environment]
+    REACT_APP_DOOR43_SERVER_URL = "https://git.door43.org"    
+    CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
+
+[context.deploy-preview]
+  [context.deploy-preview.environment]
+    REACT_APP_DOOR43_SERVER_URL = "https://qa.door43.org"
+    CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
