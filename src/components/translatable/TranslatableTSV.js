@@ -194,9 +194,9 @@ export default function TranslatableTSV({
     }
   }
 
-  const onSave = async function(...args) {
+  const onSave = async function(_newContent) {
     setIsSaving(true);
-    const saved = await _onSave(...args)
+    const saved = await _onSave(_newContent, targetContent);
     setIsSaving(false);
     return saved;
   }

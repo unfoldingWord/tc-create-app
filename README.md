@@ -27,6 +27,14 @@ tC Create is built using [React Component Libraries](https://forum.door43.org/t/
 
 ## Developer Notes
 
+### Running Local Build
+- requires node v16 (newer versions of node give warning that digital envelope routines are not supported)
+- in first terminal, start the app by (in Windows, run this in `git Bash` as it needs bash):
+```
+yarn
+yarn start
+```
+
 ### Running Local Cypress Tests
 
 #### First Time Setup
@@ -45,6 +53,7 @@ yarn run cypress install
 - you will need to be part of unfoldingWord organization for the test to complete
 
 #### Running tests
+- requires node v16 (newer versions of node give warning that digital envelope routines are not supported)
 - in first terminal, start the app by (in Windows, run this in `git Bash` as it needs bash):
 ```
 yarn start
