@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
 import { NoSsr } from '@material-ui/core';
-import { useLanguages } from 'uw-languages-rcl';
 import { CircularProgress } from '@material-ui/core';
 
+import { AppContext } from '../../App.context';
 import { getLanguage } from './helpers';
 import * as components from './Components';
 
@@ -16,7 +16,7 @@ export default function LanguageSelect({
   organization,
 }) {
   const classes = useStyles();
-  const { state: languages } = useLanguages();
+  const { languages } = useContext(AppContext);
 
   const handleChange = useDeepCompareCallback((object) => {
     const languageId = object.langId;

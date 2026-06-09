@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { useDeepCompareMemo } from 'use-deep-compare';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { useLanguages } from 'uw-languages-rcl';
 
 import { AppContext } from '../../App.context';
 import { getLanguage } from '../languages/helpers';
@@ -22,12 +21,12 @@ export default function FilesHeader() {
       sourceFileHook,
       targetFileHook,
     },
+    languages,
   } = useContext(AppContext);
 
   const { html_url: sourceFileHtmlUrl, filepath: sourceFilepath } = sourceFileHook.state || {};
   const { html_url: targetFileHtmlUrl } = targetFileHook.state || {};
 
-  const { state: languages } = useLanguages();
   const sourceLanguage = getLanguage({ languageId: sourceRepository.name.split('_')[0], languagesJSON: languages });
 
   const sourceChip = useDeepCompareMemo(() => {
