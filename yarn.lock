@@ -11327,10 +11327,10 @@ markdown-translatable@2.1.1:
     turndown "^7.0.0"
     turndown-plugin-gfm "^1.0.2"
 
-markdown-translatable@2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-2.1.4.tgz#e96b0acda9cdafc7ec5393a40fba60b98224f055"
-  integrity sha512-XBnhCY7pmAt4tj6TPtT9V73I4hK/bi+D2utN878kuxdb6010/zd4Z3Ws0q6A+el2s8mj4r3h0sdo31AaRqz+uw==
+markdown-translatable@2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/markdown-translatable/-/markdown-translatable-2.1.5.tgz#c02aaac53ddde7903b7008879e0ade89f49b74b2"
+  integrity sha512-b1Io+Y1bQ8UX4D8oDZQKUxLGhO3ZYwQbLWNwBJbWanGrq7MjjwMA0P3PzcInPru6+A15/4MJb2keIbT5n13hfA==
   dependencies:
     deep-freeze "^0.0.1"
     md5 "^2.2.1"

@@ -40,7 +40,7 @@
     "deep-freeze": "^0.0.1",
     "gitea-react-toolkit": "2.4.4",
     "lodash.isequal": "^4.5.0",
-    "markdown-translatable": "2.1.4",
+    "markdown-translatable": "2.1.5",
     "notistack": "^3.0.2",
     "react": "^16.14.0",
     "react-beforeunload": "^2.5.1",
