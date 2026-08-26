@@ -3533,10 +3533,10 @@ axios@^0.27.2:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
 
-axios@^0.30.2:
-  version "0.30.3"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.30.3.tgz#ab1be887a2d37dd9ebc219657704180faf2c4920"
-  integrity sha512-5/tmEb6TmE/ax3mdXBc/Mi6YdPGxQsv+0p5YlciXWt3PHIn0VamqCXhRMtScnwY3lbgSXLneOuXAKUhgmSRpwg==
+axios@^0.32.0:
+  version "0.32.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.32.0.tgz#7859220c955272a72df8c0789ebd1219aba6d1d9"
+  integrity sha512-sGQArzERW2SI8IRkjuJ5y91Sm9QjiRq4Ay4kOLqpbBt5CeKDNq4g6nirJdyD+palK3yEDXnJiVXsesX66AjwyA==
   dependencies:
     follow-redirects "^1.15.4"
     form-data "^4.0.4"
@@ -17563,13 +17563,13 @@ uuid@^8.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
-uw-content-validation@3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/uw-content-validation/-/uw-content-validation-3.2.1.tgz#7f484ab64d78fbd2507ea53b981bc85d712c9bc8"
-  integrity sha512-ddAnLgBVNJMcMaUxSPa05eFf40ihlt3+LASdcgDIPSirfJ8HPDXebtCVHpsItxY++aH4UhZZYamO9PniQocKJw==
+uw-content-validation@3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/uw-content-validation/-/uw-content-validation-3.2.2.tgz#f2a17968c702d82b17ee4e7833d6c44326c0865b"
+  integrity sha512-SAJoFvxz3wO+lT+yjN46KtNJoFJMYMuAVNQlv1ut1jHqp81yN+Y9hfUMu7UAOO7JAWNBp5/ZxBvTY1QQPet78Q==
   dependencies:
     ajv "^8.18.0"
-    axios "^0.30.2"
+    axios "^0.32.0"
     jquery "^3.7.1"
     jszip "^3.10.1"
     localforage "^1.10.0"
